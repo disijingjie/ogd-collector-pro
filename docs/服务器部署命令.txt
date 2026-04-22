@@ -1,0 +1,129 @@
+# OGD-Collector Pro 服务器一键部署命令
+# 在服务器上执行以下所有命令（复制粘贴即可）
+# 服务器IP: 106.53.188.187
+
+# =============================================================================
+# 第一步：SSH登录服务器（在本地PowerShell执行）
+# =============================================================================
+ssh root@106.53.188.187
+
+# =============================================================================
+# 第二步：在服务器上执行以下部署命令（复制粘贴全部）
+# =============================================================================
+
+set -e
+echo "=========================================="
+echo "OGD-Collector Pro 一键部署开始"
+echo "=========================================="
+
+# 1. 系统更新与安装依赖
+echo "[1/7] 更新系统并安装依赖..."
+apt-get update -y
+apt-get install -y python3 python3-pip python3-venv git nginx curl openssl
+
+# 2. 创建应用目录并拉取代码
+echo "[2/7] 拉取代码..."
+APP_DIR="/opt/ogd-collector-pro"
+mkdir -p "$APP_DIR"
+cd "$APP_DIR"
+git clone https://github.com/disijingjie/ogd-collector-pro.git .
+
+# 3. 创建虚拟环境并安装依赖
+echo "[3/7] 安装Python依赖..."
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# 4. 初始化数据库
+echo "[4/7] 初始化数据库..."
+python3 -c "from models import init_db, init_platforms_data; init_db(); init_platforms_data()"
+
+# 5. 配置systemd服务
+echo "[5/7] 配置系统服务..."
+SECRET_KEY=$(openssl rand -hex 32)
+mkdir -p "$APP_DIR/logs"
+
+cat > /etc/systemd/system/ogd-collector.service << EOF
+[Unit]
+Description=OGD-Collector Pro
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=$APP_DIR
+Environment="PATH=$APP_DIR/venv/bin"
+Environment="SECRET_KEY=$SECRET_KEY"
+Environment="FLASK_ENV=production"
+ExecStart=$APP_DIR/venv/bin/gunicorn wsgi:app --bind 0.0.0.0:5000 --workers 2 --timeout 60
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable ogd-collector
+systemctl start ogd-collector
+
+# 6. 配置Nginx
+echo "[6/7] 配置Nginx..."
+cat > /etc/nginx/sites-available/ogd-collector << 'EOF'
+server {
+    listen 80;
+    server_name _;
+    
+    client_max_body_size 64M;
+    
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+    
+    location /static {
+        alias /opt/ogd-collector-pro/static;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+EOF
+
+ln -sf /etc/nginx/sites-available/ogd-collector /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default
+nginx -t
+systemctl restart nginx
+systemctl enable nginx
+
+# 7. 完成
+echo "[7/7] 部署完成！"
+sleep 2
+
+if systemctl is-active --quiet ogd-collector; then
+    echo ""
+    echo "=========================================="
+    echo "✅ OGD-Collector Pro 部署成功！"
+    echo "=========================================="
+    echo ""
+    echo "访问地址：http://106.53.188.187"
+    echo ""
+    echo "常用命令："
+    echo "  查看状态：systemctl status ogd-collector"
+    echo "  查看日志：journalctl -u ogd-collector -f"
+    echo "  重启服务：systemctl restart ogd-collector"
+    echo "  停止服务：systemctl stop ogd-collector"
+    echo ""
+    echo "代码目录：/opt/ogd-collector-pro"
+    echo "=========================================="
+else
+    echo "❌ 服务启动失败"
+    journalctl -u ogd-collector -n 20
+    exit 1
+fi

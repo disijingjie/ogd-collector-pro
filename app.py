@@ -117,6 +117,11 @@ def analysis_page():
     """分析图表"""
     return render_template('analysis.html', title='分析图表 | OGD-Collector Pro')
 
+@app.route('/thesis')
+def thesis_page():
+    """论文成果展示页面"""
+    return render_template('thesis.html', title='论文成果展示 | OGD-Collector Pro')
+
 
 # ===== API接口 =====
 
