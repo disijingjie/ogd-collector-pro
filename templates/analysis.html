@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">分析图表</h2>
+        <p class="text-muted mb-0">层级分化、区域差异与4E维度深度分析</p>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-outline-primary active" onclick="switchView('tier')">层级分析</button>
+        <button class="btn btn-outline-primary" onclick="switchView('region')">区域分析</button>
+        <button class="btn btn-outline-primary" onclick="switchView('4e')">4E维度</button>
+    </div>
+</div>
+
+<!-- 层级分析视图 -->
+<div id="view-tier">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">三层绩效梯度</h5>
+                    <p class="text-muted small">副省级 > 省级 >> 地级市的倒U型格局</p>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="tierGradientChart" height="280"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">维度错位分析</h5>
+                    <p class="text-muted small">省级"量多质低" vs 副省级"量少质高"</p>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="dimensionShiftChart" height="280"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header bg-white pt-4 pb-0 px-4">
+            <h5 class="mb-0">层级分化传导断裂模型</h5>
+        </div>
+        <div class="card-body p-4">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="p-4 rounded border">
+                        <div class="fs-1 text-danger mb-2"><i class="bi bi-file-earmark-x"></i></div>
+                        <h6>制度传导断裂</h6>
+                        <p class="small text-muted mb-0">省级100%有政策<br>地级市仅21.6%</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded border">
+                        <div class="fs-1 text-warning mb-2"><i class="bi bi-hdd-rack"></i></div>
+                        <h6>技术传导断裂</h6>
+                        <p class="small text-muted mb-0">71%地级市挂靠省级<br>丧失自主性</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded border">
+                        <div class="fs-1 text-info mb-2"><i class="bi bi-database-x"></i></div>
+                        <h6>数据传导断裂</h6>
+                        <p class="small text-muted mb-0">61.3%难获省级数据<br>城市级细分缺乏</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 rounded border">
+                        <div class="fs-1 text-secondary mb-2"><i class="bi bi-people"></i></div>
+                        <h6>生态传导断裂</h6>
+                        <p class="small text-muted mb-0">87.1%无开发者社区<br>社会利用为零</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 区域分析视图 -->
+<div id="view-region" style="display:none;">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">区域绩效热力对比</h5>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="regionHeatChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">东中西部可用率</h5>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="regionAvailChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4E维度视图 -->
+<div id="view-4e" style="display:none;">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">4E维度得分分布箱线图</h5>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="boxChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">4E维度相关性矩阵</h5>
+                </div>
+                <div class="card-body p-4">
+                    <canvas id="corrChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let charts = {};
+
+function switchView(view) {
+    ['tier', 'region', '4e'].forEach(v => {
+        document.getElementById('view-' + v).style.display = v === view ? 'block' : 'none';
+    });
+    document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (view === 'tier' && !charts.tierGradient) renderTierCharts();
+    if (view === 'region' && !charts.regionHeat) renderRegionCharts();
+    if (view === '4e' && !charts.box) render4ECharts();
+}
+
+async function renderTierCharts() {
+    const res = await fetch('/api/analysis/tier_comparison');
+    const data = await res.json();
+    
+    // 绩效梯度
+    const ctx1 = document.getElementById('tierGradientChart').getContext('2d');
+    charts.tierGradient = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.tier),
+            datasets: [{
+                label: '平均综合得分',
+                data: data.map(d => d.avg_score),
+                backgroundColor: ['#3182ce', '#38a169', '#d69e2e'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, max: 1.0 } }
+        }
+    });
+    
+    // 维度错位
+    const ctx2 = document.getElementById('dimensionShiftChart').getContext('2d');
+    charts.dimensionShift = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ['C1供给', 'C2服务', 'C3质量', 'C4效果'],
+            datasets: data.map((d, i) => ({
+                label: d.tier,
+                data: [d.avg_c1, d.avg_c2, d.avg_c3, d.avg_c4],
+                borderColor: ['#3182ce', '#38a169', '#d69e2e'][i],
+                backgroundColor: ['#3182ce', '#38a169', '#d69e2e'][i],
+                tension: 0.3,
+                fill: false
+            }))
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true, max: 1.0 } }
+        }
+    });
+}
+
+async function renderRegionCharts() {
+    const res = await fetch('/api/analysis/region_distribution');
+    const data = await res.json();
+    
+    // 热力图（简化为柱状图）
+    const ctx1 = document.getElementById('regionHeatChart').getContext('2d');
+    charts.regionHeat = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [
+                { label: '平均得分', data: data.map(d => d.avg_score), backgroundColor: '#3182ce', borderRadius: 6 },
+                { label: '可用率(%)', data: data.map(d => d.total > 0 ? d.available/d.total*100 : 0), backgroundColor: '#38a169', borderRadius: 6, yAxisID: 'y1' }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, max: 1.0 },
+                y1: { position: 'right', beginAtZero: true, max: 100 }
+            }
+        }
+    });
+    
+    // 可用率饼图
+    const ctx2 = document.getElementById('regionAvailChart').getContext('2d');
+    charts.regionAvail = new Chart(ctx2, {
+        type: 'polarArea',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [{
+                data: data.map(d => d.available),
+                backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20']
+            }]
+        },
+        options: { responsive: true }
+    });
+}
+
+async function render4ECharts() {
+    const res = await fetch('/api/records?limit=200');
+    const records = await res.json();
+    const available = records.filter(r => r.status === 'available');
+    
+    // 箱线图（使用柱状图模拟）
+    const ctx1 = document.getElementById('boxChart').getContext('2d');
+    const dimensions = ['score_c1', 'score_c2', 'score_c3', 'score_c4'];
+    const dimLabels = ['C1供给保障', 'C2平台服务', 'C3数据质量', 'C4利用效果'];
+    
+    const stats = dimensions.map(dim => {
+        const vals = available.map(r => r[dim]).filter(v => v > 0).sort((a, b) => a - b);
+        return {
+            min: vals[0] || 0,
+            q1: vals[Math.floor(vals.length * 0.25)] || 0,
+            median: vals[Math.floor(vals.length * 0.5)] || 0,
+            q3: vals[Math.floor(vals.length * 0.75)] || 0,
+            max: vals[vals.length - 1] || 0
+        };
+    });
+    
+    charts.box = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: dimLabels,
+            datasets: [
+                { label: '最小值', data: stats.map(s => s.min), backgroundColor: '#e53e3e' },
+                { label: 'Q1', data: stats.map(s => s.q1), backgroundColor: '#d69e2e' },
+                { label: '中位数', data: stats.map(s => s.median), backgroundColor: '#3182ce' },
+                { label: 'Q3', data: stats.map(s => s.q3), backgroundColor: '#38a169' },
+                { label: '最大值', data: stats.map(s => s.max), backgroundColor: '#805ad5' }
+            ]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
+    
+    // 相关性矩阵（简化为热力点图）
+    const ctx2 = document.getElementById('corrChart').getContext('2d');
+    const corrData = [];
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            const vals_i = available.map(r => r[dimensions[i]]);
+            const vals_j = available.map(r => r[dimensions[j]]);
+            const corr = i === j ? 1.0 : calculateCorrelation(vals_i, vals_j);
+            corrData.push({x: j, y: i, v: corr});
+        }
+    }
+    
+    charts.corr = new Chart(ctx2, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: '相关系数',
+                data: corrData.map(d => ({x: d.x, y: d.y, r: Math.abs(d.v) * 20})),
+                backgroundColor: corrData.map(d => {
+                    const intensity = Math.abs(d.v);
+                    return d.v > 0 ? `rgba(49, 130, 206, ${intensity})` : `rgba(229, 62, 62, ${intensity})`;
+                })
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { type: 'linear', position: 'bottom', min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } },
+                y: { min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } }
+            }
+        }
+    });
+}
+
+function calculateCorrelation(x, y) {
+    const n = Math.min(x.length, y.length);
+    if (n < 2) return 0;
+    const sumX = x.slice(0, n).reduce((a, b) => a + b, 0);
+    const sumY = y.slice(0, n).reduce((a, b) => a + b, 0);
+    const sumXY = x.slice(0, n).reduce((acc, xi, i) => acc + xi * y[i], 0);
+    const sumX2 = x.slice(0, n).reduce((a, b) => a + b * b, 0);
+    const sumY2 = y.slice(0, n).reduce((a, b) => a + b * b, 0);
+    return (n * sumXY - sumX * sumY) / Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY)) || 0;
+}
+
+// 初始渲染
+renderTierCharts();
+</script>
+{% endblock %}

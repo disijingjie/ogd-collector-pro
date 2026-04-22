@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">数据看板</h2>
+        <p class="text-muted mb-0">三层架构采集数据的可视化展示与层级对比</p>
+    </div>
+    <div>
+        <a href="/api/export/csv" class="btn btn-outline-primary">
+            <i class="bi bi-download"></i> 导出CSV
+        </a>
+    </div>
+</div>
+
+<!-- 4E维度雷达图对比 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-bullseye"></i> 4E维度层级对比</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="radarChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> 可用率对比</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="availabilityChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 综合得分与功能支持 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-trophy"></i> 平台TOP排行</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table" id="top-platforms-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>平台名称</th>
+                                <th>层级</th>
+                                <th>区域</th>
+                                <th>综合得分</th>
+                                <th>4E维度分解</th>
+                            </tr>
+                        </thead>
+                        <tbody id="top-platforms-body">
+                            <tr><td colspan="6" class="text-center text-muted py-4">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-puzzle"></i> 功能支持率</h5>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="featureChart" height="280"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 区域分布热力 -->
+<div class="card">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-map"></i> 区域绩效分布</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-lg-6">
+                <canvas id="regionScoreChart" height="250"></canvas>
+            </div>
+            <div class="col-lg-6">
+                <div class="table-responsive">
+                    <table class="table table-sm" id="region-table">
+                        <thead>
+                            <tr>
+                                <th>区域</th>
+                                <th>平台数</th>
+                                <th>可用数</th>
+                                <th>可用率</th>
+                                <th>平均得分</th>
+                            </tr>
+                        </thead>
+                        <tbody id="region-table-body">
+                            <tr><td colspan="5" class="text-center text-muted">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let radarChart, availabilityChart, featureChart, regionScoreChart;
+
+// 加载数据并渲染图表
+async function loadDashboardData() {
+    // 1. 层级比较数据
+    const tierRes = await fetch('/api/analysis/tier_comparison');
+    const tierData = await tierRes.json();
+    renderRadarChart(tierData);
+    renderAvailabilityChart(tierData);
+    
+    // 2. TOP平台
+    const topRes = await fetch('/api/analysis/top_platforms?limit=15');
+    const topData = await topRes.json();
+    renderTopPlatforms(topData);
+    
+    // 3. 区域分布
+    const regionRes = await fetch('/api/analysis/region_distribution');
+    const regionData = await regionRes.json();
+    renderRegionChart(regionData);
+    renderRegionTable(regionData);
+    
+    // 4. 功能支持率（基于最新记录）
+    const recordsRes = await fetch('/api/records?limit=200');
+    const records = await recordsRes.json();
+    renderFeatureChart(records);
+}
+
+function renderRadarChart(data) {
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    
+    const datasets = data.map((tier, idx) => ({
+        label: tier.tier,
+        data: [tier.avg_c1, tier.avg_c2, tier.avg_c3, tier.avg_c4],
+        backgroundColor: ['rgba(49, 130, 206, 0.2)', 'rgba(56, 161, 105, 0.2)', 'rgba(214, 158, 46, 0.2)'][idx],
+        borderColor: ['#3182ce', '#38a169', '#d69e2e'][idx],
+        borderWidth: 2
+    }));
+    
+    radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['供给保障 C1', '平台服务 C2', '数据质量 C3', '利用效果 C4'],
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 1.0,
+                    ticks: { stepSize: 0.2 }
+                }
+            }
+        }
+    });
+}
+
+function renderAvailabilityChart(data) {
+    const ctx = document.getElementById('availabilityChart').getContext('2d');
+    
+    availabilityChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.tier),
+            datasets: [
+                {
+                    label: '可用平台',
+                    data: data.map(d => d.available),
+                    backgroundColor: '#38a169',
+                    borderRadius: 6
+                },
+                {
+                    label: '不可用',
+                    data: data.map(d => d.total - d.available),
+                    backgroundColor: '#e53e3e',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true, beginAtZero: true }
+            }
+        }
+    });
+}
+
+function renderTopPlatforms(data) {
+    const tbody = document.getElementById('top-platforms-body');
+    tbody.innerHTML = data.map((p, i) => `
+        <tr>
+            <td><span class="badge bg-${i < 3 ? 'warning' : 'secondary'}">${i + 1}</span></td>
+            <td><strong>${p.name}</strong></td>
+            <td><span class="tier-badge tier-${p.tier === '省级' ? 'provincial' : p.tier === '副省级/计划单列市' ? 'subprovincial' : 'prefectural'}">${p.tier}</span></td>
+            <td>${p.region}</td>
+            <td><span class="fw-bold text-primary">${p.overall.toFixed(3)}</span></td>
+            <td style="width: 200px;">
+                <div class="d-flex gap-1" style="font-size: 0.7rem;">
+                    <span class="badge bg-info" title="C1">${p.c1.toFixed(2)}</span>
+                    <span class="badge bg-success" title="C2">${p.c2.toFixed(2)}</span>
+                    <span class="badge bg-warning" title="C3">${p.c3.toFixed(2)}</span>
+                    <span class="badge bg-danger" title="C4">${p.c4.toFixed(2)}</span>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function renderFeatureChart(records) {
+    const available = records.filter(r => r.status === 'available');
+    if (available.length === 0) return;
+    
+    const features = ['has_search', 'has_download', 'has_api', 'has_register', 'has_preview', 'has_visualization', 'has_update_info', 'has_metadata'];
+    const labels = ['搜索', '下载', 'API', '注册', '预览', '可视化', '更新信息', '元数据'];
+    
+    const data = features.map(f => {
+        const count = available.filter(r => r[f] === 1).length;
+        return Math.round(count / available.length * 100);
+    });
+    
+    const ctx = document.getElementById('featureChart').getContext('2d');
+    featureChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: ['#3182ce', '#38a169', '#d69e2e', '#e53e3e', '#805ad5', '#00b5d8', '#dd6b20', '#718096']
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '50%',
+            plugins: {
+                legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.label}: ${ctx.raw}%`
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderRegionChart(data) {
+    const ctx = document.getElementById('regionScoreChart').getContext('2d');
+    
+    regionScoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [{
+                label: '平均得分',
+                data: data.map(d => d.avg_score),
+                backgroundColor: data.map((d, i) => {
+                    const colors = ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'];
+                    return colors[i % colors.length];
+                }),
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, max: 1.0 } }
+        }
+    });
+}
+
+function renderRegionTable(data) {
+    const tbody = document.getElementById('region-table-body');
+    tbody.innerHTML = data.map(r => {
+        const rate = r.total > 0 ? (r.available / r.total * 100).toFixed(1) : 0;
+        return `
+            <tr>
+                <td><strong>${r.region}</strong></td>
+                <td>${r.total}</td>
+                <td class="text-success">${r.available}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: ${rate}%"></div>
+                        </div>
+                        <span class="small">${rate}%</span>
+                    </div>
+                </td>
+                <td><span class="fw-bold">${r.avg_score.toFixed(3)}</span></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// 加载数据
+loadDashboardData();
+</script>
+{% endblock %}

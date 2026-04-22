@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f7fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#edf2f7;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="#f7fafc"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#1a202c">OGD-Collector Pro 系统架构图</text>
+  <text x="450" y="55" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#718096">三层架构政府数据开放平台采集与可视化系统</text>
+
+  <!-- Layer 1: Presentation -->
+  <rect x="50" y="75" width="800" height="130" rx="10" fill="url(#grad1)" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="70" y="100" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#2d3748">展示层 Presentation</text>
+
+  <rect x="70" y="110" width="130" height="75" rx="6" fill="#fff" stroke="#3182ce" stroke-width="2"/>
+  <text x="135" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">主控台</text>
+  <text x="135" y="155" text-anchor="middle" font-size="10" fill="#718096">系统概览</text>
+  <text x="135" y="170" text-anchor="middle" font-size="10" fill="#718096">统计卡片</text>
+
+  <rect x="220" y="110" width="130" height="75" rx="6" fill="#fff" stroke="#38a169" stroke-width="2"/>
+  <text x="285" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">采集管理</text>
+  <text x="285" y="155" text-anchor="middle" font-size="10" fill="#718096">任务创建</text>
+  <text x="285" y="170" text-anchor="middle" font-size="10" fill="#718096">实时监控</text>
+
+  <rect x="370" y="110" width="130" height="75" rx="6" fill="#fff" stroke="#d69e2e" stroke-width="2"/>
+  <text x="435" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">数据看板</text>
+  <text x="435" y="155" text-anchor="middle" font-size="10" fill="#718096">层级对比</text>
+  <text x="435" y="170" text-anchor="middle" font-size="10" fill="#718096">TOP排行</text>
+
+  <rect x="520" y="110" width="130" height="75" rx="6" fill="#fff" stroke="#805ad5" stroke-width="2"/>
+  <text x="585" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">分析图表</text>
+  <text x="585" y="155" text-anchor="middle" font-size="10" fill="#718096">雷达图</text>
+  <text x="585" y="170" text-anchor="middle" font-size="10" fill="#718096">传导断裂模型</text>
+
+  <rect x="670" y="110" width="130" height="75" rx="6" fill="#fff" stroke="#dd6b20" stroke-width="2"/>
+  <text x="735" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">平台详情</text>
+  <text x="735" y="155" text-anchor="middle" font-size="10" fill="#718096">全量列表</text>
+  <text x="735" y="170" text-anchor="middle" font-size="10" fill="#718096">4E分解</text>
+
+  <!-- Tech: Bootstrap + Chart.js -->
+  <rect x="70" y="188" width="730" height="20" rx="4" fill="#edf2f7"/>
+  <text x="435" y="202" text-anchor="middle" font-size="9" fill="#718096">Bootstrap 5 + Chart.js 4.4 + SSE实时推送</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="205" x2="450" y2="225" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4"/>
+
+  <!-- Layer 2: API -->
+  <rect x="50" y="225" width="800" height="70" rx="10" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1" filter="url(#shadow)"/>
+  <text x="70" y="248" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#2b6cb0">API层 REST API (Flask)</text>
+
+  <rect x="70" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#3182ce" stroke-width="1"/>
+  <text x="125" y="275" text-anchor="middle" font-size="9" fill="#2d3748">/api/tasks</text>
+
+  <rect x="195" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#3182ce" stroke-width="1"/>
+  <text x="250" y="275" text-anchor="middle" font-size="9" fill="#2d3748">/api/records</text>
+
+  <rect x="320" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#3182ce" stroke-width="1"/>
+  <text x="375" y="275" text-anchor="middle" font-size="9" fill="#2d3748">/api/platforms</text>
+
+  <rect x="445" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#3182ce" stroke-width="1"/>
+  <text x="500" y="275" text-anchor="middle" font-size="9" fill="#2d3748">/api/analysis/*</text>
+
+  <rect x="570" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#38a169" stroke-width="1"/>
+  <text x="625" y="275" text-anchor="middle" font-size="9" fill="#2d3748">/api/export/csv</text>
+
+  <rect x="695" y="258" width="110" height="25" rx="4" fill="#fff" stroke="#d69e2e" stroke-width="1"/>
+  <text x="750" y="275" text-anchor="middle" font-size="9" fill="#2d3748">SSE /progress</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="295" x2="450" y2="315" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4"/>
+
+  <!-- Layer 3: Business Logic -->
+  <rect x="50" y="315" width="800" height="90" rx="10" fill="#f0fff4" stroke="#9ae6b4" stroke-width="1" filter="url(#shadow)"/>
+  <text x="70" y="338" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#276749">业务逻辑层 Business Logic</text>
+
+  <rect x="70" y="348" width="360" height="45" rx="6" fill="#fff" stroke="#38a169" stroke-width="2"/>
+  <text x="250" y="365" text-anchor="middle" font-size="12" font-weight="600" fill="#2d3748">CollectorEngine 采集引擎</text>
+  <text x="250" y="382" text-anchor="middle" font-size="9" fill="#718096">detect_platform() → calculate_4e_scores() → collect_single() → run_collection()</text>
+
+  <rect x="450" y="348" width="330" height="45" rx="6" fill="#fff" stroke="#38a169" stroke-width="1"/>
+  <text x="615" y="365" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">4E评估框架内置</text>
+  <text x="615" y="382" text-anchor="middle" font-size="9" fill="#718096">C1供给 × C2服务 × C3质量 × C4效果 = 综合得分</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="405" x2="450" y2="425" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4"/>
+
+  <!-- Layer 4: Data -->
+  <rect x="50" y="425" width="800" height="130" rx="10" fill="#faf5ff" stroke="#d6bcfa" stroke-width="1" filter="url(#shadow)"/>
+  <text x="70" y="448" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#553c9a">数据持久层 Data (SQLite)</text>
+
+  <rect x="70" y="458" width="130" height="80" rx="6" fill="#fff" stroke="#805ad5" stroke-width="1"/>
+  <text x="135" y="478" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">platforms</text>
+  <text x="135" y="495" text-anchor="middle" font-size="9" fill="#718096">104条基础数据</text>
+  <text x="135" y="510" text-anchor="middle" font-size="9" fill="#718096">31省+13副省级</text>
+  <text x="135" y="525" text-anchor="middle" font-size="9" fill="#718096">+60地级市</text>
+
+  <rect x="215" y="458" width="130" height="80" rx="6" fill="#fff" stroke="#805ad5" stroke-width="1"/>
+  <text x="280" y="478" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">collection_records</text>
+  <text x="280" y="495" text-anchor="middle" font-size="9" fill="#718096">采集记录主表</text>
+  <text x="280" y="510" text-anchor="middle" font-size="9" fill="#718096">4E全量指标</text>
+  <text x="280" y="525" text-anchor="middle" font-size="9" fill="#718096">功能检测位</text>
+
+  <rect x="360" y="458" width="130" height="80" rx="6" fill="#fff" stroke="#805ad5" stroke-width="1"/>
+  <text x="425" y="478" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">collection_tasks</text>
+  <text x="425" y="495" text-anchor="middle" font-size="9" fill="#718096">任务管理</text>
+  <text x="425" y="510" text-anchor="middle" font-size="9" fill="#718096">进度追踪</text>
+  <text x="425" y="525" text-anchor="middle" font-size="9" fill="#718096">状态控制</text>
+
+  <rect x="505" y="458" width="130" height="80" rx="6" fill="#fff" stroke="#805ad5" stroke-width="1"/>
+  <text x="570" y="478" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">collection_snapshots</text>
+  <text x="570" y="495" text-anchor="middle" font-size="9" fill="#718096">中间状态快照</text>
+  <text x="570" y="510" text-anchor="middle" font-size="9" fill="#718096">断点续采</text>
+  <text x="570" y="525" text-anchor="middle" font-size="9" fill="#718096">过程回溯</text>
+
+  <rect x="650" y="458" width="130" height="80" rx="6" fill="#fff" stroke="#805ad5" stroke-width="1"/>
+  <text x="715" y="478" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">analysis_results</text>
+  <text x="715" y="495" text-anchor="middle" font-size="9" fill="#718096">预计算结果</text>
+  <text x="715" y="510" text-anchor="middle" font-size="9" fill="#718096">TOPSIS/DEA</text>
+  <text x="715" y="525" text-anchor="middle" font-size="9" fill="#718096">图表配置</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="555" x2="450" y2="575" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4"/>
+
+  <!-- Layer 5: Targets -->
+  <rect x="50" y="575" width="800" height="95" rx="10" fill="#fff5f5" stroke="#fc8181" stroke-width="1" filter="url(#shadow)"/>
+  <text x="70" y="598" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#c53030">采集对象层 Targets</text>
+
+  <rect x="70" y="608" width="230" height="50" rx="6" fill="#fff" stroke="#e53e3e" stroke-width="1"/>
+  <text x="185" y="625" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">Tier 1: 省级平台</text>
+  <text x="185" y="642" text-anchor="middle" font-size="9" fill="#718096">31个省级行政区（省/自治区/直辖市）</text>
+
+  <rect x="320" y="608" width="230" height="50" rx="6" fill="#fff" stroke="#e53e3e" stroke-width="1"/>
+  <text x="435" y="625" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">Tier 2: 副省级/计划单列市</text>
+  <text x="435" y="642" text-anchor="middle" font-size="9" fill="#718096">13个城市（深圳/杭州/广州/宁波/成都等）</text>
+
+  <rect x="570" y="608" width="250" height="50" rx="6" fill="#fff" stroke="#e53e3e" stroke-width="1"/>
+  <text x="695" y="625" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3748">Tier 3: 地级市（抽样）</text>
+  <text x="695" y="642" text-anchor="middle" font-size="9" fill="#718096">287个地级市（分层抽样60个）</text>
+
+  <!-- Footer -->
+  <text x="450" y="685" text-anchor="middle" font-size="10" fill="#a0aec0">武汉大学信息管理学院 | 文明 博士生 | 2026年4月</text>
+</svg>

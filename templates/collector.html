@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">采集任务管理</h2>
+        <p class="text-muted mb-0">创建、监控和管理三层架构数据采集任务</p>
+    </div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+        <i class="bi bi-plus-lg"></i> 新建采集任务
+    </button>
+</div>
+
+<!-- 采集控制台 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-terminal"></i> 实时采集监控</h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- 进度概览 -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-primary" id="stat-total">0</div>
+                            <div class="small text-muted">总平台</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-success" id="stat-success">0</div>
+                            <div class="small text-muted">成功</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-danger" id="stat-failed">0</div>
+                            <div class="small text-muted">失败</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-info" id="stat-current">-</div>
+                            <div class="small text-muted">当前</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="small text-muted">采集进度</span>
+                        <span class="small fw-bold" id="progress-text">0%</span>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                             style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- 控制按钮 -->
+                <div class="d-flex gap-2 mb-4">
+                    <button id="btn-start" class="btn btn-success" onclick="startTask()">
+                        <i class="bi bi-play-fill"></i> 开始采集
+                    </button>
+                    <button id="btn-pause" class="btn btn-warning" onclick="pauseTask()" disabled>
+                        <i class="bi bi-pause-fill"></i> 暂停
+                    </button>
+                    <button id="btn-stop" class="btn btn-danger" onclick="stopTask()" disabled>
+                        <i class="bi bi-stop-fill"></i> 停止
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="loadTasks()">
+                        <i class="bi bi-arrow-clockwise"></i> 刷新
+                    </button>
+                </div>
+                
+                <!-- 实时日志 -->
+                <div class="log-panel" id="log-panel">
+                    <div class="log-entry log-info">[系统] OGD-Collector Pro 采集引擎已就绪</div>
+                    <div class="log-entry log-info">[系统] 等待任务启动...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-gear"></i> 采集配置</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">当前任务</label>
+                    <select id="task-select" class="form-select">
+                        <option value="">-- 选择任务 --</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">采集范围</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-provincial" checked>
+                        <label class="form-check-label" for="check-provincial">省级平台 (31个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-subprovincial" checked>
+                        <label class="form-check-label" for="check-subprovincial">副省级/单列市 (13个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-prefectural" checked>
+                        <label class="form-check-label" for="check-prefectural">地级市抽样 (60个)</label>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">请求间隔 (秒)</label>
+                    <input type="range" class="form-range" id="delay-range" min="1" max="10" value="2">
+                    <div class="text-end small text-muted"><span id="delay-value">2</span> 秒</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">并发数</label>
+                    <select class="form-select" id="workers-select">
+                        <option value="1">单线程</option>
+                        <option value="3" selected>3线程</option>
+                        <option value="5">5线程</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 任务列表 -->
+<div class="card">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-list-task"></i> 任务历史</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>任务名称</th>
+                        <th>类型</th>
+                        <th>状态</th>
+                        <th>进度</th>
+                        <th>成功</th>
+                        <th>失败</th>
+                        <th>耗时</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="task-list">
+                    {% for task in tasks %}
+                    <tr data-task-id="{{ task.id }}">
+                        <td>#{{ task.id }}</td>
+                        <td>{{ task.task_name }}</td>
+                        <td><span class="badge bg-secondary">{{ task.task_type }}</span></td>
+                        <td>
+                            {% if task.status == 'completed' %}
+                                <span class="badge bg-success">已完成</span>
+                            {% elif task.status == 'running' %}
+                                <span class="badge bg-primary">运行中</span>
+                            {% elif task.status == 'paused' %}
+                                <span class="badge bg-warning">已暂停</span>
+                            {% elif task.status == 'stopped' %}
+                                <span class="badge bg-secondary">已停止</span>
+                            {% else %}
+                                <span class="badge bg-light text-dark">{{ task.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td style="width: 150px;">
+                            <div class="progress" style="height: 6px;">
+                                {% set pct = (task.completed / task.total * 100) if task.total and task.total > 0 else 0 %}
+                                <div class="progress-bar" style="width: {{ pct }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ task.completed or 0 }}/{{ task.total or 0 }}</small>
+                        </td>
+                        <td class="text-success">{{ task.success or 0 }}</td>
+                        <td class="text-danger">{{ task.failed or 0 }}</td>
+                        <td class="text-muted small">
+                            {% if task.started and task.completed %}
+                                {{ task.completed }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTask({{ task.id }})">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 新建任务模态框 -->
+<div class="modal fade" id="newTaskModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新建采集任务</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">任务名称</label>
+                    <input type="text" class="form-control" id="new-task-name" 
+                           value="三层架构完整采集">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">采集类型</label>
+                    <select class="form-select" id="new-task-type">
+                        <option value="full">完整采集 (31省+13副省级+60地级市)</option>
+                        <option value="provincial">仅省级 (31个)</option>
+                        <option value="subprovincial">仅副省级 (13个)</option>
+                        <option value="prefectural">仅地级市 (60个)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="createTask()">创建任务</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentTaskId = null;
+let eventSource = null;
+
+// 加载任务列表
+async function loadTasks() {
+    const res = await fetch('/api/tasks');
+    const tasks = await res.json();
+    
+    const select = document.getElementById('task-select');
+    select.innerHTML = '<option value="">-- 选择任务 --</option>';
+    
+    tasks.forEach(task => {
+        const opt = document.createElement('option');
+        opt.value = task.id;
+        opt.textContent = `#${task.id} ${task.task_name} (${task.status})`;
+        select.appendChild(opt);
+    });
+}
+
+// 创建任务
+async function createTask() {
+    const name = document.getElementById('new-task-name').value;
+    const type = document.getElementById('new-task-type').value;
+    
+    const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({task_name: name, task_type: type})
+    });
+    
+    const data = await res.json();
+    if (data.success) {
+        addLog('success', `任务创建成功: #${data.task_id}`);
+        bootstrap.Modal.getInstance(document.getElementById('newTaskModal')).hide();
+        loadTasks();
+        // 自动选中新任务
+        document.getElementById('task-select').value = data.task_id;
+    } else {
+        addLog('error', `任务创建失败: ${data.message}`);
+    }
+}
+
+// 开始采集
+async function startTask() {
+    const taskId = document.getElementById('task-select').value;
+    if (!taskId) {
+        addLog('warning', '请先选择一个任务');
+        return;
+    }
+    
+    currentTaskId = taskId;
+    const res = await fetch(`/api/tasks/${taskId}/start`, {method: 'POST'});
+    const data = await res.json();
+    
+    if (data.success) {
+        addLog('success', `任务 #${taskId} 已启动`);
+        document.getElementById('btn-start').disabled = true;
+        document.getElementById('btn-pause').disabled = false;
+        document.getElementById('btn-stop').disabled = false;
+        
+        // 连接SSE
+        connectSSE(taskId);
+    } else {
+        addLog('error', data.message);
+    }
+}
+
+// 暂停
+function pauseTask() {
+    addLog('warning', '暂停功能待实现');
+}
+
+// 停止
+async function stopTask() {
+    if (!currentTaskId) return;
+    
+    await fetch(`/api/tasks/${currentTaskId}/stop`, {method: 'POST'});
+    addLog('warning', `任务 #${currentTaskId} 已停止`);
+    
+    if (eventSource) eventSource.close();
+    document.getElementById('btn-start').disabled = false;
+    document.getElementById('btn-pause').disabled = true;
+    document.getElementById('btn-stop').disabled = true;
+}
+
+// 连接SSE实时进度
+function connectSSE(taskId) {
+    if (eventSource) eventSource.close();
+    
+    eventSource = new EventSource(`/api/tasks/${taskId}/progress`);
+    
+    eventSource.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        updateProgress(data);
+    };
+    
+    eventSource.onerror = () => {
+        eventSource.close();
+    };
+}
+
+// 更新进度
+function updateProgress(data) {
+    if (data.total) {
+        const pct = Math.round((data.completed / data.total) * 100);
+        document.getElementById('progress-bar').style.width = pct + '%';
+        document.getElementById('progress-text').textContent = pct + '%';
+        document.getElementById('stat-total').textContent = data.total;
+    }
+    document.getElementById('stat-success').textContent = data.success || 0;
+    document.getElementById('stat-failed').textContent = data.failed || 0;
+    if (data.platform) {
+        document.getElementById('stat-current').textContent = data.platform;
+    }
+    
+    if (data.platform && data.status) {
+        const statusText = data.status === 'available' ? '成功' : '失败';
+        const statusClass = data.status === 'available' ? 'success' : 'error';
+        addLog(statusClass, `${data.platform}: ${statusText}, 得分: ${data.overall_score || 0}`);
+    }
+}
+
+// 添加日志
+function addLog(level, message) {
+    const panel = document.getElementById('log-panel');
+    const entry = document.createElement('div');
+    entry.className = `log-entry log-${level}`;
+    const time = new Date().toLocaleTimeString();
+    entry.textContent = `[${time}] ${message}`;
+    panel.appendChild(entry);
+    panel.scrollTop = panel.scrollHeight;
+}
+
+// 查看任务详情
+function viewTask(taskId) {
+    window.open(`/api/records?task_id=${taskId}&limit=100`, '_blank');
+}
+
+// 延迟滑块
+document.getElementById('delay-range').addEventListener('input', (e) => {
+    document.getElementById('delay-value').textContent = e.target.value;
+});
+
+// 初始化
+loadTasks();
+</script>
+{% endblock %}

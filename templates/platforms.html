@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">平台详情</h2>
+        <p class="text-muted mb-0">三层架构所有平台的详细信息与采集记录</p>
+    </div>
+    <div class="d-flex gap-2">
+        <select id="filter-tier" class="form-select" style="width: 150px;" onchange="loadPlatforms()">
+            <option value="">全部层级</option>
+            <option value="省级">省级</option>
+            <option value="副省级/计划单列市">副省级/单列市</option>
+            <option value="地级市">地级市</option>
+        </select>
+        <select id="filter-region" class="form-select" style="width: 150px;" onchange="loadPlatforms()">
+            <option value="">全部区域</option>
+            <option value="华东">华东</option>
+            <option value="华北">华北</option>
+            <option value="华南">华南</option>
+            <option value="华中">华中</option>
+            <option value="西南">西南</option>
+            <option value="西北">西北</option>
+            <option value="东北">东北</option>
+        </select>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>编码</th>
+                        <th>平台名称</th>
+                        <th>层级</th>
+                        <th>区域</th>
+                        <th>类型</th>
+                        <th>URL</th>
+                        <th>最新状态</th>
+                        <th>综合得分</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="platforms-body">
+                    <tr><td colspan="9" class="text-center text-muted py-4">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 平台详情模态框 -->
+<div class="modal fade" id="platformModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">平台详情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function loadPlatforms() {
+    const tier = document.getElementById('filter-tier').value;
+    const region = document.getElementById('filter-region').value;
+    
+    let url = '/api/platforms';
+    const params = [];
+    if (tier) params.push(`tier=${encodeURIComponent(tier)}`);
+    if (region) params.push(`region=${encodeURIComponent(region)}`);
+    if (params.length) url += '?' + params.join('&');
+    
+    const res = await fetch(url);
+    const platforms = await res.json();
+    
+    // 获取最新记录
+    const recordsRes = await fetch('/api/records?limit=500');
+    const records = await recordsRes.json();
+    
+    const tbody = document.getElementById('platforms-body');
+    tbody.innerHTML = platforms.map(p => {
+        const record = records.find(r => r.platform_code === p.code);
+        const status = record ? record.status : 'unknown';
+        const score = record ? record.overall_score : '-';
+        
+        const statusBadge = status === 'available' ? 
+            '<span class="badge bg-success">可用</span>' :
+            status === 'unavailable' ? 
+            '<span class="badge bg-danger">不可用</span>' :
+            '<span class="badge bg-secondary">未采集</span>';
+        
+        const tierBadge = p.tier === '省级' ? 'tier-provincial' : 
+                         p.tier === '副省级/计划单列市' ? 'tier-subprovincial' : 'tier-prefectural';
+        
+        return `
+            <tr>
+                <td><code>${p.code}</code></td>
+                <td><strong>${p.name}</strong></td>
+                <td><span class="tier-badge ${tierBadge}">${p.tier}</span></td>
+                <td>${p.region || '-'}</td>
+                <td>${p.platform_type}</td>
+                <td><small class="text-muted">${p.url || p.url_pattern || '-'}</small></td>
+                <td>${statusBadge}</td>
+                <td>${score !== '-' ? score.toFixed(3) : '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewPlatformDetail('${p.code}')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+async function viewPlatformDetail(code) {
+    const res = await fetch('/api/records?limit=10');
+    const records = await res.json();
+    const record = records.find(r => r.platform_code === code);
+    
+    if (!record) {
+        document.getElementById('modal-body').innerHTML = '<p class="text-muted">暂无采集记录</p>';
+    } else {
+        document.getElementById('modal-title').textContent = `${record.platform_name} - 采集详情`;
+        document.getElementById('modal-body').innerHTML = `
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <h6>基础信息</h6>
+                    <table class="table table-sm">
+                        <tr><td>层级</td><td>${record.tier}</td></tr>
+                        <tr><td>区域</td><td>${record.region || '-'}</td></tr>
+                        <tr><td>状态</td><td><span class="badge bg-${record.status === 'available' ? 'success' : 'danger'}">${record.status}</span></td></tr>
+                        <tr><td>响应时间</td><td>${record.response_time || '-'} 秒</td></tr>
+                        <tr><td>HTTP状态</td><td>${record.http_status || '-'}</td></tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h6>4E得分</h6>
+                    <table class="table table-sm">
+                        <tr><td>C1 供给保障</td><td><div class="progress" style="height: 6px;"><div class="progress-bar" style="width: ${(record.score_c1 || 0) * 100}%"></div></div> ${(record.score_c1 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C2 平台服务</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-success" style="width: ${(record.score_c2 || 0) * 100}%"></div></div> ${(record.score_c2 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C3 数据质量</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-warning" style="width: ${(record.score_c3 || 0) * 100}%"></div></div> ${(record.score_c3 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C4 利用效果</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-danger" style="width: ${(record.score_c4 || 0) * 100}%"></div></div> ${(record.score_c4 || 0).toFixed(3)}</td></tr>
+                        <tr class="table-primary"><td><strong>综合得分</strong></td><td><strong>${(record.overall_score || 0).toFixed(3)}</strong></td></tr>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <h6>功能检测</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        ${renderFeatureBadge('HTTPS', record.has_https)}
+                        ${renderFeatureBadge('搜索', record.has_search)}
+                        ${renderFeatureBadge('下载', record.has_download)}
+                        ${renderFeatureBadge('API', record.has_api)}
+                        ${renderFeatureBadge('注册', record.has_register)}
+                        ${renderFeatureBadge('预览', record.has_preview)}
+                        ${renderFeatureBadge('可视化', record.has_visualization)}
+                        ${renderFeatureBadge('更新信息', record.has_update_info)}
+                        ${renderFeatureBadge('元数据', record.has_metadata)}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h6>数据集</h6>
+                    <p class="mb-1">数量: <strong>${record.dataset_count || 0}</strong></p>
+                    <p class="mb-1">格式: ${record.format_types || '[]'}</p>
+                    <p class="mb-0">应用成果: <strong>${record.app_count || 0}</strong></p>
+                </div>
+                <div class="col-12">
+                    <h6>采集时间</h6>
+                    <p class="text-muted small">${record.collected_at || '-'}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    new bootstrap.Modal(document.getElementById('platformModal')).show();
+}
+
+function renderFeatureBadge(name, value) {
+    return `<span class="badge bg-${value ? 'success' : 'secondary'}">${name} ${value ? '✓' : '✗'}</span>`;
+}
+
+// 加载
+loadPlatforms();
+</script>
+{% endblock %}

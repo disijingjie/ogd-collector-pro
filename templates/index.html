@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">主控台</h2>
+        <p class="text-muted mb-0">政府数据开放平台三层架构采集系统概览</p>
+    </div>
+    <div class="text-end">
+        <span class="badge bg-primary fs-6 px-3 py-2">
+            <i class="bi bi-calendar-check"></i> {{ now or '2026-04-22' }}
+        </span>
+    </div>
+</div>
+
+<!-- 统计卡片 -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card success">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.total_platforms or 104 }}</div>
+                    <div class="stat-label">平台总数</div>
+                </div>
+                <div class="fs-1 text-success opacity-25">
+                    <i class="bi bi-layers"></i>
+                </div>
+            </div>
+            <div class="mt-2 small text-muted">
+                省级31 + 副省级13 + 地级市60
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.available_count or 25 }}</div>
+                    <div class="stat-label">可用平台</div>
+                </div>
+                <div class="fs-1 text-primary opacity-25">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+            </div>
+            <div class="mt-2 small text-muted">
+                可用率 {{ "%.1f"|format((stats.available_count or 25) / (stats.total_platforms or 104) * 100) }}%
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card warning">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.total_tasks or 1 }}</div>
+                    <div class="stat-label">采集任务</div>
+                </div>
+                <div class="fs-1 text-warning opacity-25">
+                    <i class="bi bi-collection"></i>
+                </div>
+            </div>
+            <div class="mt-2 small text-muted">
+                已完成 {{ stats.total_tasks or 1 }} 次采集
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card danger">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.total_records or 104 }}</div>
+                    <div class="stat-label">采集记录</div>
+                </div>
+                <div class="fs-1 text-danger opacity-25">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+            </div>
+            <div class="mt-2 small text-muted">
+                包含4E框架全量指标
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- 左侧：层级分布 -->
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> 三层架构分布</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row text-center mb-4">
+                    <div class="col-4">
+                        <div class="p-3 rounded" style="background: #ebf8ff;">
+                            <div class="fs-2 fw-bold text-primary">31</div>
+                            <div class="small text-muted">省级平台</div>
+                            <span class="tier-badge tier-provincial mt-1 d-inline-block">省级</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 rounded" style="background: #f0fff4;">
+                            <div class="fs-2 fw-bold text-success">13</div>
+                            <div class="small text-muted">副省级/单列市</div>
+                            <span class="tier-badge tier-subprovincial mt-1 d-inline-block">副省级</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 rounded" style="background: #fffaf0;">
+                            <div class="fs-2 fw-bold text-warning">60</div>
+                            <div class="small text-muted">地级市(抽样)</div>
+                            <span class="tier-badge tier-prefectural mt-1 d-inline-block">地级市</span>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="tierChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 右侧：区域分布 -->
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-geo-alt"></i> 区域覆盖</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center p-2 rounded" style="background: #fff5f5;">
+                            <div class="flex-grow-1">
+                                <div class="small text-muted">华东</div>
+                                <div class="fw-bold">20 平台</div>
+                            </div>
+                            <span class="badge bg-danger">19.2%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center p-2 rounded" style="background: #fffaf0;">
+                            <div class="flex-grow-1">
+                                <div class="small text-muted">华北</div>
+                                <div class="fw-bold">14 平台</div>
+                            </div>
+                            <span class="badge bg-warning">13.5%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center p-2 rounded" style="background: #f0fff4;">
+                            <div class="flex-grow-1">
+                                <div class="small text-muted">华南</div>
+                                <div class="fw-bold">15 平台</div>
+                            </div>
+                            <span class="badge bg-success">14.4%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center p-2 rounded" style="background: #ebf8ff;">
+                            <div class="flex-grow-1">
+                                <div class="small text-muted">华中</div>
+                                <div class="fw-bold">15 平台</div>
+                            </div>
+                            <span class="badge bg-primary">14.4%</span>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="regionChart" height="180"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 最近采集任务 -->
+<div class="card mt-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-clock-history"></i> 最近采集任务</h5>
+        <a href="/collector" class="btn btn-sm btn-primary">进入采集管理</a>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>任务ID</th>
+                        <th>任务名称</th>
+                        <th>类型</th>
+                        <th>状态</th>
+                        <th>进度</th>
+                        <th>成功/失败</th>
+                        <th>创建时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in stats.recent_tasks %}
+                    <tr>
+                        <td>#{{ task.id }}</td>
+                        <td>{{ task.task_name }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ task.task_type }}</span>
+                        </td>
+                        <td>
+                            {% if task.status == 'completed' %}
+                                <span class="badge bg-success">已完成</span>
+                            {% elif task.status == 'running' %}
+                                <span class="badge bg-primary">运行中</span>
+                            {% elif task.status == 'paused' %}
+                                <span class="badge bg-warning">已暂停</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ task.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td style="width: 200px;">
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar" style="width: {{ (task.completed / task.total * 100) if task.total else 0 }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ task.completed or 0 }}/{{ task.total or 0 }}</small>
+                        </td>
+                        <td>
+                            <span class="text-success">{{ task.success or 0 }}</span> / 
+                            <span class="text-danger">{{ task.failed or 0 }}</span>
+                        </td>
+                        <td class="text-muted small">{{ task.created_at or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            暂无采集任务，请前往采集管理页面创建
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 层级分布饼图
+const tierCtx = document.getElementById('tierChart').getContext('2d');
+new Chart(tierCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['省级', '副省级/计划单列市', '地级市(抽样)'],
+        datasets: [{
+            data: [31, 13, 60],
+            backgroundColor: ['#3182ce', '#38a169', '#d69e2e'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        cutout: '60%',
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+    }
+});
+
+// 区域分布柱状图
+const regionCtx = document.getElementById('regionChart').getContext('2d');
+new Chart(regionCtx, {
+    type: 'bar',
+    data: {
+        labels: ['华东', '华北', '华南', '华中', '西南', '西北', '东北'],
+        datasets: [{
+            label: '平台数量',
+            data: [20, 14, 15, 15, 15, 14, 11],
+            backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'],
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 5 } }
+        }
+    }
+});
+</script>
+{% endblock %}

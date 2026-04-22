@@ -1,0 +1,21 @@
+# Render.com 部署配置文件
+# 访问 https://render.com/ 注册并部署
+
+services:
+  - type: web
+    name: ogd-collector-pro
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 60"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+    disk:
+      name: ogd-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
