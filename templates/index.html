@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h2 class="mb-1">主控台</h2>
         <p class="text-muted mb-0">政府数据开放平台三层架构采集系统概览</p>
@@ -12,6 +12,31 @@
         </span>
     </div>
 </div>
+
+<!-- 内页Tab导航 -->
+<ul class="nav page-tabs" id="consoleTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+            <i class="bi bi-speedometer2"></i> 概览
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab">
+            <i class="bi bi-graph-up"></i> 分析图表
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="platforms-tab" data-bs-toggle="tab" data-bs-target="#platforms" type="button" role="tab">
+            <i class="bi bi-grid-3x3"></i> 平台详情
+        </button>
+    </li>
+</ul>
+
+<!-- Tab内容区 -->
+<div class="tab-content" id="consoleTabContent">
+
+<!-- ====== 概览 Tab ====== -->
+<div class="tab-pane fade show active" id="overview" role="tabpanel">
 
 <!-- 统计卡片 -->
 <div class="row g-4 mb-4">
@@ -369,5 +394,61 @@ async function loadRealtimeStats() {
 }
 loadRealtimeStats();
 setInterval(loadRealtimeStats, 30000);
+</script>
+
+</div> <!-- /tab-pane overview -->
+
+<!-- 分析图表 Tab -->
+<div class="tab-pane fade" id="analysis" role="tabpanel">
+    <div id="analysis-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载分析图表...</p>
+        </div>
+    </div>
+</div>
+
+<!-- 平台详情 Tab -->
+<div class="tab-pane fade" id="platforms" role="tabpanel">
+    <div id="platforms-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载平台详情...</p>
+        </div>
+    </div>
+</div>
+
+</div> <!-- /tab-content -->
+
+<!-- 分析图表 & 平台详情 通过AJAX加载 -->
+<script>
+function loadTabContent(tabId, url, containerId) {
+    const container = document.getElementById(containerId);
+    if (container.dataset.loaded) return;
+    fetch(url + '?embed=1')
+        .then(r => r.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const content = doc.querySelector('.main-content');
+            container.innerHTML = content ? content.innerHTML : html;
+            container.dataset.loaded = '1';
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        })
+        .catch(e => { container.innerHTML = '<div class="alert alert-danger">加载失败，请刷新重试</div>'; });
+}
+
+document.getElementById('analysis-tab').addEventListener('shown.bs.tab', function() {
+    loadTabContent('analysis', '/analysis', 'analysis-content');
+});
+
+document.getElementById('platforms-tab').addEventListener('shown.bs.tab', function() {
+    loadTabContent('platforms', '/platforms', 'platforms-content');
+});
 </script>
 {% endblock %}

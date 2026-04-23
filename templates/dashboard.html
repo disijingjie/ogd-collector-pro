@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h2 class="mb-1">数据看板</h2>
-        <p class="text-muted mb-0">三层架构采集数据的可视化展示与层级对比</p>
+        <p class="text-muted mb-0">采集管理、实时监控、数据溯源与归集的一体化视图</p>
     </div>
     <div>
         <a href="/api/export/csv" class="btn btn-outline-primary">
@@ -12,6 +12,46 @@
         </a>
     </div>
 </div>
+
+<!-- 内页Tab导航 -->
+<ul class="nav page-tabs" id="dashboardTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="db-overview-tab" data-bs-toggle="tab" data-bs-target="#db-overview" type="button" role="tab">
+            <i class="bi bi-bar-chart-line"></i> 数据看板
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="db-collector-tab" data-bs-toggle="tab" data-bs-target="#db-collector" type="button" role="tab">
+            <i class="bi bi-collection-play"></i> 采集管理
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="db-monitoring-tab" data-bs-toggle="tab" data-bs-target="#db-monitoring" type="button" role="tab">
+            <i class="bi bi-activity"></i> 实时监控
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="db-source-tab" data-bs-toggle="tab" data-bs-target="#db-source" type="button" role="tab">
+            <i class="bi bi-code-square"></i> 采集源码
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="db-provenance-tab" data-bs-toggle="tab" data-bs-target="#db-provenance" type="button" role="tab">
+            <i class="bi bi-database-check"></i> 数据来源
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="db-archive-tab" data-bs-toggle="tab" data-bs-target="#db-archive" type="button" role="tab">
+            <i class="bi bi-archive"></i> 数据归集
+        </button>
+    </li>
+</ul>
+
+<!-- Tab内容区 -->
+<div class="tab-content" id="dashboardTabContent">
+
+<!-- ====== 数据看板 Tab（默认） ====== -->
+<div class="tab-pane fade show active" id="db-overview" role="tabpanel">
 
 <!-- 4E维度雷达图对比 -->
 <div class="row g-4 mb-4">
@@ -309,5 +349,99 @@ function renderRegionTable(data) {
 
 // 加载数据
 loadDashboardData();
+</script>
+
+</div> <!-- /tab-pane db-overview -->
+
+<!-- 采集管理 Tab -->
+<div class="tab-pane fade" id="db-collector" role="tabpanel">
+    <div id="db-collector-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载采集管理...</p>
+        </div>
+    </div>
+</div>
+
+<!-- 实时监控 Tab -->
+<div class="tab-pane fade" id="db-monitoring" role="tabpanel">
+    <div id="db-monitoring-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载实时监控...</p>
+        </div>
+    </div>
+</div>
+
+<!-- 采集源码 Tab -->
+<div class="tab-pane fade" id="db-source" role="tabpanel">
+    <div id="db-source-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载采集源码...</p>
+        </div>
+    </div>
+</div>
+
+<!-- 数据来源 Tab -->
+<div class="tab-pane fade" id="db-provenance" role="tabpanel">
+    <div id="db-provenance-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载数据来源...</p>
+        </div>
+    </div>
+</div>
+
+<!-- 数据归集 Tab -->
+<div class="tab-pane fade" id="db-archive" role="tabpanel">
+    <div id="db-archive-content">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">加载数据归集...</p>
+        </div>
+    </div>
+</div>
+
+</div> <!-- /tab-content -->
+
+<!-- AJAX加载其他Tab内容 -->
+<script>
+function loadDashboardTab(tabBtnId, url, containerId) {
+    const container = document.getElementById(containerId);
+    if (container.dataset.loaded) return;
+    fetch(url + '?embed=1')
+        .then(r => r.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const content = doc.querySelector('.main-content');
+            container.innerHTML = content ? content.innerHTML : html;
+            container.dataset.loaded = '1';
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        })
+        .catch(e => { container.innerHTML = '<div class="alert alert-danger">加载失败，请刷新重试</div>'; });
+}
+
+document.getElementById('db-collector-tab').addEventListener('shown.bs.tab', function() {
+    loadDashboardTab('db-collector', '/collector', 'db-collector-content');
+});
+document.getElementById('db-monitoring-tab').addEventListener('shown.bs.tab', function() {
+    loadDashboardTab('db-monitoring', '/monitoring', 'db-monitoring-content');
+});
+document.getElementById('db-source-tab').addEventListener('shown.bs.tab', function() {
+    loadDashboardTab('db-source', '/source-code', 'db-source-content');
+});
+document.getElementById('db-provenance-tab').addEventListener('shown.bs.tab', function() {
+    loadDashboardTab('db-provenance', '/provenance', 'db-provenance-content');
+});
+document.getElementById('db-archive-tab').addEventListener('shown.bs.tab', function() {
+    loadDashboardTab('db-archive', '/data-archive', 'db-archive-content');
+});
 </script>
 {% endblock %}

@@ -172,7 +172,8 @@ def collector_page():
                     task[key] = 0
         tasks.append(task)
     conn.close()
-    return render_template('collector.html', tasks=tasks, title='采集管理 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('collector.html', tasks=tasks, title='采集管理 | OGD-Collector Pro', embed=embed)
 
 
 @app.route('/platforms')
@@ -180,7 +181,8 @@ def collector_page():
 def platforms_page():
     """平台详情"""
     record_access()
-    return render_template('platforms.html', title='平台详情 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('platforms.html', title='平台详情 | OGD-Collector Pro', embed=embed)
 
 
 @app.route('/analysis')
@@ -188,7 +190,8 @@ def platforms_page():
 def analysis_page():
     """分析图表"""
     record_access()
-    return render_template('analysis.html', title='分析图表 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('analysis.html', title='分析图表 | OGD-Collector Pro', embed=embed)
 
 @app.route('/thesis')
 @login_required
@@ -693,21 +696,24 @@ def api_access_logs():
 def monitoring_page():
     """实时监控面板"""
     record_access()
-    return render_template('monitoring.html', title='实时监控 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('monitoring.html', title='实时监控 | OGD-Collector Pro', embed=embed)
 
 @app.route('/provenance')
 @login_required
 def provenance_page():
     """数据来源溯源页面"""
     record_access()
-    return render_template('provenance.html', title='数据来源 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('provenance.html', title='数据来源 | OGD-Collector Pro', embed=embed)
 
 @app.route('/data-archive')
 @login_required
 def data_archive_page():
     """数据归集中心"""
     record_access()
-    return render_template('data_archive.html', title='数据归集 | OGD-Collector Pro')
+    embed = request.args.get('embed', '')
+    return render_template('data_archive.html', title='数据归集 | OGD-Collector Pro', embed=embed)
 
 
 @app.route('/api/monitoring/realtime')
@@ -1013,6 +1019,7 @@ def source_code_page():
             return '\n'.join(lines[:max_lines]) + f'\n\n# ... ({len(lines) - max_lines} 行省略，点击下载查看完整代码) ...'
         return code
     
+    embed = request.args.get('embed', '')
     return render_template('source_code.html',
         title='采集源码 | OGD-Collector Pro',
         engine_code=truncate_code(engine_full),
@@ -1024,7 +1031,8 @@ def source_code_page():
             'auto': sha256_file('auto_collect.py'),
             'models': sha256_file('models.py'),
             'app': sha256_file('app.py')
-        }
+        },
+        embed=embed
     )
 
 

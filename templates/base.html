@@ -88,6 +88,39 @@
             margin-top: 0;
             padding-top: 0.5rem;
         }
+
+        /* 内页Tab导航样式 */
+        .page-tabs {
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        .page-tabs .nav-link {
+            color: #718096;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 0.75rem 1.25rem;
+            margin-right: 0.5rem;
+            font-weight: 500;
+            border-radius: 0;
+        }
+        .page-tabs .nav-link:hover {
+            color: #2d3748;
+            background: transparent;
+            border-left-color: transparent;
+        }
+        .page-tabs .nav-link.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+            background: transparent;
+            border-left-color: transparent;
+        }
+        .tab-content-section {
+            display: none;
+        }
+        .tab-content-section.active {
+            display: block;
+        }
         
         .main-content {
             margin-left: 260px;
@@ -213,46 +246,14 @@
             <small>三层架构采集系统 v2.0</small>
         </div>
         <nav class="nav flex-column mt-3">
-            <!-- 核心数据 -->
-            <div class="nav-section-title">核心数据</div>
             <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
                 <i class="bi bi-speedometer2"></i> 主控台
             </a>
             <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}" href="/dashboard">
                 <i class="bi bi-bar-chart-line"></i> 数据看板
             </a>
-            <a class="nav-link {% if request.path == '/analysis' %}active{% endif %}" href="/analysis">
-                <i class="bi bi-graph-up"></i> 分析图表
-            </a>
-            <a class="nav-link {% if request.path == '/platforms' %}active{% endif %}" href="/platforms">
-                <i class="bi bi-grid-3x3"></i> 平台详情
-            </a>
-
-            <!-- 采集系统 -->
-            <div class="nav-section-title">采集系统</div>
-            <a class="nav-link {% if request.path == '/collector' %}active{% endif %}" href="/collector">
-                <i class="bi bi-collection-play"></i> 采集管理
-            </a>
-            <a class="nav-link {% if request.path == '/monitoring' %}active{% endif %}" href="/monitoring">
-                <i class="bi bi-activity"></i> 实时监控
-            </a>
-            <a class="nav-link {% if request.path == '/source-code' %}active{% endif %}" href="/source-code">
-                <i class="bi bi-code-square"></i> 采集源码
-            </a>
-
-            <!-- 数据治理 -->
-            <div class="nav-section-title">数据治理</div>
-            <a class="nav-link {% if request.path == '/provenance' %}active{% endif %}" href="/provenance">
-                <i class="bi bi-database-check"></i> 数据来源
-            </a>
-            <a class="nav-link {% if request.path == '/data-archive' %}active{% endif %}" href="/data-archive">
-                <i class="bi bi-archive"></i> 数据归集
-            </a>
-
-            <!-- 论文成果 -->
-            <div class="nav-section-title">论文成果</div>
             <a class="nav-link {% if request.path == '/thesis' %}active{% endif %}" href="/thesis">
-                <i class="bi bi-journal-text"></i> 论文成果
+                <i class="bi bi-journal-text"></i> 研究成果
             </a>
         </nav>
         
