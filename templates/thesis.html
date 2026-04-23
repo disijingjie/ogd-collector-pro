@@ -1,40 +1,18 @@
 {% extends "base.html" %}
-
 {% block title %}论文成果展示 | OGD-Collector Pro{% endblock %}
-
 {% block extra_css %}
 <style>
 .thesis-hero {
     background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
     color: white;
-    padding: 60px 0;
-    margin-bottom: 40px;
+    padding: 50px 0;
+    margin-bottom: 30px;
 }
-.thesis-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-.thesis-hero .subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 20px;
-}
-.thesis-hero .meta {
-    font-size: 0.95rem;
-    opacity: 0.8;
-}
-.thesis-hero .badge-custom {
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    margin-right: 10px;
-    font-size: 0.85rem;
-}
+.thesis-hero h1 { font-size: 2.2rem; font-weight: 700; }
+.thesis-hero .subtitle { font-size: 1.1rem; opacity: 0.9; }
+.thesis-hero .meta { font-size: 0.9rem; opacity: 0.8; }
 
-.section-card {
+.chapter-section {
     background: white;
     border-radius: 12px;
     padding: 30px;
@@ -42,203 +20,110 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     border: 1px solid #e2e8f0;
 }
-.section-card h2 {
+.chapter-section h2 {
     color: #1e3a5f;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 3px solid #3182ce;
 }
-.section-card h3 {
-    color: #2c5282;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 20px 0 12px 0;
+.chapter-abstract {
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 25px;
+    color: #4a5568;
+    line-height: 1.8;
+    font-size: 0.95rem;
 }
 
-.innovation-item {
-    background: #f7fafc;
-    border-left: 4px solid #3182ce;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 0 8px 8px 0;
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 25px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-.innovation-item h4 {
-    color: #2c5282;
+.chart-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+.chart-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f7fafc;
+    cursor: zoom-in;
+}
+.chart-body {
+    padding: 20px;
+}
+.chart-title {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
+    color: #2c5282;
     margin-bottom: 10px;
 }
-.innovation-item p {
+.chart-desc {
     color: #4a5568;
-    margin-bottom: 0;
+    font-size: 0.9rem;
     line-height: 1.7;
 }
-
-.framework-box {
-    background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
-    border-radius: 10px;
-    padding: 25px;
-    margin: 15px 0;
+.chart-meta {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.framework-box h4 {
+.chart-tag {
+    background: #ebf8ff;
     color: #2c5282;
-    margin-bottom: 15px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
-
-.chart-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-.chart-item {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-    cursor: pointer;
-}
-.chart-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-.chart-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background: #f7fafc;
-}
-.chart-item .caption {
-    padding: 15px;
-    font-size: 0.9rem;
-    color: #4a5568;
-    font-weight: 500;
-}
-
-.data-highlight {
-    background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    margin: 10px 0;
-}
-.data-highlight .number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #22543d;
-}
-.data-highlight .label {
-    font-size: 0.9rem;
-    color: #276749;
-    margin-top: 5px;
-}
-
-.timeline {
-    position: relative;
-    padding-left: 30px;
-}
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 8px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: #cbd5e0;
-}
-.timeline-item {
-    position: relative;
-    margin-bottom: 25px;
-    padding-left: 20px;
-}
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -26px;
-    top: 5px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #3182ce;
-    border: 2px solid white;
-    box-shadow: 0 0 0 2px #3182ce;
-}
-.timeline-item h4 {
-    color: #2c5282;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-}
-.timeline-item p {
-    color: #4a5568;
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
 .nav-pills .nav-link {
-    color: #4a5568;
-    font-weight: 500;
-    padding: 12px 20px;
-    border-radius: 8px;
-    margin-right: 5px;
+    color: #4a5568; font-weight: 500; padding: 10px 18px;
+    border-radius: 8px; margin-right: 5px; font-size: 0.9rem;
 }
 .nav-pills .nav-link.active {
-    background: #1e3a5f;
-    color: white;
+    background: #1e3a5f; color: white;
 }
 .nav-pills .nav-link:hover:not(.active) {
     background: #e2e8f0;
 }
-
-.tab-content {
-    padding-top: 20px;
+.content-reader {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
 }
-
-.reference-item {
-    padding: 8px 0;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 0.9rem;
-    color: #4a5568;
-}
-.reference-item:last-child {
-    border-bottom: none;
-}
-
-.policy-card {
-    background: #fffaf0;
-    border-left: 4px solid #ed8936;
-    padding: 20px;
+.content-reader h3 {
+    color: #1e3a5f;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin-bottom: 15px;
-    border-radius: 0 8px 8px 0;
 }
-.policy-card h4 {
-    color: #c05621;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-}
-
-.fsQCA-result {
-    background: #faf5ff;
-    border: 1px solid #e9d8fd;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-}
-.fsQCA-result h5 {
-    color: #6b46c1;
-    font-size: 1rem;
-    margin-bottom: 8px;
+.content-text {
+    line-height: 1.9;
+    color: #2d3748;
+    font-size: 0.95rem;
+    text-align: justify;
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- 论文头部信息 -->
 <div class="thesis-hero">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-lg-8">
                 <h1>政府数据开放平台数据资源利用的评价与优化研究</h1>
                 <p class="subtitle">基于三层架构的4E评估框架与fsQCA方法</p>
@@ -246,18 +131,11 @@
                     <p>作者：文明 | 武汉大学信息管理学院 博士研究生</p>
                     <p>指导教师：陈传夫 教授</p>
                 </div>
-                <div class="mt-4">
-                    <span class="badge-custom">博士论文</span>
-                    <span class="badge-custom">4E评估框架</span>
-                    <span class="badge-custom">fsQCA</span>
-                    <span class="badge-custom">三层架构</span>
-                    <span class="badge-custom">政府数据开放</span>
-                </div>
             </div>
-            <div class="col-lg-4 text-end d-flex align-items-center justify-content-end">
-                <div class="text-center">
-                    <div style="font-size: 3rem; font-weight: 700;">15万+</div>
-                    <div style="opacity: 0.8;">字</div>
+            <div class="col-lg-4 text-end">
+                <div class="d-inline-block text-center px-4 py-3" style="background:rgba(255,255,255,0.1);border-radius:12px;">
+                    <div style="font-size:2.5rem;font-weight:700;">31</div>
+                    <div style="opacity:0.8;">张核心图表</div>
                 </div>
             </div>
         </div>
@@ -265,544 +143,907 @@
 </div>
 
 <div class="container">
-    <!-- 导航标签 -->
     <ul class="nav nav-pills mb-4" id="thesisTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#overview" type="button">研究概览</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="framework-tab" data-bs-toggle="pill" data-bs-target="#framework" type="button">理论框架</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="empirical-tab" data-bs-toggle="pill" data-bs-target="#empirical" type="button">实证研究</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="charts-tab" data-bs-toggle="pill" data-bs-target="#charts" type="button">论文图表</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="policy-tab" data-bs-toggle="pill" data-bs-target="#policy" type="button">对策建议</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="references-tab" data-bs-toggle="pill" data-bs-target="#references" type="button">参考文献</button>
-        </li>
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#overview">研究概览</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch1">第一章 绪论</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch2">第二章 理论基础</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch3">第三章 评估框架与指标体系</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch5">第五章 实证研究</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch6">第六章 问题诊断与fsQCA分析</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#allcharts">全部图表</button></li>
     </ul>
 
-    <div class="tab-content" id="thesisTabContent">
-        <!-- 研究概览 -->
-        <div class="tab-pane fade show active" id="overview" role="tabpanel">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-card">
-                        <h2><i class="fas fa-lightbulb text-warning me-2"></i>研究创新点</h2>
-                        
-                        <div class="innovation-item">
-                            <h4>创新点一：评估范式创新</h4>
-                            <p>构建"环境-效率-效果-演化"（4E）四维评估框架，突破传统单一维度评估局限，实现从"有没有"到"好不好"再到"可持续"的评估范式跃迁。</p>
-                        </div>
-                        
-                        <div class="innovation-item">
-                            <h4>创新点二：方法创新</h4>
-                            <p>将fsQCA（模糊集定性比较分析）引入政府数据开放评价领域，揭示多因素组态效应，突破传统回归分析的变量独立性假设局限。</p>
-                        </div>
-                        
-                        <div class="innovation-item">
-                            <h4>特色一：指标体系创新</h4>
-                            <p>构建包含4个一级维度、12个二级指标、36个三级指标的三层架构评估指标体系，覆盖31个省级、13个副省级、287个地级市平台。</p>
-                        </div>
-                        
-                        <div class="innovation-item">
-                            <h4>特色二：理论整合创新</h4>
-                            <p>整合技术接受模型（TAM）、制度理论、生态系统理论，构建"制度-技术-数据-生态"四维理论解释框架。</p>
-                        </div>
-                    </div>
-
-                    <div class="section-card">
-                        <h2><i class="fas fa-book-open text-primary me-2"></i>研究背景与问题</h2>
-                        <p style="line-height: 1.8; color: #4a5568;">
-                            随着数字政府建设的深入推进，政府数据开放平台已成为公共数据资源流通的重要基础设施。
-                            然而，当前平台普遍存在"重建设轻运营""重数量轻质量""重开放轻利用"等问题，
-                            数据资源利用绩效参差不齐，层级分化与区域差异显著。
-                            本研究聚焦"政府数据开放平台数据资源利用的评价与优化"，
-                            旨在回答三个核心问题：
-                        </p>
-                        <div class="framework-box">
-                            <h4>核心研究问题</h4>
-                            <ol class="mb-0">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="overview">
+            <div class="chapter-section">
+                <h2><i class="bi bi-journal-bookmark-fill me-2"></i>研究概览</h2>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="content-text">
+                            <p>本研究聚焦<strong>"政府数据开放平台数据资源利用的评价与优化"</strong>，旨在回答三个核心问题：</p>
+                            <ol>
                                 <li><strong>如何科学评价</strong>政府数据开放平台的数据资源利用绩效？</li>
                                 <li><strong>哪些因素</strong>影响平台数据资源利用绩效？</li>
                                 <li><strong>如何优化</strong>不同层级、不同区域平台的数据资源利用？</li>
                             </ol>
+                            <p>研究构建<strong>"环境-效率-效果-演化"（4E）四维评估框架</strong>，将fsQCA方法引入政府数据开放评价领域，覆盖<strong>31个省级、13个副省级、287个地级市</strong>平台，形成包含4个一级维度、12个二级指标、36个三级指标的三层架构评估体系。</p>
+                            <p>研究发现：我国政府数据开放正在经历"有数据无利用"的困境——数据从"不可获取"变为"可获取"，但并未从"可获取"进阶为"可利用"。副省级平台平均得分最高（0.623），省级次之（0.405），地级市已建平台平均0.318，尚有78.4%的地级市未建平台。</p>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="section-card">
-                        <h2><i class="fas fa-chart-bar text-success me-2"></i>研究数据</h2>
-                        <div class="data-highlight">
-                            <div class="number">331</div>
-                            <div class="label">个平台样本</div>
+                    <div class="col-lg-5">
+                        <div class="row g-3">
+                            <div class="col-6"><div class="p-3 text-center" style="background:linear-gradient(135deg,#c6f6d5,#9ae6b4);border-radius:10px;"><div style="font-size:1.8rem;font-weight:700;color:#22543d;">331</div><div style="color:#276749;font-size:0.85rem;">平台样本</div></div></div>
+                            <div class="col-6"><div class="p-3 text-center" style="background:linear-gradient(135deg,#feebc8,#fbd38d);border-radius:10px;"><div style="font-size:1.8rem;font-weight:700;color:#744210;">36</div><div style="color:#744210;font-size:0.85rem;">评估指标</div></div></div>
+                            <div class="col-6"><div class="p-3 text-center" style="background:linear-gradient(135deg,#fed7d7,#fc8181);border-radius:10px;"><div style="font-size:1.8rem;font-weight:700;color:#742a2a;">504</div><div style="color:#742a2a;font-size:0.85rem;">参考文献</div></div></div>
+                            <div class="col-6"><div class="p-3 text-center" style="background:linear-gradient(135deg,#e9d8fd,#b794f4);border-radius:10px;"><div style="font-size:1.8rem;font-weight:700;color:#44337a;">8</div><div style="color:#44337a;font-size:0.85rem;">章节结构</div></div></div>
                         </div>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #feebc8 0%, #fbd38d 100%);">
-                            <div class="number" style="color: #744210;">36</div>
-                            <div class="label" style="color: #744210;">个评估指标</div>
-                        </div>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);">
-                            <div class="number" style="color: #742a2a;">504</div>
-                            <div class="label" style="color: #742a2a;">条参考文献</div>
-                        </div>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #e9d8fd 0%, #b794f4 100%);">
-                            <div class="number" style="color: #44337a;">8</div>
-                            <div class="label" style="color: #44337a;">章完整结构</div>
-                        </div>
-                    </div>
-
-                    <div class="section-card">
-                        <h2><i class="fas fa-clock text-info me-2"></i>研究历程</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <h4>2024.03</h4>
-                                <p>确定研究选题，构建4E理论框架</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>2024.06</h4>
-                                <p>完成指标体系设计与专家咨询</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>2024.09</h4>
-                                <p>完成331个平台数据采集</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>2025.01</h4>
-                                <p>完成fsQCA分析与问题诊断</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>2025.06</h4>
-                                <p>完成对策建议与系统开发</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>2026.04</h4>
-                                <p>论文定稿，系统上线</p>
-                            </div>
+                        <div class="mt-3 p-3" style="background:#ebf8ff;border-radius:10px;">
+                            <div class="small fw-semibold text-primary mb-2">研究创新点</div>
+                            <div class="small text-muted">• 评估范式从"供给导向"向"效果导向"转型</div>
+                            <div class="small text-muted">• fsQCA方法揭示多重并发因果机制</div>
+                            <div class="small text-muted">• 三层架构指标体系覆盖331个平台</div>
+                            <div class="small text-muted">• "制度-技术-数据-生态"四维解释框架</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 理论框架 -->
-        <div class="tab-pane fade" id="framework" role="tabpanel">
-            <div class="section-card">
-                <h2>4E评估框架</h2>
+        <div class="tab-pane fade" id="ch1">
+            <div class="chapter-section">
+                <h2>第一章 绪论</h2>
+                <div class="chapter-abstract"></div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="framework-box text-center">
-                            <h4><i class="fas fa-globe text-primary mb-2"></i><br>环境 (Environment)</h4>
-                            <p class="mb-0 small">平台基础环境建设<br>制度保障体系<br>组织支撑机制</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="framework-box text-center" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
-                            <h4><i class="fas fa-tachometer-alt text-warning mb-2"></i><br>效率 (Efficiency)</h4>
-                            <p class="mb-0 small">数据获取效率<br>服务响应效率<br>资源利用效率</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="framework-box text-center" style="background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);">
-                            <h4><i class="fas fa-bullseye text-info mb-2"></i><br>效果 (Effectiveness)</h4>
-                            <p class="mb-0 small">数据质量效果<br>用户满意效果<br>价值实现效果</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="framework-box text-center" style="background: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%);">
-                            <h4><i class="fas fa-sync-alt text-danger mb-2"></i><br>演化 (Evolution)</h4>
-                            <p class="mb-0 small">持续更新能力<br>迭代优化机制<br>生态演化趋势</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="section-card">
-                <h2>理论整合框架</h2>
-                <p style="line-height: 1.8; color: #4a5568;">
-                    本研究整合三大理论视角，构建"制度-技术-数据-生态"四维解释框架：
-                </p>
-                <div class="row mt-4">
                     <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #805ad5;">
-                            <h4>技术接受模型 (TAM)</h4>
-                            <p>解释用户对平台数据资源的感知有用性和感知易用性，影响数据利用意愿。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-1.png" alt="我国政府数据开放政策演进的\"三重逻辑\"" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-1 我国政府数据开放政策演进的\"三重逻辑\"</div>
+                                <div class="chart-desc">政府数据开放是数字政府建设的核心内容和数据要素价值化释放的关键路径。在全球数字治理浪潮中，政府数据开放已成为衡量一个国家数字政府建设水平的重要标志。自2009年美国Data.gov上线以来，已有超过150个国家和地区建立了政府数据开放平台，政府数据开放从\"前沿探索\"发展为\"国际共识\"。在我国，政府数据开放的推进经历了从地方试点到国家战略的制度跃迁。这一跃迁不是一蹴而就的，而是经历了近十年的政策积累和制度演化，体现了从\"技术推动\"到\"制度驱动\"再到\"价值牵引\"的三重逻辑递进。 在政策启动期（2015-2018），2015年国务院印发《促进大数据发展行动纲要》，首次从国家层面提出\"稳步推动公共数据资源开放\"的要求，标志着我国政府数据开放从地方探索上升为国家战略。该纲要明确...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #d69e2e;">
-                            <h4>制度理论</h4>
-                            <p>解释规制压力、规范压力和认知压力对平台数据开放行为的影响机制。</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #38a169;">
-                            <h4>生态系统理论</h4>
-                            <p>解释平台数据资源在多元主体互动中的价值共创与生态演化。</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #e53e3e;">
-                            <h4>多层治理理论</h4>
-                            <p>解释中央-省-市三层架构下的政策传导与执行偏差。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="section-card">
-                <h2>三层架构指标体系</h2>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>一级维度</th>
-                                <th>二级指标</th>
-                                <th>三级指标数</th>
-                                <th>权重</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td rowspan="3"><strong>环境 (E1)</strong></td>
-                                <td>制度环境</td>
-                                <td>3</td>
-                                <td>0.25</td>
-                            </tr>
-                            <tr>
-                                <td>技术环境</td>
-                                <td>3</td>
-                                <td>0.25</td>
-                            </tr>
-                            <tr>
-                                <td>组织环境</td>
-                                <td>3</td>
-                                <td>0.25</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="3"><strong>效率 (E2)</strong></td>
-                                <td>获取效率</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td>服务效率</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td>利用效率</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="3"><strong>效果 (E3)</strong></td>
-                                <td>数据质量</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td>用户满意</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td>价值实现</td>
-                                <td>3</td>
-                                <td>0.20</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="3"><strong>演化 (E4)</strong></td>
-                                <td>更新能力</td>
-                                <td>3</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>迭代优化</td>
-                                <td>3</td>
-                                <td>0.15</td>
-                            </tr>
-                            <tr>
-                                <td>生态演化</td>
-                                <td>3</td>
-                                <td>0.15</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-10.png" alt="研究内容与逻辑框架（详细版）" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-10 研究内容与逻辑框架（详细版）</div>
+                                <div class="chart-desc">本研究包括八章，遵循'概念界定-理论构建-指标设计-实证评估-问题诊断-对策优化'的逻辑主线。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-11.png" alt="研究技术路线图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-11 研究技术路线图</div>
+                                <div class="chart-desc">研究技术路线图展示了从文献综述、理论构建到数据采集、实证分析、问题诊断与对策建议的完整研究流程。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-12.png" alt="研究创新点与特色结构（详细版）" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-12 研究创新点与特色结构（详细版）</div>
+                                <div class="chart-desc">研究创新点包括评估范式创新、方法创新、指标体系创新与理论整合创新四个方面。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-2.png" alt="我国政府数据开放平台增长趋势与国内外数据利用效果对比" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-2 我国政府数据开放平台增长趋势与国内外数据利用效果对比</div>
+                                <div class="chart-desc">2024年的调查数据显示，超过60%的省级平台数据集下载量不足100次，仅有不到10%的数据集被实际应用于产品开发或决策支持。这意味着绝大多数开放的数据集处于\"沉睡\"状态，未能实现从\"数据资源\"到\"数据价值\"的转化。更为具体地，对30个样本平台的分析发现：仅有浙江、广东、上海三个平台的下载量中位数超过200次；超过40%的数据集自发布以来从未被更新；约15%的数据集以PDF等非机器可读格式发布，严重制约了程序化利用。这些数据揭示了一个深层矛盾：我国政府数据开放正在经历\"有数据无利用\"的困境------数据从\"不可获取\"变为\"可获取\"，但并未从\"可获取\"进阶为\"可利用\"。 这一"量增质未增"的困境与国际先进经验形成鲜明对比。美国Data.gov平台的数据集平均月...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-3.png" alt="\"数据口径幻觉\"：目录数量与有效数据集的巨大差距" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-3 \"数据口径幻觉\"：目录数量与有效数据集的巨大差距</div>
+                                <div class="chart-desc">更为深层的问题是\"数据口径幻觉\"。本研究对30个平台的调研发现，数据目录数量与有效数据集数量之间存在巨大差异：中位数口径比值为8.2倍，即目录中平均8个数据集仅有1个是真正有效的------存在实质内容、格式规范、可供利用的数据集。如图1-3所示，这一差异在不同平台间呈现巨大的异质性：山东平台的口径比值高达67.7倍------其\"6万数据集\"中仅有944个被认定为有效数据集；贵州的口径比值为18.7倍，其\"2.8万数据集\"中有效数据集仅1520个。即便是表现较好的浙江平台，口径比值也有3.4倍------1.57万目录数据集中仅4680个有效。这意味着，以数据目录数量为基准的评估可能严重高估平台的实际供给能力，进而导致评估结果的系统性失真。当评估体系将\"目录数量\"等同于\"...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-4.png" alt="政府数据开放研究的三阶段演进脉络" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-4 政府数据开放研究的三阶段演进脉络</div>
+                                <div class="chart-desc">随着研究的深入，学界对政府数据开放的认识经历了三个阶段的演进，每个阶段对应不同的研究重心和理论关切（见图1-5）：第一阶段（2009-2013）聚焦\"开放什么\"，探讨数据开放的边界、类型和优先级。如Yu和Robinson区分了\"政府信息公开\"（FOIA导向的知情权保障）与\"开放数据\"（利用导向的价值释放）在目的和机制上的根本差异，揭示了\"可读\"与\"可用\"之间的本质区别------前者关注公民能否\"看到\"政府数据，后者关注公民能否\"使用\"政府数据。这一区分为后续研究从\"透明导向\"向\"利用导向\"的转向奠定了概念基础。Davies从知识管理视角分析了开放数据的信息生态，提出了\"数据-信息-知识-智慧\"（DIKW）的层级转化模型，为理解数据开放的\"利用\"本...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-5.png" alt="评估范式从\"供给导向\"向\"效果导向\"的转变" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-5 评估范式从\"供给导向\"向\"效果导向\"的转变</div>
+                                <div class="chart-desc">在政府数据开放的价值研究方面，Jetzek等构建了开放数据价值评估框架，从效率价值（降低信息获取成本、减少重复采集）、创新价值（催生新应用和新服务）和社会价值（提升透明度和问责能力）三个维度衡量数据开放的产出。该框架的理论贡献在于将数据开放的价值从单一的\"透明度\"叙事拓展到多维价值谱系，但其局限在于价值量化的方法论困难------效率价值可通过成本节约间接估算，但创新价值和社会价值难以精确度量。Martin等进一步提出了\"数据价值光谱\"（Data Value Spectrum）概念，将数据价值从\"潜在价值\"到\"实现价值\"进行连续谱系的刻画，认为数据开放只是释放了\"潜在价值\"，而\"实现价值\"取决于数据被利用的深度和广度------这一\"价值光谱\"理论为本研究的全链条...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-6.png" alt="政府数据开放评估研究的三个核心争议" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-6 政府数据开放评估研究的三个核心争议</div>
+                                <div class="chart-desc">进一步梳理现有文献可以发现，当前研究存在三个核心争议尚未解决，这些争议不是细枝末节的学术分歧，而是关乎政府数据开放评估研究发展方向的根本性问题（见图1-7）：</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-7.png" alt="三个核心争议与本研究的理论回应" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-7 三个核心争议与本研究的理论回应</div>
+                                <div class="chart-desc">第一，评估范式之争：供给侧评估（关注数据开放数量与质量）与需求侧评估（关注数据利用效果与社会价值）孰优孰劣？以开放数林指数为代表的供给侧评估虽然操作性强，但无法回答\"开放的数据是否被真正利用\"的问题------一个拥有5万个数据集但下载量不足100次的平台，在供给侧评估中可能排名靠前，但其\"数据利用绩效\"显然是不合格的。而需求侧评估虽更贴近绩效本质，但数据获取困难且指标难以量化------\"社会价值\"\"创新能力\"等概念的操作化仍是方法论难题。本研究主张从\"供给导向\"向\"效果导向\"转型，以4E框架整合供给侧与需求侧，实现对绩效的全链条度量。这一立场的理论依据是公共价值理论------绩效的本质是公共资源（数据）的价值实现过程，而价值实现包含\"投入-转化-产出\"的全链...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-8.png" alt="研究内容与逻辑框架" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-8 研究内容与逻辑框架</div>
+                                <div class="chart-desc">本研究包括八章，遵循\"概念界定-理论构建-指标设计-实证评估-问题诊断-对策优化\"的逻辑主线（见图1-8）。 第一章绪论，阐述研究背景和意义，梳理国内外研究现状并指出三个核心争议，明确研究目标和内容框架，提出创新点。本章的核心贡献在于识别了三个根本性争议，并为每个争议提供了本研究的理论回应------这些回应不是凭空提出的，而是建立在对既有文献的系统梳理和批判性分析之上。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-9.png" alt="研究创新点与特色结构" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图1-9 研究创新点与特色结构</div>
+                                <div class="chart-desc">创新一：研究视角创新------从\"供给导向\"向\"效果导向\"的评估范式转变。本研究突破现有评估研究侧重数据开放数量和质量的\"供给导向\"范式，提出以4E框架整合供给保障、平台服务、数据质量和利用效果四个维度的\"效果导向\"评估框架，将\"数据是否被有效利用\"作为评估的核心关切。这一范式转变不仅是维度的扩展，更是评估逻辑的根本转型------绩效的本质不是\"提供了多少数据\"，而是\"数据被有效利用了多少\"。与开放数林指数等既有评估工具相比，本研究的评估框架在两个层面实现了实质性推进：维度完整性层面，从偏重供给侧扩展到4E全链条------开放数林指数的\"利用层\"仅有2个指标且权重仅15%，本研究的\"利用效果\"维度包含10个指标且权重约25%；方法系统性层面，从单方法...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 实证研究 -->
-        <div class="tab-pane fade" id="empirical" role="tabpanel">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-card">
-                        <h2>三层绩效梯度</h2>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);">
-                            <div class="number" style="font-size: 2rem;">0.623</div>
-                            <div class="label">副省级平台平均得分</div>
-                        </div>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #feebc8 0%, #fbd38d 100%);">
-                            <div class="number" style="font-size: 2rem; color: #744210;">0.405</div>
-                            <div class="label" style="color: #744210;">省级平台平均得分</div>
-                        </div>
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);">
-                            <div class="number" style="font-size: 2rem; color: #742a2a;">0.318</div>
-                            <div class="label" style="color: #742a2a;">地级市平台平均得分（已建平台）</div>
-                        </div>
-                        <div class="mt-3">
-                            <p class="text-muted small">注：地级市已建平台62个（21.6%），空白225个（78.4%）</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="section-card">
-                        <h2>fsQCA 分析结果</h2>
-                        <div class="fsQCA-result">
-                            <h5>高绩效组态（一致性 > 0.85）</h5>
-                            <p class="mb-0 small">制度完善 × 技术先进 × 数据丰富 × 生态活跃 → 高利用绩效</p>
-                        </div>
-                        <div class="fsQCA-result">
-                            <h5>低绩效组态</h5>
-                            <p class="mb-0 small">制度缺失 × 技术落后 × 数据匮乏 × 生态封闭 → 低利用绩效</p>
-                        </div>
-                        <div class="fsQCA-result">
-                            <h5>核心条件</h5>
-                            <p class="mb-0 small">制度保障（核心）+ 数据质量（核心）+ 技术支撑（边缘）</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-card">
-                <h2>四种"传导断裂"诊断</h2>
+        <div class="tab-pane fade" id="ch2">
+            <div class="chapter-section">
+                <h2>第二章 理论基础</h2>
+                <div class="chapter-abstract"></div>
                 <div class="row">
+
                     <div class="col-md-6">
-                        <div class="policy-card" style="border-left-color: #e53e3e;">
-                            <h4><i class="fas fa-unlink text-danger me-2"></i>制度传导断裂</h4>
-                            <p>中央政策到地方执行层层衰减，省级有制度、地市无配套。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图2-1.png" alt="公共价值与4E评估维度映射关系" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图2-1 公共价值与4E评估维度映射关系</div>
+                                <div class="chart-desc">从概念史的角度审视，OGD概念的演进折射出公共治理范式的深层变迁。第一代开放数据运动（2009-2015）以"数据开放即善治"为信条，将数据开放本身视为目的，关注开放的数量与速度。第二代开放数据运动（2016至今）则转向"数据开放即赋能"的理念，将数据开放视为实现公共价值创造的手段，关注开放的质量与利用效果。这一转向不仅是学术话语的变迁，更深刻地对实践具有参考意义评估的标准------评估不再以"开放了多少"为核心指标，而转向"开放带来了什么"的价值追问。Wirtz等的综述将这一转向概括为从"开放导向"到"影响导向"的评估范式转移。 政府数据开放概念的演进还可以从"权利话语"的变迁来理解。早期的OGD概念以"透明度"为核心话语，强调公民对政府信息的知情权------数据开放是政府履行透明义务...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第二章 理论基础</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="policy-card" style="border-left-color: #3182ce;">
-                            <h4><i class="fas fa-microchip text-primary me-2"></i>技术传导断裂</h4>
-                            <p>省级平台技术先进，地级市技术能力不足，无法承接。</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="policy-card" style="border-left-color: #38a169;">
-                            <h4><i class="fas fa-database text-success me-2"></i>数据传导断裂</h4>
-                            <p>数据资源在层级间流动受阻，形成"数据孤岛"。</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="policy-card" style="border-left-color: #805ad5;">
-                            <h4><i class="fas fa-project-diagram text-purple me-2"></i>生态传导断裂</h4>
-                            <p>多元主体参与不足，生态闭环难以形成。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图2-2.png" alt="公共价值---4E维度映射关系图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图2-2 公共价值---4E维度映射关系图</div>
+                                <div class="chart-desc">值得注意的是，公共价值评估面临可操作性的难题：公共价值的多元维度难以量化，且不同维度之间存在潜在的价值冲突。Guo等研究了数字政府如何赋能中国的公共服务供给。Hajar和Arma研究了基于公共价值的数字公共服务共创机制。Matheus等对数字透明与OGD有用性的关系进行了实证分析，发现透明度本身并不自动产生公共价值，需要与数据可理解性和可操作性相结合。这些研究为将公共价值理论引入政府数据利用绩效评估提供了重要的理论桥梁。 MacLean和Titah对数字政府公共价值的实证研究进行了系统性文献综述，发现数字技术的公共价值实现存在"价值鸿沟"。Yuan和Gasco-Hernandez从公共部门开放创新的视角研究了公共价值创造路径。Matheus等对数字透明与OGD有用性的关系进行了实证分析，发现...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第二章 理论基础</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 论文图表 -->
-        <div class="tab-pane fade" id="charts" role="tabpanel">
-            <div class="section-card">
-                <h2>论文核心图表展示</h2>
-                <p class="text-muted mb-4">共31张图表，涵盖研究框架、指标体系、实证结果与对策建议</p>
-                
-                <h3>第一章 绪论</h3>
-                <div class="chart-gallery">
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图1-1.png" alt="图1-1" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图1-1 研究技术路线图</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图1-2.png" alt="图1-2" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图1-2 研究框架图</div>
-                    </div>
-                </div>
-
-                <h3>第二章 理论基础</h3>
-                <div class="chart-gallery">
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图2-1.png" alt="图2-1" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图2-1 4E评估框架理论模型</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图2-2.png" alt="图2-2" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图2-2 理论整合框架</div>
-                    </div>
-                </div>
-
-                <h3>第三章 指标体系</h3>
-                <div class="chart-gallery">
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图3-1.png" alt="图3-1" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图3-1 指标体系架构图</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图3-2.png" alt="图3-2" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图3-2 指标权重分布</div>
-                    </div>
-                </div>
-
-                <h3>第五章 实证分析</h3>
-                <div class="chart-gallery">
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图5-1.png" alt="图5-1" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图5-1 三层绩效梯度对比</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图5-2.png" alt="图5-2" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图5-2 fsQCA组态分析结果</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图5-3.png" alt="图5-3" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图5-3 传导断裂模型</div>
-                    </div>
-                </div>
-
-                <h3>第六章 对策建议</h3>
-                <div class="chart-gallery">
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图6-1.png" alt="图6-1" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图6-1 优化路径图</div>
-                    </div>
-                    <div class="chart-item">
-                        <img src="/static/thesis_charts/图6-2.png" alt="图6-2" onerror="this.src='/static/images/chart-placeholder.png'">
-                        <div class="caption">图6-2 政策建议框架</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 对策建议 -->
-        <div class="tab-pane fade" id="policy" role="tabpanel">
-            <div class="section-card">
-                <h2>分层分类优化策略</h2>
-                
-                <div class="policy-card">
-                    <h4><i class="fas fa-building me-2"></i>省级平台优化策略</h4>
-                    <ul class="mb-0">
-                        <li>从"量多质低"转向"量质并重"，提升数据质量维度得分</li>
-                        <li>强化制度供给，建立数据开放标准体系</li>
-                        <li>发挥标杆示范作用，向副省级平台学习精细化运营</li>
-                    </ul>
-                </div>
-
-                <div class="policy-card" style="border-left-color: #3182ce; background: #ebf8ff;">
-                    <h4><i class="fas fa-city me-2" style="color: #2c5282;"></i>副省级平台优化策略</h4>
-                    <ul class="mb-0">
-                        <li>保持"量少质高"优势，扩大数据开放规模</li>
-                        <li>探索创新应用场景，提升数据利用深度</li>
-                        <li>输出经验模式，带动周边地级市发展</li>
-                    </ul>
-                </div>
-
-                <div class="policy-card" style="border-left-color: #38a169; background: #f0fff4;">
-                    <h4><i class="fas fa-map-marked-alt me-2" style="color: #276749;"></i>地级市平台优化策略</h4>
-                    <ul class="mb-0">
-                        <li>补齐平台空白：78.4%的地级市尚未建立平台，优先推进基础设施建设</li>
-                        <li>借力省级资源：通过省级平台下沉服务，降低独立建设成本</li>
-                        <li>聚焦特色数据：结合地方特色，开放高价值数据集</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="section-card">
-                <h2>四维协同治理机制</h2>
+        <div class="tab-pane fade" id="ch3">
+            <div class="chapter-section">
+                <h2>第三章 评估框架与指标体系</h2>
+                <div class="chapter-abstract"></div>
                 <div class="row">
+
                     <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #e53e3e;">
-                            <h4>制度维度：完善法规标准</h4>
-                            <p>制定《政府数据开放条例》，建立数据分级分类开放标准，完善绩效考核机制。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-1.png" alt="理论整合逻辑图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-1 理论整合逻辑图</div>
+                                <div class="chart-desc">这种理论整合的逻辑优势体现在两个方面：一是避免了单一理论的解释局限，三者整合实现了"价值---结构---条件"的理论互补。二是为多方法研究设计提供了统一的理论支撑。DEA效率评估以4E框架中的效率性维度为依据，TOPSIS综合排名以4E四个维度的整体表现为对象，fsQCA组态分析以TOE三类条件与绩效的组态关系为核心。三种方法的理论基础统一于整合框架之内，确保了方法互补的逻辑自洽性（见图3-1）。 理论整合过程中需要处理的一个关键问题是：三个理论框架之间存在潜在的张力。公共价值理论强调价值判断的规范性，要求评估回答"应该是什么"；4E框架强调维度结构的描述性，要求评估呈现"实际是什么"；TOE框架强调条件因素的因果性，要求评估解释"为什么是这样"。规范性、描述性与因果性三种逻辑取向并不总是和...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #3182ce;">
-                            <h4>技术维度：统一技术架构</h4>
-                            <p>推广统一数据开放平台技术规范，建立数据质量自动检测系统，提升互操作性。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-2.png" alt="图3-2" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-2 图3-2</div>
+                                <div class="chart-desc">论文核心图表，展示研究的关键发现与分析结果。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #38a169;">
-                            <h4>数据维度：提升数据质量</h4>
-                            <p>建立数据质量评估体系，推进数据清洗与标准化，丰富高价值数据集供给。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-3.png" alt="政府数据开放平台数据利用绩效评估整合分析框架" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-3 政府数据开放平台数据利用绩效评估整合分析框架</div>
+                                <div class="chart-desc">整合分析框架的方法论优势还体现在"分析结果的可追溯性"上。在传统的研究中，政策建议往往缺乏明确的实证证据链------为什么提出这条建议？依据是什么？哪些数据支持？这些问题难以回答。而本研究的整合框架确保了每条政策建议都能追溯到具体的分析结果：H1路径的建议来源于fsQCA的组态分析，因果干预的优先序来源于DEMATEL的原因度排序，制度保障的重要性来源于DEMATEL的组织条件识别。这种"建议→分析→数据"的完整追溯链，使得政策建议不是"空中楼阁"而是"有根之木"，增强了建议的可信度和可问责性。 将4E绩效评估框架与TOE条件分析框架进行整合，形成本研究的整合分析框架。该框架的核心逻辑是：以4E框架评估《绩效如何》，以TOE框架识别《条件为何》，以fsQCA揭示《何种条件组合导致高绩效》。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
-                        <div class="innovation-item" style="border-left-color: #805ad5;">
-                            <h4>生态维度：培育利用生态</h4>
-                            <p>举办数据开放创新大赛，培育第三方数据服务商，建立数据利用反馈机制。</p>
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-4.png" alt="整合分析框架全景图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-4 整合分析框架全景图</div>
+                                <div class="chart-desc">整合分析框架实现了公共价值理论、4E框架与TOE框架的'三位一体'整合，形成完整的理论-分析体系。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-5.png" alt="基于4E框架的政府数据开放平台数据利用绩效评估指标体系" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-5 基于4E框架的政府数据开放平台数据利用绩效评估指标体系</div>
+                                <div class="chart-desc">基于4E框架构建的政府数据开放平台数据利用绩效评估指标体系，包含4个一级维度、12个二级指标、36个三级指标。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-6.png" alt="4E框架指标体系详细结构" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图3-6 4E框架指标体系详细结构</div>
+                                <div class="chart-desc">4E框架指标体系详细结构图展示了从环境(Economy)、效率(Efficiency)、效果(Effectiveness)到演化(Evolution)的完整指标层级。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 参考文献 -->
-        <div class="tab-pane fade" id="references" role="tabpanel">
-            <div class="section-card">
-                <h2>参考文献概况</h2>
-                <div class="row mb-4">
-                    <div class="col-md-3">
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #e9d8fd 0%, #b794f4 100%);">
-                            <div class="number" style="font-size: 2rem; color: #44337a;">504</div>
-                            <div class="label" style="color: #44337a;">总参考文献</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);">
-                            <div class="number" style="font-size: 2rem; color: #22543d;">341</div>
-                            <div class="label" style="color: #22543d;">中文文献 (67.6%)</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #feebc8 0%, #fbd38d 100%);">
-                            <div class="number" style="font-size: 2rem; color: #744210;">163</div>
-                            <div class="label" style="color: #744210;">英文文献 (32.4%)</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="data-highlight" style="background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);">
-                            <div class="number" style="font-size: 2rem; color: #742a2a;">92.4%</div>
-                            <div class="label" style="color: #742a2a;">近5年文献</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="tab-pane fade" id="ch5">
+            <div class="chapter-section">
+                <h2>第五章 实证研究</h2>
+                <div class="chapter-abstract"></div>
+                <div class="row">
 
-                <h3>核心参考文献</h3>
-                <div class="reference-item">
-                    <strong>[1]</strong> 郑磊, 吕文增, 张锐昕, 等. 中国地方政府数据开放报告[R]. 复旦大学数字与移动治理实验室, 2024.
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-1.png" alt="东中西部数据利用绩效区域比较" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-1 东中西部数据利用绩效区域比较</div>
+                                <div class="chart-desc">（2）30个省级平台的选取兼顾了区域代表性和发展水平差异：东部11个省份（北京、天津、河北、辽宁、上海、江苏、浙江、福建、山东、广东、海南），中部8个省份（山西、吉林、黑龙江、安徽、江西、河南、湖北、湖南），西部11个省份（内蒙古、广西、重庆、四川、贵州、云南、陕西、甘肃、青海、宁夏、新疆）。这种区域分布为后续的区域比较分析提供了样本基础。 （3）30个省级平台的选取还考虑了数据开放平台发展的阶段代表性。根据平台上线时间和功能完善程度，可以将30个平台大致分为三个发展阶段：先行探索期平台（2015年前上线，如上海、北京、浙江等，已形成较完善的运营体系）、快速推进期平台（2016-2020年上线，如山东、贵州、福建等，处于功能快速迭代阶段）和追赶起步期平台（2021年后上线或大规模改版，如甘肃...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-2.png" alt="东中西部4E维度得分热力图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-2 东中西部4E维度得分热力图</div>
+                                <div class="chart-desc">（3）30个省级平台的选取还考虑了数据开放平台发展的阶段代表性。根据平台上线时间和功能完善程度，可以将30个平台大致分为三个发展阶段：先行探索期平台（2015年前上线，如上海、北京、浙江等，已形成较完善的运营体系）、快速推进期平台（2016-2020年上线，如山东、贵州、福建等，处于功能快速迭代阶段）和追赶起步期平台（2021年后上线或大规模改版，如甘肃、青海、宁夏等，基础设施尚在建设中）。三个阶段的平台分别占比30%、43%和27%，这种阶段分布确保了评估结果能够反映不同发展阶段的绩效特征，而非仅反映先行者的经验。 （4）样本选取还需要考虑平台的发展阶段与政策环境的差异。在省级层面，各省份对数据开放的政策重视程度存在显著差异：浙江、上海、广东等省份已将数据开放纳入省级战略，出台了专门的地方...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-3.png" alt="前5名与后5名平台4E维度得分对比" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-3 前5名与后5名平台4E维度得分对比</div>
+                                <div class="chart-desc">（8）从4E维度得分来看，各平台呈现差异化特征。浙江在四个维度上均排名第一，展现了"全面领先型"的绩效格局。山东在供给保障维度排名靠前（C1=0.872），但平台服务维度相对薄弱（C2=0.512），呈现"供给强服务弱"的不均衡格局。贵州在利用效果维度表现亮眼（C4=0.564），但供给保障维度偏低（C1=0.438），呈现"效果突出供给不足"的格局。 （9）TOPSIS评估结果的另一个重要特征是绩效分布的"双峰性"：优秀/良好等级（Ci≥0.4）的平台与较差/极差等级（Ci\<0.25）的平台之间形成了明显的"断层"，中等水平（0.25≤Ci\<0.4）的平台数量较少。这种双峰分布表明，我国省级数据开放平台正在经历"分化期"------先行平台已进入良性循环（数据多→用户多→反馈多→改进快...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-4.png" alt="30个平台DEA效率评价散点图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-4 30个平台DEA效率评价散点图</div>
+                                <div class="chart-desc">Table 5-2 DEA-BCC Efficiency Evaluation Results of 30 Provincial Platforms ------------------------------------------------------------------------------------------------------------</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-5.png" alt="30个省级政府数据开放平台数据利用绩效综合得分排名" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-5 30个省级政府数据开放平台数据利用绩效综合得分排名</div>
+                                <div class="chart-desc">（1）将TOPSIS综合得分与DEA技术效率进行交叉分析，可以识别四类平台：（1）"高绩效高效率"型（TOPSIS排名前10且TE\>0.9），如浙江、广东、上海、深圳；（2）"高绩效低效率"型，暂无平台落入此区域；（3）"低绩效高效率"型，如德州（TE=0.950但TOPSIS排名靠后），投入规模不足导致综合绩效偏低；（4）"低绩效低效率"型，如河南、合肥、广西、云南，面临投入不足与效率低下的双重困境。 （2）交叉分析揭示了"阈值效应"：当TE低于0.7时综合得分普遍偏低；当TE超过0.9时综合得分才有较大可能进入前10名。资源配置效率是综合绩效的必要条件但非充分条件------仅有高效率而无充足投入，仍难以实现高绩效。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-6.png" alt="政府数据开放平台数据利用绩效时间趋势(2020-2024)" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-6 政府数据开放平台数据利用绩效时间趋势(2020-2024)</div>
+                                <div class="chart-desc">（1）基于2020-2025年6个年度的追踪数据，全国省级平台的平均综合得分从2020年的0.182增长至2025年的0.405，年均复合增长率17.5%。但增长态势呈现"先快后慢"的特征：2020-2022年年均增长率22.3%，2023-2025年降至13.8%，说明绩效提升进入"深水区"。 （2）从4E维度的变化趋势来看，供给保障维度增长最快（年均19.2%），利用效果维度次之（年均15.8%），数据质量维度增长最慢（年均8.7%），进一步印证了"供给---效果"增长不同步的结构性矛盾。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-7.png" alt="政府数据开放平台数据利用绩效时间趋势(2020-2024)" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图5-7 政府数据开放平台数据利用绩效时间趋势(2020-2024)</div>
+                                <div class="chart-desc">2020-2024年间30个省级政府数据开放平台数据利用绩效的时间趋势变化，揭示了绩效的动态演化特征。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="reference-item">
-                    <strong>[2]</strong> OECD. Open Government Data Report: Enhancing Policy Maturity[R]. Paris: OECD Publishing, 2024.
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="ch6">
+            <div class="chapter-section">
+                <h2>第六章 问题诊断与fsQCA分析</h2>
+                <div class="chapter-abstract"></div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-1.png" alt="fsQCA三条高绩效组态路径条件组合" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图6-1 fsQCA三条高绩效组态路径条件组合</div>
+                                <div class="chart-desc">（3）数据供给质量不高的另一个深层次原因是"数据产权模糊"。政府数据的产权归属在实践中缺乏明确界定：数据是由政府部门采集的，但采集过程往往依赖社会公众的参与（如人口普查数据、企业登记数据），因此政府是否享有数据的完全处置权存在争议。产权模糊导致两种极端行为：一是"保守开放"------因担心产权纠纷而限制数据开放；二是"随意开放"------因缺乏产权约束而忽视数据质量和隐私保护。两种行为都损害了数据供给质量。"数据二十条"提出的数据产权"三权分置"（数据资源持有权、数据加工使用权、数据产品经营权）为解决这一问题提供了制度框架，但在政府数据领域的具体落地方案仍在探索中。 （4）数据供给质量问题的改善路径可以从"供给侧改革"的视角重新审视。传统思路是"先开放后治理"------先大量开放数据，...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-2.png" alt="fsQCA组态路径分析结果" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图6-2 fsQCA组态路径分析结果</div>
+                                <div class="chart-desc">fsQCA组态路径分析结果展示了高绩效平台的多重等效路径，揭示了制度、技术、数据与生态条件的组态效应。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-3.png" alt="政府数据开放平台数据利用绩效影响因素DEMATEL因果图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图6-3 政府数据开放平台数据利用绩效影响因素DEMATEL因果图</div>
+                                <div class="chart-desc">（1）在展开DEMATEL分析之前，需要先阐明四种方法的逻辑关系，以消解"多方法是否存在循环论证"的潜在疑虑。本研究的四种方法分属两个分析层次，并非在同一层面重复分析同一问题。第一层次为绩效评估层，包括TOPSIS和DEA：TOPSIS基于4E框架的28项指标对各平台进行综合排名，回答"绩效如何"；DEA将综合排名中的投入产出关系抽象为效率问题，回答"绩效是否充分"。两者的分析单元均是平台（DMU），分析结果均属于"绩效描述"范畴。第二层次为绩效解释层，包括DEMATEL和fsQCA：DEMATEL的分析单元是因素间的因果关系（而非平台），回答"哪些因素是驱动源"；fsQCA的分析单元是条件组态（而非单一因果），回答"哪些条件组合导致高绩效"。两者的分析结果均属于"绩效解释"范畴。关键区分在...</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-4.png" alt="政府数据开放平台数据利用绩效影响因素DEMATEL因果图" loading="lazy">
+                            <div class="chart-body">
+                                <div class="chart-title">图6-4 政府数据开放平台数据利用绩效影响因素DEMATEL因果图</div>
+                                <div class="chart-desc">DEMATEL因果图揭示了政府数据开放平台数据利用绩效影响因素的因果网络结构与中心度关系。</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                    <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="reference-item">
-                    <strong>[3]</strong> 国务院办公厅. 关于构建更加完善的要素市场化配置体制机制的意见[Z]. 2020.
-                </div>
-                <div class="reference-item">
-                    <strong>[4]</strong> 国家数据局. 关于加快公共数据资源开发利用的意见[Z]. 2024.
-                </div>
-                <div class="reference-item">
-                    <strong>[5]</strong> Janssen M, et al. Benefits, adoption barriers and myths of open data and open government[J]. Information Systems Management, 2023.
-                </div>
-                <div class="reference-item">
-                    <strong>[6]</strong> 黄璜. 中国"互联网+政务服务"发展报告[M]. 北京: 北京大学出版社, 2023.
-                </div>
-                <div class="reference-item">
-                    <strong>[7]</strong> 张成岗, 等. 政府数据开放的绩效评估研究[J]. 中国行政管理, 2024.
-                </div>
-                <div class="reference-item">
-                    <strong>[8]</strong> Raghavan R S, et al. A framework for evaluating open government data initiatives[J]. Government Information Quarterly, 2023.
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="allcharts">
+            <div class="chapter-section">
+                <h2><i class="bi bi-images me-2"></i>全部论文图表</h2>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-1.png" alt="我国政府数据开放政策演进的\"三重逻辑\"" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-1 我国政府数据开放政策演进的\"三重逻辑\"</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-10.png" alt="研究内容与逻辑框架（详细版）" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-10 研究内容与逻辑框架（详细版）</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-11.png" alt="研究技术路线图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-11 研究技术路线图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-12.png" alt="研究创新点与特色结构（详细版）" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-12 研究创新点与特色结构（详细版）</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-2.png" alt="我国政府数据开放平台增长趋势与国内外数据利用效果对比" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-2 我国政府数据开放平台增长趋势与国内外数据利用效果对比</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-3.png" alt="\"数据口径幻觉\"：目录数量与有效数据集的巨大差距" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-3 \"数据口径幻觉\"：目录数量与有效数据集的巨大差距</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-4.png" alt="政府数据开放研究的三阶段演进脉络" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-4 政府数据开放研究的三阶段演进脉络</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-5.png" alt="评估范式从\"供给导向\"向\"效果导向\"的转变" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-5 评估范式从\"供给导向\"向\"效果导向\"的转变</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-6.png" alt="政府数据开放评估研究的三个核心争议" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-6 政府数据开放评估研究的三个核心争议</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-7.png" alt="三个核心争议与本研究的理论回应" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-7 三个核心争议与本研究的理论回应</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-8.png" alt="研究内容与逻辑框架" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-8 研究内容与逻辑框架</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图1-9.png" alt="研究创新点与特色结构" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图1-9 研究创新点与特色结构</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第一章 绪论</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图2-1.png" alt="公共价值与4E评估维度映射关系" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图2-1 公共价值与4E评估维度映射关系</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第二章 理论基础</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图2-2.png" alt="公共价值---4E维度映射关系图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图2-2 公共价值---4E维度映射关系图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第二章 理论基础</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-1.png" alt="理论整合逻辑图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-1 理论整合逻辑图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-2.png" alt="图3-2" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-2 图3-2</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-3.png" alt="政府数据开放平台数据利用绩效评估整合分析框架" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-3 政府数据开放平台数据利用绩效评估整合分析框架</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-4.png" alt="整合分析框架全景图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-4 整合分析框架全景图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-5.png" alt="基于4E框架的政府数据开放平台数据利用绩效评估指标体系" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-5 基于4E框架的政府数据开放平台数据利用绩效评估指标体系</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图3-6.png" alt="4E框架指标体系详细结构" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图3-6 4E框架指标体系详细结构</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第三章 评估框架与指标体系</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-1.png" alt="东中西部数据利用绩效区域比较" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-1 东中西部数据利用绩效区域比较</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-2.png" alt="东中西部4E维度得分热力图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-2 东中西部4E维度得分热力图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-3.png" alt="前5名与后5名平台4E维度得分对比" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-3 前5名与后5名平台4E维度得分对比</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-4.png" alt="30个平台DEA效率评价散点图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-4 30个平台DEA效率评价散点图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-5.png" alt="30个省级政府数据开放平台数据利用绩效综合得分排名" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-5 30个省级政府数据开放平台数据利用绩效综合得分排名</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-6.png" alt="政府数据开放平台数据利用绩效时间趋势(2020-2024)" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-6 政府数据开放平台数据利用绩效时间趋势(2020-2024)</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图5-7.png" alt="政府数据开放平台数据利用绩效时间趋势(2020-2024)" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图5-7 政府数据开放平台数据利用绩效时间趋势(2020-2024)</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第五章 实证研究</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-1.png" alt="fsQCA三条高绩效组态路径条件组合" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图6-1 fsQCA三条高绩效组态路径条件组合</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-2.png" alt="fsQCA组态路径分析结果" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图6-2 fsQCA组态路径分析结果</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-3.png" alt="政府数据开放平台数据利用绩效影响因素DEMATEL因果图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图6-3 政府数据开放平台数据利用绩效影响因素DEMATEL因果图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="chart-card">
+                            <img src="/static/thesis_charts/图6-4.png" alt="政府数据开放平台数据利用绩效影响因素DEMATEL因果图" loading="lazy" style="max-height:200px;object-fit:cover;">
+                            <div class="chart-body">
+                                <div class="chart-title" style="font-size:0.95rem;">图6-4 政府数据开放平台数据利用绩效影响因素DEMATEL因果图</div>
+                                <div class="chart-meta">
+                                    <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -812,16 +1053,11 @@
 
 {% block extra_js %}
 <script>
-// 图表点击放大功能
-document.querySelectorAll('.chart-item img').forEach(img => {
+document.querySelectorAll('.chart-card img').forEach(img => {
     img.addEventListener('click', function() {
         const modal = document.createElement('div');
-        modal.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 9999; display: flex;
-            align-items: center; justify-content: center; cursor: zoom-out;
-        `;
-        modal.innerHTML = `<img src="${this.src}" style="max-width: 90%; max-height: 90%; object-fit: contain;">`;
+        modal.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;overflow:auto;padding:40px;`;
+        modal.innerHTML = `<img src="${this.src}" style="max-width:90%;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">`;
         modal.addEventListener('click', () => modal.remove());
         document.body.appendChild(modal);
     });

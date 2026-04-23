@@ -28,7 +28,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'ogd-collector-pro-dev-k
 app.config['JSON_AS_ASCII'] = False
 
 # ===== 隐私保护：登录认证 =====
-AUTH_PASSWORD = os.environ.get('AUTH_PASSWORD', 'wenming890503')
+AUTH_PASSWORD = os.environ.get('AUTH_PASSWORD', '123')
 
 
 def login_required(f):
