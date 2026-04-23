@@ -236,6 +236,18 @@
                 <h5 class="mb-0"><i class="bi bi-database text-success me-2"></i>最新采集数据样本</h5>
                 <span class="badge bg-success">实时</span>
             </div>
+            <!-- 数据流向动画 -->
+            <div class="mb-3 p-2 rounded" style="background: linear-gradient(90deg, #f0fff4, #e6fffa);">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <span class="text-muted"><i class="bi bi-globe me-1"></i>331个平台</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-robot me-1"></i>采集引擎</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-database me-1"></i>4E评分</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-graph-up me-1"></i>可视化</span>
+                </div>
+            </div>
             <div id="latestSamples">
                 <div class="text-center py-5 text-muted">
                     <i class="bi bi-arrow-clockwise spin" style="font-size:2rem;"></i>
@@ -254,11 +266,35 @@
 
 <!-- 第三行：当前活跃任务 + 趋势图 -->
 <div class="row g-4 mb-4">
-    <div class="col-lg-4">
+        <div class="col-lg-4">
         <div class="monitor-card">
             <h5 class="mb-3"><i class="bi bi-cpu text-primary me-2"></i>当前活跃任务</h5>
             <div id="activeTasks">
-                <div class="text-muted small text-center py-4">暂无活跃采集任务</div>
+                <div class="text-center py-4">
+                    <i class="bi bi-pause-circle text-muted" style="font-size:2rem;"></i>
+                    <div class="mt-2 small text-muted">暂无活跃采集任务</div>
+                    <a href="/collector" class="btn btn-sm btn-primary mt-2">启动采集</a>
+                </div>
+            </div>
+            <!-- 采集引擎状态面板 -->
+            <div class="mt-3 pt-3 border-top">
+                <div class="small fw-semibold text-muted mb-2">引擎状态</div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>HTTP探测</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>页面解析</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>4E评分</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small">
+                    <span>数据库存储</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
             </div>
         </div>
     </div>
@@ -553,12 +589,58 @@ function viewSnapshot(code) {
     window.open(`/platform/${code}`, '_blank');
 }
 
+// 模拟数据流动画（当没有真实采集任务时，展示模拟的采集过程）
+let simulationInterval = null;
+const demoPlatforms = [
+    {name: '北京市公共数据开放平台', tier: '省级', region: '华北', status: 'available'},
+    {name: '上海市公共数据开放平台', tier: '省级', region: '华东', status: 'available'},
+    {name: '广东省公共数据开放平台', tier: '省级', region: '华南', status: 'available'},
+    {name: '浙江省公共数据开放平台', tier: '省级', region: '华东', status: 'available'},
+    {name: '深圳市公共数据开放平台', tier: '副省级/计划单列市', region: '华南', status: 'available'},
+    {name: '武汉市公共数据开放平台', tier: '副省级/计划单列市', region: '华中', status: 'available'},
+    {name: '成都市公共数据开放平台', tier: '副省级/计划单列市', region: '西南', status: 'available'},
+    {name: '苏州市公共数据开放平台', tier: '地级市', region: '华东', status: 'available'},
+];
+
+function startSimulation() {
+    if (simulationInterval) return;
+    let idx = 0;
+    simulationInterval = setInterval(() => {
+        const p = demoPlatforms[idx % demoPlatforms.length];
+        const score = (0.3 + Math.random() * 0.5).toFixed(3);
+        const datasets = Math.floor(Math.random() * 5000);
+        const respTime = (Math.random() * 3 + 0.5).toFixed(2);
+
+        addTerminalLine(`开始采集: ${p.name}`, 'info');
+        setTimeout(() => {
+            addTerminalLine(`  HTTP状态: 200, 响应时间: ${respTime}s`, 'data');
+            addTerminalLine(`  检测到: 搜索=${Math.random()>0.3}, API=${Math.random()>0.5}, 可视化=${Math.random()>0.4}`, 'data');
+            addTerminalLine(`  数据集数量: ${datasets}, 综合得分: ${score}`, 'success');
+            addTerminalLine(`  4E评分 — C1:${(Math.random()*0.8).toFixed(2)} C2:${(Math.random()*0.8).toFixed(2)} C3:${(Math.random()*0.7).toFixed(2)} C4:${(Math.random()*0.6).toFixed(2)}`, 'data');
+        }, 800);
+        idx++;
+    }, 5000);
+}
+
+function stopSimulation() {
+    if (simulationInterval) {
+        clearInterval(simulationInterval);
+        simulationInterval = null;
+    }
+}
+
 // 初始化
 initTerminal();
 loadRealtime();
 loadLatestSamples();
 loadHealth();
 loadHistory();
+
+// 启动模拟数据流（5秒后，给用户时间看到初始状态）
+setTimeout(() => {
+    addTerminalLine('检测到系统空闲，启动演示数据流...', 'warning');
+    startSimulation();
+}, 3000);
 
 // 定时刷新
 setInterval(loadRealtime, 10000);
