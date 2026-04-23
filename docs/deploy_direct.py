@@ -20,6 +20,10 @@ files_to_deploy = [
     ("../templates/monitoring.html", f"{APP_DIR}/templates/monitoring.html"),
     ("../templates/provenance.html", f"{APP_DIR}/templates/provenance.html"),
     ("../templates/data_archive.html", f"{APP_DIR}/templates/data_archive.html"),
+    ("../templates/collector.html", f"{APP_DIR}/templates/collector.html"),
+    ("../templates/dashboard.html", f"{APP_DIR}/templates/dashboard.html"),
+    ("../templates/source_code.html", f"{APP_DIR}/templates/source_code.html"),
+    ("../static/research_roadmap.svg", f"{APP_DIR}/static/research_roadmap.svg"),
 ]
 
 def scp_file(local, remote):

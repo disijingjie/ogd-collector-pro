@@ -468,18 +468,25 @@ def api_region_distribution():
 @app.route('/api/analysis/top_platforms')
 @login_required
 def api_top_platforms():
-    """获取TOP平台"""
+    """获取TOP平台（按平台去重，只取每个平台的最新记录）"""
     limit = request.args.get('limit', 10, type=int)
     
     conn = get_db()
     cursor = conn.cursor()
     
+    # 子查询：取每个平台的最新一条可用记录
     cursor.execute("""
         SELECT r.platform_name, r.tier, r.region, r.overall_score, 
                r.score_c1, r.score_c2, r.score_c3, r.score_c4,
-               r.dataset_count, r.has_api, r.has_search, r.response_time
+               r.dataset_count, r.has_api, r.has_search, r.response_time,
+               r.collected_at
         FROM collection_records r
-        WHERE r.status='available'
+        INNER JOIN (
+            SELECT platform_code, MAX(id) as max_id
+            FROM collection_records
+            WHERE status='available'
+            GROUP BY platform_code
+        ) latest ON r.id = latest.max_id
         ORDER BY r.overall_score DESC
         LIMIT ?
     """, (limit,))
@@ -489,7 +496,8 @@ def api_top_platforms():
         results.append({
             'name': row[0], 'tier': row[1], 'region': row[2], 'overall': row[3],
             'c1': row[4], 'c2': row[5], 'c3': row[6], 'c4': row[7],
-            'datasets': row[8], 'has_api': row[9], 'has_search': row[10], 'response_time': row[11]
+            'datasets': row[8], 'has_api': row[9], 'has_search': row[10], 'response_time': row[11],
+            'collected_at': row[12]
         })
     
     conn.close()
@@ -745,6 +753,32 @@ def api_monitoring_realtime():
         FROM collection_tasks ORDER BY id DESC LIMIT 5
     """)
     stats['recent_tasks'] = [dict(zip(['id','name','status','total','completed','time'], r)) for r in cursor.fetchall()]
+
+    # 活跃任务（running 或 paused 状态）
+    cursor.execute("""
+        SELECT id, task_name, status, total_count, completed_count, success_count, fail_count
+        FROM collection_tasks WHERE status IN ('running', 'paused') ORDER BY id DESC
+    """)
+    active = []
+    for row in cursor.fetchall():
+        active.append({
+            'id': row[0], 'name': row[1], 'status': row[2],
+            'total': row[3], 'completed': row[4] or 0,
+            'success': row[5] or 0, 'failed': row[6] or 0,
+            'current_platform': ''
+        })
+    stats['active_tasks'] = active
+
+    # 健康检查检测率
+    cursor.execute("""
+        SELECT COUNT(DISTINCT platform_code) FROM platform_health_checks
+        WHERE check_time >= datetime('now', '-1 day')
+    """)
+    checked_platforms = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM platforms")
+    total_platforms = cursor.fetchone()[0]
+    stats['health_check_rate'] = round(checked_platforms / max(total_platforms, 1) * 100, 1)
+
     conn.close()
     return jsonify(stats)
 
@@ -794,6 +828,97 @@ def api_monitoring_history():
         ORDER BY d
     """.format(days))
     results = [{'date': r[0], 'checks': r[1], 'reachable': r[2], 'avg_ms': r[3]} for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/monitoring/live_logs')
+@login_required
+def api_monitoring_live_logs():
+    """获取最近采集日志（用于终端实时展示）"""
+    limit = request.args.get('limit', 20, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT task_id, platform_code, log_level, message, created_at
+        FROM collection_logs
+        ORDER BY id DESC
+        LIMIT ?
+    """, (limit,))
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            'task_id': row[0], 'platform': row[1] or '系统',
+            'level': row[2], 'message': row[3], 'time': row[4]
+        })
+    conn.close()
+    # 反转顺序，让最新的在最后
+    results.reverse()
+    return jsonify(results)
+
+
+@app.route('/api/monitoring/latest_samples')
+@login_required
+def api_monitoring_latest_samples():
+    """获取最近采集的数据样本（真实采集结果展示）"""
+    limit = request.args.get('limit', 8, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT platform_name, tier, region, status, overall_score,
+               dataset_count, has_api, has_search, response_time, collected_at
+        FROM collection_records
+        ORDER BY id DESC
+        LIMIT ?
+    """, (limit,))
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            'name': row[0], 'tier': row[1], 'region': row[2],
+            'status': row[3], 'overall': row[4] or 0,
+            'datasets': row[5] or 0, 'has_api': row[6],
+            'has_search': row[7], 'response_time': row[8],
+            'collected_at': row[9]
+        })
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/monitoring/health')
+@login_required
+def api_monitoring_health():
+    """平台健康检查数据（增强版：包含采集得分和数据集数）"""
+    limit = request.args.get('limit', 100, type=int)
+    platform = request.args.get('platform')
+    conn = get_db()
+    cursor = conn.cursor()
+
+    # 获取健康检查记录，同时关联最新采集记录的得分和数据集数
+    query = """
+        SELECT
+            h.platform_code, h.platform_name, h.check_time, h.is_reachable,
+            h.http_status, h.response_time_ms, h.dns_resolve_time_ms,
+            h.ssl_valid, h.page_size_kb, h.error_type, h.error_detail,
+            r.overall_score, r.dataset_count, r.status as record_status
+        FROM platform_health_checks h
+        LEFT JOIN (
+            SELECT platform_code, overall_score, dataset_count, status,
+                   ROW_NUMBER() OVER (PARTITION BY platform_code ORDER BY id DESC) as rn
+            FROM collection_records
+        ) r ON h.platform_code = r.platform_code AND r.rn = 1
+        WHERE 1=1
+    """
+    params = []
+    if platform:
+        query += " AND h.platform_code=?"
+        params.append(platform)
+    query += " ORDER BY h.check_time DESC LIMIT ?"
+    params.append(limit)
+    cursor.execute(query, params)
+    results = [dict(zip([
+        'code','name','time','reachable','http_status','response_ms','dns_ms',
+        'ssl_valid','page_kb','error_type','error_detail','overall','dataset_count','status'
+    ], r)) for r in cursor.fetchall()]
     conn.close()
     return jsonify(results)
 
@@ -879,6 +1004,287 @@ def api_export_provenance():
     )
 
 
+# ===== 采集源码公开 =====
+
+@app.route('/source-code')
+@login_required
+def source_code_page():
+    """采集源码公开页面"""
+    import hashlib
+    base_dir = Path(__file__).parent
+    
+    def read_code(filename):
+        path = base_dir / filename
+        if path.exists():
+            return path.read_text(encoding='utf-8')
+        return f'# 文件不存在: {filename}'
+    
+    def sha256_file(filename):
+        path = base_dir / filename
+        if path.exists():
+            return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+        return 'N/A'
+    
+    engine_full = read_code('collector_engine.py')
+    auto_full = read_code('auto_collect.py')
+    models_full = read_code('models.py')
+    app_full = read_code('app.py')
+    
+    # 截断显示（保留前200行）
+    def truncate_code(code, max_lines=200):
+        lines = code.split('\n')
+        if len(lines) > max_lines:
+            return '\n'.join(lines[:max_lines]) + f'\n\n# ... ({len(lines) - max_lines} 行省略，点击下载查看完整代码) ...'
+        return code
+    
+    return render_template('source_code.html',
+        title='采集源码 | OGD-Collector Pro',
+        engine_code=truncate_code(engine_full),
+        auto_code=truncate_code(auto_full),
+        models_code=truncate_code(models_full),
+        app_code=truncate_code(app_full),
+        checksums={
+            'engine': sha256_file('collector_engine.py'),
+            'auto': sha256_file('auto_collect.py'),
+            'models': sha256_file('models.py'),
+            'app': sha256_file('app.py')
+        }
+    )
+
+
+@app.route('/api/source/download/<filename>')
+@login_required
+def api_source_download(filename):
+    """下载源码文件"""
+    import mimetypes
+    base_dir = Path(__file__).parent
+    
+    file_map = {
+        'collector_engine': 'collector_engine.py',
+        'auto_collect': 'auto_collect.py',
+        'models': 'models.py',
+        'app': 'app.py',
+        'all': None
+    }
+    
+    if filename == 'all':
+        # 打包所有源码为zip
+        import zipfile
+        import io
+        memory_file = io.BytesIO()
+        with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zf:
+            for key, fname in file_map.items():
+                if fname and (base_dir / fname).exists():
+                    zf.write(base_dir / fname, fname)
+        memory_file.seek(0)
+        return Response(
+            memory_file.getvalue(),
+            mimetype='application/zip',
+            headers={'Content-Disposition': 'attachment; filename=ogd_collector_source.zip'}
+        )
+    
+    actual_file = file_map.get(filename)
+    if not actual_file:
+        return jsonify({'error': '文件不存在'}), 404
+    
+    file_path = base_dir / actual_file
+    if not file_path.exists():
+        return jsonify({'error': '文件不存在'}), 404
+    
+    return Response(
+        file_path.read_text(encoding='utf-8'),
+        mimetype='text/plain',
+        headers={'Content-Disposition': f'attachment; filename={actual_file}'}
+    )
+
+
+@app.route('/api/source/verify', methods=['POST'])
+@login_required
+def api_source_verify():
+    """在线源码一致性校验
+    接收用户提交的代码片段，计算其SHA-256哈希，并与生产环境代码进行比对。
+    支持两种方式：
+    1. 用户粘贴任意代码片段，系统在完整源码中搜索匹配
+    2. 若匹配到完整文件内容，返回文件级哈希比对结果
+    """
+    import hashlib
+    data = request.get_json()
+    target = data.get('target', 'engine')
+    user_code = data.get('code', '').strip()
+
+    if not user_code:
+        return jsonify({'error': '代码片段不能为空'}), 400
+
+    base_dir = Path(__file__).parent
+    file_map = {
+        'engine': 'collector_engine.py',
+        'auto': 'auto_collect.py',
+        'models': 'models.py',
+        'app': 'app.py'
+    }
+
+    target_file = file_map.get(target)
+    if not target_file:
+        return jsonify({'error': '无效的目标文件'}), 400
+
+    file_path = base_dir / target_file
+    if not file_path.exists():
+        return jsonify({'error': '目标文件不存在'}), 404
+
+    production_code = file_path.read_text(encoding='utf-8')
+
+    # 计算用户代码片段的哈希
+    user_hash = hashlib.sha256(user_code.encode('utf-8')).hexdigest()
+
+    # 检查用户代码是否出现在生产代码中
+    is_contained = user_code in production_code
+
+    # 如果是完整文件内容匹配
+    is_full_match = user_code == production_code.strip()
+
+    # 计算生产代码的哈希（用于展示）
+    production_hash = hashlib.sha256(production_code.encode('utf-8')).hexdigest()
+
+    # 计算用户代码在生产代码中的位置上下文
+    context = None
+    if is_contained:
+        idx = production_code.find(user_code)
+        start = max(0, idx - 100)
+        end = min(len(production_code), idx + len(user_code) + 100)
+        context = production_code[start:end]
+
+    return jsonify({
+        'match': is_contained or is_full_match,
+        'full_match': is_full_match,
+        'hash': user_hash[:16] + '...',
+        'hash_full': user_hash,
+        'production_hash': production_hash[:16] + '...',
+        'production_hash_full': production_hash,
+        'target_file': target_file,
+        'user_code_length': len(user_code),
+        'production_code_length': len(production_code),
+        'contained': is_contained,
+        'context': context[:300] + '...' if context and len(context) > 300 else context
+    })
+
+
+# ===== 定时任务管理API =====
+
+@app.route('/api/schedule', methods=['GET'])
+@login_required
+def api_schedule_list():
+    """获取定时任务列表"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM auto_schedule ORDER BY id DESC")
+    columns = [d[0] for d in cursor.description]
+    results = [dict(zip(columns, r)) for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/schedule', methods=['POST'])
+@login_required
+def api_schedule_create():
+    """创建定时任务"""
+    data = request.get_json()
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO auto_schedule (schedule_name, cron_expression, task_type, is_active, next_run_at)
+        VALUES (?, ?, ?, ?, ?)
+    """, (
+        data.get('schedule_name', '自动采集任务'),
+        data.get('cron_expression', '0 2 * * *'),
+        data.get('task_type', 'full'),
+        1 if data.get('is_active', True) else 0,
+        datetime.now().isoformat()
+    ))
+    conn.commit()
+    task_id = cursor.lastrowid
+    conn.close()
+    return jsonify({'success': True, 'id': task_id})
+
+
+@app.route('/api/schedule/<int:schedule_id>', methods=['PUT'])
+@login_required
+def api_schedule_update(schedule_id):
+    """更新定时任务"""
+    data = request.get_json()
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE auto_schedule SET
+            schedule_name=?, cron_expression=?, task_type=?, is_active=?
+        WHERE id=?
+    """, (
+        data.get('schedule_name'),
+        data.get('cron_expression'),
+        data.get('task_type'),
+        1 if data.get('is_active') else 0,
+        schedule_id
+    ))
+    conn.commit()
+    conn.close()
+    return jsonify({'success': True})
+
+
+@app.route('/api/schedule/<int:schedule_id>', methods=['DELETE'])
+@login_required
+def api_schedule_delete(schedule_id):
+    """删除定时任务"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM auto_schedule WHERE id=?", (schedule_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'success': True})
+
+
+@app.route('/api/schedule/<int:schedule_id>/toggle', methods=['POST'])
+@login_required
+def api_schedule_toggle(schedule_id):
+    """切换定时任务开关"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT is_active FROM auto_schedule WHERE id=?", (schedule_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        return jsonify({'error': '任务不存在'}), 404
+    new_status = 0 if row[0] else 1
+    cursor.execute("UPDATE auto_schedule SET is_active=? WHERE id=?", (new_status, schedule_id))
+    conn.commit()
+    conn.close()
+    return jsonify({'success': True, 'is_active': bool(new_status)})
+
+
+@app.route('/api/schedule/history')
+@login_required
+def api_schedule_history():
+    """获取自动采集历史成果"""
+    days = request.args.get('days', 30, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, task_name, task_type, status, total_count, completed_count,
+               success_count, fail_count, created_at, completed_at
+        FROM collection_tasks
+        WHERE task_name LIKE '自动采集_%'
+          AND created_at >= datetime('now', '-{} days')
+        ORDER BY id DESC
+    """.format(days))
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            'id': row[0], 'name': row[1], 'type': row[2], 'status': row[3],
+            'total': row[4], 'completed': row[5], 'success': row[6], 'failed': row[7],
+            'created': row[8], 'completed_at': row[9]
+        })
+    conn.close()
+    return jsonify(results)
+
+
 # 初始化数据库
 @app.before_request
 def before_first_request():
@@ -889,13 +1295,112 @@ def before_first_request():
         init_provenance_data()
 
 
+# ===== 后台定时任务调度器 =====
+
+def parse_cron(cron_expr):
+    """简单cron解析：支持 '分 时 日 月 周' 格式"""
+    parts = cron_expr.strip().split()
+    if len(parts) != 5:
+        return None
+    minute, hour, day, month, weekday = parts
+    return {
+        'minute': minute,
+        'hour': hour,
+        'day': day,
+        'month': month,
+        'weekday': weekday
+    }
+
+
+def match_cron_field(field, current):
+    """匹配cron字段"""
+    if field == '*':
+        return True
+    if '/' in field:
+        base, step = field.split('/')
+        if base == '*':
+            return current % int(step) == 0
+        return False
+    if ',' in field:
+        return str(current) in field.split(',')
+    if '-' in field:
+        start, end = field.split('-')
+        return int(start) <= current <= int(end)
+    return str(current) == field
+
+
+def should_run(cron_expr, last_run):
+    """判断当前是否应该执行定时任务"""
+    cron = parse_cron(cron_expr)
+    if not cron:
+        return False
+    now = datetime.now()
+    # 检查是否已在本分钟执行过
+    if last_run:
+        last = datetime.fromisoformat(last_run)
+        if last.year == now.year and last.month == now.month and last.day == now.day and last.hour == now.hour and last.minute == now.minute:
+            return False
+    return (match_cron_field(cron['minute'], now.minute) and
+            match_cron_field(cron['hour'], now.hour) and
+            match_cron_field(cron['day'], now.day) and
+            match_cron_field(cron['month'], now.month) and
+            match_cron_field(cron['weekday'], now.weekday()))
+
+
+def scheduler_worker():
+    """后台定时任务调度器线程"""
+    print("[Scheduler] 定时任务调度器已启动")
+    while True:
+        try:
+            conn = get_db()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, schedule_name, cron_expression, task_type, last_run_at
+                FROM auto_schedule WHERE is_active=1
+            """)
+            tasks = cursor.fetchall()
+            conn.close()
+
+            for task in tasks:
+                task_id, name, cron, task_type, last_run = task
+                if should_run(cron, last_run):
+                    print(f"[Scheduler] 执行定时任务 #{task_id}: {name}")
+                    try:
+                        # 更新最后执行时间
+                        conn = get_db()
+                        cursor = conn.cursor()
+                        cursor.execute("UPDATE auto_schedule SET last_run_at=? WHERE id=?",
+                                       (datetime.now().isoformat(), task_id))
+                        conn.commit()
+                        conn.close()
+                        # 执行采集（在独立线程中避免阻塞调度器）
+                        import subprocess
+                        subprocess.Popen([
+                            sys.executable, 'auto_collect.py',
+                            '--tier', task_type,
+                            '--workers', '3'
+                        ], cwd=os.path.dirname(os.path.abspath(__file__)))
+                        print(f"[Scheduler] 定时任务 #{task_id} 已触发")
+                    except Exception as e:
+                        print(f"[Scheduler] 任务 #{task_id} 执行失败: {e}")
+        except Exception as e:
+            print(f"[Scheduler] 调度器异常: {e}")
+        # 每分钟检查一次
+        time.sleep(60)
+
+
+# 启动后台调度器
+scheduler_thread = threading.Thread(target=scheduler_worker, daemon=True)
+scheduler_thread.start()
+
+
 if __name__ == '__main__':
     # 确保数据库已初始化
     if not DB_PATH.exists():
         init_db()
         init_platforms_data()
         init_provenance_data()
-    
+
     print("=" * 60)
     print("OGD-Collector Pro 启动中...")
     print("三层架构数据开放平台采集系统")
@@ -903,5 +1408,5 @@ if __name__ == '__main__':
     print("=" * 60)
     print("访问地址: http://127.0.0.1:5000")
     print("=" * 60)
-    
+
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)

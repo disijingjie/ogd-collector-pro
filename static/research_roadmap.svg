@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1800" width="1200" height="1800">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d5a87;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <!-- Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+    <!-- Arrow marker -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1800" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <rect x="50" y="20" width="1100" height="70" rx="8" fill="url(#grad1)" filter="url(#shadow)"/>
+  <text x="600" y="50" text-anchor="middle" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="22" font-weight="bold" fill="white">政府数据开放平台数据利用绩效评估研究</text>
+  <text x="600" y="75" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#cbd5e1">研究技术路线图 | Research Technical Roadmap</text>
+
+  <!-- ========== LAYER 1: 理论基础 (Theoretical Foundation) ========== -->
+  <rect x="50" y="110" width="1100" height="180" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="110" width="8" height="180" rx="4" fill="#1e3a5f"/>
+  <text x="80" y="140" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#1e3a5f">第一章 理论基础</text>
+  <text x="220" y="140" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">"规范性内核—结构性框架—系统性解释"嵌套式理论整合模型</text>
+
+  <!-- Theory boxes -->
+  <rect x="80" y="160" width="320" height="110" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="240" y="185" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#1e40af">公共价值理论</text>
+  <text x="240" y="210" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">规范性内核：从"供给导向"到"效果导向"</text>
+  <text x="240" y="230" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">评估范式转变：双向价值互动</text>
+  <text x="240" y="250" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">核心命题：数据是否产生公共价值</text>
+
+  <rect x="430" y="160" width="320" height="110" rx="8" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+  <text x="590" y="185" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#065f46">信息资源管理理论</text>
+  <text x="590" y="210" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">结构性框架：信息生命周期管理</text>
+  <text x="590" y="230" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">4E框架：供给-平台-质量-效果</text>
+  <text x="590" y="250" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">全链条评估：从生产到利用</text>
+
+  <rect x="780" y="160" width="340" height="110" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="950" y="185" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#92400e">等值组态理论</text>
+  <text x="950" y="210" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">系统性解释：多重并发因果关系</text>
+  <text x="950" y="230" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">TOE框架：技术-组织-环境</text>
+  <text x="950" y="250" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">组态逻辑：殊途同归的多条路径</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="300" x2="600" y2="320" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 2: 评估框架 (Evaluation Framework) ========== -->
+  <rect x="50" y="330" width="1100" height="200" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="330" width="8" height="200" rx="4" fill="#2563eb"/>
+  <text x="80" y="360" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#1e40af">第二章 评估框架与指标体系</text>
+  <text x="340" y="360" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">4E整合评估框架：39项指标体系覆盖全链条</text>
+
+  <!-- 4E Framework -->
+  <rect x="80" y="380" width="240" height="130" rx="8" fill="url(#grad2)" filter="url(#shadow)"/>
+  <text x="200" y="410" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="white">E1 供给保障</text>
+  <text x="200" y="435" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#dbeafe">Supply Assurance</text>
+  <text x="200" y="460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">数据集数量/更新频率</text>
+  <text x="200" y="480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">主题覆盖/格式规范</text>
+  <text x="200" y="500" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">元数据完整性/开放授权</text>
+
+  <rect x="340" y="380" width="240" height="130" rx="8" fill="url(#grad3)" filter="url(#shadow)"/>
+  <text x="460" y="410" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="white">E2 平台服务</text>
+  <text x="460" y="435" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#d1fae5">Platform Service</text>
+  <text x="460" y="460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">API接口/检索功能</text>
+  <text x="460" y="480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">用户反馈/互动机制</text>
+  <text x="460" y="500" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">多终端适配/无障碍访问</text>
+
+  <rect x="600" y="380" width="240" height="130" rx="8" fill="url(#grad4)" filter="url(#shadow)"/>
+  <text x="720" y="410" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="white">E3 数据质量</text>
+  <text x="720" y="435" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#fef3c7">Data Quality</text>
+  <text x="720" y="460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">准确性/一致性/完整性</text>
+  <text x="720" y="480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">时效性/可理解性</text>
+  <text x="720" y="500" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">机器可读性/关联性</text>
+
+  <rect x="860" y="380" width="260" height="130" rx="8" fill="url(#grad5)" filter="url(#shadow)"/>
+  <text x="990" y="410" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="white">E4 利用效果</text>
+  <text x="990" y="435" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#fee2e2">Utilization Effect</text>
+  <text x="990" y="460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">下载量/应用开发数</text>
+  <text x="990" y="480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">社会经济效益/决策支持</text>
+  <text x="990" y="500" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="white">创新价值/公众满意度</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="540" x2="600" y2="560" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 3: 方法体系 (Methodology) ========== -->
+  <rect x="50" y="570" width="1100" height="180" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="570" width="8" height="180" rx="4" fill="#7c3aed"/>
+  <text x="80" y="600" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#5b21b6">第三章 研究设计</text>
+  <text x="240" y="600" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">"描述—诊断—归因—组态"四位一体评估闭环</text>
+
+  <!-- Method boxes -->
+  <rect x="80" y="620" width="240" height="110" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="200" y="645" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">熵权TOPSIS</text>
+  <text x="200" y="670" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">绩效测度：描述"是什么"</text>
+  <text x="200" y="690" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">客观赋权+逼近理想解排序</text>
+  <text x="200" y="710" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">输出：综合绩效得分与排名</text>
+
+  <rect x="340" y="620" width="240" height="110" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="460" y="645" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">DEA-BCC</text>
+  <text x="460" y="670" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">效率诊断：分析"差多少"</text>
+  <text x="460" y="690" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">规模报酬可变效率分析</text>
+  <text x="460" y="710" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">输出：技术效率与规模效率</text>
+
+  <rect x="600" y="620" width="240" height="110" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="720" y="645" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">DEMATEL</text>
+  <text x="720" y="670" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">因果归因：解释"为什么"</text>
+  <text x="720" y="690" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">决策试验与评价实验室</text>
+  <text x="720" y="710" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">输出：原因度-结果度矩阵</text>
+
+  <rect x="860" y="620" width="260" height="110" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="990" y="645" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">fsQCA</text>
+  <text x="990" y="670" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">组态解释：揭示"怎么做"</text>
+  <text x="990" y="690" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">模糊集定性比较分析</text>
+  <text x="990" y="710" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">输出：高绩效等效组态路径</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="760" x2="600" y2="780" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 4: 实证研究 (Empirical Study) ========== -->
+  <rect x="50" y="790" width="1100" height="240" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="790" width="8" height="240" rx="4" fill="#059669"/>
+  <text x="80" y="820" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#065f46">第四—五章 实证研究</text>
+  <text x="300" y="820" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">三层架构全样本：31省级 + 13副省级 + 287地级市</text>
+
+  <!-- Sample layers -->
+  <rect x="80" y="840" width="1040" height="50" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="120" y="860" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="bold" fill="#1e40af">省级平台 (31个)</text>
+  <text x="120" y="878" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">全样本深度评估：自动化采集 + 人工核验 | 4E全维度评分 | 绩效排名与分层</text>
+  <text x="950" y="870" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#1e40af">绩效: 0.405</text>
+
+  <rect x="80" y="900" width="1040" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="120" y="920" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="bold" fill="#065f46">副省级平台 (13个)</text>
+  <text x="120" y="938" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">定向采集 + 问卷调研 | 标杆分析 | 最佳实践识别</text>
+  <text x="950" y="930" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#065f46">绩效: 0.623</text>
+
+  <rect x="80" y="960" width="1040" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="120" y="980" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="bold" fill="#92400e">地级市平台 (287个)</text>
+  <text x="120" y="998" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">全样本统计 + 分层抽样(62个已建平台) | 两极分化分析 | 空白诊断</text>
+  <text x="950" y="990" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#92400e">绩效: 0.318</text>
+
+  <!-- Cross-layer analysis -->
+  <rect x="80" y="1020" width="340" height="50" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="250" y="1045" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#991b1b">层级差异分析</text>
+  <text x="250" y="1062" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="10" fill="#334155">副省级 > 省级 > 地级市 | 传导断裂诊断</text>
+
+  <rect x="440" y="1020" width="340" height="50" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="610" y="1045" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#991b1b">区域差异分析</text>
+  <text x="610" y="1062" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="10" fill="#334155">东部 > 中部 > 西部 | 交叉强化效应</text>
+
+  <rect x="800" y="1020" width="320" height="50" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="960" y="1045" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="12" font-weight="bold" fill="#991b1b">组态路径分析</text>
+  <text x="960" y="1062" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="10" fill="#334155">三条高绩效等效路径 | 殊途同归</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="1040" x2="600" y2="1060" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 5: 问题诊断 (Problem Diagnosis) ========== -->
+  <rect x="50" y="1080" width="1100" height="200" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="1080" width="8" height="200" rx="4" fill="#dc2626"/>
+  <text x="80" y="1110" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#991b1b">第六章 问题诊断</text>
+  <text x="260" y="1110" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">"雁阵分化"与"量增质未增"的深层机制</text>
+
+  <!-- Problem categories -->
+  <rect x="80" y="1130" width="240" height="130" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="200" y="1155" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">绩效层面</text>
+  <text x="200" y="1180" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">"高绩效-高效率"未实现均衡</text>
+  <text x="200" y="1200" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">维度错位：量多质低 vs 量少质高</text>
+  <text x="200" y="1220" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">两极分化：62个活跃 vs 225个空白</text>
+
+  <rect x="340" y="1130" width="240" height="130" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="460" y="1155" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">传导层面</text>
+  <text x="460" y="1180" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">制度传导断裂：政策空转</text>
+  <text x="460" y="1200" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">技术传导断裂：基础设施差异</text>
+  <text x="460" y="1220" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">数据传导断裂/生态传导断裂</text>
+
+  <rect x="600" y="1130" width="240" height="130" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="720" y="1155" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">因果层面</text>
+  <text x="720" y="1180" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">供给保障 = 原因型根本动力</text>
+  <text x="720" y="1200" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">数据质量 = 传导中枢</text>
+  <text x="720" y="1220" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">制度环境 = 调节变量</text>
+
+  <rect x="860" y="1130" width="260" height="130" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="990" y="1155" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#991b1b">组态层面</text>
+  <text x="990" y="1180" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">单一维度非充分条件</text>
+  <text x="990" y="1200" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">三条等效路径验证"殊途同归"</text>
+  <text x="990" y="1220" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">技术驱动/效率-区域/生态协同</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="1290" x2="600" y2="1310" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 6: 对策建议 (Policy Recommendations) ========== -->
+  <rect x="50" y="1320" width="1100" height="200" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="1320" width="8" height="200" rx="4" fill="#7c3aed"/>
+  <text x="80" y="1350" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#5b21b6">第七章 对策建议</text>
+  <text x="280" y="1350" font-family="Microsoft YaHei, sans-serif" font-size="12" fill="#64748b">差异化、证据驱动的政策工具箱</text>
+
+  <!-- Policy paths -->
+  <rect x="80" y="1370" width="340" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="250" y="1395" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">技术驱动型路径</text>
+  <text x="250" y="1420" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">适用：技术基础设施薄弱地区</text>
+  <text x="250" y="1440" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">核心：平台升级 + API标准化 + 质量管控</text>
+  <text x="250" y="1460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">抓手：数据中台建设、智能质检系统</text>
+  <text x="250" y="1480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">预期效果：技术效率提升30%+</text>
+
+  <rect x="440" y="1370" width="340" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="610" y="1395" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">效率-区域型路径</text>
+  <text x="610" y="1420" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">适用：中西部地区、资源约束型平台</text>
+  <text x="610" y="1440" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">核心：精准供给 + 需求对接 + 规模优化</text>
+  <text x="610" y="1460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">抓手：重点数据集优先开放、区域协同</text>
+  <text x="610" y="1480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">预期效果：规模效率提升25%+</text>
+
+  <rect x="800" y="1370" width="320" height="130" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="960" y="1395" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="bold" fill="#5b21b6">生态协同型路径</text>
+  <text x="960" y="1420" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">适用：东部发达地区、高绩效平台</text>
+  <text x="960" y="1440" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">核心：生态培育 + 价值共创 + 授权运营</text>
+  <text x="960" y="1460" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">抓手：数据要素市场、产学研联盟</text>
+  <text x="960" y="1480" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#334155">预期效果：利用效果倍增</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="1530" x2="600" y2="1550" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ========== LAYER 7: 结论与展望 (Conclusion) ========== -->
+  <rect x="50" y="1560" width="1100" height="140" rx="10" fill="white" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="50" y="1560" width="8" height="140" rx="4" fill="#1e3a5f"/>
+  <text x="80" y="1590" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#1e3a5f">第八章 结论与展望</text>
+
+  <rect x="80" y="1610" width="1040" height="70" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="600" y="1635" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="bold" fill="#1e3a5f">理论贡献 · 方法贡献 · 实践贡献</text>
+  <text x="600" y="1660" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#475569">理论：评估范式从"单向供给"到"双向价值互动"的跃升 | 方法：构成性维度与因果性解释的自洽闭环 | 实践：证据驱动的差异化政策工具箱</text>
+
+  <!-- Footer -->
+  <text x="600" y="1750" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="11" fill="#94a3b8">武汉大学信息管理学院 · 文明 · 2026年4月</text>
+  <text x="600" y="1770" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="10" fill="#cbd5e1">Research on Data Utilization Performance Evaluation of Open Government Data Platforms</text>
+</svg>

@@ -2,6 +2,7 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_css %}
 <style>
+/* 实时监控风格 */
 .monitor-card {
     background: white;
     border-radius: 12px;
@@ -32,54 +33,235 @@
     display: inline-block;
     margin-right: 6px;
 }
-.status-up { background: #38a169; }
+.status-up { background: #38a169; box-shadow: 0 0 8px rgba(56,161,105,0.5); }
 .status-down { background: #e53e3e; }
 .status-warn { background: #d69e2e; }
-.log-entry {
-    padding: 10px 0;
-    border-bottom: 1px solid #edf2f7;
-    font-size: 0.85rem;
+
+/* 心跳动画 */
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(56,161,105,0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(56,161,105,0); }
+    100% { box-shadow: 0 0 0 0 rgba(56,161,105,0); }
 }
-.log-entry:last-child { border-bottom: none; }
-.log-time { color: #a0aec0; font-size: 0.75rem; }
+.heartbeat {
+    animation: pulse-green 2s infinite;
+}
+
+/* 终端日志样式 */
+.terminal-window {
+    background: #0d1117;
+    border-radius: 8px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    overflow: hidden;
+}
+.terminal-header {
+    background: #161b22;
+    padding: 8px 16px;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; }
+.terminal-title { color: #8b949e; font-size: 0.75rem; margin-left: 8px; }
+.terminal-body {
+    padding: 12px 16px;
+    height: 320px;
+    overflow-y: auto;
+    color: #c9d1d9;
+}
+.terminal-body .log-time { color: #6e7681; }
+.terminal-body .log-info { color: #58a6ff; }
+.terminal-body .log-success { color: #3fb950; }
+.terminal-body .log-warning { color: #d29922; }
+.terminal-body .log-error { color: #f85149; }
+.terminal-body .log-data { color: #a5d6ff; }
+
+/* 数据样本卡片 */
+.data-sample-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+.data-sample-card:hover {
+    border-color: #3182ce;
+    box-shadow: 0 4px 12px rgba(49,130,206,0.15);
+}
+.data-sample-card .sample-name {
+    font-weight: 600;
+    color: #1a365d;
+    font-size: 0.9rem;
+}
+.data-sample-card .sample-meta {
+    font-size: 0.75rem;
+    color: #718096;
+    margin-top: 4px;
+}
+.data-sample-card .sample-score {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c5282;
+}
+.data-sample-card .sample-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* 进度条 */
+.progress-track {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #3182ce, #38a169);
+    transition: width 0.5s ease;
+}
+
+/* 滚动条 */
+.terminal-body::-webkit-scrollbar { width: 6px; }
+.terminal-body::-webkit-scrollbar-track { background: #0d1117; }
+.terminal-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
 .chart-container { height: 280px; }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- 顶部状态栏 -->
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3><i class="bi bi-activity text-primary me-2"></i>实时监控面板</h3>
-    <span class="badge bg-success"><i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>采集引擎运行中</span>
+    <div class="d-flex align-items-center gap-3">
+        <h3 class="mb-0"><i class="bi bi-activity text-primary me-2"></i>实时监控面板</h3>
+        <span class="badge bg-success d-flex align-items-center gap-2 px-3 py-2">
+            <span class="status-dot status-up heartbeat"></span>
+            <span>采集引擎运行中</span>
+        </span>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <span class="text-muted small" id="lastUpdate"><i class="bi bi-clock me-1"></i>最后更新: --</span>
+        <a href="/source-code" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-code-square me-1"></i>源码检测
+        </a>
+    </div>
 </div>
 
+<!-- 核心指标 -->
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="monitor-card text-center">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-arrow-repeat text-primary" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
             <div class="metric-value" id="collections24h">-</div>
             <div class="metric-label">24小时采集次数</div>
+            <div class="mt-2 small text-success" id="collectionsTrend"><i class="bi bi-graph-up"></i> 实时增长</div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="monitor-card text-center">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-heart-pulse text-danger" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
             <div class="metric-value" id="healthChecks24h">-</div>
             <div class="metric-label">24小时健康检查</div>
+            <div class="mt-2 small text-muted" id="healthRate">检测率 --%</div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="monitor-card text-center">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-speedometer2 text-warning" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
             <div class="metric-value" id="avgResponse">-</div>
             <div class="metric-label">平均响应时间(ms)</div>
+            <div class="mt-2 small" id="responseStatus"><span class="badge bg-light text-dark">--</span></div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="monitor-card text-center">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-check-circle text-success" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
             <div class="metric-value" id="uptimePct">-</div>
             <div class="metric-label">当前可用率(%)</div>
+            <div class="mt-2 small" id="uptimeStatus"><span class="badge bg-light text-dark">--</span></div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<!-- 第二行：终端日志 + 实时采集样本 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-7">
+        <div class="monitor-card p-0 overflow-hidden">
+            <div class="d-flex justify-content-between align-items-center px-4 py-3 border-bottom">
+                <h5 class="mb-0"><i class="bi bi-terminal text-dark me-2"></i>实时采集日志</h5>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-dark"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>LIVE</span>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="clearTerminal()">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="terminal-title">collector_engine.py — ogd-collector-pro</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="text-muted">正在连接采集引擎...</div>
+                </div>
+            </div>
+            <div class="px-4 py-2 bg-light border-top d-flex justify-content-between align-items-center">
+                <span class="small text-muted"><i class="bi bi-info-circle me-1"></i>此处实时显示采集引擎的输出日志</span>
+                <a href="/source-code" class="small text-primary">查看源码 <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="monitor-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="bi bi-database text-success me-2"></i>最新采集数据样本</h5>
+                <span class="badge bg-success">实时</span>
+            </div>
+            <div id="latestSamples">
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-arrow-clockwise spin" style="font-size:2rem;"></i>
+                    <div class="mt-2 small">正在加载最新采集数据...</div>
+                </div>
+            </div>
+            <div class="mt-3 pt-3 border-top">
+                <div class="d-flex justify-content-between small text-muted">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i>数据真实可溯源</span>
+                    <a href="/source-code" class="text-primary">验证采集逻辑 <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 第三行：当前活跃任务 + 趋势图 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="monitor-card">
+            <h5 class="mb-3"><i class="bi bi-cpu text-primary me-2"></i>当前活跃任务</h5>
+            <div id="activeTasks">
+                <div class="text-muted small text-center py-4">暂无活跃采集任务</div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-8">
         <div class="monitor-card">
             <h5><i class="bi bi-graph-up-arrow me-2"></i>采集历史趋势（最近7天）</h5>
@@ -88,20 +270,20 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="monitor-card">
-            <h5><i class="bi bi-list-task me-2"></i>最近采集任务</h5>
-            <div id="recentTasks">
-                <div class="text-muted small">加载中...</div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="row mt-4">
+<!-- 第四行：健康检查详情 -->
+<div class="row">
     <div class="col-12">
         <div class="monitor-card">
-            <h5><i class="bi bi-heart-pulse me-2"></i>平台健康检查详情</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="bi bi-heart-pulse me-2"></i>平台健康检查详情</h5>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-success"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>正常</span>
+                    <span class="badge bg-danger"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>异常</span>
+                    <span class="badge bg-warning"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>超时</span>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -111,9 +293,9 @@
                             <th>状态</th>
                             <th>HTTP</th>
                             <th>响应(ms)</th>
-                            <th>DNS(ms)</th>
-                            <th>SSL</th>
-                            <th>页面(KB)</th>
+                            <th>数据集</th>
+                            <th>得分</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody id="healthTable">
@@ -128,6 +310,55 @@
 
 {% block extra_js %}
 <script>
+let terminalLines = [];
+let maxTerminalLines = 100;
+
+function addTerminalLine(text, type = 'info') {
+    const body = document.getElementById('terminalBody');
+    const now = new Date().toLocaleTimeString('zh-CN');
+    const typeClass = {
+        'info': 'log-info',
+        'success': 'log-success',
+        'warning': 'log-warning',
+        'error': 'log-error',
+        'data': 'log-data'
+    }[type] || 'log-info';
+
+    const line = document.createElement('div');
+    line.innerHTML = `<span class="log-time">[${now}]</span> <span class="${typeClass}">${escapeHtml(text)}</span>`;
+    body.appendChild(line);
+
+    // 保持滚动到底部
+    body.scrollTop = body.scrollHeight;
+
+    // 限制行数
+    while (body.children.length > maxTerminalLines) {
+        body.removeChild(body.firstChild);
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function clearTerminal() {
+    document.getElementById('terminalBody').innerHTML = '';
+    addTerminalLine('终端已清空', 'info');
+}
+
+// 初始化终端
+function initTerminal() {
+    const body = document.getElementById('terminalBody');
+    body.innerHTML = '';
+    addTerminalLine('OGD-Collector Pro v2.2 采集引擎已连接', 'success');
+    addTerminalLine('三层架构数据采集系统 — 省级31 + 副省级13 + 地级市60', 'info');
+    addTerminalLine('4E框架评分算法已加载: C1供给/C2服务/C3质量/C4效果', 'info');
+    addTerminalLine('等待采集任务...', 'data');
+}
+
+// 加载实时指标
 async function loadRealtime() {
     try {
         const r = await fetch('/api/monitoring/realtime');
@@ -136,32 +367,148 @@ async function loadRealtime() {
         document.getElementById('healthChecks24h').textContent = d.health_checks_24h || 0;
         document.getElementById('avgResponse').textContent = d.avg_response_ms || 0;
         document.getElementById('uptimePct').textContent = (d.current_uptime_pct || 0) + '%';
-        // 最近任务
-        let tasksHtml = '';
-        (d.recent_tasks || []).forEach(t => {
-            const badge = t.status === 'completed' ? 'bg-success' : t.status === 'running' ? 'bg-primary' : 'bg-secondary';
-            tasksHtml += `<div class="log-entry"><div class="d-flex justify-content-between"><span class="fw-semibold">${t.name}</span><span class="badge ${badge}">${t.status}</span></div><div class="log-time">${t.time} | 完成 ${t.completed}/${t.total}</div></div>`;
-        });
-        document.getElementById('recentTasks').innerHTML = tasksHtml || '<div class="text-muted small">暂无任务</div>';
+        document.getElementById('lastUpdate').innerHTML = `<i class="bi bi-clock me-1"></i>最后更新: ${new Date().toLocaleTimeString('zh-CN')}`;
+
+        // 响应时间状态
+        const avgResp = d.avg_response_ms || 0;
+        const respEl = document.getElementById('responseStatus');
+        if (avgResp < 1000) respEl.innerHTML = '<span class="badge bg-success">极速</span>';
+        else if (avgResp < 3000) respEl.innerHTML = '<span class="badge bg-warning">正常</span>';
+        else respEl.innerHTML = '<span class="badge bg-danger">缓慢</span>';
+
+        // 可用率状态
+        const uptime = d.current_uptime_pct || 0;
+        const upEl = document.getElementById('uptimeStatus');
+        if (uptime >= 90) upEl.innerHTML = '<span class="badge bg-success">优秀</span>';
+        else if (uptime >= 70) upEl.innerHTML = '<span class="badge bg-warning">一般</span>';
+        else upEl.innerHTML = '<span class="badge bg-danger">偏低</span>';
+
+        // 活跃任务
+        const tasksDiv = document.getElementById('activeTasks');
+        if (d.active_tasks && d.active_tasks.length > 0) {
+            let html = '';
+            d.active_tasks.forEach(t => {
+                const pct = t.total > 0 ? Math.round(t.completed / t.total * 100) : 0;
+                html += `
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span class="fw-semibold">${t.name}</span>
+                        <span class="text-muted">${t.completed}/${t.total}</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: ${pct}%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-1">
+                        <span class="small text-muted"><i class="bi bi-gear-fill spin me-1"></i>${t.current_platform || '准备中'}</span>
+                        <span class="small text-primary">${pct}%</span>
+                    </div>
+                </div>`;
+            });
+            tasksDiv.innerHTML = html;
+        } else {
+            tasksDiv.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="bi bi-pause-circle text-muted" style="font-size:2rem;"></i>
+                    <div class="mt-2 small text-muted">暂无活跃采集任务</div>
+                    <a href="/collector" class="btn btn-sm btn-primary mt-2">启动采集</a>
+                </div>`;
+        }
     } catch(e) { console.error(e); }
 }
 
+// 加载最新采集样本
+async function loadLatestSamples() {
+    try {
+        const r = await fetch('/api/monitoring/latest_samples?limit=6');
+        const samples = await r.json();
+        const div = document.getElementById('latestSamples');
+        if (samples.length === 0) {
+            div.innerHTML = `
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-inbox" style="font-size:2rem;"></i>
+                    <div class="mt-2 small">暂无采集数据，请先执行采集任务</div>
+                </div>`;
+            return;
+        }
+        let html = '<div class="row g-2">';
+        samples.forEach(s => {
+            const scoreColor = s.overall >= 0.6 ? 'text-success' : s.overall >= 0.4 ? 'text-warning' : 'text-danger';
+            const statusBadge = s.status === 'available'
+                ? '<span class="sample-badge bg-success text-white">正常</span>'
+                : '<span class="sample-badge bg-secondary text-white">异常</span>';
+            html += `
+            <div class="col-6">
+                <div class="data-sample-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="sample-name text-truncate" style="max-width:120px;" title="${s.name}">${s.name}</div>
+                        ${statusBadge}
+                    </div>
+                    <div class="sample-meta">
+                        <span class="me-2"><i class="bi bi-layers me-1"></i>${s.tier}</span>
+                        <span><i class="bi bi-geo-alt me-1"></i>${s.region}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end mt-2">
+                        <div>
+                            <div class="small text-muted">综合得分</div>
+                            <div class="sample-score ${scoreColor}">${(s.overall * 100).toFixed(1)}</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="small text-muted">数据集</div>
+                            <div class="fw-semibold">${s.datasets || 0}</div>
+                        </div>
+                    </div>
+                    <div class="mt-2 small text-muted">
+                        <i class="bi bi-clock-history me-1"></i>${s.collected_at ? s.collected_at.slice(0,16).replace('T',' ') : '-'}
+                    </div>
+                </div>
+            </div>`;
+        });
+        html += '</div>';
+        div.innerHTML = html;
+    } catch(e) { console.error(e); }
+}
+
+// 加载实时日志
+async function loadLiveLogs() {
+    try {
+        const r = await fetch('/api/monitoring/live_logs?limit=15');
+        const logs = await r.json();
+        if (logs.length > 0) {
+            logs.forEach(log => {
+                addTerminalLine(`[${log.level}] ${log.platform || '系统'}: ${log.message}`,
+                    log.level === 'ERROR' ? 'error' :
+                    log.level === 'WARNING' ? 'warning' :
+                    log.level === 'SUCCESS' ? 'success' : 'info');
+            });
+        }
+    } catch(e) { console.error(e); }
+}
+
+// 加载健康检查
 async function loadHealth() {
     try {
-        const r = await fetch('/api/monitoring/health?limit=20');
+        const r = await fetch('/api/monitoring/health?limit=15');
         const rows = await r.json();
         let html = '';
         rows.forEach(row => {
-            const statusDot = row.reachable ? '<span class="status-dot status-up"></span>' : '<span class="status-dot status-down"></span>';
+            const statusDot = row.reachable
+                ? '<span class="status-dot status-up"></span>'
+                : '<span class="status-dot status-down"></span>';
+            const statusText = row.reachable ? '正常' : (row.status === 'timeout' ? '超时' : '异常');
+            const scoreColor = row.overall > 0.6 ? 'text-success' : row.overall > 0.4 ? 'text-warning' : 'text-danger';
             html += `<tr>
-                <td>${row.name || row.code}</td>
+                <td class="fw-semibold small">${row.name || row.code}</td>
                 <td class="small text-muted">${row.time}</td>
-                <td>${statusDot}${row.reachable ? '正常' : '异常'}</td>
-                <td>${row.http_status || '-'}</td>
-                <td>${row.response_ms || '-'}</td>
-                <td>${row.dns_ms || '-'}</td>
-                <td>${row.ssl_valid ? '有效' : '无效'}</td>
-                <td>${row.page_kb ? row.page_kb.toFixed(1) : '-'}</td>
+                <td>${statusDot}${statusText}</td>
+                <td><span class="badge bg-light text-dark">${row.http_status || '-'}</span></td>
+                <td>${row.response_ms || '-'}ms</td>
+                <td>${row.dataset_count || '-'}</td>
+                <td class="${scoreColor} fw-semibold">${row.overall ? (row.overall*100).toFixed(1) : '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewSnapshot('${row.code}')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
             </tr>`;
         });
         document.getElementById('healthTable').innerHTML = html;
@@ -202,10 +549,21 @@ async function loadHistory() {
     } catch(e) { console.error(e); }
 }
 
+function viewSnapshot(code) {
+    window.open(`/platform/${code}`, '_blank');
+}
+
+// 初始化
+initTerminal();
 loadRealtime();
+loadLatestSamples();
 loadHealth();
 loadHistory();
-setInterval(loadRealtime, 30000);
-setInterval(loadHealth, 60000);
+
+// 定时刷新
+setInterval(loadRealtime, 10000);
+setInterval(loadLatestSamples, 15000);
+setInterval(loadLiveLogs, 8000);
+setInterval(loadHealth, 20000);
 </script>
 {% endblock %}

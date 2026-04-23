@@ -132,10 +132,117 @@
     </div>
 </div>
 
+<!-- 定时任务配置 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-5">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-clock-history text-primary me-2"></i>定时任务配置</h5>
+                <span class="badge bg-success" id="scheduler-status">调度器运行中</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="alert alert-light border small mb-3">
+                    <i class="bi bi-info-circle me-1"></i>
+                    设置定时自动采集任务，系统将按配置自动执行数据采集并生成统计报告。
+                </div>
+                <form id="schedule-form" onsubmit="event.preventDefault(); createSchedule();">
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">任务名称</label>
+                        <input type="text" class="form-control" id="sched-name" value="每日自动全量采集" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Cron表达式 <a href="https://crontab.guru/" target="_blank" class="small">(?)</a></label>
+                        <input type="text" class="form-control" id="sched-cron" value="0 2 * * *" required>
+                        <div class="form-text small">默认每天凌晨2:00执行</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">采集范围</label>
+                        <select class="form-select" id="sched-type">
+                            <option value="full">完整采集 (31省+13副省级+60地级市)</option>
+                            <option value="provincial">仅省级 (31个)</option>
+                            <option value="subprovincial">仅副省级 (13个)</option>
+                            <option value="prefectural">仅地级市 (60个)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-lg"></i> 添加定时任务
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-calendar-check text-success me-2"></i>定时任务列表</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadSchedules()">
+                    <i class="bi bi-arrow-clockwise"></i> 刷新
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>Cron</th>
+                                <th>范围</th>
+                                <th>状态</th>
+                                <th>上次执行</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-list">
+                            <tr><td colspan="7" class="text-center text-muted py-4">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 自动采集成果 -->
+<div class="card mb-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-trophy text-warning me-2"></i>自动采集历史成果</h5>
+        <div>
+            <select class="form-select form-select-sm d-inline-block w-auto" id="history-days" onchange="loadScheduleHistory()">
+                <option value="7">近7天</option>
+                <option value="30" selected>近30天</option>
+                <option value="90">近90天</option>
+            </select>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>任务ID</th>
+                        <th>任务名称</th>
+                        <th>范围</th>
+                        <th>状态</th>
+                        <th>平台总数</th>
+                        <th>成功</th>
+                        <th>失败</th>
+                        <th>成功率</th>
+                        <th>执行时间</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-history">
+                    <tr><td colspan="9" class="text-center text-muted py-4">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <!-- 任务列表 -->
 <div class="card">
     <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-        <h5 class="mb-0"><i class="bi bi-list-task"></i> 任务历史</h5>
+        <h5 class="mb-0"><i class="bi bi-list-task"></i> 手动任务历史</h5>
     </div>
     <div class="card-body p-4">
         <div class="table-responsive">
@@ -379,7 +486,114 @@ document.getElementById('delay-range').addEventListener('input', (e) => {
     document.getElementById('delay-value').textContent = e.target.value;
 });
 
+// ===== 定时任务管理 =====
+
+async function loadSchedules() {
+    const res = await fetch('/api/schedule');
+    const schedules = await res.json();
+    const tbody = document.getElementById('schedule-list');
+    if (schedules.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">暂无定时任务</td></tr>';
+        return;
+    }
+    tbody.innerHTML = schedules.map(s => `
+        <tr>
+            <td>#${s.id}</td>
+            <td>${s.schedule_name}</td>
+            <td><code class="small">${s.cron_expression}</code></td>
+            <td><span class="badge bg-light text-dark">${s.task_type}</span></td>
+            <td>
+                <span class="badge bg-${s.is_active ? 'success' : 'secondary'}">${s.is_active ? '启用' : '禁用'}</span>
+            </td>
+            <td class="small text-muted">${s.last_run_at || '从未'}</td>
+            <td>
+                <button class="btn btn-sm btn-${s.is_active ? 'warning' : 'success'}" onclick="toggleSchedule(${s.id})">
+                    <i class="bi bi-toggle-${s.is_active ? 'on' : 'off'}"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${s.id})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function createSchedule() {
+    const data = {
+        schedule_name: document.getElementById('sched-name').value,
+        cron_expression: document.getElementById('sched-cron').value,
+        task_type: document.getElementById('sched-type').value,
+        is_active: true
+    };
+    const res = await fetch('/api/schedule', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务创建成功: #${result.id}`);
+        loadSchedules();
+    } else {
+        addLog('error', '定时任务创建失败');
+    }
+}
+
+async function toggleSchedule(id) {
+    const res = await fetch(`/api/schedule/${id}/toggle`, {method: 'POST'});
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务 #${id} 已${result.is_active ? '启用' : '禁用'}`);
+        loadSchedules();
+    }
+}
+
+async function deleteSchedule(id) {
+    if (!confirm('确定删除此定时任务？')) return;
+    const res = await fetch(`/api/schedule/${id}`, {method: 'DELETE'});
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务 #${id} 已删除`);
+        loadSchedules();
+    }
+}
+
+async function loadScheduleHistory() {
+    const days = document.getElementById('history-days').value;
+    const res = await fetch(`/api/schedule/history?days=${days}`);
+    const history = await res.json();
+    const tbody = document.getElementById('schedule-history');
+    if (history.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-4">暂无自动采集记录</td></tr>';
+        return;
+    }
+    tbody.innerHTML = history.map(h => {
+        const rate = h.total > 0 ? (h.success / h.total * 100).toFixed(1) : 0;
+        return `
+        <tr>
+            <td>#${h.id}</td>
+            <td>${h.name}</td>
+            <td><span class="badge bg-light text-dark">${h.type}</span></td>
+            <td><span class="badge bg-${h.status === 'completed' ? 'success' : h.status === 'failed' ? 'danger' : 'primary'}">${h.status}</span></td>
+            <td>${h.total || 0}</td>
+            <td class="text-success">${h.success || 0}</td>
+            <td class="text-danger">${h.failed || 0}</td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                        <div class="progress-bar bg-success" style="width: ${rate}%"></div>
+                    </div>
+                    <span class="small">${rate}%</span>
+                </div>
+            </td>
+            <td class="small text-muted">${h.created || '-'}</td>
+        </tr>
+    `}).join('');
+}
+
 // 初始化
 loadTasks();
+loadSchedules();
+loadScheduleHistory();
 </script>
 {% endblock %}
