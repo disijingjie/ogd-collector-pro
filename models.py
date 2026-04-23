@@ -20,6 +20,32 @@ def get_db():
     return conn
 
 
+REQUIRED_TABLES = [
+    'platforms', 'collection_tasks', 'collection_records',
+    'collection_snapshots', 'analysis_results', 'collection_logs',
+    'access_logs', 'collection_stats', 'platform_features',
+    'auto_schedule', 'platform_health_checks', 'api_endpoint_checks',
+    'data_provenance', 'collection_metrics_detail'
+]
+
+
+def ensure_db():
+    """确保数据库完整：文件存在且所有必需表都在"""
+    if not DB_PATH.exists():
+        init_db()
+        init_platforms_data()
+        return
+    conn = sqlite3.connect(str(DB_PATH))
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    existing = {row[0] for row in cursor.fetchall()}
+    conn.close()
+    missing = [t for t in REQUIRED_TABLES if t not in existing]
+    if missing:
+        print(f"[DB] 检测到缺失表: {missing}, 自动重建...")
+        init_db()
+
+
 def init_db():
     """初始化数据库表结构"""
     conn = get_db()

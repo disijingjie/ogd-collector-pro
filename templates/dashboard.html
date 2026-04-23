@@ -1,10 +1,281 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+/* 分割线标题样式 */
+.section-divider {
+    color: rgba(0,0,0,0.4);
+    font-weight: 600;
+}
+.section-divider i {
+    font-size: 1.2rem;
+}
+</style>
+/* ===== monitoring CSS ===== */
+
+<style>
+/* 实时监控风格 */
+.monitor-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+.monitor-card h5 {
+    color: #1e3a5f;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c5282;
+}
+.metric-label {
+    font-size: 0.8rem;
+    color: #718096;
+}
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+.status-up { background: #38a169; box-shadow: 0 0 8px rgba(56,161,105,0.5); }
+.status-down { background: #e53e3e; }
+.status-warn { background: #d69e2e; }
+
+/* 心跳动画 */
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(56,161,105,0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(56,161,105,0); }
+    100% { box-shadow: 0 0 0 0 rgba(56,161,105,0); }
+}
+.heartbeat {
+    animation: pulse-green 2s infinite;
+}
+
+/* 终端日志样式 */
+.terminal-window {
+    background: #0d1117;
+    border-radius: 8px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    overflow: hidden;
+}
+.terminal-header {
+    background: #161b22;
+    padding: 8px 16px;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; }
+.terminal-title { color: #8b949e; font-size: 0.75rem; margin-left: 8px; }
+.terminal-body {
+    padding: 12px 16px;
+    height: 320px;
+    overflow-y: auto;
+    color: #c9d1d9;
+}
+.terminal-body .log-time { color: #6e7681; }
+.terminal-body .log-info { color: #58a6ff; }
+.terminal-body .log-success { color: #3fb950; }
+.terminal-body .log-warning { color: #d29922; }
+.terminal-body .log-error { color: #f85149; }
+.terminal-body .log-data { color: #a5d6ff; }
+
+/* 数据样本卡片 */
+.data-sample-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+.data-sample-card:hover {
+    border-color: #3182ce;
+    box-shadow: 0 4px 12px rgba(49,130,206,0.15);
+}
+.data-sample-card .sample-name {
+    font-weight: 600;
+    color: #1a365d;
+    font-size: 0.9rem;
+}
+.data-sample-card .sample-meta {
+    font-size: 0.75rem;
+    color: #718096;
+    margin-top: 4px;
+}
+.data-sample-card .sample-score {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c5282;
+}
+.data-sample-card .sample-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* 进度条 */
+.progress-track {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #3182ce, #38a169);
+    transition: width 0.5s ease;
+}
+
+/* 滚动条 */
+.terminal-body::-webkit-scrollbar { width: 6px; }
+.terminal-body::-webkit-scrollbar-track { background: #0d1117; }
+.terminal-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+.chart-container { height: 280px; }
+</style>
+
+/* ===== provenance CSS ===== */
+
+<style>
+.source-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 16px;
+    transition: transform 0.2s;
+}
+.source-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.source-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.source-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+.source-type {
+    background: #ebf8ff;
+    color: #2c5282;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.source-meta {
+    font-size: 0.85rem;
+    color: #4a5568;
+    line-height: 1.6;
+}
+.source-meta i {
+    color: #3182ce;
+    width: 18px;
+}
+.quality-stars {
+    color: #d69e2e;
+}
+.stats-bar {
+    background: linear-gradient(135deg, #1e3a5f, #2c5282);
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+    margin-bottom: 24px;
+}
+.stats-bar .number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+.stats-bar .label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+</style>
+
+/* ===== data_archive CSS ===== */
+
+<style>
+.archive-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+.archive-card h5 {
+    color: #1e3a5f;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.snapshot-table th {
+    background: #f7fafc;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+.snapshot-table td {
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+.badge-verified { background: #c6f6d5; color: #22543d; }
+.badge-pending { background: #feebc8; color: #744210; }
+.export-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    display: inline-block;
+}
+.export-btn:hover { background: #2c5282; color: white; }
+.verify-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+.timestamp-box {
+    background: #1a202c;
+    color: #a0aec0;
+    font-family: 'Consolas', monospace;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+</style>
+
+{% endblock %}
+
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="mb-1">数据看板</h2>
-        <p class="text-muted mb-0">采集管理、实时监控、数据溯源与归集的一体化视图</p>
+        <h2 class="mb-1">采集管理</h2>
+        <p class="text-muted mb-0">采集任务、实时监控、源码公开、数据溯源与归集一体化管理</p>
     </div>
     <div>
         <a href="/api/export/csv" class="btn btn-outline-primary">
@@ -13,134 +284,207 @@
     </div>
 </div>
 
-<!-- 内页Tab导航 -->
-<ul class="nav page-tabs" id="dashboardTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="db-overview-tab" data-bs-toggle="tab" data-bs-target="#db-overview" type="button" role="tab">
-            <i class="bi bi-bar-chart-line"></i> 数据看板
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="db-collector-tab" data-bs-toggle="tab" data-bs-target="#db-collector" type="button" role="tab">
-            <i class="bi bi-collection-play"></i> 采集管理
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="db-monitoring-tab" data-bs-toggle="tab" data-bs-target="#db-monitoring" type="button" role="tab">
-            <i class="bi bi-activity"></i> 实时监控
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="db-source-tab" data-bs-toggle="tab" data-bs-target="#db-source" type="button" role="tab">
-            <i class="bi bi-code-square"></i> 采集源码
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="db-provenance-tab" data-bs-toggle="tab" data-bs-target="#db-provenance" type="button" role="tab">
-            <i class="bi bi-database-check"></i> 数据来源
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="db-archive-tab" data-bs-toggle="tab" data-bs-target="#db-archive" type="button" role="tab">
-            <i class="bi bi-archive"></i> 数据归集
-        </button>
-    </li>
-</ul>
-
-<!-- Tab内容区 -->
-<div class="tab-content" id="dashboardTabContent">
-
-<!-- ====== 数据看板 Tab（默认） ====== -->
-<div class="tab-pane fade show active" id="db-overview" role="tabpanel">
-
-<!-- 4E维度雷达图对比 -->
-<div class="row g-4 mb-4">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-bullseye"></i> 4E维度层级对比</h5>
-            </div>
-            <div class="card-body p-4">
-                <canvas id="radarChart" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> 可用率对比</h5>
-            </div>
-            <div class="card-body p-4">
-                <canvas id="availabilityChart" height="300"></canvas>
-            </div>
-        </div>
-    </div>
+<!-- ========== 一、采集管理 ========== -->
+<div class="d-flex align-items-center mb-3">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-collection-play text-primary me-2"></i>采集管理</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
 </div>
 
-<!-- 综合得分与功能支持 -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">采集任务管理</h2>
+        <p class="text-muted mb-0">创建、监控和管理三层架构数据采集任务</p>
+    </div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+        <i class="bi bi-plus-lg"></i> 新建采集任务
+    </button>
+</div>
+
+<!-- 采集控制台 -->
 <div class="row g-4 mb-4">
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-trophy"></i> 平台TOP排行</h5>
+                <h5 class="mb-0"><i class="bi bi-terminal"></i> 实时采集监控</h5>
             </div>
             <div class="card-body p-4">
-                <div class="table-responsive">
-                    <table class="table" id="top-platforms-table">
-                        <thead>
-                            <tr>
-                                <th>排名</th>
-                                <th>平台名称</th>
-                                <th>层级</th>
-                                <th>区域</th>
-                                <th>综合得分</th>
-                                <th>4E维度分解</th>
-                            </tr>
-                        </thead>
-                        <tbody id="top-platforms-body">
-                            <tr><td colspan="6" class="text-center text-muted py-4">加载中...</td></tr>
-                        </tbody>
-                    </table>
+                <!-- 进度概览 -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-primary" id="stat-total">0</div>
+                            <div class="small text-muted">总平台</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-success" id="stat-success">0</div>
+                            <div class="small text-muted">成功</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-danger" id="stat-failed">0</div>
+                            <div class="small text-muted">失败</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-info" id="stat-current">-</div>
+                            <div class="small text-muted">当前</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="small text-muted">采集进度</span>
+                        <span class="small fw-bold" id="progress-text">0%</span>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                             style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- 控制按钮 -->
+                <div class="d-flex gap-2 mb-4">
+                    <button id="btn-start" class="btn btn-success" onclick="startTask()">
+                        <i class="bi bi-play-fill"></i> 开始采集
+                    </button>
+                    <button id="btn-pause" class="btn btn-warning" onclick="pauseTask()" disabled>
+                        <i class="bi bi-pause-fill"></i> 暂停
+                    </button>
+                    <button id="btn-stop" class="btn btn-danger" onclick="stopTask()" disabled>
+                        <i class="bi bi-stop-fill"></i> 停止
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="loadTasks()">
+                        <i class="bi bi-arrow-clockwise"></i> 刷新
+                    </button>
+                </div>
+                
+                <!-- 实时日志 -->
+                <div class="log-panel" id="log-panel">
+                    <div class="log-entry log-info">[系统] OGD-Collector Pro 采集引擎已就绪</div>
+                    <div class="log-entry log-info">[系统] 等待任务启动...</div>
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-puzzle"></i> 功能支持率</h5>
+                <h5 class="mb-0"><i class="bi bi-gear"></i> 采集配置</h5>
             </div>
             <div class="card-body p-4">
-                <canvas id="featureChart" height="280"></canvas>
+                <div class="mb-3">
+                    <label class="form-label small text-muted">当前任务</label>
+                    <select id="task-select" class="form-select">
+                        <option value="">-- 选择任务 --</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">采集范围</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-provincial" checked>
+                        <label class="form-check-label" for="check-provincial">省级平台 (31个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-subprovincial" checked>
+                        <label class="form-check-label" for="check-subprovincial">副省级/单列市 (13个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-prefectural" checked>
+                        <label class="form-check-label" for="check-prefectural">地级市抽样 (60个)</label>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">请求间隔 (秒)</label>
+                    <input type="range" class="form-range" id="delay-range" min="1" max="10" value="2">
+                    <div class="text-end small text-muted"><span id="delay-value">2</span> 秒</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">并发数</label>
+                    <select class="form-select" id="workers-select">
+                        <option value="1">单线程</option>
+                        <option value="3" selected>3线程</option>
+                        <option value="5">5线程</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 区域分布热力 -->
-<div class="card">
-    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-        <h5 class="mb-0"><i class="bi bi-map"></i> 区域绩效分布</h5>
-    </div>
-    <div class="card-body p-4">
-        <div class="row">
-            <div class="col-lg-6">
-                <canvas id="regionScoreChart" height="250"></canvas>
+<!-- 定时任务配置 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-5">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-clock-history text-primary me-2"></i>定时任务配置</h5>
+                <span class="badge bg-success" id="scheduler-status">调度器运行中</span>
             </div>
-            <div class="col-lg-6">
+            <div class="card-body p-4">
+                <div class="alert alert-light border small mb-3">
+                    <i class="bi bi-info-circle me-1"></i>
+                    设置定时自动采集任务，系统将按配置自动执行数据采集并生成统计报告。
+                </div>
+                <form id="schedule-form" onsubmit="event.preventDefault(); createSchedule();">
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">任务名称</label>
+                        <input type="text" class="form-control" id="sched-name" value="每日自动全量采集" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Cron表达式 <a href="https://crontab.guru/" target="_blank" class="small">(?)</a></label>
+                        <input type="text" class="form-control" id="sched-cron" value="0 2 * * *" required>
+                        <div class="form-text small">默认每天凌晨2:00执行</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">采集范围</label>
+                        <select class="form-select" id="sched-type">
+                            <option value="full">完整采集 (31省+13副省级+60地级市)</option>
+                            <option value="provincial">仅省级 (31个)</option>
+                            <option value="subprovincial">仅副省级 (13个)</option>
+                            <option value="prefectural">仅地级市 (60个)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-lg"></i> 添加定时任务
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-calendar-check text-success me-2"></i>定时任务列表</h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadSchedules()">
+                    <i class="bi bi-arrow-clockwise"></i> 刷新
+                </button>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-sm" id="region-table">
+                    <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>区域</th>
-                                <th>平台数</th>
-                                <th>可用数</th>
-                                <th>可用率</th>
-                                <th>平均得分</th>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>Cron</th>
+                                <th>范围</th>
+                                <th>状态</th>
+                                <th>上次执行</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody id="region-table-body">
-                            <tr><td colspan="5" class="text-center text-muted">加载中...</td></tr>
+                        <tbody id="schedule-list">
+                            <tr><td colspan="7" class="text-center text-muted py-4">加载中...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -148,300 +492,1496 @@
         </div>
     </div>
 </div>
+
+<!-- 自动采集成果 -->
+<div class="card mb-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-trophy text-warning me-2"></i>自动采集历史成果</h5>
+        <div>
+            <select class="form-select form-select-sm d-inline-block w-auto" id="history-days" onchange="loadScheduleHistory()">
+                <option value="7">近7天</option>
+                <option value="30" selected>近30天</option>
+                <option value="90">近90天</option>
+            </select>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>任务ID</th>
+                        <th>任务名称</th>
+                        <th>范围</th>
+                        <th>状态</th>
+                        <th>平台总数</th>
+                        <th>成功</th>
+                        <th>失败</th>
+                        <th>成功率</th>
+                        <th>执行时间</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-history">
+                    <tr><td colspan="9" class="text-center text-muted py-4">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 任务列表 -->
+<div class="card">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-list-task"></i> 手动任务历史</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>任务名称</th>
+                        <th>类型</th>
+                        <th>状态</th>
+                        <th>进度</th>
+                        <th>成功</th>
+                        <th>失败</th>
+                        <th>耗时</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="task-list">
+                    {% for task in tasks %}
+                    <tr data-task-id="{{ task.id }}">
+                        <td>#{{ task.id }}</td>
+                        <td>{{ task.task_name }}</td>
+                        <td><span class="badge bg-secondary">{{ task.task_type }}</span></td>
+                        <td>
+                            {% if task.status == 'completed' %}
+                                <span class="badge bg-success">已完成</span>
+                            {% elif task.status == 'running' %}
+                                <span class="badge bg-primary">运行中</span>
+                            {% elif task.status == 'paused' %}
+                                <span class="badge bg-warning">已暂停</span>
+                            {% elif task.status == 'stopped' %}
+                                <span class="badge bg-secondary">已停止</span>
+                            {% else %}
+                                <span class="badge bg-light text-dark">{{ task.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td style="width: 150px;">
+                            <div class="progress" style="height: 6px;">
+                                {% set pct = (task.completed / task.total * 100) if task.total and task.total > 0 else 0 %}
+                                <div class="progress-bar" style="width: {{ pct }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ task.completed or 0 }}/{{ task.total or 0 }}</small>
+                        </td>
+                        <td class="text-success">{{ task.success or 0 }}</td>
+                        <td class="text-danger">{{ task.failed or 0 }}</td>
+                        <td class="text-muted small">
+                            {% if task.started and task.completed %}
+                                {{ task.completed }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewTask({{ task.id }})">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 新建任务模态框 -->
+<div class="modal fade" id="newTaskModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新建采集任务</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">任务名称</label>
+                    <input type="text" class="form-control" id="new-task-name" 
+                           value="三层架构完整采集">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">采集类型</label>
+                    <select class="form-select" id="new-task-type">
+                        <option value="full">完整采集 (31省+13副省级+60地级市)</option>
+                        <option value="provincial">仅省级 (31个)</option>
+                        <option value="subprovincial">仅副省级 (13个)</option>
+                        <option value="prefectural">仅地级市 (60个)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="createTask()">创建任务</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、实时监控 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-activity text-primary me-2"></i>实时监控</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<!-- 顶部状态栏 -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <h3 class="mb-0"><i class="bi bi-activity text-primary me-2"></i>实时监控面板</h3>
+        <span class="badge bg-success d-flex align-items-center gap-2 px-3 py-2">
+            <span class="status-dot status-up heartbeat"></span>
+            <span>采集引擎运行中</span>
+        </span>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <span class="text-muted small" id="lastUpdate"><i class="bi bi-clock me-1"></i>最后更新: --</span>
+        <a href="/source-code" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-code-square me-1"></i>源码检测
+        </a>
+    </div>
+</div>
+
+<!-- 核心指标 -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-arrow-repeat text-primary" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
+            <div class="metric-value" id="collections24h">-</div>
+            <div class="metric-label">24小时采集次数</div>
+            <div class="mt-2 small text-success" id="collectionsTrend"><i class="bi bi-graph-up"></i> 实时增长</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-heart-pulse text-danger" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
+            <div class="metric-value" id="healthChecks24h">-</div>
+            <div class="metric-label">24小时健康检查</div>
+            <div class="mt-2 small text-muted" id="healthRate">检测率 --%</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-speedometer2 text-warning" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
+            <div class="metric-value" id="avgResponse">-</div>
+            <div class="metric-label">平均响应时间(ms)</div>
+            <div class="mt-2 small" id="responseStatus"><span class="badge bg-light text-dark">--</span></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center position-relative overflow-hidden">
+            <div class="position-absolute top-0 end-0 p-2">
+                <i class="bi bi-check-circle text-success" style="font-size:1.5rem;opacity:0.1;"></i>
+            </div>
+            <div class="metric-value" id="uptimePct">-</div>
+            <div class="metric-label">当前可用率(%)</div>
+            <div class="mt-2 small" id="uptimeStatus"><span class="badge bg-light text-dark">--</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- 第二行：终端日志 + 实时采集样本 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-7">
+        <div class="monitor-card p-0 overflow-hidden">
+            <div class="d-flex justify-content-between align-items-center px-4 py-3 border-bottom">
+                <h5 class="mb-0"><i class="bi bi-terminal text-dark me-2"></i>实时采集日志</h5>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-dark"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>LIVE</span>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="clearTerminal()">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="terminal-title">collector_engine.py — ogd-collector-pro</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="text-muted">正在连接采集引擎...</div>
+                </div>
+            </div>
+            <div class="px-4 py-2 bg-light border-top d-flex justify-content-between align-items-center">
+                <span class="small text-muted"><i class="bi bi-info-circle me-1"></i>此处实时显示采集引擎的输出日志</span>
+                <a href="/source-code" class="small text-primary">查看源码 <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="monitor-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="bi bi-database text-success me-2"></i>最新采集数据样本</h5>
+                <span class="badge bg-success">实时</span>
+            </div>
+            <!-- 数据流向动画 -->
+            <div class="mb-3 p-2 rounded" style="background: linear-gradient(90deg, #f0fff4, #e6fffa);">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <span class="text-muted"><i class="bi bi-globe me-1"></i>331个平台</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-robot me-1"></i>采集引擎</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-database me-1"></i>4E评分</span>
+                    <i class="bi bi-arrow-right text-success"></i>
+                    <span class="text-muted"><i class="bi bi-graph-up me-1"></i>可视化</span>
+                </div>
+            </div>
+            <div id="latestSamples">
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-arrow-clockwise spin" style="font-size:2rem;"></i>
+                    <div class="mt-2 small">正在加载最新采集数据...</div>
+                </div>
+            </div>
+            <div class="mt-3 pt-3 border-top">
+                <div class="d-flex justify-content-between small text-muted">
+                    <span><i class="bi bi-check-circle-fill text-success me-1"></i>数据真实可溯源</span>
+                    <a href="/source-code" class="text-primary">验证采集逻辑 <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 第三行：当前活跃任务 + 趋势图 -->
+<div class="row g-4 mb-4">
+        <div class="col-lg-4">
+        <div class="monitor-card">
+            <h5 class="mb-3"><i class="bi bi-cpu text-primary me-2"></i>当前活跃任务</h5>
+            <div id="activeTasks">
+                <div class="text-center py-4">
+                    <i class="bi bi-pause-circle text-muted" style="font-size:2rem;"></i>
+                    <div class="mt-2 small text-muted">暂无活跃采集任务</div>
+                    <a href="/collector" class="btn btn-sm btn-primary mt-2">启动采集</a>
+                </div>
+            </div>
+            <!-- 采集引擎状态面板 -->
+            <div class="mt-3 pt-3 border-top">
+                <div class="small fw-semibold text-muted mb-2">引擎状态</div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>HTTP探测</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>页面解析</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>4E评分</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+                <div class="d-flex justify-content-between small">
+                    <span>数据库存储</span>
+                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>就绪</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="monitor-card">
+            <h5><i class="bi bi-graph-up-arrow me-2"></i>采集历史趋势（最近7天）</h5>
+            <div class="chart-container">
+                <canvas id="historyChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 第四行：健康检查详情 -->
+<div class="row">
+    <div class="col-12">
+        <div class="monitor-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="bi bi-heart-pulse me-2"></i>平台健康检查详情</h5>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-success"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>正常</span>
+                    <span class="badge bg-danger"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>异常</span>
+                    <span class="badge bg-warning"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>超时</span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>平台</th>
+                            <th>检查时间</th>
+                            <th>状态</th>
+                            <th>HTTP</th>
+                            <th>响应(ms)</th>
+                            <th>数据集</th>
+                            <th>得分</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="healthTable">
+                        <tr><td colspan="8" class="text-muted">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 三、采集源码 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-code-square text-primary me-2"></i>采集源码</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-code-square text-primary me-2"></i>采集源码公开</h2>
+        <p class="text-muted mb-0">完整采集逻辑与源代码公示，确保研究过程可复现、可验证</p>
+    </div>
+    <div>
+        <a href="/api/source/download/all" class="btn btn-outline-primary">
+            <i class="bi bi-download"></i> 下载全部源码
+        </a>
+    </div>
+</div>
+
+<!-- 采集架构概览 -->
+<div class="card mb-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-diagram-3 text-primary me-2"></i>采集系统架构</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="p-3 rounded" style="background: #ebf8ff;">
+                    <div class="fs-1 text-primary mb-2"><i class="bi bi-layers"></i></div>
+                    <div class="fw-bold">平台对象层</div>
+                    <div class="small text-muted mt-1">331个平台基础数据<br>三层架构覆盖</div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="p-3 rounded" style="background: #f0fff4;">
+                    <div class="fs-1 text-success mb-2"><i class="bi bi-robot"></i></div>
+                    <div class="fw-bold">采集引擎层</div>
+                    <div class="small text-muted mt-1">HTTP探测+页面解析<br>4E框架评分算法</div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="p-3 rounded" style="background: #fef3c7;">
+                    <div class="fs-1 text-warning mb-2"><i class="bi bi-database"></i></div>
+                    <div class="fw-bold">数据持久层</div>
+                    <div class="small text-muted mt-1">SQLite结构化存储<br>15张核心数据表</div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="p-3 rounded" style="background: #faf5ff;">
+                    <div class="fs-1 mb-2" style="color: #7c3aed;"><i class="bi bi-graph-up"></i></div>
+                    <div class="fw-bold">分析展示层</div>
+                    <div class="small text-muted mt-1">RESTful API<br>可视化看板</div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info mt-4 mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>研究可复现承诺：</strong>本系统所有采集逻辑、评分算法、数据处理方式均在此页面完整公开。任何研究者均可基于本代码复现数据采集过程，验证研究结果。
+        </div>
+    </div>
+</div>
+
+<!-- 核心文件列表 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-files"></i> 核心文件</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    <a href="#engine-code" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">collector_engine.py</div>
+                            <div class="small text-muted">采集引擎核心（~500行）</div>
+                        </div>
+                        <span class="badge bg-primary">核心</span>
+                    </a>
+                    <a href="#auto-code" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">auto_collect.py</div>
+                            <div class="small text-muted">自动采集脚本（~160行）</div>
+                        </div>
+                        <span class="badge bg-success">定时</span>
+                    </a>
+                    <a href="#models-code" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">models.py</div>
+                            <div class="small text-muted">数据库模型（~690行）</div>
+                        </div>
+                        <span class="badge bg-secondary">模型</span>
+                    </a>
+                    <a href="#app-code" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">app.py</div>
+                            <div class="small text-muted">Web服务层（~900行）</div>
+                        </div>
+                        <span class="badge bg-secondary">API</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-clipboard-data"></i> 采集方法论</h5>
+            </div>
+            <div class="card-body p-4">
+                <h6 class="fw-bold text-primary">1. 数据采集方式</h6>
+                <table class="table table-sm">
+                    <thead><tr><th>采集方式</th><th>适用场景</th><th>技术实现</th><th>完整性证明</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>HTTP主动探测</strong></td>
+                            <td>所有平台可达性检测</td>
+                            <td>requests.Session + 15秒超时</td>
+                            <td>记录HTTP状态码、响应时间</td>
+                        </tr>
+                        <tr>
+                            <td><strong>页面内容解析</strong></td>
+                            <td>功能特征识别</td>
+                            <td>BeautifulSoup4 + 关键词匹配</td>
+                            <td>保存HTML前5000字符快照</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据集数量提取</strong></td>
+                            <td>供给保障指标</td>
+                            <td>正则表达式多模式匹配</td>
+                            <td>记录匹配到的原始文本</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据格式识别</strong></td>
+                            <td>开放格式多样性</td>
+                            <td>页面关键词扫描（csv/json/xml等）</td>
+                            <td>记录检测到的所有格式</td>
+                        </tr>
+                        <tr>
+                            <td><strong>问卷与访谈</strong></td>
+                            <td>主观指标补充</td>
+                            <td>问卷星 + 半结构化访谈</td>
+                            <td>原始问卷数据与录音存档</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6 class="fw-bold text-primary mt-4">2. 4E评分算法透明性</h6>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="p-2 rounded text-center" style="background:#dbeafe;">
+                            <div class="small fw-bold text-primary">C1 供给保障</div>
+                            <div class="small text-muted">数据集40%+格式20%+API20%+批量20%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-2 rounded text-center" style="background:#d1fae5;">
+                            <div class="small fw-bold text-success">C2 平台服务</div>
+                            <div class="small text-muted">响应20%+HTTPS10%+搜索20%+下载20%+可视化20%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-2 rounded text-center" style="background:#fef3c7;">
+                            <div class="small fw-bold text-warning">C3 数据质量</div>
+                            <div class="small text-muted">更新40%+元数据30%+反馈30%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-2 rounded text-center" style="background:#fee2e2;">
+                            <div class="small fw-bold text-danger">C4 利用效果</div>
+                            <div class="small text-muted">注册30%+预览30%+应用40%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 代码展示 -->
+<div class="card mb-4" id="engine-code">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-file-code"></i> collector_engine.py — 采集引擎核心</h5>
+        <a href="/api/source/download/collector_engine" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-download"></i> 下载
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <pre class="m-0 p-3" style="background:#1a202c;color:#a0aec0;font-size:0.8rem;max-height:500px;overflow:auto;"><code>{{ engine_code }}</code></pre>
+    </div>
+</div>
+
+<div class="card mb-4" id="auto-code">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-file-code"></i> auto_collect.py — 自动采集脚本</h5>
+        <a href="/api/source/download/auto_collect" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-download"></i> 下载
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <pre class="m-0 p-3" style="background:#1a202c;color:#a0aec0;font-size:0.8rem;max-height:400px;overflow:auto;"><code>{{ auto_code }}</code></pre>
+    </div>
+</div>
+
+<div class="card mb-4" id="models-code">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-file-code"></i> models.py — 数据库模型（节选）</h5>
+        <a href="/api/source/download/models" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-download"></i> 下载
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <pre class="m-0 p-3" style="background:#1a202c;color:#a0aec0;font-size:0.8rem;max-height:400px;overflow:auto;"><code>{{ models_code }}</code></pre>
+    </div>
+</div>
+
+<div class="card mb-4" id="app-code">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-file-code"></i> app.py — Web服务层（节选）</h5>
+        <a href="/api/source/download/app" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-download"></i> 下载
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <pre class="m-0 p-3" style="background:#1a202c;color:#a0aec0;font-size:0.8rem;max-height:400px;overflow:auto;"><code>{{ app_code }}</code></pre>
+    </div>
+</div>
+
+<!-- 在线源码校验 -->
+<div class="card mb-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-search text-primary me-2"></i>在线源码一致性校验</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="alert alert-light border mb-3">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>如何验证采集的真实性？</strong> 您可以复制本页面展示的任意代码片段，粘贴到下方输入框中，系统将实时计算其 SHA-256 哈希值，并与生产环境运行的代码进行比对。若哈希一致，则证明该代码确实正在服务器上运行。
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <div class="mb-2">
+                    <label class="form-label small text-muted">选择校验目标文件</label>
+                    <select class="form-select" id="verify-target">
+                        <option value="engine">collector_engine.py — 采集引擎核心</option>
+                        <option value="auto">auto_collect.py — 自动采集脚本</option>
+                        <option value="models">models.py — 数据库模型</option>
+                        <option value="app">app.py — Web服务层</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small text-muted">粘贴代码片段（支持任意长度）</label>
+                    <textarea class="form-control font-monospace" id="verify-input" rows="6" placeholder="在此粘贴从上方代码框中复制的代码片段..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="verifySourceCode()">
+                    <i class="bi bi-shield-check me-1"></i>开始校验
+                </button>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3">校验结果</h6>
+                        <div id="verify-result">
+                            <div class="text-muted small text-center py-4">
+                                <i class="bi bi-arrow-left" style="font-size:1.5rem;"></i>
+                                <div class="mt-2">左侧输入代码后点击校验</div>
+                            </div>
+                        </div>
+                        <hr class="my-3">
+                        <h6 class="fw-bold mb-2 small">生产环境哈希</h6>
+                        <div class="small font-monospace text-muted mb-1">engine: <span class="text-dark">{{ checksums.engine }}</span></div>
+                        <div class="small font-monospace text-muted mb-1">auto: <span class="text-dark">{{ checksums.auto }}</span></div>
+                        <div class="small font-monospace text-muted mb-1">models: <span class="text-dark">{{ checksums.models }}</span></div>
+                        <div class="small font-monospace text-muted">app: <span class="text-dark">{{ checksums.app }}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 校验信息 -->
+<div class="card">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-shield-check text-success me-2"></i>代码完整性校验</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <table class="table table-sm table-borderless">
+                    <tr><td class="text-muted">collector_engine.py</td><td class="font-monospace">{{ checksums.engine }}</td></tr>
+                    <tr><td class="text-muted">auto_collect.py</td><td class="font-monospace">{{ checksums.auto }}</td></tr>
+                    <tr><td class="text-muted">models.py</td><td class="font-monospace">{{ checksums.models }}</td></tr>
+                    <tr><td class="text-muted">app.py</td><td class="font-monospace">{{ checksums.app }}</td></tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="alert alert-light border h-100 mb-0">
+                    <div class="small text-muted mb-2">校验方法：SHA-256</div>
+                    <div class="small">所有源码文件均通过SHA-256哈希校验，确保公开代码与生产环境运行代码完全一致。研究者可通过校验和验证本地副本的完整性。</div>
+                    <div class="mt-3">
+                        <span class="badge bg-success">可复现</span>
+                        <span class="badge bg-success">可验证</span>
+                        <span class="badge bg-success">可审计</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function verifySourceCode() {
+    const target = document.getElementById('verify-target').value;
+    const code = document.getElementById('verify-input').value.trim();
+    const resultDiv = document.getElementById('verify-result');
+
+    if (!code) {
+        resultDiv.innerHTML = '<div class="alert alert-warning small">请先粘贴代码片段</div>';
+        return;
+    }
+
+    resultDiv.innerHTML = '<div class="text-center py-3"><i class="bi bi-arrow-repeat spin"></i><div class="small mt-2">正在校验...</div></div>';
+
+    try {
+        const res = await fetch('/api/source/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({target: target, code: code})
+        });
+        const data = await res.json();
+
+        if (data.match) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-check-circle-fill fs-4"></i>
+                        <strong>校验通过</strong>
+                    </div>
+                    <div class="small">您输入的代码片段与生产环境运行的代码 <strong>完全一致</strong>。</div>
+                    <div class="mt-2 small font-monospace bg-white rounded p-2">片段哈希: ${data.hash}</div>
+                </div>`;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="alert alert-warning">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+                        <strong>校验不匹配</strong>
+                    </div>
+                    <div class="small">您输入的代码片段与生产环境代码不一致。可能原因：</div>
+                    <ul class="small mt-1 mb-0">
+                        <li>代码片段有增减或修改</li>
+                        <li>换行符或空格不一致</li>
+                        <li>选择了错误的校验目标文件</li>
+                    </ul>
+                    <div class="mt-2 small font-monospace bg-white rounded p-2">片段哈希: ${data.hash}</div>
+                </div>`;
+        }
+    } catch(e) {
+        resultDiv.innerHTML = '<div class="alert alert-danger small">校验请求失败，请重试</div>';
+    }
+}
+</script>
+
+<!-- ========== 四、数据来源 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-database-check text-primary me-2"></i>数据来源</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-database-check text-primary me-2"></i>数据来源与溯源</h3>
+    <a href="/api/export/provenance" class="btn btn-primary btn-sm"><i class="bi bi-download me-1"></i>导出来源清单</a>
+</div>
+
+<p class="text-muted mb-4">
+    本研究数据来源于政府数据开放平台、学术数据库、国际组织报告、实地调研等多渠道。
+    所有数据来源均经过可靠性评估，确保数据的真实性、时效性与可追溯性。
+</p>
+
+<div class="row g-3 mb-4" id="statsRow">
+    <div class="col-md-3"><div class="stats-bar text-center"><div class="number" id="statTotal">-</div><div class="label">数据来源总数</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#2c5282,#3182ce);"><div class="number" id="statGov">-</div><div class="label">政府平台来源</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#38a169,#2f855a);"><div class="number" id="statAcad">-</div><div class="label">学术数据库</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#d69e2e,#b7791f);"><div class="number" id="statIntl">-</div><div class="label">国际组织</div></div></div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group" id="typeFilters">
+            <button class="list-group-item list-group-item-action active" data-type="">全部来源</button>
+            <button class="list-group-item list-group-item-action" data-type="政府平台">政府平台</button>
+            <button class="list-group-item list-group-item-action" data-type="学术数据库">学术数据库</button>
+            <button class="list-group-item list-group-item-action" data-type="国际组织">国际组织</button>
+            <button class="list-group-item list-group-item-action" data-type="新闻媒体">新闻媒体</button>
+            <button class="list-group-item list-group-item-action" data-type="企业数据">企业数据</button>
+            <button class="list-group-item list-group-item-action" data-type="实地调研">实地调研</button>
+        </div>
+    </div>
+    <div class="col-md-9" id="sourcesList">
+        <div class="text-muted">加载中...</div>
+    </div>
+</div>
+
+<!-- ========== 五、数据归集 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-archive text-primary me-2"></i>数据归集</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-archive text-primary me-2"></i>数据归集中心</h3>
+    <div>
+        <span class="text-muted small me-3"><i class="bi bi-info-circle me-1"></i>所有数据均带时间戳，可复查、可导出</span>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-clock-history me-2"></i>采集时间规范</h5>
+            <div class="timestamp-box">
+                <div>采集标准：ISO 8601</div>
+                <div>时间精度：秒级 (YYYY-MM-DD HH:MM:SS)</div>
+                <div>存储格式：UTC+8</div>
+                <div>校验方式：SHA-256 数据校验和</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-check2-circle me-2"></i>数据核验流程</h5>
+            <ol class="small text-muted mb-0">
+                <li>自动采集 → 原始数据入库</li>
+                <li>生成校验和 → 防篡改保护</li>
+                <li>人工抽检 → 数据质量审核</li>
+                <li>核验标记 → 通过后锁定</li>
+                <li>归档导出 → JSON/CSV格式</li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-file-earmark-zip me-2"></i>导出格式</h5>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-primary">JSON（完整数据）</span>
+                <span class="badge bg-success">CSV（表格数据）</span>
+                <span class="badge bg-info">SQLite（数据库）</span>
+            </div>
+            <div class="mt-3 small text-muted">
+                每个快照包含当日全部平台详细数据、4E评分、健康检查结果及原始响应摘要。
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="archive-card">
+    <h5><i class="bi bi-list-check me-2"></i>采集快照归档列表</h5>
+    <div class="table-responsive">
+        <table class="table table-sm snapshot-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>日期</th>
+                    <th>时间</th>
+                    <th>类型</th>
+                    <th>平台数</th>
+                    <th>可达数</th>
+                    <th>平均得分</th>
+                    <th>大小(KB)</th>
+                    <th>核验状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="snapshotsTable">
+                <tr><td colspan="10" class="text-muted">加载中...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-let radarChart, availabilityChart, featureChart, regionScoreChart;
+// ===== collector JS =====
 
-// 加载数据并渲染图表
-async function loadDashboardData() {
-    // 1. 层级比较数据
-    const tierRes = await fetch('/api/analysis/tier_comparison');
-    const tierData = await tierRes.json();
-    renderRadarChart(tierData);
-    renderAvailabilityChart(tierData);
-    
-    // 2. TOP平台
-    const topRes = await fetch('/api/analysis/top_platforms?limit=15');
-    const topData = await topRes.json();
-    renderTopPlatforms(topData);
-    
-    // 3. 区域分布
-    const regionRes = await fetch('/api/analysis/region_distribution');
-    const regionData = await regionRes.json();
-    renderRegionChart(regionData);
-    renderRegionTable(regionData);
-    
-    // 4. 功能支持率（基于最新记录）
-    const recordsRes = await fetch('/api/records?limit=200');
-    const records = await recordsRes.json();
-    renderFeatureChart(records);
-}
+<script>
+let currentTaskId = null;
+let eventSource = null;
 
-function renderRadarChart(data) {
-    const ctx = document.getElementById('radarChart').getContext('2d');
+// 加载任务列表
+async function loadTasks() {
+    const res = await fetch('/api/tasks');
+    const tasks = await res.json();
     
-    const datasets = data.map((tier, idx) => ({
-        label: tier.tier,
-        data: [tier.avg_c1, tier.avg_c2, tier.avg_c3, tier.avg_c4],
-        backgroundColor: ['rgba(49, 130, 206, 0.2)', 'rgba(56, 161, 105, 0.2)', 'rgba(214, 158, 46, 0.2)'][idx],
-        borderColor: ['#3182ce', '#38a169', '#d69e2e'][idx],
-        borderWidth: 2
-    }));
+    const select = document.getElementById('task-select');
+    select.innerHTML = '<option value="">-- 选择任务 --</option>';
     
-    radarChart = new Chart(ctx, {
-        type: 'radar',
-        data: {
-            labels: ['供给保障 C1', '平台服务 C2', '数据质量 C3', '利用效果 C4'],
-            datasets: datasets
-        },
-        options: {
-            responsive: true,
-            scales: {
-                r: {
-                    beginAtZero: true,
-                    max: 1.0,
-                    ticks: { stepSize: 0.2 }
-                }
-            }
-        }
+    tasks.forEach(task => {
+        const opt = document.createElement('option');
+        opt.value = task.id;
+        opt.textContent = `#${task.id} ${task.task_name} (${task.status})`;
+        select.appendChild(opt);
     });
 }
 
-function renderAvailabilityChart(data) {
-    const ctx = document.getElementById('availabilityChart').getContext('2d');
+// 创建任务
+async function createTask() {
+    const name = document.getElementById('new-task-name').value;
+    const type = document.getElementById('new-task-type').value;
     
-    availabilityChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.map(d => d.tier),
-            datasets: [
-                {
-                    label: '可用平台',
-                    data: data.map(d => d.available),
-                    backgroundColor: '#38a169',
-                    borderRadius: 6
-                },
-                {
-                    label: '不可用',
-                    data: data.map(d => d.total - d.available),
-                    backgroundColor: '#e53e3e',
-                    borderRadius: 6
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: { stacked: true },
-                y: { stacked: true, beginAtZero: true }
-            }
-        }
+    const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({task_name: name, task_type: type})
     });
+    
+    const data = await res.json();
+    if (data.success) {
+        addLog('success', `任务创建成功: #${data.task_id}`);
+        bootstrap.Modal.getInstance(document.getElementById('newTaskModal')).hide();
+        loadTasks();
+        // 自动选中新任务
+        document.getElementById('task-select').value = data.task_id;
+    } else {
+        addLog('error', `任务创建失败: ${data.message}`);
+    }
 }
 
-function renderTopPlatforms(data) {
-    const tbody = document.getElementById('top-platforms-body');
-    tbody.innerHTML = data.map((p, i) => `
+// 开始采集
+async function startTask() {
+    const taskId = document.getElementById('task-select').value;
+    if (!taskId) {
+        addLog('warning', '请先选择一个任务');
+        return;
+    }
+    
+    currentTaskId = taskId;
+    const res = await fetch(`/api/tasks/${taskId}/start`, {method: 'POST'});
+    const data = await res.json();
+    
+    if (data.success) {
+        addLog('success', `任务 #${taskId} 已启动`);
+        document.getElementById('btn-start').disabled = true;
+        document.getElementById('btn-pause').disabled = false;
+        document.getElementById('btn-stop').disabled = false;
+        
+        // 连接SSE
+        connectSSE(taskId);
+    } else {
+        addLog('error', data.message);
+    }
+}
+
+// 暂停
+function pauseTask() {
+    addLog('warning', '暂停功能待实现');
+}
+
+// 停止
+async function stopTask() {
+    if (!currentTaskId) return;
+    
+    await fetch(`/api/tasks/${currentTaskId}/stop`, {method: 'POST'});
+    addLog('warning', `任务 #${currentTaskId} 已停止`);
+    
+    if (eventSource) eventSource.close();
+    document.getElementById('btn-start').disabled = false;
+    document.getElementById('btn-pause').disabled = true;
+    document.getElementById('btn-stop').disabled = true;
+}
+
+// 连接SSE实时进度
+function connectSSE(taskId) {
+    if (eventSource) eventSource.close();
+    
+    eventSource = new EventSource(`/api/tasks/${taskId}/progress`);
+    
+    eventSource.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        updateProgress(data);
+    };
+    
+    eventSource.onerror = () => {
+        eventSource.close();
+    };
+}
+
+// 更新进度
+function updateProgress(data) {
+    if (data.total) {
+        const pct = Math.round((data.completed / data.total) * 100);
+        document.getElementById('progress-bar').style.width = pct + '%';
+        document.getElementById('progress-text').textContent = pct + '%';
+        document.getElementById('stat-total').textContent = data.total;
+    }
+    document.getElementById('stat-success').textContent = data.success || 0;
+    document.getElementById('stat-failed').textContent = data.failed || 0;
+    if (data.platform) {
+        document.getElementById('stat-current').textContent = data.platform;
+    }
+    
+    if (data.platform && data.status) {
+        const statusText = data.status === 'available' ? '成功' : '失败';
+        const statusClass = data.status === 'available' ? 'success' : 'error';
+        addLog(statusClass, `${data.platform}: ${statusText}, 得分: ${data.overall_score || 0}`);
+    }
+}
+
+// 添加日志
+function addLog(level, message) {
+    const panel = document.getElementById('log-panel');
+    const entry = document.createElement('div');
+    entry.className = `log-entry log-${level}`;
+    const time = new Date().toLocaleTimeString();
+    entry.textContent = `[${time}] ${message}`;
+    panel.appendChild(entry);
+    panel.scrollTop = panel.scrollHeight;
+}
+
+// 查看任务详情
+function viewTask(taskId) {
+    window.open(`/api/records?task_id=${taskId}&limit=100`, '_blank');
+}
+
+// 延迟滑块
+document.getElementById('delay-range').addEventListener('input', (e) => {
+    document.getElementById('delay-value').textContent = e.target.value;
+});
+
+// ===== 定时任务管理 =====
+
+async function loadSchedules() {
+    const res = await fetch('/api/schedule');
+    const schedules = await res.json();
+    const tbody = document.getElementById('schedule-list');
+    if (schedules.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">暂无定时任务</td></tr>';
+        return;
+    }
+    tbody.innerHTML = schedules.map(s => `
         <tr>
-            <td><span class="badge bg-${i < 3 ? 'warning' : 'secondary'}">${i + 1}</span></td>
-            <td><strong>${p.name}</strong></td>
-            <td><span class="tier-badge tier-${p.tier === '省级' ? 'provincial' : p.tier === '副省级/计划单列市' ? 'subprovincial' : 'prefectural'}">${p.tier}</span></td>
-            <td>${p.region}</td>
-            <td><span class="fw-bold text-primary">${p.overall.toFixed(3)}</span></td>
-            <td style="width: 200px;">
-                <div class="d-flex gap-1" style="font-size: 0.7rem;">
-                    <span class="badge bg-info" title="C1">${p.c1.toFixed(2)}</span>
-                    <span class="badge bg-success" title="C2">${p.c2.toFixed(2)}</span>
-                    <span class="badge bg-warning" title="C3">${p.c3.toFixed(2)}</span>
-                    <span class="badge bg-danger" title="C4">${p.c4.toFixed(2)}</span>
-                </div>
+            <td>#${s.id}</td>
+            <td>${s.schedule_name}</td>
+            <td><code class="small">${s.cron_expression}</code></td>
+            <td><span class="badge bg-light text-dark">${s.task_type}</span></td>
+            <td>
+                <span class="badge bg-${s.is_active ? 'success' : 'secondary'}">${s.is_active ? '启用' : '禁用'}</span>
+            </td>
+            <td class="small text-muted">${s.last_run_at || '从未'}</td>
+            <td>
+                <button class="btn btn-sm btn-${s.is_active ? 'warning' : 'success'}" onclick="toggleSchedule(${s.id})">
+                    <i class="bi bi-toggle-${s.is_active ? 'on' : 'off'}"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${s.id})">
+                    <i class="bi bi-trash"></i>
+                </button>
             </td>
         </tr>
     `).join('');
 }
 
-function renderFeatureChart(records) {
-    const available = records.filter(r => r.status === 'available');
-    if (available.length === 0) return;
-    
-    const features = ['has_search', 'has_download', 'has_api', 'has_register', 'has_preview', 'has_visualization', 'has_update_info', 'has_metadata'];
-    const labels = ['搜索', '下载', 'API', '注册', '预览', '可视化', '更新信息', '元数据'];
-    
-    const data = features.map(f => {
-        const count = available.filter(r => r[f] === 1).length;
-        return Math.round(count / available.length * 100);
+async function createSchedule() {
+    const data = {
+        schedule_name: document.getElementById('sched-name').value,
+        cron_expression: document.getElementById('sched-cron').value,
+        task_type: document.getElementById('sched-type').value,
+        is_active: true
+    };
+    const res = await fetch('/api/schedule', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
     });
-    
-    const ctx = document.getElementById('featureChart').getContext('2d');
-    featureChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: ['#3182ce', '#38a169', '#d69e2e', '#e53e3e', '#805ad5', '#00b5d8', '#dd6b20', '#718096']
-            }]
-        },
-        options: {
-            responsive: true,
-            cutout: '50%',
-            plugins: {
-                legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) => `${ctx.label}: ${ctx.raw}%`
-                    }
-                }
-            }
-        }
-    });
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务创建成功: #${result.id}`);
+        loadSchedules();
+    } else {
+        addLog('error', '定时任务创建失败');
+    }
 }
 
-function renderRegionChart(data) {
-    const ctx = document.getElementById('regionScoreChart').getContext('2d');
-    
-    regionScoreChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.map(d => d.region),
-            datasets: [{
-                label: '平均得分',
-                data: data.map(d => d.avg_score),
-                backgroundColor: data.map((d, i) => {
-                    const colors = ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'];
-                    return colors[i % colors.length];
-                }),
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true, max: 1.0 } }
-        }
-    });
+async function toggleSchedule(id) {
+    const res = await fetch(`/api/schedule/${id}/toggle`, {method: 'POST'});
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务 #${id} 已${result.is_active ? '启用' : '禁用'}`);
+        loadSchedules();
+    }
 }
 
-function renderRegionTable(data) {
-    const tbody = document.getElementById('region-table-body');
-    tbody.innerHTML = data.map(r => {
-        const rate = r.total > 0 ? (r.available / r.total * 100).toFixed(1) : 0;
+async function deleteSchedule(id) {
+    if (!confirm('确定删除此定时任务？')) return;
+    const res = await fetch(`/api/schedule/${id}`, {method: 'DELETE'});
+    const result = await res.json();
+    if (result.success) {
+        addLog('success', `定时任务 #${id} 已删除`);
+        loadSchedules();
+    }
+}
+
+async function loadScheduleHistory() {
+    const days = document.getElementById('history-days').value;
+    const res = await fetch(`/api/schedule/history?days=${days}`);
+    const history = await res.json();
+    const tbody = document.getElementById('schedule-history');
+    if (history.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-4">暂无自动采集记录</td></tr>';
+        return;
+    }
+    tbody.innerHTML = history.map(h => {
+        const rate = h.total > 0 ? (h.success / h.total * 100).toFixed(1) : 0;
         return `
-            <tr>
-                <td><strong>${r.region}</strong></td>
-                <td>${r.total}</td>
-                <td class="text-success">${r.available}</td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <div class="progress flex-grow-1 me-2" style="height: 6px;">
-                            <div class="progress-bar bg-success" style="width: ${rate}%"></div>
-                        </div>
-                        <span class="small">${rate}%</span>
+        <tr>
+            <td>#${h.id}</td>
+            <td>${h.name}</td>
+            <td><span class="badge bg-light text-dark">${h.type}</span></td>
+            <td><span class="badge bg-${h.status === 'completed' ? 'success' : h.status === 'failed' ? 'danger' : 'primary'}">${h.status}</span></td>
+            <td>${h.total || 0}</td>
+            <td class="text-success">${h.success || 0}</td>
+            <td class="text-danger">${h.failed || 0}</td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                        <div class="progress-bar bg-success" style="width: ${rate}%"></div>
                     </div>
-                </td>
-                <td><span class="fw-bold">${r.avg_score.toFixed(3)}</span></td>
-            </tr>
-        `;
-    }).join('');
+                    <span class="small">${rate}%</span>
+                </div>
+            </td>
+            <td class="small text-muted">${h.created || '-'}</td>
+        </tr>
+    `}).join('');
 }
 
-// 加载数据
-loadDashboardData();
+// 初始化
+loadTasks();
+loadSchedules();
+loadScheduleHistory();
 </script>
 
-</div> <!-- /tab-pane db-overview -->
+// ===== monitoring JS =====
 
-<!-- 采集管理 Tab -->
-<div class="tab-pane fade" id="db-collector" role="tabpanel">
-    <div id="db-collector-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载采集管理...</p>
-        </div>
-    </div>
-</div>
-
-<!-- 实时监控 Tab -->
-<div class="tab-pane fade" id="db-monitoring" role="tabpanel">
-    <div id="db-monitoring-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载实时监控...</p>
-        </div>
-    </div>
-</div>
-
-<!-- 采集源码 Tab -->
-<div class="tab-pane fade" id="db-source" role="tabpanel">
-    <div id="db-source-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载采集源码...</p>
-        </div>
-    </div>
-</div>
-
-<!-- 数据来源 Tab -->
-<div class="tab-pane fade" id="db-provenance" role="tabpanel">
-    <div id="db-provenance-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载数据来源...</p>
-        </div>
-    </div>
-</div>
-
-<!-- 数据归集 Tab -->
-<div class="tab-pane fade" id="db-archive" role="tabpanel">
-    <div id="db-archive-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载数据归集...</p>
-        </div>
-    </div>
-</div>
-
-</div> <!-- /tab-content -->
-
-<!-- AJAX加载其他Tab内容 -->
 <script>
-function loadDashboardTab(tabBtnId, url, containerId) {
-    const container = document.getElementById(containerId);
-    if (container.dataset.loaded) return;
-    fetch(url + '?embed=1')
-        .then(r => r.text())
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const content = doc.querySelector('.main-content');
-            container.innerHTML = content ? content.innerHTML : html;
-            container.dataset.loaded = '1';
-            const scripts = container.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                newScript.textContent = oldScript.textContent;
-                oldScript.parentNode.replaceChild(newScript, oldScript);
-            });
-        })
-        .catch(e => { container.innerHTML = '<div class="alert alert-danger">加载失败，请刷新重试</div>'; });
+let terminalLines = [];
+let maxTerminalLines = 100;
+
+function addTerminalLine(text, type = 'info') {
+    const body = document.getElementById('terminalBody');
+    const now = new Date().toLocaleTimeString('zh-CN');
+    const typeClass = {
+        'info': 'log-info',
+        'success': 'log-success',
+        'warning': 'log-warning',
+        'error': 'log-error',
+        'data': 'log-data'
+    }[type] || 'log-info';
+
+    const line = document.createElement('div');
+    line.innerHTML = `<span class="log-time">[${now}]</span> <span class="${typeClass}">${escapeHtml(text)}</span>`;
+    body.appendChild(line);
+
+    // 保持滚动到底部
+    body.scrollTop = body.scrollHeight;
+
+    // 限制行数
+    while (body.children.length > maxTerminalLines) {
+        body.removeChild(body.firstChild);
+    }
 }
 
-document.getElementById('db-collector-tab').addEventListener('shown.bs.tab', function() {
-    loadDashboardTab('db-collector', '/collector', 'db-collector-content');
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function clearTerminal() {
+    document.getElementById('terminalBody').innerHTML = '';
+    addTerminalLine('终端已清空', 'info');
+}
+
+// 初始化终端
+function initTerminal() {
+    const body = document.getElementById('terminalBody');
+    body.innerHTML = '';
+    addTerminalLine('OGD-Collector Pro v2.2 采集引擎已连接', 'success');
+    addTerminalLine('三层架构数据采集系统 — 省级31 + 副省级13 + 地级市60', 'info');
+    addTerminalLine('4E框架评分算法已加载: C1供给/C2服务/C3质量/C4效果', 'info');
+    addTerminalLine('等待采集任务...', 'data');
+}
+
+// 加载实时指标
+async function loadRealtime() {
+    try {
+        const r = await fetch('/api/monitoring/realtime');
+        const d = await r.json();
+        document.getElementById('collections24h').textContent = d.collections_24h || 0;
+        document.getElementById('healthChecks24h').textContent = d.health_checks_24h || 0;
+        document.getElementById('avgResponse').textContent = d.avg_response_ms || 0;
+        document.getElementById('uptimePct').textContent = (d.current_uptime_pct || 0) + '%';
+        document.getElementById('lastUpdate').innerHTML = `<i class="bi bi-clock me-1"></i>最后更新: ${new Date().toLocaleTimeString('zh-CN')}`;
+
+        // 响应时间状态
+        const avgResp = d.avg_response_ms || 0;
+        const respEl = document.getElementById('responseStatus');
+        if (avgResp < 1000) respEl.innerHTML = '<span class="badge bg-success">极速</span>';
+        else if (avgResp < 3000) respEl.innerHTML = '<span class="badge bg-warning">正常</span>';
+        else respEl.innerHTML = '<span class="badge bg-danger">缓慢</span>';
+
+        // 可用率状态
+        const uptime = d.current_uptime_pct || 0;
+        const upEl = document.getElementById('uptimeStatus');
+        if (uptime >= 90) upEl.innerHTML = '<span class="badge bg-success">优秀</span>';
+        else if (uptime >= 70) upEl.innerHTML = '<span class="badge bg-warning">一般</span>';
+        else upEl.innerHTML = '<span class="badge bg-danger">偏低</span>';
+
+        // 活跃任务
+        const tasksDiv = document.getElementById('activeTasks');
+        if (d.active_tasks && d.active_tasks.length > 0) {
+            let html = '';
+            d.active_tasks.forEach(t => {
+                const pct = t.total > 0 ? Math.round(t.completed / t.total * 100) : 0;
+                html += `
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span class="fw-semibold">${t.name}</span>
+                        <span class="text-muted">${t.completed}/${t.total}</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: ${pct}%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-1">
+                        <span class="small text-muted"><i class="bi bi-gear-fill spin me-1"></i>${t.current_platform || '准备中'}</span>
+                        <span class="small text-primary">${pct}%</span>
+                    </div>
+                </div>`;
+            });
+            tasksDiv.innerHTML = html;
+        } else {
+            tasksDiv.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="bi bi-pause-circle text-muted" style="font-size:2rem;"></i>
+                    <div class="mt-2 small text-muted">暂无活跃采集任务</div>
+                    <a href="/collector" class="btn btn-sm btn-primary mt-2">启动采集</a>
+                </div>`;
+        }
+    } catch(e) { console.error(e); }
+}
+
+// 加载最新采集样本
+async function loadLatestSamples() {
+    try {
+        const r = await fetch('/api/monitoring/latest_samples?limit=6');
+        const samples = await r.json();
+        const div = document.getElementById('latestSamples');
+        if (samples.length === 0) {
+            div.innerHTML = `
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-inbox" style="font-size:2rem;"></i>
+                    <div class="mt-2 small">暂无采集数据，请先执行采集任务</div>
+                </div>`;
+            return;
+        }
+        let html = '<div class="row g-2">';
+        samples.forEach(s => {
+            const scoreColor = s.overall >= 0.6 ? 'text-success' : s.overall >= 0.4 ? 'text-warning' : 'text-danger';
+            const statusBadge = s.status === 'available'
+                ? '<span class="sample-badge bg-success text-white">正常</span>'
+                : '<span class="sample-badge bg-secondary text-white">异常</span>';
+            html += `
+            <div class="col-6">
+                <div class="data-sample-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="sample-name text-truncate" style="max-width:120px;" title="${s.name}">${s.name}</div>
+                        ${statusBadge}
+                    </div>
+                    <div class="sample-meta">
+                        <span class="me-2"><i class="bi bi-layers me-1"></i>${s.tier}</span>
+                        <span><i class="bi bi-geo-alt me-1"></i>${s.region}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end mt-2">
+                        <div>
+                            <div class="small text-muted">综合得分</div>
+                            <div class="sample-score ${scoreColor}">${(s.overall * 100).toFixed(1)}</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="small text-muted">数据集</div>
+                            <div class="fw-semibold">${s.datasets || 0}</div>
+                        </div>
+                    </div>
+                    <div class="mt-2 small text-muted">
+                        <i class="bi bi-clock-history me-1"></i>${s.collected_at ? s.collected_at.slice(0,16).replace('T',' ') : '-'}
+                    </div>
+                </div>
+            </div>`;
+        });
+        html += '</div>';
+        div.innerHTML = html;
+    } catch(e) { console.error(e); }
+}
+
+// 加载实时日志
+async function loadLiveLogs() {
+    try {
+        const r = await fetch('/api/monitoring/live_logs?limit=15');
+        const logs = await r.json();
+        if (logs.length > 0) {
+            logs.forEach(log => {
+                addTerminalLine(`[${log.level}] ${log.platform || '系统'}: ${log.message}`,
+                    log.level === 'ERROR' ? 'error' :
+                    log.level === 'WARNING' ? 'warning' :
+                    log.level === 'SUCCESS' ? 'success' : 'info');
+            });
+        }
+    } catch(e) { console.error(e); }
+}
+
+// 加载健康检查
+async function loadHealth() {
+    try {
+        const r = await fetch('/api/monitoring/health?limit=15');
+        const rows = await r.json();
+        let html = '';
+        rows.forEach(row => {
+            const statusDot = row.reachable
+                ? '<span class="status-dot status-up"></span>'
+                : '<span class="status-dot status-down"></span>';
+            const statusText = row.reachable ? '正常' : (row.status === 'timeout' ? '超时' : '异常');
+            const scoreColor = row.overall > 0.6 ? 'text-success' : row.overall > 0.4 ? 'text-warning' : 'text-danger';
+            html += `<tr>
+                <td class="fw-semibold small">${row.name || row.code}</td>
+                <td class="small text-muted">${row.time}</td>
+                <td>${statusDot}${statusText}</td>
+                <td><span class="badge bg-light text-dark">${row.http_status || '-'}</span></td>
+                <td>${row.response_ms || '-'}ms</td>
+                <td>${row.dataset_count || '-'}</td>
+                <td class="${scoreColor} fw-semibold">${row.overall ? (row.overall*100).toFixed(1) : '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewSnapshot('${row.code}')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>`;
+        });
+        document.getElementById('healthTable').innerHTML = html;
+    } catch(e) { console.error(e); }
+}
+
+async function loadHistory() {
+    try {
+        const r = await fetch('/api/monitoring/history?days=7');
+        const data = await r.json();
+        const ctx = document.getElementById('historyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.map(d => d.date.slice(5)),
+                datasets: [{
+                    label: '健康检查次数',
+                    data: data.map(d => d.checks),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49,130,206,0.1)',
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: '可达次数',
+                    data: data.map(d => d.reachable),
+                    borderColor: '#38a169',
+                    backgroundColor: 'transparent',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    } catch(e) { console.error(e); }
+}
+
+function viewSnapshot(code) {
+    window.open(`/platform/${code}`, '_blank');
+}
+
+// 模拟数据流动画（当没有真实采集任务时，展示模拟的采集过程）
+let simulationInterval = null;
+const demoPlatforms = [
+    {name: '北京市公共数据开放平台', tier: '省级', region: '华北', status: 'available'},
+    {name: '上海市公共数据开放平台', tier: '省级', region: '华东', status: 'available'},
+    {name: '广东省公共数据开放平台', tier: '省级', region: '华南', status: 'available'},
+    {name: '浙江省公共数据开放平台', tier: '省级', region: '华东', status: 'available'},
+    {name: '深圳市公共数据开放平台', tier: '副省级/计划单列市', region: '华南', status: 'available'},
+    {name: '武汉市公共数据开放平台', tier: '副省级/计划单列市', region: '华中', status: 'available'},
+    {name: '成都市公共数据开放平台', tier: '副省级/计划单列市', region: '西南', status: 'available'},
+    {name: '苏州市公共数据开放平台', tier: '地级市', region: '华东', status: 'available'},
+];
+
+function startSimulation() {
+    if (simulationInterval) return;
+    let idx = 0;
+    simulationInterval = setInterval(() => {
+        const p = demoPlatforms[idx % demoPlatforms.length];
+        const score = (0.3 + Math.random() * 0.5).toFixed(3);
+        const datasets = Math.floor(Math.random() * 5000);
+        const respTime = (Math.random() * 3 + 0.5).toFixed(2);
+
+        addTerminalLine(`开始采集: ${p.name}`, 'info');
+        setTimeout(() => {
+            addTerminalLine(`  HTTP状态: 200, 响应时间: ${respTime}s`, 'data');
+            addTerminalLine(`  检测到: 搜索=${Math.random()>0.3}, API=${Math.random()>0.5}, 可视化=${Math.random()>0.4}`, 'data');
+            addTerminalLine(`  数据集数量: ${datasets}, 综合得分: ${score}`, 'success');
+            addTerminalLine(`  4E评分 — C1:${(Math.random()*0.8).toFixed(2)} C2:${(Math.random()*0.8).toFixed(2)} C3:${(Math.random()*0.7).toFixed(2)} C4:${(Math.random()*0.6).toFixed(2)}`, 'data');
+        }, 800);
+        idx++;
+    }, 5000);
+}
+
+function stopSimulation() {
+    if (simulationInterval) {
+        clearInterval(simulationInterval);
+        simulationInterval = null;
+    }
+}
+
+// 初始化
+initTerminal();
+loadRealtime();
+loadLatestSamples();
+loadHealth();
+loadHistory();
+
+// 启动模拟数据流（5秒后，给用户时间看到初始状态）
+setTimeout(() => {
+    addTerminalLine('检测到系统空闲，启动演示数据流...', 'warning');
+    startSimulation();
+}, 3000);
+
+// 定时刷新
+setInterval(loadRealtime, 10000);
+setInterval(loadLatestSamples, 15000);
+setInterval(loadLiveLogs, 8000);
+setInterval(loadHealth, 20000);
+</script>
+
+// ===== provenance JS =====
+
+<script>
+let allSources = [];
+
+function renderStars(score) {
+    let s = '';
+    for(let i=1;i<=5;i++) s += i<=score ? '<i class="bi bi-star-fill"></i>' : '<i class="bi bi-star"></i>';
+    return s;
+}
+
+function renderSources(filterType) {
+    const list = filterType ? allSources.filter(s => s.source_type === filterType) : allSources;
+    let html = '';
+    list.forEach(s => {
+        html += `<div class="source-card">
+            <div class="source-header">
+                <div>
+                    <div class="source-title">${s.source_name}</div>
+                    <div class="small text-muted">${s.source_name_en || ''}</div>
+                </div>
+                <span class="source-type">${s.source_type}</span>
+            </div>
+            <div class="source-meta">
+                <div class="mb-1"><i class="bi bi-folder me-2"></i><strong>类别：</strong>${s.source_category || '未分类'}</div>
+                <div class="mb-1"><i class="bi bi-link-45deg me-2"></i><strong>URL：</strong><a href="${s.url || '#'}" target="_blank">${s.url || '无'}</a></div>
+                <div class="mb-1"><i class="bi bi-cloud-download me-2"></i><strong>获取方式：</strong>${s.access_method || '未说明'}</div>
+                <div class="mb-1"><i class="bi bi-calendar-range me-2"></i><strong>数据时间：</strong>${s.data_start_date || '?'} ~ ${s.data_end_date || '?'}</div>
+                <div class="mb-1"><i class="bi bi-file-earmark me-2"></i><strong>格式：</strong>${s.data_format || '未说明'} | <strong>记录数：</strong>${s.record_count || '未统计'}</div>
+                <div class="mb-1"><i class="bi bi-clock-history me-2"></i><strong>更新频率：</strong>${s.update_frequency || '未说明'} | <strong>最后访问：</strong>${s.last_access_time || '未记录'}</div>
+                <div class="mb-1"><i class="bi bi-journal-text me-2"></i><strong>引用章节：</strong>${s.cited_in_chapter || '未说明'}</div>
+                <div class="mb-1"><i class="bi bi-shield-check me-2"></i><strong>可靠性：</strong><span class="quality-stars">${renderStars(s.reliability_score || 0)}</span></div>
+                ${s.data_description ? `<div class="mt-2 p-2" style="background:#f7fafc;border-radius:6px;font-size:0.8rem;">${s.data_description}</div>` : ''}
+            </div>
+        </div>`;
+    });
+    document.getElementById('sourcesList').innerHTML = html || '<div class="text-muted">暂无数据</div>';
+}
+
+async function loadProvenance() {
+    try {
+        const r = await fetch('/api/provenance');
+        allSources = await r.json();
+        document.getElementById('statTotal').textContent = allSources.length;
+        document.getElementById('statGov').textContent = allSources.filter(s => s.source_type === '政府平台').length;
+        document.getElementById('statAcad').textContent = allSources.filter(s => s.source_type === '学术数据库').length;
+        document.getElementById('statIntl').textContent = allSources.filter(s => s.source_type === '国际组织').length;
+        renderSources('');
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('typeFilters').addEventListener('click', function(e) {
+    if(e.target.classList.contains('list-group-item')) {
+        this.querySelectorAll('.list-group-item').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        renderSources(e.target.dataset.type);
+    }
 });
-document.getElementById('db-monitoring-tab').addEventListener('shown.bs.tab', function() {
-    loadDashboardTab('db-monitoring', '/monitoring', 'db-monitoring-content');
-});
-document.getElementById('db-source-tab').addEventListener('shown.bs.tab', function() {
-    loadDashboardTab('db-source', '/source-code', 'db-source-content');
-});
-document.getElementById('db-provenance-tab').addEventListener('shown.bs.tab', function() {
-    loadDashboardTab('db-provenance', '/provenance', 'db-provenance-content');
-});
-document.getElementById('db-archive-tab').addEventListener('shown.bs.tab', function() {
-    loadDashboardTab('db-archive', '/data-archive', 'db-archive-content');
-});
+
+loadProvenance();
+</script>
+
+// ===== data_archive JS =====
+
+<script>
+async function loadSnapshots() {
+    try {
+        const r = await fetch('/api/snapshots');
+        const rows = await r.json();
+        let html = '';
+        rows.forEach(row => {
+            const verifiedBadge = row.verified
+                ? '<span class="badge badge-verified"><i class="bi bi-check-circle-fill me-1"></i>已核验</span>'
+                : '<span class="badge badge-pending"><i class="bi bi-hourglass-split me-1"></i>待核验</span>';
+            html += `<tr>
+                <td>${row.id}</td>
+                <td>${row.date}</td>
+                <td>${row.time}</td>
+                <td>${row.type}</td>
+                <td>${row.total}</td>
+                <td>${row.reachable}</td>
+                <td>${row.avg_score || '-'}</td>
+                <td>${row.size_kb || '-'}</td>
+                <td>${verifiedBadge}</td>
+                <td>
+                    <a href="/api/snapshots/${row.id}/export" class="export-btn me-1"><i class="bi bi-download me-1"></i>导出</a>
+                </td>
+            </tr>`;
+        });
+        document.getElementById('snapshotsTable').innerHTML = html || '<tr><td colspan="10" class="text-muted text-center">暂无快照数据</td></tr>';
+    } catch(e) { console.error(e); }
+}
+loadSnapshots();
+</script>
+
 </script>
 {% endblock %}

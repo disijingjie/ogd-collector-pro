@@ -19,7 +19,7 @@ from functools import wraps
 
 # 确保能导入本地模块
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from models import get_db, init_db, init_platforms_data, DB_PATH
+from models import get_db, init_db, init_platforms_data, init_provenance_data, ensure_db, DB_PATH
 from collector_engine import CollectorEngine, create_collection_task
 
 app = Flask(__name__)
@@ -306,7 +306,9 @@ def api_task_progress(task_id):
     def event_stream():
         global active_engine
         last_progress = None
-        
+        idle_count = 0
+        MAX_IDLE = 30  # 最多等待60秒任务启动
+
         while True:
             if active_engine and active_engine.task_id == task_id:
                 try:
@@ -315,27 +317,50 @@ def api_task_progress(task_id):
                         last_progress = progress
                         yield f"data: {json.dumps(progress, ensure_ascii=False)}\n\n"
                 except:
-                    pass
+                    # 发送heartbeat保活
+                    yield ":heartbeat\n\n"
             else:
                 # 查询数据库获取最新状态
-                conn = get_db()
-                cursor = conn.cursor()
-                cursor.execute("""
-                    SELECT status, completed_count, success_count, fail_count, total_count
-                    FROM collection_tasks WHERE id=?
-                """, (task_id,))
-                row = cursor.fetchone()
-                conn.close()
-                
-                if row:
-                    status, completed, success, failed, total = row
-                    yield f"data: {json.dumps({'status': status, 'completed': completed or 0, 'success': success or 0, 'failed': failed or 0, 'total': total or 0}, ensure_ascii=False)}\n\n"
-                
+                try:
+                    conn = get_db()
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        SELECT status, completed_count, success_count, fail_count, total_count
+                        FROM collection_tasks WHERE id=?
+                    """, (task_id,))
+                    row = cursor.fetchone()
+                    conn.close()
+
+                    if row:
+                        status, completed, success, failed, total = row
+                        yield f"data: {json.dumps({'status': status, 'completed': completed or 0, 'success': success or 0, 'failed': failed or 0, 'total': total or 0}, ensure_ascii=False)}\n\n"
+                except Exception:
+                    yield ":db_error\n\n"
+
+                idle_count += 1
+                if idle_count > MAX_IDLE:
+                    yield f"data: {json.dumps({'status': 'timeout', 'message': '等待任务启动超时'}, ensure_ascii=False)}\n\n"
+                    break
                 time.sleep(2)
-                
-            if not (active_engine and active_engine.is_running):
+
+            if active_engine and not active_engine.is_running:
+                # 任务已结束，再发一次最终状态
+                try:
+                    conn = get_db()
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        SELECT status, completed_count, success_count, fail_count, total_count
+                        FROM collection_tasks WHERE id=?
+                    """, (task_id,))
+                    row = cursor.fetchone()
+                    conn.close()
+                    if row:
+                        status, completed, success, failed, total = row
+                        yield f"data: {json.dumps({'status': status, 'completed': completed or 0, 'success': success or 0, 'failed': failed or 0, 'total': total or 0, 'finished': True}, ensure_ascii=False)}\n\n"
+                except Exception:
+                    pass
                 break
-    
+
     return Response(event_stream(), mimetype='text/event-stream')
 
 
@@ -1158,89 +1183,104 @@ def api_source_verify():
 @login_required
 def api_schedule_list():
     """获取定时任务列表"""
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM auto_schedule ORDER BY id DESC")
-    columns = [d[0] for d in cursor.description]
-    results = [dict(zip(columns, r)) for r in cursor.fetchall()]
-    conn.close()
-    return jsonify(results)
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM auto_schedule ORDER BY id DESC")
+        columns = [d[0] for d in cursor.description]
+        results = [dict(zip(columns, r)) for r in cursor.fetchall()]
+        conn.close()
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({'error': str(e), 'schedules': []}), 200
 
 
 @app.route('/api/schedule', methods=['POST'])
 @login_required
 def api_schedule_create():
     """创建定时任务"""
-    data = request.get_json()
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO auto_schedule (schedule_name, cron_expression, task_type, is_active, next_run_at)
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        data.get('schedule_name', '自动采集任务'),
-        data.get('cron_expression', '0 2 * * *'),
-        data.get('task_type', 'full'),
-        1 if data.get('is_active', True) else 0,
-        datetime.now().isoformat()
-    ))
-    conn.commit()
-    task_id = cursor.lastrowid
-    conn.close()
-    return jsonify({'success': True, 'id': task_id})
+    try:
+        data = request.get_json()
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO auto_schedule (schedule_name, cron_expression, task_type, is_active, next_run_at)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            data.get('schedule_name', '自动采集任务'),
+            data.get('cron_expression', '0 2 * * *'),
+            data.get('task_type', 'full'),
+            1 if data.get('is_active', True) else 0,
+            datetime.now().isoformat()
+        ))
+        conn.commit()
+        task_id = cursor.lastrowid
+        conn.close()
+        return jsonify({'success': True, 'id': task_id})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/schedule/<int:schedule_id>', methods=['PUT'])
 @login_required
 def api_schedule_update(schedule_id):
     """更新定时任务"""
-    data = request.get_json()
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("""
-        UPDATE auto_schedule SET
-            schedule_name=?, cron_expression=?, task_type=?, is_active=?
-        WHERE id=?
-    """, (
-        data.get('schedule_name'),
-        data.get('cron_expression'),
-        data.get('task_type'),
-        1 if data.get('is_active') else 0,
-        schedule_id
-    ))
-    conn.commit()
-    conn.close()
-    return jsonify({'success': True})
+    try:
+        data = request.get_json()
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE auto_schedule SET
+                schedule_name=?, cron_expression=?, task_type=?, is_active=?
+            WHERE id=?
+        """, (
+            data.get('schedule_name'),
+            data.get('cron_expression'),
+            data.get('task_type'),
+            1 if data.get('is_active') else 0,
+            schedule_id
+        ))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/schedule/<int:schedule_id>', methods=['DELETE'])
 @login_required
 def api_schedule_delete(schedule_id):
     """删除定时任务"""
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM auto_schedule WHERE id=?", (schedule_id,))
-    conn.commit()
-    conn.close()
-    return jsonify({'success': True})
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM auto_schedule WHERE id=?", (schedule_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/schedule/<int:schedule_id>/toggle', methods=['POST'])
 @login_required
 def api_schedule_toggle(schedule_id):
     """切换定时任务开关"""
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT is_active FROM auto_schedule WHERE id=?", (schedule_id,))
-    row = cursor.fetchone()
-    if not row:
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT is_active FROM auto_schedule WHERE id=?", (schedule_id,))
+        row = cursor.fetchone()
+        if not row:
+            conn.close()
+            return jsonify({'error': '任务不存在'}), 404
+        new_status = 0 if row[0] else 1
+        cursor.execute("UPDATE auto_schedule SET is_active=? WHERE id=?", (new_status, schedule_id))
+        conn.commit()
         conn.close()
-        return jsonify({'error': '任务不存在'}), 404
-    new_status = 0 if row[0] else 1
-    cursor.execute("UPDATE auto_schedule SET is_active=? WHERE id=?", (new_status, schedule_id))
-    conn.commit()
-    conn.close()
-    return jsonify({'success': True, 'is_active': bool(new_status)})
+        return jsonify({'success': True, 'is_active': bool(new_status)})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/api/schedule/history')
@@ -1273,10 +1313,9 @@ def api_schedule_history():
 @app.before_request
 def before_first_request():
     """首次请求前初始化数据库"""
-    if not DB_PATH.exists():
-        init_db()
-        init_platforms_data()
-        init_provenance_data()
+    ensure_db()
+    init_platforms_data()
+    init_provenance_data()
 
 
 # ===== 后台定时任务调度器 =====
@@ -1334,6 +1373,12 @@ def should_run(cron_expr, last_run):
 def scheduler_worker():
     """后台定时任务调度器线程"""
     print("[Scheduler] 定时任务调度器已启动")
+    # 先确保数据库表存在
+    try:
+        ensure_db()
+    except Exception as e:
+        print(f"[Scheduler] 数据库初始化失败: {e}")
+
     while True:
         try:
             conn = get_db()
@@ -1380,10 +1425,9 @@ scheduler_thread.start()
 
 if __name__ == '__main__':
     # 确保数据库已初始化
-    if not DB_PATH.exists():
-        init_db()
-        init_platforms_data()
-        init_provenance_data()
+    ensure_db()
+    init_platforms_data()
+    init_provenance_data()
 
     print("=" * 60)
     print("OGD-Collector Pro 启动中...")

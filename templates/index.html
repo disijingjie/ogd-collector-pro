@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="mb-1">主控台</h2>
         <p class="text-muted mb-0">政府数据开放平台三层架构采集系统概览</p>
@@ -13,32 +13,7 @@
     </div>
 </div>
 
-<!-- 内页Tab导航 -->
-<ul class="nav page-tabs" id="consoleTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
-            <i class="bi bi-speedometer2"></i> 概览
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis" type="button" role="tab">
-            <i class="bi bi-graph-up"></i> 分析图表
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="platforms-tab" data-bs-toggle="tab" data-bs-target="#platforms" type="button" role="tab">
-            <i class="bi bi-grid-3x3"></i> 平台详情
-        </button>
-    </li>
-</ul>
-
-<!-- Tab内容区 -->
-<div class="tab-content" id="consoleTabContent">
-
-<!-- ====== 概览 Tab ====== -->
-<div class="tab-pane fade show active" id="overview" role="tabpanel">
-
-<!-- 统计卡片 -->
+<!-- ========== 一、概览统计 ========== -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
         <div class="stat-card success">
@@ -47,13 +22,9 @@
                     <div class="stat-value">{{ stats.total_platforms or 104 }}</div>
                     <div class="stat-label">平台总数</div>
                 </div>
-                <div class="fs-1 text-success opacity-25">
-                    <i class="bi bi-layers"></i>
-                </div>
+                <div class="fs-1 text-success opacity-25"><i class="bi bi-layers"></i></div>
             </div>
-            <div class="mt-2 small text-muted">
-                省级31 + 副省级13 + 地级市60
-            </div>
+            <div class="mt-2 small text-muted">省级31 + 副省级13 + 地级市60</div>
         </div>
     </div>
     <div class="col-md-3">
@@ -63,13 +34,9 @@
                     <div class="stat-value">{{ stats.available_count or 25 }}</div>
                     <div class="stat-label">可用平台</div>
                 </div>
-                <div class="fs-1 text-primary opacity-25">
-                    <i class="bi bi-check-circle"></i>
-                </div>
+                <div class="fs-1 text-primary opacity-25"><i class="bi bi-check-circle"></i></div>
             </div>
-            <div class="mt-2 small text-muted">
-                可用率 {{ "%.1f"|format((stats.available_count or 25) / (stats.total_platforms or 104) * 100) }}%
-            </div>
+            <div class="mt-2 small text-muted">可用率 {{ "%.1f"|format((stats.available_count or 25) / (stats.total_platforms or 104) * 100) }}%</div>
         </div>
     </div>
     <div class="col-md-3">
@@ -79,13 +46,9 @@
                     <div class="stat-value">{{ stats.total_tasks or 1 }}</div>
                     <div class="stat-label">采集任务</div>
                 </div>
-                <div class="fs-1 text-warning opacity-25">
-                    <i class="bi bi-collection"></i>
-                </div>
+                <div class="fs-1 text-warning opacity-25"><i class="bi bi-collection"></i></div>
             </div>
-            <div class="mt-2 small text-muted">
-                已完成 {{ stats.total_tasks or 1 }} 次采集
-            </div>
+            <div class="mt-2 small text-muted">已完成 {{ stats.total_tasks or 1 }} 次采集</div>
         </div>
     </div>
     <div class="col-md-3">
@@ -95,13 +58,9 @@
                     <div class="stat-value">{{ stats.total_records or 104 }}</div>
                     <div class="stat-label">采集记录</div>
                 </div>
-                <div class="fs-1 text-danger opacity-25">
-                    <i class="bi bi-file-earmark-text"></i>
-                </div>
+                <div class="fs-1 text-danger opacity-25"><i class="bi bi-file-earmark-text"></i></div>
             </div>
-            <div class="mt-2 small text-muted">
-                包含4E框架全量指标
-            </div>
+            <div class="mt-2 small text-muted">包含4E框架全量指标</div>
         </div>
     </div>
 </div>
@@ -112,7 +71,7 @@
         <div class="card">
             <div class="card-header bg-white border-0 pt-3 pb-0 px-4 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="bi bi-activity text-primary me-2"></i>实时采集监控</h5>
-                <a href="/monitoring" class="btn btn-sm btn-outline-primary">查看详情 <i class="bi bi-arrow-right"></i></a>
+                <a href="#platforms-section" class="btn btn-sm btn-outline-primary">查看平台详情 <i class="bi bi-arrow-down"></i></a>
             </div>
             <div class="card-body">
                 <div class="row g-3 text-center">
@@ -177,8 +136,8 @@
     </div>
 </div>
 
-<div class="row g-4">
-    <!-- 左侧：层级分布 -->
+<!-- 层级分布 + 区域覆盖 -->
+<div class="row g-4 mb-4">
     <div class="col-lg-6">
         <div class="card h-100">
             <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
@@ -212,8 +171,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- 右侧：区域分布 -->
     <div class="col-lg-6">
         <div class="card h-100">
             <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
@@ -221,42 +178,10 @@
             </div>
             <div class="card-body p-4">
                 <div class="row g-3 mb-3">
-                    <div class="col-6">
-                        <div class="d-flex align-items-center p-2 rounded" style="background: #fff5f5;">
-                            <div class="flex-grow-1">
-                                <div class="small text-muted">华东</div>
-                                <div class="fw-bold">20 平台</div>
-                            </div>
-                            <span class="badge bg-danger">19.2%</span>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex align-items-center p-2 rounded" style="background: #fffaf0;">
-                            <div class="flex-grow-1">
-                                <div class="small text-muted">华北</div>
-                                <div class="fw-bold">14 平台</div>
-                            </div>
-                            <span class="badge bg-warning">13.5%</span>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex align-items-center p-2 rounded" style="background: #f0fff4;">
-                            <div class="flex-grow-1">
-                                <div class="small text-muted">华南</div>
-                                <div class="fw-bold">15 平台</div>
-                            </div>
-                            <span class="badge bg-success">14.4%</span>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex align-items-center p-2 rounded" style="background: #ebf8ff;">
-                            <div class="flex-grow-1">
-                                <div class="small text-muted">华中</div>
-                                <div class="fw-bold">15 平台</div>
-                            </div>
-                            <span class="badge bg-primary">14.4%</span>
-                        </div>
-                    </div>
+                    <div class="col-6"><div class="d-flex align-items-center p-2 rounded" style="background: #fff5f5;"><div class="flex-grow-1"><div class="small text-muted">华东</div><div class="fw-bold">20 平台</div></div><span class="badge bg-danger">19.2%</span></div></div>
+                    <div class="col-6"><div class="d-flex align-items-center p-2 rounded" style="background: #fffaf0;"><div class="flex-grow-1"><div class="small text-muted">华北</div><div class="fw-bold">14 平台</div></div><span class="badge bg-warning">13.5%</span></div></div>
+                    <div class="col-6"><div class="d-flex align-items-center p-2 rounded" style="background: #f0fff4;"><div class="flex-grow-1"><div class="small text-muted">华南</div><div class="fw-bold">15 平台</div></div><span class="badge bg-success">14.4%</span></div></div>
+                    <div class="col-6"><div class="d-flex align-items-center p-2 rounded" style="background: #ebf8ff;"><div class="flex-grow-1"><div class="small text-muted">华中</div><div class="fw-bold">15 平台</div></div><span class="badge bg-primary">14.4%</span></div></div>
                 </div>
                 <canvas id="regionChart" height="180"></canvas>
             </div>
@@ -265,66 +190,274 @@
 </div>
 
 <!-- 最近采集任务 -->
-<div class="card mt-4">
+<div class="card mb-4">
     <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
         <h5 class="mb-0"><i class="bi bi-clock-history"></i> 最近采集任务</h5>
-        <a href="/collector" class="btn btn-sm btn-primary">进入采集管理</a>
+        <a href="/dashboard" class="btn btn-sm btn-primary">进入数据看板</a>
     </div>
     <div class="card-body p-4">
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>任务ID</th>
-                        <th>任务名称</th>
-                        <th>类型</th>
-                        <th>状态</th>
-                        <th>进度</th>
-                        <th>成功/失败</th>
-                        <th>创建时间</th>
-                    </tr>
+                    <tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>进度</th><th>成功/失败</th><th>创建时间</th></tr>
                 </thead>
                 <tbody>
                     {% for task in stats.recent_tasks %}
                     <tr>
                         <td>#{{ task.id }}</td>
                         <td>{{ task.task_name }}</td>
+                        <td><span class="badge bg-secondary">{{ task.task_type }}</span></td>
                         <td>
-                            <span class="badge bg-secondary">{{ task.task_type }}</span>
-                        </td>
-                        <td>
-                            {% if task.status == 'completed' %}
-                                <span class="badge bg-success">已完成</span>
-                            {% elif task.status == 'running' %}
-                                <span class="badge bg-primary">运行中</span>
-                            {% elif task.status == 'paused' %}
-                                <span class="badge bg-warning">已暂停</span>
-                            {% else %}
-                                <span class="badge bg-secondary">{{ task.status }}</span>
-                            {% endif %}
+                            {% if task.status == 'completed' %}<span class="badge bg-success">已完成</span>
+                            {% elif task.status == 'running' %}<span class="badge bg-primary">运行中</span>
+                            {% elif task.status == 'paused' %}<span class="badge bg-warning">已暂停</span>
+                            {% else %}<span class="badge bg-secondary">{{ task.status }}</span>{% endif %}
                         </td>
                         <td style="width: 200px;">
-                            <div class="progress" style="height: 8px;">
-                                <div class="progress-bar" style="width: {{ (task.completed / task.total * 100) if task.total else 0 }}%"></div>
-                            </div>
+                            <div class="progress" style="height: 8px;"><div class="progress-bar" style="width: {{ (task.completed / task.total * 100) if task.total else 0 }}%"></div></div>
                             <small class="text-muted">{{ task.completed or 0 }}/{{ task.total or 0 }}</small>
                         </td>
-                        <td>
-                            <span class="text-success">{{ task.success or 0 }}</span> / 
-                            <span class="text-danger">{{ task.failed or 0 }}</span>
-                        </td>
+                        <td><span class="text-success">{{ task.success or 0 }}</span> / <span class="text-danger">{{ task.failed or 0 }}</span></td>
                         <td class="text-muted small">{{ task.created_at or '-' }}</td>
                     </tr>
                     {% else %}
-                    <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
-                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                            暂无采集任务，请前往采集管理页面创建
-                        </td>
-                    </tr>
+                    <tr><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-inbox fs-1 d-block mb-2"></i>暂无采集任务，请前往数据看板创建</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、分析图表 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-graph-up text-primary me-2"></i>分析图表</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4">
+                <h5 class="mb-0">三层绩效梯度</h5>
+                <p class="text-muted small">副省级 > 省级 >> 地级市的倒U型格局</p>
+            </div>
+            <div class="card-body p-4"><canvas id="tierGradientChart" height="280"></canvas></div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4">
+                <h5 class="mb-0">维度错位分析</h5>
+                <p class="text-muted small">省级"量多质低" vs 副省级"量少质高"</p>
+            </div>
+            <div class="card-body p-4"><canvas id="dimensionShiftChart" height="280"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">层级分化传导断裂模型</h5></div>
+    <div class="card-body p-4">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="p-4 rounded border">
+                    <div class="fs-1 text-danger mb-2"><i class="bi bi-file-earmark-x"></i></div>
+                    <h6>制度传导断裂</h6>
+                    <p class="small text-muted mb-0">省级100%有政策<br>地级市仅21.6%</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4 rounded border">
+                    <div class="fs-1 text-warning mb-2"><i class="bi bi-hdd-rack"></i></div>
+                    <h6>技术传导断裂</h6>
+                    <p class="small text-muted mb-0">71%地级市挂靠省级<br>丧失自主性</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4 rounded border">
+                    <div class="fs-1 text-info mb-2"><i class="bi bi-database-x"></i></div>
+                    <h6>数据传导断裂</h6>
+                    <p class="small text-muted mb-0">61.3%难获省级数据<br>城市级细分缺乏</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4 rounded border">
+                    <div class="fs-1 text-secondary mb-2"><i class="bi bi-people"></i></div>
+                    <h6>生态传导断裂</h6>
+                    <p class="small text-muted mb-0">87.1%无开发者社区<br>社会利用为零</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">区域绩效热力对比</h5></div>
+            <div class="card-body p-4"><canvas id="regionHeatChart" height="300"></canvas></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">东中西部可用率</h5></div>
+            <div class="card-body p-4"><canvas id="regionAvailChart" height="300"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">4E维度得分分布箱线图</h5></div>
+            <div class="card-body p-4"><canvas id="boxChart" height="300"></canvas></div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">4E维度相关性矩阵</h5></div>
+            <div class="card-body p-4"><canvas id="corrChart" height="300"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 三、数据看板 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-bar-chart-line text-primary me-2"></i>数据看板</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<!-- 4E维度雷达图 + 可用率 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-bullseye"></i> 4E维度层级对比</h5>
+            </div>
+            <div class="card-body p-4"><canvas id="radarChart" height="300"></canvas></div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> 可用率对比</h5>
+            </div>
+            <div class="card-body p-4"><canvas id="availabilityChart" height="300"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOP排行 + 功能支持率 -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-trophy"></i> 平台TOP排行</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table" id="top-platforms-table">
+                        <thead>
+                            <tr><th>排名</th><th>平台名称</th><th>层级</th><th>区域</th><th>综合得分</th><th>4E维度分解</th></tr>
+                        </thead>
+                        <tbody id="top-platforms-body">
+                            <tr><td colspan="6" class="text-center text-muted py-4">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-puzzle"></i> 功能支持率</h5>
+            </div>
+            <div class="card-body p-4"><canvas id="featureChart" height="280"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<!-- 区域绩效分布 -->
+<div class="card mb-4">
+    <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+        <h5 class="mb-0"><i class="bi bi-map"></i> 区域绩效分布</h5>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-lg-6"><canvas id="regionScoreChart" height="250"></canvas></div>
+            <div class="col-lg-6">
+                <div class="table-responsive">
+                    <table class="table table-sm" id="region-table">
+                        <thead>
+                            <tr><th>区域</th><th>平台数</th><th>可用数</th><th>可用率</th><th>平均得分</th></tr>
+                        </thead>
+                        <tbody id="region-table-body">
+                            <tr><td colspan="5" class="text-center text-muted">加载中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 四、平台详情 ========== -->
+<div class="d-flex align-items-center mb-3 mt-5" id="platforms-section">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h4 class="mx-3 mb-0 text-muted"><i class="bi bi-grid-3x3 text-primary me-2"></i>平台详情</h4>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <p class="text-muted mb-0">三层架构所有平台的详细信息与采集记录</p>
+    <div class="d-flex gap-2">
+        <select id="filter-tier" class="form-select" style="width: 150px;" onchange="loadPlatforms()">
+            <option value="">全部层级</option>
+            <option value="省级">省级</option>
+            <option value="副省级/计划单列市">副省级/单列市</option>
+            <option value="地级市">地级市</option>
+        </select>
+        <select id="filter-region" class="form-select" style="width: 150px;" onchange="loadPlatforms()">
+            <option value="">全部区域</option>
+            <option value="华东">华东</option>
+            <option value="华北">华北</option>
+            <option value="华南">华南</option>
+            <option value="华中">华中</option>
+            <option value="西南">西南</option>
+            <option value="西北">西北</option>
+            <option value="东北">东北</option>
+        </select>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr><th>编码</th><th>平台名称</th><th>层级</th><th>区域</th><th>类型</th><th>URL</th><th>最新状态</th><th>综合得分</th><th>操作</th></tr>
+                </thead>
+                <tbody id="platforms-body">
+                    <tr><td colspan="9" class="text-center text-muted py-4">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 平台详情模态框 -->
+<div class="modal fade" id="platformModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">平台详情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 </div>
@@ -332,47 +465,25 @@
 
 {% block extra_js %}
 <script>
-// 层级分布饼图
+// ===== 概览图表 =====
 const tierCtx = document.getElementById('tierChart').getContext('2d');
 new Chart(tierCtx, {
     type: 'doughnut',
     data: {
         labels: ['省级', '副省级/计划单列市', '地级市(抽样)'],
-        datasets: [{
-            data: [31, 13, 60],
-            backgroundColor: ['#3182ce', '#38a169', '#d69e2e'],
-            borderWidth: 0
-        }]
+        datasets: [{ data: [31, 13, 60], backgroundColor: ['#3182ce', '#38a169', '#d69e2e'], borderWidth: 0 }]
     },
-    options: {
-        responsive: true,
-        cutout: '60%',
-        plugins: {
-            legend: { position: 'bottom' }
-        }
-    }
+    options: { responsive: true, cutout: '60%', plugins: { legend: { position: 'bottom' } } }
 });
 
-// 区域分布柱状图
 const regionCtx = document.getElementById('regionChart').getContext('2d');
 new Chart(regionCtx, {
     type: 'bar',
     data: {
         labels: ['华东', '华北', '华南', '华中', '西南', '西北', '东北'],
-        datasets: [{
-            label: '平台数量',
-            data: [20, 14, 15, 15, 15, 14, 11],
-            backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'],
-            borderRadius: 6
-        }]
+        datasets: [{ label: '平台数量', data: [20, 14, 15, 15, 15, 14, 11], backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'], borderRadius: 6 }]
     },
-    options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 5 } }
-        }
-    }
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 5 } } } }
 });
 
 // 实时指标加载
@@ -394,61 +505,382 @@ async function loadRealtimeStats() {
 }
 loadRealtimeStats();
 setInterval(loadRealtimeStats, 30000);
-</script>
 
-</div> <!-- /tab-pane overview -->
+// ===== 分析图表 =====
+let charts = {};
 
-<!-- 分析图表 Tab -->
-<div class="tab-pane fade" id="analysis" role="tabpanel">
-    <div id="analysis-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载分析图表...</p>
-        </div>
-    </div>
-</div>
-
-<!-- 平台详情 Tab -->
-<div class="tab-pane fade" id="platforms" role="tabpanel">
-    <div id="platforms-content">
-        <div class="text-center py-5">
-            <div class="spinner-border text-primary" role="status"></div>
-            <p class="mt-2 text-muted">加载平台详情...</p>
-        </div>
-    </div>
-</div>
-
-</div> <!-- /tab-content -->
-
-<!-- 分析图表 & 平台详情 通过AJAX加载 -->
-<script>
-function loadTabContent(tabId, url, containerId) {
-    const container = document.getElementById(containerId);
-    if (container.dataset.loaded) return;
-    fetch(url + '?embed=1')
-        .then(r => r.text())
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const content = doc.querySelector('.main-content');
-            container.innerHTML = content ? content.innerHTML : html;
-            container.dataset.loaded = '1';
-            const scripts = container.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                newScript.textContent = oldScript.textContent;
-                oldScript.parentNode.replaceChild(newScript, oldScript);
-            });
-        })
-        .catch(e => { container.innerHTML = '<div class="alert alert-danger">加载失败，请刷新重试</div>'; });
+async function renderTierCharts() {
+    const res = await fetch('/api/analysis/tier_comparison');
+    const data = await res.json();
+    
+    const ctx1 = document.getElementById('tierGradientChart').getContext('2d');
+    charts.tierGradient = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.tier),
+            datasets: [{ label: '平均综合得分', data: data.map(d => d.avg_score), backgroundColor: ['#3182ce', '#38a169', '#d69e2e'], borderRadius: 8 }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
+    
+    const ctx2 = document.getElementById('dimensionShiftChart').getContext('2d');
+    charts.dimensionShift = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ['C1供给', 'C2服务', 'C3质量', 'C4效果'],
+            datasets: data.map((d, i) => ({
+                label: d.tier,
+                data: [d.avg_c1, d.avg_c2, d.avg_c3, d.avg_c4],
+                borderColor: ['#3182ce', '#38a169', '#d69e2e'][i],
+                backgroundColor: ['#3182ce', '#38a169', '#d69e2e'][i],
+                tension: 0.3,
+                fill: false
+            }))
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
 }
 
-document.getElementById('analysis-tab').addEventListener('shown.bs.tab', function() {
-    loadTabContent('analysis', '/analysis', 'analysis-content');
-});
+async function renderRegionCharts() {
+    const res = await fetch('/api/analysis/region_distribution');
+    const data = await res.json();
+    
+    const ctx1 = document.getElementById('regionHeatChart').getContext('2d');
+    charts.regionHeat = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [
+                { label: '平均得分', data: data.map(d => d.avg_score), backgroundColor: '#3182ce', borderRadius: 6 },
+                { label: '可用率(%)', data: data.map(d => d.total > 0 ? d.available/d.total*100 : 0), backgroundColor: '#38a169', borderRadius: 6, yAxisID: 'y1' }
+            ]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1.0 }, y1: { position: 'right', beginAtZero: true, max: 100 } } }
+    });
+    
+    const ctx2 = document.getElementById('regionAvailChart').getContext('2d');
+    charts.regionAvail = new Chart(ctx2, {
+        type: 'polarArea',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [{ data: data.map(d => d.available), backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20'] }]
+        },
+        options: { responsive: true }
+    });
+}
 
-document.getElementById('platforms-tab').addEventListener('shown.bs.tab', function() {
-    loadTabContent('platforms', '/platforms', 'platforms-content');
-});
+async function render4ECharts() {
+    const res = await fetch('/api/records?limit=200');
+    const records = await res.json();
+    const available = records.filter(r => r.status === 'available');
+    
+    const ctx1 = document.getElementById('boxChart').getContext('2d');
+    const dimensions = ['score_c1', 'score_c2', 'score_c3', 'score_c4'];
+    const dimLabels = ['C1供给保障', 'C2平台服务', 'C3数据质量', 'C4利用效果'];
+    
+    const stats = dimensions.map(dim => {
+        const vals = available.map(r => r[dim]).filter(v => v > 0).sort((a, b) => a - b);
+        return { min: vals[0] || 0, q1: vals[Math.floor(vals.length * 0.25)] || 0, median: vals[Math.floor(vals.length * 0.5)] || 0, q3: vals[Math.floor(vals.length * 0.75)] || 0, max: vals[vals.length - 1] || 0 };
+    });
+    
+    charts.box = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: dimLabels,
+            datasets: [
+                { label: '最小值', data: stats.map(s => s.min), backgroundColor: '#e53e3e' },
+                { label: 'Q1', data: stats.map(s => s.q1), backgroundColor: '#d69e2e' },
+                { label: '中位数', data: stats.map(s => s.median), backgroundColor: '#3182ce' },
+                { label: 'Q3', data: stats.map(s => s.q3), backgroundColor: '#38a169' },
+                { label: '最大值', data: stats.map(s => s.max), backgroundColor: '#805ad5' }
+            ]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
+    
+    const ctx2 = document.getElementById('corrChart').getContext('2d');
+    const corrData = [];
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            const vals_i = available.map(r => r[dimensions[i]]);
+            const vals_j = available.map(r => r[dimensions[j]]);
+            const corr = i === j ? 1.0 : calculateCorrelation(vals_i, vals_j);
+            corrData.push({x: j, y: i, v: corr});
+        }
+    }
+    
+    charts.corr = new Chart(ctx2, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: '相关系数',
+                data: corrData.map(d => ({x: d.x, y: d.y, r: Math.abs(d.v) * 20})),
+                backgroundColor: corrData.map(d => {
+                    const intensity = Math.abs(d.v);
+                    return d.v > 0 ? `rgba(49, 130, 206, ${intensity})` : `rgba(229, 62, 62, ${intensity})`;
+                })
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { type: 'linear', position: 'bottom', min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } },
+                y: { min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } }
+            }
+        }
+    });
+}
+
+function calculateCorrelation(x, y) {
+    const n = Math.min(x.length, y.length);
+    if (n < 2) return 0;
+    const sumX = x.slice(0, n).reduce((a, b) => a + b, 0);
+    const sumY = y.slice(0, n).reduce((a, b) => a + b, 0);
+    const sumXY = x.slice(0, n).reduce((acc, xi, i) => acc + xi * y[i], 0);
+    const sumX2 = x.slice(0, n).reduce((a, b) => a + b * b, 0);
+    const sumY2 = y.slice(0, n).reduce((a, b) => a + b * b, 0);
+    return (n * sumXY - sumX * sumY) / Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY)) || 0;
+}
+
+renderTierCharts();
+renderRegionCharts();
+render4ECharts();
+
+// ===== 平台详情 =====
+async function loadPlatforms() {
+    const tier = document.getElementById('filter-tier').value;
+    const region = document.getElementById('filter-region').value;
+    let url = '/api/platforms';
+    const params = [];
+    if (tier) params.push(`tier=${encodeURIComponent(tier)}`);
+    if (region) params.push(`region=${encodeURIComponent(region)}`);
+    if (params.length) url += '?' + params.join('&');
+    
+    const res = await fetch(url);
+    const platforms = await res.json();
+    const recordsRes = await fetch('/api/records?limit=500');
+    const records = await recordsRes.json();
+    
+    const tbody = document.getElementById('platforms-body');
+    tbody.innerHTML = platforms.map(p => {
+        const record = records.find(r => r.platform_code === p.code);
+        const status = record ? record.status : 'unknown';
+        const score = record ? record.overall_score : '-';
+        const statusBadge = status === 'available' ? '<span class="badge bg-success">可用</span>' : status === 'unavailable' ? '<span class="badge bg-danger">不可用</span>' : '<span class="badge bg-secondary">未采集</span>';
+        const tierBadge = p.tier === '省级' ? 'tier-provincial' : p.tier === '副省级/计划单列市' ? 'tier-subprovincial' : 'tier-prefectural';
+        return `
+            <tr>
+                <td><code>${p.code}</code></td>
+                <td><strong>${p.name}</strong></td>
+                <td><span class="tier-badge ${tierBadge}">${p.tier}</span></td>
+                <td>${p.region || '-'}</td>
+                <td>${p.platform_type}</td>
+                <td><small class="text-muted">${p.url || p.url_pattern || '-'}</small></td>
+                <td>${statusBadge}</td>
+                <td>${score !== '-' ? score.toFixed(3) : '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewPlatformDetail('${p.code}')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>`;
+    }).join('');
+}
+
+async function viewPlatformDetail(code) {
+    const res = await fetch('/api/records?limit=10');
+    const records = await res.json();
+    const record = records.find(r => r.platform_code === code);
+    
+    if (!record) {
+        document.getElementById('modal-body').innerHTML = '<p class="text-muted">暂无采集记录</p>';
+    } else {
+        document.getElementById('modal-title').textContent = `${record.platform_name} - 采集详情`;
+        document.getElementById('modal-body').innerHTML = `
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <h6>基础信息</h6>
+                    <table class="table table-sm">
+                        <tr><td>层级</td><td>${record.tier}</td></tr>
+                        <tr><td>区域</td><td>${record.region || '-'}</td></tr>
+                        <tr><td>状态</td><td><span class="badge bg-${record.status === 'available' ? 'success' : 'danger'}">${record.status}</span></td></tr>
+                        <tr><td>响应时间</td><td>${record.response_time || '-'} 秒</td></tr>
+                        <tr><td>HTTP状态</td><td>${record.http_status || '-'}</td></tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h6>4E得分</h6>
+                    <table class="table table-sm">
+                        <tr><td>C1 供给保障</td><td><div class="progress" style="height: 6px;"><div class="progress-bar" style="width: ${(record.score_c1 || 0) * 100}%"></div></div> ${(record.score_c1 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C2 平台服务</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-success" style="width: ${(record.score_c2 || 0) * 100}%"></div></div> ${(record.score_c2 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C3 数据质量</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-warning" style="width: ${(record.score_c3 || 0) * 100}%"></div></div> ${(record.score_c3 || 0).toFixed(3)}</td></tr>
+                        <tr><td>C4 利用效果</td><td><div class="progress" style="height: 6px;"><div class="progress-bar bg-danger" style="width: ${(record.score_c4 || 0) * 100}%"></div></div> ${(record.score_c4 || 0).toFixed(3)}</td></tr>
+                        <tr class="table-primary"><td><strong>综合得分</strong></td><td><strong>${(record.overall_score || 0).toFixed(3)}</strong></td></tr>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <h6>功能检测</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        ${renderFeatureBadge('HTTPS', record.has_https)}
+                        ${renderFeatureBadge('搜索', record.has_search)}
+                        ${renderFeatureBadge('下载', record.has_download)}
+                        ${renderFeatureBadge('API', record.has_api)}
+                        ${renderFeatureBadge('注册', record.has_register)}
+                        ${renderFeatureBadge('预览', record.has_preview)}
+                        ${renderFeatureBadge('可视化', record.has_visualization)}
+                        ${renderFeatureBadge('更新信息', record.has_update_info)}
+                        ${renderFeatureBadge('元数据', record.has_metadata)}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h6>数据集</h6>
+                    <p class="mb-1">数量: <strong>${record.dataset_count || 0}</strong></p>
+                    <p class="mb-1">格式: ${record.format_types || '[]'}</p>
+                    <p class="mb-0">应用成果: <strong>${record.app_count || 0}</strong></p>
+                </div>
+                <div class="col-12">
+                    <h6>采集时间</h6>
+                    <p class="text-muted small">${record.collected_at || '-'}</p>
+                </div>
+            </div>`;
+    }
+    new bootstrap.Modal(document.getElementById('platformModal')).show();
+}
+
+function renderFeatureBadge(name, value) {
+    return `<span class="badge bg-${value ? 'success' : 'secondary'}">${name} ${value ? '✓' : '✗'}</span>`;
+}
+
+loadPlatforms();
+
+// ===== 数据看板图表 =====
+let radarChart, availabilityChart, featureChart, regionScoreChart;
+
+async function loadDashboardCharts() {
+    // 1. 层级比较数据
+    const tierRes = await fetch('/api/analysis/tier_comparison');
+    const tierData = await tierRes.json();
+    renderRadarChart(tierData);
+    renderAvailabilityChart(tierData);
+    
+    // 2. TOP平台
+    const topRes = await fetch('/api/analysis/top_platforms?limit=15');
+    const topData = await topRes.json();
+    renderTopPlatforms(topData);
+    
+    // 3. 区域分布
+    const regionRes = await fetch('/api/analysis/region_distribution');
+    const regionData = await regionRes.json();
+    renderRegionChart(regionData);
+    renderRegionTable(regionData);
+    
+    // 4. 功能支持率
+    const recordsRes = await fetch('/api/records?limit=200');
+    const records = await recordsRes.json();
+    renderFeatureChart(records);
+}
+
+function renderRadarChart(data) {
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    const datasets = data.map((tier, idx) => ({
+        label: tier.tier,
+        data: [tier.avg_c1, tier.avg_c2, tier.avg_c3, tier.avg_c4],
+        backgroundColor: ['rgba(49, 130, 206, 0.2)', 'rgba(56, 161, 105, 0.2)', 'rgba(214, 158, 46, 0.2)'][idx],
+        borderColor: ['#3182ce', '#38a169', '#d69e2e'][idx],
+        borderWidth: 2
+    }));
+    radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: { labels: ['供给保障 C1', '平台服务 C2', '数据质量 C3', '利用效果 C4'], datasets: datasets },
+        options: { responsive: true, scales: { r: { beginAtZero: true, max: 1.0, ticks: { stepSize: 0.2 } } } }
+    });
+}
+
+function renderAvailabilityChart(data) {
+    const ctx = document.getElementById('availabilityChart').getContext('2d');
+    availabilityChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.tier),
+            datasets: [
+                { label: '可用平台', data: data.map(d => d.available), backgroundColor: '#38a169', borderRadius: 6 },
+                { label: '不可用', data: data.map(d => d.total - d.available), backgroundColor: '#e53e3e', borderRadius: 6 }
+            ]
+        },
+        options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } } }
+    });
+}
+
+function renderTopPlatforms(data) {
+    const tbody = document.getElementById('top-platforms-body');
+    tbody.innerHTML = data.map((p, i) => `
+        <tr>
+            <td><span class="badge bg-${i < 3 ? 'warning' : 'secondary'}">${i + 1}</span></td>
+            <td><strong>${p.name}</strong></td>
+            <td><span class="tier-badge tier-${p.tier === '省级' ? 'provincial' : p.tier === '副省级/计划单列市' ? 'subprovincial' : 'prefectural'}">${p.tier}</span></td>
+            <td>${p.region}</td>
+            <td><span class="fw-bold text-primary">${p.overall.toFixed(3)}</span></td>
+            <td style="width: 200px;">
+                <div class="d-flex gap-1" style="font-size: 0.7rem;">
+                    <span class="badge bg-info" title="C1">${p.c1.toFixed(2)}</span>
+                    <span class="badge bg-success" title="C2">${p.c2.toFixed(2)}</span>
+                    <span class="badge bg-warning" title="C3">${p.c3.toFixed(2)}</span>
+                    <span class="badge bg-danger" title="C4">${p.c4.toFixed(2)}</span>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function renderFeatureChart(records) {
+    const available = records.filter(r => r.status === 'available');
+    if (available.length === 0) return;
+    const features = ['has_search', 'has_download', 'has_api', 'has_register', 'has_preview', 'has_visualization', 'has_update_info', 'has_metadata'];
+    const labels = ['搜索', '下载', 'API', '注册', '预览', '可视化', '更新信息', '元数据'];
+    const data = features.map(f => {
+        const count = available.filter(r => r[f] === 1).length;
+        return Math.round(count / available.length * 100);
+    });
+    const ctx = document.getElementById('featureChart').getContext('2d');
+    featureChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: ['#3182ce', '#38a169', '#d69e2e', '#e53e3e', '#805ad5', '#00b5d8', '#dd6b20', '#718096'] }] },
+        options: { responsive: true, cutout: '50%', plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }, tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw}%` } } } }
+    });
+}
+
+function renderRegionChart(data) {
+    const ctx = document.getElementById('regionScoreChart').getContext('2d');
+    regionScoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.region),
+            datasets: [{ label: '平均得分', data: data.map(d => d.avg_score), backgroundColor: data.map((d, i) => { const colors = ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20']; return colors[i % colors.length]; }), borderRadius: 6 }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
+}
+
+function renderRegionTable(data) {
+    const tbody = document.getElementById('region-table-body');
+    tbody.innerHTML = data.map(r => {
+        const rate = r.total > 0 ? (r.available / r.total * 100).toFixed(1) : 0;
+        return `
+            <tr>
+                <td><strong>${r.region}</strong></td>
+                <td>${r.total}</td>
+                <td class="text-success">${r.available}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1 me-2" style="height: 6px;"><div class="progress-bar bg-success" style="width: ${rate}%"></div></div>
+                        <span class="small">${rate}%</span>
+                    </div>
+                </td>
+                <td><span class="fw-bold">${r.avg_score.toFixed(3)}</span></td>
+            </tr>`;
+    }).join('');
+}
+
+loadDashboardCharts();
 </script>
 {% endblock %}
