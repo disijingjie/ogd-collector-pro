@@ -783,31 +783,7 @@ def api_monitoring_realtime():
     return jsonify(stats)
 
 
-@app.route('/api/monitoring/health')
-@login_required
-def api_monitoring_health():
-    """平台健康检查数据"""
-    limit = request.args.get('limit', 100, type=int)
-    platform = request.args.get('platform')
-    conn = get_db()
-    cursor = conn.cursor()
-    query = """
-        SELECT platform_code, platform_name, check_time, is_reachable,
-               http_status, response_time_ms, dns_resolve_time_ms,
-               ssl_valid, page_size_kb, error_type, error_detail
-        FROM platform_health_checks WHERE 1=1
-    """
-    params = []
-    if platform:
-        query += " AND platform_code=?"
-        params.append(platform)
-    query += " ORDER BY check_time DESC LIMIT ?"
-    params.append(limit)
-    cursor.execute(query, params)
-    results = [dict(zip(['code','name','time','reachable','http_status','response_ms','dns_ms','ssl_valid','page_kb','error_type','error_detail'], r))
-               for r in cursor.fetchall()]
-    conn.close()
-    return jsonify(results)
+
 
 
 @app.route('/api/monitoring/history')
