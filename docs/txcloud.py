@@ -35,7 +35,7 @@ REGION = "ap-guangzhou"
 INSTANCE_ID = "lhins-kyp9be3t"
 SERVER_IP = "106.53.188.187"
 SERVER_USER = "ubuntu"
-SERVER_PASSWORD = os.environ.get("SERVER_PASSWORD", "YOUR_PASSWORD")
+SERVER_PASSWORD = os.environ.get("SERVER_PASSWORD", "wenming.890503")
 APP_DIR = "/opt/ogd-collector-pro"
 
 
