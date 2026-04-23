@@ -14,7 +14,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from flask import Flask, render_template, jsonify, request, Response
+from flask import Flask, render_template, jsonify, request, Response, redirect, url_for, session
+from functools import wraps
 
 # 确保能导入本地模块
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,43 @@ app = Flask(__name__)
 import os
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'ogd-collector-pro-dev-key-change-in-production')
 app.config['JSON_AS_ASCII'] = False
+
+# ===== 隐私保护：登录认证 =====
+AUTH_PASSWORD = os.environ.get('AUTH_PASSWORD', 'wenming890503')
+
+
+def login_required(f):
+    """登录验证装饰器"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            if request.is_json or request.path.startswith('/api/'):
+                return jsonify({'error': '未授权，请先登录'}), 401
+            return redirect(url_for('login_page'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def record_access():
+    """记录访问日志"""
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO access_logs (ip, path, method, user_agent, accessed_at)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            request.remote_addr,
+            request.path,
+            request.method,
+            request.headers.get('User-Agent', '')[:200],
+            datetime.now().isoformat()
+        ))
+        conn.commit()
+        conn.close()
+    except Exception:
+        pass
+
 
 # 全局采集引擎实例
 active_engine = None
@@ -69,20 +107,51 @@ def get_stats():
     return stats
 
 
+@app.route('/robots.txt')
+def robots():
+    """禁止搜索引擎抓取"""
+    return Response("User-agent: *\nDisallow: /\n", mimetype='text/plain')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    """登录页面"""
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+        if password == AUTH_PASSWORD:
+            session['logged_in'] = True
+            session.permanent = True
+            return redirect(url_for('index'))
+        return render_template('login.html', title='登录 | OGD-Collector Pro', error='密码错误')
+    return render_template('login.html', title='登录 | OGD-Collector Pro')
+
+
+@app.route('/logout')
+def logout():
+    """退出登录"""
+    session.pop('logged_in', None)
+    return redirect(url_for('login_page'))
+
+
 @app.route('/')
+@login_required
 def index():
     """主控台首页"""
+    record_access()
     stats = get_stats()
     return render_template('index.html', stats=stats, title='OGD-Collector Pro | 主控台')
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     """数据看板"""
+    record_access()
     return render_template('dashboard.html', title='数据看板 | OGD-Collector Pro')
 
 
 @app.route('/collector')
+@login_required
 def collector_page():
     """采集任务管理"""
     conn = get_db()
@@ -107,31 +176,39 @@ def collector_page():
 
 
 @app.route('/platforms')
+@login_required
 def platforms_page():
     """平台详情"""
+    record_access()
     return render_template('platforms.html', title='平台详情 | OGD-Collector Pro')
 
 
 @app.route('/analysis')
+@login_required
 def analysis_page():
     """分析图表"""
+    record_access()
     return render_template('analysis.html', title='分析图表 | OGD-Collector Pro')
 
 @app.route('/thesis')
+@login_required
 def thesis_page():
     """论文成果展示页面"""
+    record_access()
     return render_template('thesis.html', title='论文成果展示 | OGD-Collector Pro')
 
 
 # ===== API接口 =====
 
 @app.route('/api/stats')
+@login_required
 def api_stats():
     """获取系统统计"""
     return jsonify(get_stats())
 
 
 @app.route('/api/tasks', methods=['GET', 'POST'])
+@login_required
 def api_tasks():
     """任务管理API"""
     if request.method == 'POST':
@@ -162,6 +239,7 @@ def api_tasks():
 
 
 @app.route('/api/tasks/<int:task_id>/start', methods=['POST'])
+@login_required
 def api_start_task(task_id):
     """启动采集任务"""
     global active_engine
@@ -208,6 +286,7 @@ def api_start_task(task_id):
 
 
 @app.route('/api/tasks/<int:task_id>/stop', methods=['POST'])
+@login_required
 def api_stop_task(task_id):
     """停止采集任务"""
     global active_engine
@@ -218,6 +297,7 @@ def api_stop_task(task_id):
 
 
 @app.route('/api/tasks/<int:task_id>/progress')
+@login_required
 def api_task_progress(task_id):
     """获取任务实时进度（SSE流）"""
     def event_stream():
@@ -257,6 +337,7 @@ def api_task_progress(task_id):
 
 
 @app.route('/api/records')
+@login_required
 def api_records():
     """获取采集记录"""
     task_id = request.args.get('task_id', type=int)
@@ -296,6 +377,7 @@ def api_records():
 
 
 @app.route('/api/platforms')
+@login_required
 def api_platforms():
     """获取平台列表"""
     tier = request.args.get('tier')
@@ -324,6 +406,7 @@ def api_platforms():
 
 
 @app.route('/api/analysis/tier_comparison')
+@login_required
 def api_tier_comparison():
     """获取层级比较分析数据"""
     conn = get_db()
@@ -356,6 +439,7 @@ def api_tier_comparison():
 
 
 @app.route('/api/analysis/region_distribution')
+@login_required
 def api_region_distribution():
     """获取区域分布分析数据"""
     conn = get_db()
@@ -382,6 +466,7 @@ def api_region_distribution():
 
 
 @app.route('/api/analysis/top_platforms')
+@login_required
 def api_top_platforms():
     """获取TOP平台"""
     limit = request.args.get('limit', 10, type=int)
@@ -412,6 +497,7 @@ def api_top_platforms():
 
 
 @app.route('/api/export/csv')
+@login_required
 def api_export_csv():
     """导出CSV数据"""
     import csv
@@ -434,6 +520,162 @@ def api_export_csv():
         mimetype='text/csv',
         headers={'Content-Disposition': f'attachment; filename=ogd_collection_{datetime.now().strftime("%Y%m%d")}.csv'}
     )
+
+
+# ===== 丰富数据维度API =====
+
+@app.route('/api/analysis/trend')
+@login_required
+def api_trend():
+    """获取采集趋势数据（按日统计）"""
+    days = request.args.get('days', 30, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT stat_date, total_platforms, available_count, avg_score,
+               avg_c1, avg_c2, avg_c3, avg_c4
+        FROM collection_stats
+        WHERE stat_date >= date('now', '-{} days')
+        ORDER BY stat_date
+    """.format(days))
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            'date': row[0], 'total': row[1], 'available': row[2],
+            'avg_score': row[3], 'c1': row[4], 'c2': row[5], 'c3': row[6], 'c4': row[7]
+        })
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/analysis/platform_features')
+@login_required
+def api_platform_features():
+    """获取平台架构与特征分析"""
+    conn = get_db()
+    cursor = conn.cursor()
+    # CMS类型分布
+    cursor.execute("""
+        SELECT cms_type, COUNT(*) FROM platform_features
+        WHERE cms_type IS NOT NULL GROUP BY cms_type
+    """)
+    cms_dist = {row[0]: row[1] for row in cursor.fetchall()}
+    # 功能特征统计
+    cursor.execute("""
+        SELECT 
+            SUM(has_mobile_version) as mobile,
+            SUM(has_feedback) as feedback,
+            SUM(has_data_request) as request,
+            SUM(has_app_showcase) as showcase
+        FROM platform_features
+    """)
+    row = cursor.fetchone()
+    feature_stats = {
+        'mobile': row[0] or 0, 'feedback': row[1] or 0,
+        'data_request': row[2] or 0, 'app_showcase': row[3] or 0
+    }
+    conn.close()
+    return jsonify({'cms_distribution': cms_dist, 'feature_stats': feature_stats})
+
+
+@app.route('/api/analysis/data_quality')
+@login_required
+def api_data_quality():
+    """数据质量深度分析"""
+    conn = get_db()
+    cursor = conn.cursor()
+    # 按层级数据质量分布
+    cursor.execute("""
+        SELECT tier,
+               ROUND(AVG(dataset_count), 1) as avg_datasets,
+               ROUND(AVG(CASE WHEN has_api=1 THEN 1 ELSE 0 END)*100, 1) as api_rate,
+               ROUND(AVG(CASE WHEN has_bulk_download=1 THEN 1 ELSE 0 END)*100, 1) as bulk_rate,
+               ROUND(AVG(CASE WHEN has_update_info=1 THEN 1 ELSE 0 END)*100, 1) as update_rate,
+               ROUND(AVG(CASE WHEN has_metadata=1 THEN 1 ELSE 0 END)*100, 1) as meta_rate
+        FROM collection_records WHERE status='available' GROUP BY tier
+    """)
+    results = []
+    for row in cursor.fetchall():
+        results.append({
+            'tier': row[0], 'avg_datasets': row[1],
+            'api_rate': row[2], 'bulk_rate': row[3],
+            'update_rate': row[4], 'meta_rate': row[5]
+        })
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/stats/overview')
+@login_required
+def api_stats_overview():
+    """系统总览统计（丰富版）"""
+    conn = get_db()
+    cursor = conn.cursor()
+    stats = {}
+    # 基础统计
+    cursor.execute("SELECT COUNT(*) FROM platforms")
+    stats['total_platforms'] = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM collection_records")
+    stats['total_records'] = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM collection_tasks")
+    stats['total_tasks'] = cursor.fetchone()[0]
+    # 层级分布
+    cursor.execute("SELECT tier, COUNT(*) FROM platforms GROUP BY tier")
+    stats['tier_distribution'] = {row[0]: row[1] for row in cursor.fetchall()}
+    # 可用率
+    cursor.execute("""
+        SELECT COUNT(*) FROM collection_records WHERE status='available'
+    """)
+    avail = cursor.fetchone()[0]
+    total_rec = stats['total_records'] or 1
+    stats['availability_rate'] = round(avail / total_rec * 100, 1)
+    # 平均得分
+    cursor.execute("""
+        SELECT ROUND(AVG(overall_score), 3) FROM collection_records WHERE status='available'
+    """)
+    stats['avg_score'] = cursor.fetchone()[0] or 0
+    # 数据集总量
+    cursor.execute("SELECT SUM(dataset_count) FROM collection_records")
+    stats['total_datasets'] = cursor.fetchone()[0] or 0
+    # API支持率
+    cursor.execute("""
+        SELECT ROUND(AVG(CASE WHEN has_api=1 THEN 1 ELSE 0 END)*100, 1)
+        FROM collection_records WHERE status='available'
+    """)
+    stats['api_support_rate'] = cursor.fetchone()[0] or 0
+    conn.close()
+    return jsonify(stats)
+
+
+@app.route('/api/thesis/charts')
+@login_required
+def api_thesis_charts():
+    """获取论文图表列表"""
+    import glob
+    chart_dir = Path(__file__).parent / 'static' / 'thesis_charts'
+    charts = []
+    if chart_dir.exists():
+        for f in sorted(chart_dir.glob('图*.png')):
+            name = f.stem
+            charts.append({'name': name, 'url': f'/static/thesis_charts/{f.name}'})
+    return jsonify(charts)
+
+
+@app.route('/api/access/logs')
+@login_required
+def api_access_logs():
+    """获取访问日志（管理员）"""
+    limit = request.args.get('limit', 50, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT ip, path, method, accessed_at FROM access_logs
+        ORDER BY id DESC LIMIT ?
+    """, (limit,))
+    logs = [{'ip': row[0], 'path': row[1], 'method': row[2], 'time': row[3]}
+            for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(logs)
 
 
 # 初始化数据库

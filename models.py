@@ -156,6 +156,79 @@ def init_db():
     )
     """)
 
+    # 7. 访问日志表（隐私保护 + 使用分析）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS access_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip TEXT,
+        path TEXT,
+        method TEXT,
+        user_agent TEXT,
+        accessed_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 8. 采集统计表（按日/按任务汇总，用于趋势分析）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS collection_stats (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        stat_date TEXT NOT NULL,              -- 统计日期 YYYY-MM-DD
+        task_id INTEGER,
+        tier TEXT,                            -- 层级
+        total_platforms INTEGER DEFAULT 0,    -- 平台总数
+        available_count INTEGER DEFAULT 0,    -- 可用数
+        unavailable_count INTEGER DEFAULT 0,  -- 不可用数
+        avg_score REAL DEFAULT 0,             -- 平均得分
+        avg_c1 REAL DEFAULT 0,                -- 供给保障平均分
+        avg_c2 REAL DEFAULT 0,                -- 平台服务平均分
+        avg_c3 REAL DEFAULT 0,                -- 数据质量平均分
+        avg_c4 REAL DEFAULT 0,                -- 利用效果平均分
+        new_datasets INTEGER DEFAULT 0,       -- 新增数据集数
+        total_api_calls INTEGER DEFAULT 0,    -- API调用次数统计
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 9. 平台架构与特征表（丰富数据维度）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS platform_features (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        platform_id INTEGER NOT NULL,
+        platform_code TEXT NOT NULL,
+        -- 技术架构
+        cms_type TEXT,                        -- CMS类型：自建/省级统建/第三方
+        framework TEXT,                       -- 技术框架
+        has_mobile_version INTEGER DEFAULT 0, -- 是否有移动端
+        -- 数据维度
+        data_categories TEXT,                 -- 数据分类JSON
+        update_frequency TEXT,                -- 更新频率
+        earliest_data_date TEXT,              -- 最早数据日期
+        -- 互动功能
+        has_feedback INTEGER DEFAULT 0,       -- 是否有反馈
+        has_data_request INTEGER DEFAULT 0,   -- 是否可申请数据
+        has_app_showcase INTEGER DEFAULT 0,   -- 是否有应用展示
+        -- 外部引用
+        cited_by_count INTEGER DEFAULT 0,     -- 被引用次数（如学术论文）
+        third_party_apps INTEGER DEFAULT 0,   -- 第三方应用数
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (platform_id) REFERENCES platforms(id)
+    )
+    """)
+
+    # 10. 每日自动采集任务配置表
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS auto_schedule (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        schedule_name TEXT NOT NULL,
+        cron_expression TEXT NOT NULL,        -- cron表达式
+        task_type TEXT NOT NULL,              -- full/provincial/subprovincial/prefectural
+        is_active INTEGER DEFAULT 1,          -- 是否启用
+        last_run_at TEXT,
+        next_run_at TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
     conn.commit()
     conn.close()
     print(f"[OK] 数据库初始化完成: {DB_PATH}")

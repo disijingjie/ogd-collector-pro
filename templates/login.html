@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 50%, #3182ce 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 3rem;
+            width: 100%;
+            max-width: 420px;
+        }
+        .login-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-brand i {
+            font-size: 3rem;
+            color: #3182ce;
+        }
+        .login-brand h3 {
+            margin-top: 1rem;
+            color: #1a202c;
+            font-weight: 700;
+        }
+        .login-brand p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            border: 2px solid #e2e8f0;
+            font-size: 1rem;
+        }
+        .form-control:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            color: white;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(49, 130, 206, 0.4);
+        }
+        .alert-error {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            color: #c53030;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-brand">
+            <i class="bi bi-shield-lock"></i>
+            <h3>OGD-Collector Pro</h3>
+            <p>政府数据开放平台采集与评估系统<br><small>论文成果展示站点</small></p>
+        </div>
+
+        {% if error %}
+        <div class="alert-error">
+            <i class="bi bi-exclamation-circle"></i>
+            <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('login_page') }}">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">访问密码</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-key text-muted"></i></span>
+                    <input type="password" name="password" class="form-control border-start-0" placeholder="请输入访问密码" required autofocus>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-login mt-2">
+                <i class="bi bi-box-arrow-in-right me-2"></i>进入系统
+            </button>
+        </form>
+
+        <div class="footer-note">
+            <i class="bi bi-eye-slash me-1"></i>本站点为学术研究用途，不对外公开
+        </div>
+    </div>
+</body>
+</html>
