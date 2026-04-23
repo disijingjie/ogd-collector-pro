@@ -678,6 +678,207 @@ def api_access_logs():
     return jsonify(logs)
 
 
+# ===== 实时监控与数据归集API =====
+
+@app.route('/monitoring')
+@login_required
+def monitoring_page():
+    """实时监控面板"""
+    record_access()
+    return render_template('monitoring.html', title='实时监控 | OGD-Collector Pro')
+
+@app.route('/provenance')
+@login_required
+def provenance_page():
+    """数据来源溯源页面"""
+    record_access()
+    return render_template('provenance.html', title='数据来源 | OGD-Collector Pro')
+
+@app.route('/data-archive')
+@login_required
+def data_archive_page():
+    """数据归集中心"""
+    record_access()
+    return render_template('data_archive.html', title='数据归集 | OGD-Collector Pro')
+
+
+@app.route('/api/monitoring/realtime')
+@login_required
+def api_monitoring_realtime():
+    """实时采集状态"""
+    conn = get_db()
+    cursor = conn.cursor()
+    stats = {}
+    # 最近24小时采集次数
+    cursor.execute("""
+        SELECT COUNT(*) FROM collection_records
+        WHERE collected_at >= datetime('now', '-1 day')
+    """)
+    stats['collections_24h'] = cursor.fetchone()[0]
+    # 最近健康检查
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_health_checks
+        WHERE check_time >= datetime('now', '-1 day')
+    """)
+    stats['health_checks_24h'] = cursor.fetchone()[0]
+    # 当前平均响应时间
+    cursor.execute("""
+        SELECT AVG(response_time_ms) FROM platform_health_checks
+        WHERE check_time >= datetime('now', '-1 hour') AND is_reachable=1
+    """)
+    stats['avg_response_ms'] = round(cursor.fetchone()[0] or 0, 1)
+    # 当前可用率
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_health_checks
+        WHERE check_time >= datetime('now', '-1 hour') AND is_reachable=1
+    """)
+    reachable = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_health_checks
+        WHERE check_time >= datetime('now', '-1 hour')
+    """)
+    total = cursor.fetchone()[0] or 1
+    stats['current_uptime_pct'] = round(reachable / total * 100, 1)
+    # 最近采集任务
+    cursor.execute("""
+        SELECT id, task_name, status, total_count, completed_count, created_at
+        FROM collection_tasks ORDER BY id DESC LIMIT 5
+    """)
+    stats['recent_tasks'] = [dict(zip(['id','name','status','total','completed','time'], r)) for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(stats)
+
+
+@app.route('/api/monitoring/health')
+@login_required
+def api_monitoring_health():
+    """平台健康检查数据"""
+    limit = request.args.get('limit', 100, type=int)
+    platform = request.args.get('platform')
+    conn = get_db()
+    cursor = conn.cursor()
+    query = """
+        SELECT platform_code, platform_name, check_time, is_reachable,
+               http_status, response_time_ms, dns_resolve_time_ms,
+               ssl_valid, page_size_kb, error_type, error_detail
+        FROM platform_health_checks WHERE 1=1
+    """
+    params = []
+    if platform:
+        query += " AND platform_code=?"
+        params.append(platform)
+    query += " ORDER BY check_time DESC LIMIT ?"
+    params.append(limit)
+    cursor.execute(query, params)
+    results = [dict(zip(['code','name','time','reachable','http_status','response_ms','dns_ms','ssl_valid','page_kb','error_type','error_detail'], r))
+               for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/monitoring/history')
+@login_required
+def api_monitoring_history():
+    """采集历史时间线"""
+    days = request.args.get('days', 7, type=int)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT date(check_time) as d,
+               COUNT(*) as checks,
+               SUM(CASE WHEN is_reachable=1 THEN 1 ELSE 0 END) as reachable,
+               ROUND(AVG(response_time_ms), 1) as avg_ms
+        FROM platform_health_checks
+        WHERE check_time >= date('now', '-{} days')
+        GROUP BY date(check_time)
+        ORDER BY d
+    """.format(days))
+    results = [{'date': r[0], 'checks': r[1], 'reachable': r[2], 'avg_ms': r[3]} for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/provenance')
+@login_required
+def api_provenance():
+    """数据来源列表"""
+    source_type = request.args.get('type')
+    conn = get_db()
+    cursor = conn.cursor()
+    query = "SELECT * FROM data_provenance WHERE is_active=1"
+    params = []
+    if source_type:
+        query += " AND source_type=?"
+        params.append(source_type)
+    query += " ORDER BY source_type, source_name"
+    cursor.execute(query, params)
+    columns = [d[0] for d in cursor.description]
+    results = [dict(zip(columns, r)) for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/snapshots')
+@login_required
+def api_snapshots():
+    """数据快照列表"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, snapshot_date, snapshot_time, snapshot_type,
+               total_platforms, reachable_count, avg_overall_score,
+               file_size_kb, is_verified, created_at
+        FROM collection_snapshots
+        ORDER BY snapshot_date DESC, snapshot_time DESC
+    """)
+    results = [dict(zip(['id','date','time','type','total','reachable','avg_score','size_kb','verified','created'], r))
+               for r in cursor.fetchall()]
+    conn.close()
+    return jsonify(results)
+
+
+@app.route('/api/snapshots/<int:snapshot_id>/export')
+@login_required
+def api_snapshot_export(snapshot_id):
+    """导出快照数据"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT snapshot_data_json, snapshot_date, snapshot_time FROM collection_snapshots WHERE id=?", (snapshot_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if not row:
+        return jsonify({'error': '快照不存在'}), 404
+    data, date, time = row
+    return Response(
+        data or '{}',
+        mimetype='application/json',
+        headers={'Content-Disposition': f'attachment; filename=ogd_snapshot_{date}_{time}.json'}
+    )
+
+
+@app.route('/api/export/provenance')
+@login_required
+def api_export_provenance():
+    """导出来源数据"""
+    import csv
+    import io
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM data_provenance WHERE is_active=1 ORDER BY id")
+    rows = cursor.fetchall()
+    columns = [d[0] for d in cursor.description]
+    conn.close()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(columns)
+    writer.writerows(rows)
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=data_provenance.csv'}
+    )
+
+
 # 初始化数据库
 @app.before_request
 def before_first_request():
@@ -685,6 +886,7 @@ def before_first_request():
     if not DB_PATH.exists():
         init_db()
         init_platforms_data()
+        init_provenance_data()
 
 
 if __name__ == '__main__':
@@ -692,6 +894,7 @@ if __name__ == '__main__':
     if not DB_PATH.exists():
         init_db()
         init_platforms_data()
+        init_provenance_data()
     
     print("=" * 60)
     print("OGD-Collector Pro 启动中...")

@@ -214,6 +214,15 @@
             <a class="nav-link {% if request.path == '/thesis' %}active{% endif %}" href="/thesis">
                 <i class="bi bi-journal-text"></i> 论文成果
             </a>
+            <a class="nav-link {% if request.path == '/monitoring' %}active{% endif %}" href="/monitoring">
+                <i class="bi bi-activity"></i> 实时监控
+            </a>
+            <a class="nav-link {% if request.path == '/provenance' %}active{% endif %}" href="/provenance">
+                <i class="bi bi-database-check"></i> 数据来源
+            </a>
+            <a class="nav-link {% if request.path == '/data-archive' %}active{% endif %}" href="/data-archive">
+                <i class="bi bi-archive"></i> 数据归集
+            </a>
         </nav>
         
         <div class="mt-auto p-3" style="position: absolute; bottom: 0; width: 100%;">

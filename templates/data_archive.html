@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_css %}
+<style>
+.archive-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+.archive-card h5 {
+    color: #1e3a5f;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.snapshot-table th {
+    background: #f7fafc;
+    font-size: 0.85rem;
+    color: #4a5568;
+}
+.snapshot-table td {
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+.badge-verified { background: #c6f6d5; color: #22543d; }
+.badge-pending { background: #feebc8; color: #744210; }
+.export-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    display: inline-block;
+}
+.export-btn:hover { background: #2c5282; color: white; }
+.verify-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+.timestamp-box {
+    background: #1a202c;
+    color: #a0aec0;
+    font-family: 'Consolas', monospace;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-archive text-primary me-2"></i>数据归集中心</h3>
+    <div>
+        <span class="text-muted small me-3"><i class="bi bi-info-circle me-1"></i>所有数据均带时间戳，可复查、可导出</span>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-clock-history me-2"></i>采集时间规范</h5>
+            <div class="timestamp-box">
+                <div>采集标准：ISO 8601</div>
+                <div>时间精度：秒级 (YYYY-MM-DD HH:MM:SS)</div>
+                <div>存储格式：UTC+8</div>
+                <div>校验方式：SHA-256 数据校验和</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-check2-circle me-2"></i>数据核验流程</h5>
+            <ol class="small text-muted mb-0">
+                <li>自动采集 → 原始数据入库</li>
+                <li>生成校验和 → 防篡改保护</li>
+                <li>人工抽检 → 数据质量审核</li>
+                <li>核验标记 → 通过后锁定</li>
+                <li>归档导出 → JSON/CSV格式</li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="archive-card">
+            <h5><i class="bi bi-file-earmark-zip me-2"></i>导出格式</h5>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-primary">JSON（完整数据）</span>
+                <span class="badge bg-success">CSV（表格数据）</span>
+                <span class="badge bg-info">SQLite（数据库）</span>
+            </div>
+            <div class="mt-3 small text-muted">
+                每个快照包含当日全部平台详细数据、4E评分、健康检查结果及原始响应摘要。
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="archive-card">
+    <h5><i class="bi bi-list-check me-2"></i>采集快照归档列表</h5>
+    <div class="table-responsive">
+        <table class="table table-sm snapshot-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>日期</th>
+                    <th>时间</th>
+                    <th>类型</th>
+                    <th>平台数</th>
+                    <th>可达数</th>
+                    <th>平均得分</th>
+                    <th>大小(KB)</th>
+                    <th>核验状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="snapshotsTable">
+                <tr><td colspan="10" class="text-muted">加载中...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function loadSnapshots() {
+    try {
+        const r = await fetch('/api/snapshots');
+        const rows = await r.json();
+        let html = '';
+        rows.forEach(row => {
+            const verifiedBadge = row.verified
+                ? '<span class="badge badge-verified"><i class="bi bi-check-circle-fill me-1"></i>已核验</span>'
+                : '<span class="badge badge-pending"><i class="bi bi-hourglass-split me-1"></i>待核验</span>';
+            html += `<tr>
+                <td>${row.id}</td>
+                <td>${row.date}</td>
+                <td>${row.time}</td>
+                <td>${row.type}</td>
+                <td>${row.total}</td>
+                <td>${row.reachable}</td>
+                <td>${row.avg_score || '-'}</td>
+                <td>${row.size_kb || '-'}</td>
+                <td>${verifiedBadge}</td>
+                <td>
+                    <a href="/api/snapshots/${row.id}/export" class="export-btn me-1"><i class="bi bi-download me-1"></i>导出</a>
+                </td>
+            </tr>`;
+        });
+        document.getElementById('snapshotsTable').innerHTML = html || '<tr><td colspan="10" class="text-muted text-center">暂无快照数据</td></tr>';
+    } catch(e) { console.error(e); }
+}
+loadSnapshots();
+</script>
+{% endblock %}

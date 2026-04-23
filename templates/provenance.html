@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_css %}
+<style>
+.source-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 16px;
+    transition: transform 0.2s;
+}
+.source-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.source-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.source-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+.source-type {
+    background: #ebf8ff;
+    color: #2c5282;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.source-meta {
+    font-size: 0.85rem;
+    color: #4a5568;
+    line-height: 1.6;
+}
+.source-meta i {
+    color: #3182ce;
+    width: 18px;
+}
+.quality-stars {
+    color: #d69e2e;
+}
+.stats-bar {
+    background: linear-gradient(135deg, #1e3a5f, #2c5282);
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+    margin-bottom: 24px;
+}
+.stats-bar .number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+.stats-bar .label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-database-check text-primary me-2"></i>数据来源与溯源</h3>
+    <a href="/api/export/provenance" class="btn btn-primary btn-sm"><i class="bi bi-download me-1"></i>导出来源清单</a>
+</div>
+
+<p class="text-muted mb-4">
+    本研究数据来源于政府数据开放平台、学术数据库、国际组织报告、实地调研等多渠道。
+    所有数据来源均经过可靠性评估，确保数据的真实性、时效性与可追溯性。
+</p>
+
+<div class="row g-3 mb-4" id="statsRow">
+    <div class="col-md-3"><div class="stats-bar text-center"><div class="number" id="statTotal">-</div><div class="label">数据来源总数</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#2c5282,#3182ce);"><div class="number" id="statGov">-</div><div class="label">政府平台来源</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#38a169,#2f855a);"><div class="number" id="statAcad">-</div><div class="label">学术数据库</div></div></div>
+    <div class="col-md-3"><div class="stats-bar text-center" style="background:linear-gradient(135deg,#d69e2e,#b7791f);"><div class="number" id="statIntl">-</div><div class="label">国际组织</div></div></div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group" id="typeFilters">
+            <button class="list-group-item list-group-item-action active" data-type="">全部来源</button>
+            <button class="list-group-item list-group-item-action" data-type="政府平台">政府平台</button>
+            <button class="list-group-item list-group-item-action" data-type="学术数据库">学术数据库</button>
+            <button class="list-group-item list-group-item-action" data-type="国际组织">国际组织</button>
+            <button class="list-group-item list-group-item-action" data-type="新闻媒体">新闻媒体</button>
+            <button class="list-group-item list-group-item-action" data-type="企业数据">企业数据</button>
+            <button class="list-group-item list-group-item-action" data-type="实地调研">实地调研</button>
+        </div>
+    </div>
+    <div class="col-md-9" id="sourcesList">
+        <div class="text-muted">加载中...</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let allSources = [];
+
+function renderStars(score) {
+    let s = '';
+    for(let i=1;i<=5;i++) s += i<=score ? '<i class="bi bi-star-fill"></i>' : '<i class="bi bi-star"></i>';
+    return s;
+}
+
+function renderSources(filterType) {
+    const list = filterType ? allSources.filter(s => s.source_type === filterType) : allSources;
+    let html = '';
+    list.forEach(s => {
+        html += `<div class="source-card">
+            <div class="source-header">
+                <div>
+                    <div class="source-title">${s.source_name}</div>
+                    <div class="small text-muted">${s.source_name_en || ''}</div>
+                </div>
+                <span class="source-type">${s.source_type}</span>
+            </div>
+            <div class="source-meta">
+                <div class="mb-1"><i class="bi bi-folder me-2"></i><strong>类别：</strong>${s.source_category || '未分类'}</div>
+                <div class="mb-1"><i class="bi bi-link-45deg me-2"></i><strong>URL：</strong><a href="${s.url || '#'}" target="_blank">${s.url || '无'}</a></div>
+                <div class="mb-1"><i class="bi bi-cloud-download me-2"></i><strong>获取方式：</strong>${s.access_method || '未说明'}</div>
+                <div class="mb-1"><i class="bi bi-calendar-range me-2"></i><strong>数据时间：</strong>${s.data_start_date || '?'} ~ ${s.data_end_date || '?'}</div>
+                <div class="mb-1"><i class="bi bi-file-earmark me-2"></i><strong>格式：</strong>${s.data_format || '未说明'} | <strong>记录数：</strong>${s.record_count || '未统计'}</div>
+                <div class="mb-1"><i class="bi bi-clock-history me-2"></i><strong>更新频率：</strong>${s.update_frequency || '未说明'} | <strong>最后访问：</strong>${s.last_access_time || '未记录'}</div>
+                <div class="mb-1"><i class="bi bi-journal-text me-2"></i><strong>引用章节：</strong>${s.cited_in_chapter || '未说明'}</div>
+                <div class="mb-1"><i class="bi bi-shield-check me-2"></i><strong>可靠性：</strong><span class="quality-stars">${renderStars(s.reliability_score || 0)}</span></div>
+                ${s.data_description ? `<div class="mt-2 p-2" style="background:#f7fafc;border-radius:6px;font-size:0.8rem;">${s.data_description}</div>` : ''}
+            </div>
+        </div>`;
+    });
+    document.getElementById('sourcesList').innerHTML = html || '<div class="text-muted">暂无数据</div>';
+}
+
+async function loadProvenance() {
+    try {
+        const r = await fetch('/api/provenance');
+        allSources = await r.json();
+        document.getElementById('statTotal').textContent = allSources.length;
+        document.getElementById('statGov').textContent = allSources.filter(s => s.source_type === '政府平台').length;
+        document.getElementById('statAcad').textContent = allSources.filter(s => s.source_type === '学术数据库').length;
+        document.getElementById('statIntl').textContent = allSources.filter(s => s.source_type === '国际组织').length;
+        renderSources('');
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('typeFilters').addEventListener('click', function(e) {
+    if(e.target.classList.contains('list-group-item')) {
+        this.querySelectorAll('.list-group-item').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        renderSources(e.target.dataset.type);
+    }
+});
+
+loadProvenance();
+</script>
+{% endblock %}

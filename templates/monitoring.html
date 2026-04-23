@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_css %}
+<style>
+.monitor-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+.monitor-card h5 {
+    color: #1e3a5f;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c5282;
+}
+.metric-label {
+    font-size: 0.8rem;
+    color: #718096;
+}
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+.status-up { background: #38a169; }
+.status-down { background: #e53e3e; }
+.status-warn { background: #d69e2e; }
+.log-entry {
+    padding: 10px 0;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 0.85rem;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-time { color: #a0aec0; font-size: 0.75rem; }
+.chart-container { height: 280px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="bi bi-activity text-primary me-2"></i>实时监控面板</h3>
+    <span class="badge bg-success"><i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>采集引擎运行中</span>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="monitor-card text-center">
+            <div class="metric-value" id="collections24h">-</div>
+            <div class="metric-label">24小时采集次数</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center">
+            <div class="metric-value" id="healthChecks24h">-</div>
+            <div class="metric-label">24小时健康检查</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center">
+            <div class="metric-value" id="avgResponse">-</div>
+            <div class="metric-label">平均响应时间(ms)</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="monitor-card text-center">
+            <div class="metric-value" id="uptimePct">-</div>
+            <div class="metric-label">当前可用率(%)</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="monitor-card">
+            <h5><i class="bi bi-graph-up-arrow me-2"></i>采集历史趋势（最近7天）</h5>
+            <div class="chart-container">
+                <canvas id="historyChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="monitor-card">
+            <h5><i class="bi bi-list-task me-2"></i>最近采集任务</h5>
+            <div id="recentTasks">
+                <div class="text-muted small">加载中...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="monitor-card">
+            <h5><i class="bi bi-heart-pulse me-2"></i>平台健康检查详情</h5>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>平台</th>
+                            <th>检查时间</th>
+                            <th>状态</th>
+                            <th>HTTP</th>
+                            <th>响应(ms)</th>
+                            <th>DNS(ms)</th>
+                            <th>SSL</th>
+                            <th>页面(KB)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="healthTable">
+                        <tr><td colspan="8" class="text-muted">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function loadRealtime() {
+    try {
+        const r = await fetch('/api/monitoring/realtime');
+        const d = await r.json();
+        document.getElementById('collections24h').textContent = d.collections_24h || 0;
+        document.getElementById('healthChecks24h').textContent = d.health_checks_24h || 0;
+        document.getElementById('avgResponse').textContent = d.avg_response_ms || 0;
+        document.getElementById('uptimePct').textContent = (d.current_uptime_pct || 0) + '%';
+        // 最近任务
+        let tasksHtml = '';
+        (d.recent_tasks || []).forEach(t => {
+            const badge = t.status === 'completed' ? 'bg-success' : t.status === 'running' ? 'bg-primary' : 'bg-secondary';
+            tasksHtml += `<div class="log-entry"><div class="d-flex justify-content-between"><span class="fw-semibold">${t.name}</span><span class="badge ${badge}">${t.status}</span></div><div class="log-time">${t.time} | 完成 ${t.completed}/${t.total}</div></div>`;
+        });
+        document.getElementById('recentTasks').innerHTML = tasksHtml || '<div class="text-muted small">暂无任务</div>';
+    } catch(e) { console.error(e); }
+}
+
+async function loadHealth() {
+    try {
+        const r = await fetch('/api/monitoring/health?limit=20');
+        const rows = await r.json();
+        let html = '';
+        rows.forEach(row => {
+            const statusDot = row.reachable ? '<span class="status-dot status-up"></span>' : '<span class="status-dot status-down"></span>';
+            html += `<tr>
+                <td>${row.name || row.code}</td>
+                <td class="small text-muted">${row.time}</td>
+                <td>${statusDot}${row.reachable ? '正常' : '异常'}</td>
+                <td>${row.http_status || '-'}</td>
+                <td>${row.response_ms || '-'}</td>
+                <td>${row.dns_ms || '-'}</td>
+                <td>${row.ssl_valid ? '有效' : '无效'}</td>
+                <td>${row.page_kb ? row.page_kb.toFixed(1) : '-'}</td>
+            </tr>`;
+        });
+        document.getElementById('healthTable').innerHTML = html;
+    } catch(e) { console.error(e); }
+}
+
+async function loadHistory() {
+    try {
+        const r = await fetch('/api/monitoring/history?days=7');
+        const data = await r.json();
+        const ctx = document.getElementById('historyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.map(d => d.date.slice(5)),
+                datasets: [{
+                    label: '健康检查次数',
+                    data: data.map(d => d.checks),
+                    borderColor: '#3182ce',
+                    backgroundColor: 'rgba(49,130,206,0.1)',
+                    fill: true,
+                    tension: 0.3
+                }, {
+                    label: '可达次数',
+                    data: data.map(d => d.reachable),
+                    borderColor: '#38a169',
+                    backgroundColor: 'transparent',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    } catch(e) { console.error(e); }
+}
+
+loadRealtime();
+loadHealth();
+loadHistory();
+setInterval(loadRealtime, 30000);
+setInterval(loadHealth, 60000);
+</script>
+{% endblock %}

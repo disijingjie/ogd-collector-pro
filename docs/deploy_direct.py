@@ -16,6 +16,10 @@ files_to_deploy = [
     ("../templates/login.html", f"{APP_DIR}/templates/login.html"),
     ("../templates/base.html", f"{APP_DIR}/templates/base.html"),
     ("../templates/thesis.html", f"{APP_DIR}/templates/thesis.html"),
+    ("../templates/index.html", f"{APP_DIR}/templates/index.html"),
+    ("../templates/monitoring.html", f"{APP_DIR}/templates/monitoring.html"),
+    ("../templates/provenance.html", f"{APP_DIR}/templates/provenance.html"),
+    ("../templates/data_archive.html", f"{APP_DIR}/templates/data_archive.html"),
 ]
 
 def scp_file(local, remote):

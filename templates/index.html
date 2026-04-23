@@ -81,6 +81,58 @@
     </div>
 </div>
 
+<!-- 实时监控指标 -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-3 pb-0 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-activity text-primary me-2"></i>实时采集监控</h5>
+                <a href="/monitoring" class="btn btn-sm btn-outline-primary">查看详情 <i class="bi bi-arrow-right"></i></a>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 text-center">
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#f0fff4;">
+                            <div class="fw-bold text-success" style="font-size:1.4rem;" id="rtCollections">-</div>
+                            <div class="small text-muted">24h采集</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#ebf8ff;">
+                            <div class="fw-bold text-primary" style="font-size:1.4rem;" id="rtHealth">-</div>
+                            <div class="small text-muted">24h探测</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#fffaf0;">
+                            <div class="fw-bold text-warning" style="font-size:1.4rem;" id="rtResponse">-</div>
+                            <div class="small text-muted">平均响应(ms)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#fff5f5;">
+                            <div class="fw-bold text-danger" style="font-size:1.4rem;" id="rtUptime">-</div>
+                            <div class="small text-muted">可用率(%)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#faf5ff;">
+                            <div class="fw-bold" style="font-size:1.4rem;color:#6b46c1;" id="rtDatasets">-</div>
+                            <div class="small text-muted">数据集总量</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <div class="p-2 rounded" style="background:#f0f9ff;">
+                            <div class="fw-bold" style="font-size:1.4rem;color:#0369a1;" id="rtApiRate">-</div>
+                            <div class="small text-muted">API支持率</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     <!-- 左侧：层级分布 -->
     <div class="col-lg-6">
@@ -278,5 +330,25 @@ new Chart(regionCtx, {
         }
     }
 });
+
+// 实时指标加载
+async function loadRealtimeStats() {
+    try {
+        const r = await fetch('/api/stats/overview');
+        const d = await r.json();
+        document.getElementById('rtDatasets').textContent = (d.total_datasets || 0).toLocaleString();
+        document.getElementById('rtApiRate').textContent = (d.api_support_rate || 0) + '%';
+    } catch(e) {}
+    try {
+        const r = await fetch('/api/monitoring/realtime');
+        const d = await r.json();
+        document.getElementById('rtCollections').textContent = d.collections_24h || 0;
+        document.getElementById('rtHealth').textContent = d.health_checks_24h || 0;
+        document.getElementById('rtResponse').textContent = d.avg_response_ms || 0;
+        document.getElementById('rtUptime').textContent = (d.current_uptime_pct || 0) + '%';
+    } catch(e) {}
+}
+loadRealtimeStats();
+setInterval(loadRealtimeStats, 30000);
 </script>
 {% endblock %}

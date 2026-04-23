@@ -229,6 +229,180 @@ def init_db():
     )
     """)
 
+    # 11. 平台健康检查详细记录表（每次探测的完整指标）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS platform_health_checks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        platform_id INTEGER NOT NULL,
+        platform_code TEXT NOT NULL,
+        platform_name TEXT,
+        check_time TEXT DEFAULT CURRENT_TIMESTAMP,  -- 检查时间戳
+        -- 可达性指标
+        is_reachable INTEGER DEFAULT 0,       -- 是否可达
+        http_status INTEGER,                  -- HTTP状态码
+        response_time_ms INTEGER,             -- 响应时间(毫秒)
+        dns_resolve_time_ms INTEGER,          -- DNS解析时间
+        ssl_valid INTEGER DEFAULT 0,          -- SSL证书是否有效
+        ssl_expire_days INTEGER,              -- SSL证书剩余天数
+        -- 内容指标
+        page_size_kb REAL,                    -- 页面大小(KB)
+        charset TEXT,                         -- 字符编码
+        server_header TEXT,                   -- Server响应头
+        -- 异常记录
+        error_type TEXT,                      -- 错误类型：timeout/dns_error/ssl_error/http_error
+        error_detail TEXT,                    -- 错误详情
+        -- 原始响应摘要
+        response_snippet TEXT,                -- 响应内容前500字符
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 12. API端点监测表
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS api_endpoint_checks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        platform_id INTEGER NOT NULL,
+        platform_code TEXT NOT NULL,
+        endpoint_url TEXT NOT NULL,           -- API端点URL
+        endpoint_type TEXT,                   -- 类型：dataset_list/search/download/api_doc
+        check_time TEXT DEFAULT CURRENT_TIMESTAMP,
+        is_available INTEGER DEFAULT 0,       -- 是否可用
+        http_status INTEGER,                  -- HTTP状态码
+        response_time_ms INTEGER,             -- 响应时间(毫秒)
+        response_format TEXT,                 -- 返回格式：JSON/XML/HTML/其他
+        response_size_bytes INTEGER,          -- 响应体大小
+        rate_limit_headers TEXT,              -- 限速头信息
+        error_message TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 13. 数据来源记录表（外部数据源，用于论文数据溯源）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS data_provenance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        source_name TEXT NOT NULL,            -- 来源名称
+        source_name_en TEXT,                  -- 英文名称
+        source_type TEXT NOT NULL,            -- 类型：政府平台/学术数据库/国际组织/新闻媒体/企业数据/实地调研
+        source_category TEXT,                 -- 类别：政策法规/平台数据/统计数据/案例数据/文献数据
+        -- 访问信息
+        url TEXT,                             -- 来源URL
+        access_method TEXT,                   -- 获取方式：API/爬虫/手工采集/公开下载/问卷/访谈
+        -- 时间范围
+        data_start_date TEXT,                 -- 数据起始日期
+        data_end_date TEXT,                  -- 数据结束日期
+        -- 数据描述
+        data_description TEXT,                -- 数据内容描述
+        data_format TEXT,                     -- 数据格式：JSON/XML/CSV/Excel/PDF/数据库
+        record_count INTEGER,                 -- 记录数量
+        -- 质量信息
+        update_frequency TEXT,                -- 更新频率
+        last_access_time TEXT,                -- 最后访问时间
+        reliability_score INTEGER,            -- 可靠性评分 1-5
+        -- 论文引用
+        cited_in_chapter TEXT,                -- 引用于第几章
+        citation_note TEXT,                   -- 引用说明
+        -- 元数据
+        license_type TEXT,                    -- 许可证类型
+        contact_info TEXT,                    -- 联系方式
+        notes TEXT,                           -- 备注
+        is_active INTEGER DEFAULT 1,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 14. 采集数据归集快照表（每日完整数据归集，可复查可导出）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS collection_snapshots (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        snapshot_date TEXT NOT NULL,          -- 快照日期 YYYY-MM-DD
+        snapshot_time TEXT NOT NULL,          -- 快照时间 HH:MM:SS
+        snapshot_type TEXT NOT NULL,          -- 类型：daily/midday/evening/weekly
+        task_id INTEGER,
+        -- 汇总统计
+        total_platforms INTEGER DEFAULT 0,
+        reachable_count INTEGER DEFAULT 0,
+        unreachable_count INTEGER DEFAULT 0,
+        avg_response_time_ms INTEGER DEFAULT 0,
+        -- 4E维度汇总
+        avg_score_c1 REAL DEFAULT 0,
+        avg_score_c2 REAL DEFAULT 0,
+        avg_score_c3 REAL DEFAULT 0,
+        avg_score_c4 REAL DEFAULT 0,
+        avg_overall_score REAL DEFAULT 0,
+        -- 数据集汇总
+        total_datasets INTEGER DEFAULT 0,
+        total_api_endpoints INTEGER DEFAULT 0,
+        -- 快照数据（JSON格式，包含当日所有平台详细数据）
+        snapshot_data_json TEXT,
+        -- 校验信息
+        checksum TEXT,                        -- 数据校验和
+        file_size_kb INTEGER,                 -- 快照大小KB
+        -- 元数据
+        collector_version TEXT,               -- 采集器版本
+        export_path TEXT,                     -- 导出文件路径
+        is_verified INTEGER DEFAULT 0,        -- 是否已核验
+        verified_by TEXT,                     -- 核验人
+        verified_at TEXT,                     -- 核验时间
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 15. 采集指标实时记录表（每次单个平台采集的详细指标）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS collection_metrics_detail (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        task_id INTEGER NOT NULL,
+        platform_id INTEGER NOT NULL,
+        platform_code TEXT NOT NULL,
+        platform_name TEXT,
+        tier TEXT,
+        region TEXT,
+        -- 时间戳（精确到秒）
+        collected_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        -- 可达性
+        is_reachable INTEGER DEFAULT 0,
+        http_status INTEGER,
+        response_time_ms INTEGER,
+        -- 供给保障 C1
+        dataset_count INTEGER DEFAULT 0,
+        dataset_categories INTEGER DEFAULT 0,
+        format_types TEXT,
+        has_api INTEGER DEFAULT 0,
+        has_bulk_download INTEGER DEFAULT 0,
+        open_license_count INTEGER DEFAULT 0,
+        -- 平台服务 C2
+        has_https INTEGER DEFAULT 0,
+        has_search INTEGER DEFAULT 0,
+        has_filter INTEGER DEFAULT 0,
+        has_preview INTEGER DEFAULT 0,
+        has_visualization INTEGER DEFAULT 0,
+        has_sdk INTEGER DEFAULT 0,
+        -- 数据质量 C3
+        has_metadata INTEGER DEFAULT 0,
+        has_update_info INTEGER DEFAULT 0,
+        has_quality_report INTEGER DEFAULT 0,
+        machine_readable_rate REAL DEFAULT 0,
+        update_frequency_score REAL DEFAULT 0,
+        -- 利用效果 C4
+        has_register INTEGER DEFAULT 0,
+        has_feedback INTEGER DEFAULT 0,
+        has_data_request INTEGER DEFAULT 0,
+        app_showcase_count INTEGER DEFAULT 0,
+        download_count INTEGER DEFAULT 0,
+        -- 综合评分
+        score_c1 REAL DEFAULT 0,
+        score_c2 REAL DEFAULT 0,
+        score_c3 REAL DEFAULT 0,
+        score_c4 REAL DEFAULT 0,
+        overall_score REAL DEFAULT 0,
+        -- 原始数据
+        raw_metadata TEXT,
+        error_message TEXT,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
     conn.commit()
     conn.close()
     print(f"[OK] 数据库初始化完成: {DB_PATH}")
@@ -382,6 +556,136 @@ def init_platforms_data():
     conn.commit()
     conn.close()
     print(f"[OK] 已初始化 {len(platforms)} 个平台基础数据")
+
+
+def init_provenance_data():
+    """初始化论文外部数据来源记录"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM data_provenance")
+    if cursor.fetchone()[0] > 0:
+        conn.close()
+        print("[INFO] 数据来源数据已存在，跳过初始化")
+        return
+
+    sources = [
+        # 政府平台数据
+        ("国家数据局", "National Data Bureau", "政府平台", "政策法规",
+         "https://www.nda.gov.cn", "公开下载", "2020-01", "2025-12",
+         "国家数据局发布的公共数据资源开发利用相关政策文件、指导意见",
+         "PDF/HTML", 45, "不定期", "2025-03", 5,
+         "第一章、第六章", "政策演进分析的核心依据", "政府公开", "", ""),
+        ("复旦大学数字与移动治理实验室", "Fudan DMG Lab", "政府平台", "统计数据",
+         "https://opendata.fudan.edu.cn", "公开下载", "2017-01", "2025-09",
+         "《中国地方政府数据开放报告》《中国开放数林指数》年度报告",
+         "PDF/Excel", 8, "年度", "2025-03", 5,
+         "第一章、第五章", "平台数量与数据集统计的权威来源", "CC BY", "", ""),
+        ("中国政府网", "Gov.cn", "政府平台", "政策法规",
+         "https://www.gov.cn", "公开下载", "2015-01", "2025-12",
+         "国务院及各部委发布的数字政府、数据开放相关政策文件",
+         "PDF/HTML", 120, "实时", "2025-03", 5,
+         "第一章、第六章", "政策文本分析的主要来源", "政府公开", "", ""),
+        ("各省级政府数据开放平台", "Provincial OGD Platforms", "政府平台", "平台数据",
+         "", "API/爬虫", "2015-01", "2025-03",
+         "31个省级政府数据开放平台的网站数据，包括数据集数量、格式、API等",
+         "HTML/JSON", 331, "实时", "2025-03", 5,
+         "第三至六章", "4E评估框架实证分析的核心数据", "开放许可", "", ""),
+
+        # 学术数据库
+        ("中国知网(CNKI)", "CNKI", "学术数据库", "文献数据",
+         "https://www.cnki.net", "数据库检索", "2009-01", "2025-03",
+         "政府数据开放、数字政府、公共数据相关中文学术论文",
+         "数据库", 504, "实时", "2025-03", 5,
+         "第一章、第二章", "文献综述与理论基础的主要来源", "订阅", "", ""),
+        ("Web of Science", "Web of Science", "学术数据库", "文献数据",
+         "https://www.webofscience.com", "数据库检索", "2009-01", "2025-03",
+         "Open Government Data、Open Data、Digital Government相关英文文献",
+         "数据库", 200, "实时", "2025-03", 5,
+         "第一章、第二章", "国际文献综述与理论框架构建", "订阅", "", ""),
+        ("Scopus", "Scopus", "学术数据库", "文献数据",
+         "https://www.scopus.com", "数据库检索", "2009-01", "2025-03",
+         "政府数据开放领域国际学术论文",
+         "数据库", 180, "实时", "2025-03", 5,
+         "第一章、第二章", "国际文献补充检索", "订阅", "", ""),
+
+        # 国际组织
+        ("OECD开放政府数据", "OECD OGD", "国际组织", "统计数据",
+         "https://www.oecd.org/gov/digital-government/open-government-data.htm", "公开下载", "2014-01", "2024-12",
+         "OECD发布的开放政府数据报告、比较研究与国际排名",
+         "PDF/Excel", 15, "年度", "2025-03", 5,
+         "第一章、第五章", "国际比较与评估标准参考", "开放许可", "", ""),
+        ("世界银行开放数据", "World Bank Open Data", "国际组织", "统计数据",
+         "https://data.worldbank.org", "API下载", "2010-01", "2025-03",
+         "全球开放数据指数、各国数字政府发展水平指标",
+         "API/CSV", 50, "年度", "2025-03", 5,
+         "第一章、第五章", "国际发展水平比较", "CC BY", "", ""),
+        ("Open Data Barometer", "Open Data Barometer", "国际组织", "统计数据",
+         "https://opendatabarometer.org", "公开下载", "2013-01", "2021-12",
+         "全球开放数据评估指数，覆盖115个国家的开放数据成熟度评估",
+         "PDF/Excel", 4, "年度(已停更)", "2025-03", 4,
+         "第一章", "国际评估体系比较", "CC BY", "", ""),
+        ("Global Open Data Index", "Global Open Data Index", "国际组织", "统计数据",
+         "https://index.okfn.org", "公开下载", "2013-01", "2016-12",
+         "OKF发布的全球开放数据指数，评估各国关键数据集开放程度",
+         "Web", 4, "年度(已停更)", "2025-03", 4,
+         "第一章", "早期国际评估参考", "开放许可", "", ""),
+
+        # 实地调研
+        ("平台实地访问与观察", "Platform Field Observation", "实地调研", "案例数据",
+         "", "手工采集", "2024-06", "2024-09",
+         "对30个省级平台进行实地访问，记录平台功能、数据质量、用户体验",
+         "笔记/截图", 30, "一次性", "2024-09", 5,
+         "第三至五章", "4E评估框架指标验证的一手数据", "原创", "", ""),
+        ("专家问卷调查", "Expert Survey", "实地调研", "统计数据",
+         "", "问卷星", "2024-07", "2024-08",
+         "面向30位政府数据开放领域专家的问卷，收集指标权重与评估标准意见",
+         "Excel", 30, "一次性", "2024-08", 4,
+         "第三章", "指标体系权重确定的数据基础", "原创", "", ""),
+        ("平台用户访谈", "User Interview", "实地调研", "案例数据",
+         "", "访谈录音", "2024-08", "2024-09",
+         "对15位平台深度用户（开发者、研究者、企业人员）的半结构化访谈",
+         "录音/笔记", 15, "一次性", "2024-09", 4,
+         "第五章", "利用效果评估的定性数据", "原创", "", ""),
+
+        # 新闻媒体
+        ("新华社", "Xinhua News", "新闻媒体", "案例数据",
+         "https://www.xinhuanet.com", "公开下载", "2015-01", "2025-03",
+         "数字政府建设、数据开放相关新闻报道与政策解读",
+         "HTML", 80, "实时", "2025-03", 4,
+         "第一章", "政策背景与社会语境分析", "公开", "", ""),
+        ("人民日报", "People's Daily", "新闻媒体", "案例数据",
+         "https://www.people.com.cn", "公开下载", "2015-01", "2025-03",
+         "数据要素、数字中国建设相关报道",
+         "HTML", 60, "实时", "2025-03", 4,
+         "第一章、第六章", "政策演进与社会关注分析", "公开", "", ""),
+
+        # 企业/第三方数据
+        ("天眼查", "Tianyancha", "企业数据", "统计数据",
+         "https://www.tianyancha.com", "API查询", "2024-01", "2025-03",
+         "数据开放相关企业注册信息、知识产权、司法风险等",
+         "API/Excel", 500, "实时", "2025-03", 3,
+         "第五章", "平台生态与企业参与分析", "商业", "", ""),
+        ("百度指数", "Baidu Index", "企业数据", "统计数据",
+         "https://index.baidu.com", "公开查询", "2015-01", "2025-03",
+         '"政府数据开放""数据要素"等关键词的搜索热度趋势',
+         "Web", 120, "实时", "2025-03", 3,
+         "第一章", "社会关注度与公众认知分析", "商业", "", ""),
+    ]
+
+    cursor.executemany("""
+        INSERT INTO data_provenance
+        (source_name, source_name_en, source_type, source_category, url, access_method,
+         data_start_date, data_end_date, data_description, data_format, record_count,
+         update_frequency, last_access_time, reliability_score, cited_in_chapter,
+         citation_note, license_type, contact_info, notes)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    """, sources)
+    conn.commit()
+    conn.close()
+    print(f"[OK] 已初始化 {len(sources)} 条数据来源记录")
+
+
+
 
 
 if __name__ == '__main__':
