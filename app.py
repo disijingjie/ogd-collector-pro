@@ -182,7 +182,7 @@ def collector_page():
         SELECT platform_name, tier, overall_score, score_c1, score_c2, score_c3, score_c4,
                dataset_count, status, collected_at
         FROM collection_records
-        ORDER BY collected_at DESC, id DESC
+        ORDER BY COALESCE(collected_at, '1970-01-01') DESC, id DESC
         LIMIT 8
     """)
     latest_records = []
@@ -1540,4 +1540,4 @@ if __name__ == '__main__':
     print("访问地址: http://127.0.0.1:5000")
     print("=" * 60)
 
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    app.run(debug=False, host='0.0.0.0', port=5000, threaded=True)

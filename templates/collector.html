@@ -160,7 +160,144 @@
     </div>
 </div>
 
-<!-- ========== 一、平台采集概览 ========== -->
+<!-- ========== 一、实时采集监控（移到最上方） ========== -->
+<div class="d-flex align-items-center mb-3">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h5 class="mx-3 mb-0 text-muted"><i class="bi bi-broadcast text-danger me-2"></i>实时采集监控</h5>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-terminal"></i> 实时采集控制台</h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- 进度概览 -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-primary" id="stat-total">{{ collection_summary.total_platforms }}</div>
+                            <div class="small text-muted">总平台</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-success" id="stat-success">{{ collection_summary.collected_platforms }}</div>
+                            <div class="small text-muted">已采集</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-danger" id="stat-failed">{{ collection_summary.total_records - collection_summary.collected_platforms }}</div>
+                            <div class="small text-muted">失败</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="p-3 rounded bg-light">
+                            <div class="fs-3 fw-bold text-info" id="stat-current">{{ collection_summary.avg_score }}</div>
+                            <div class="small text-muted">平均得分</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="small text-muted">采集进度</span>
+                        <span class="small fw-bold" id="progress-text">{{ collection_summary.success_rate }}%</span>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped {% if collection_summary.latest_task_status == 'running' %}progress-bar-animated{% endif %}" 
+                             style="width: {{ collection_summary.success_rate }}%"></div>
+                    </div>
+                </div>
+                
+                <!-- 控制按钮 -->
+                <div class="d-flex gap-2 mb-4">
+                    <button id="btn-start" class="btn btn-success" onclick="startTask()">
+                        <i class="bi bi-play-fill"></i> 开始采集
+                    </button>
+                    <button id="btn-pause" class="btn btn-warning" onclick="pauseTask()" disabled>
+                        <i class="bi bi-pause-fill"></i> 暂停
+                    </button>
+                    <button id="btn-stop" class="btn btn-danger" onclick="stopTask()" disabled>
+                        <i class="bi bi-stop-fill"></i> 停止
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="loadTasks()">
+                        <i class="bi bi-arrow-clockwise"></i> 刷新
+                    </button>
+                </div>
+                
+                <!-- 实时日志 -->
+                <div class="log-panel" id="log-panel">
+                    {% for log in latest_logs %}
+                    <div class="log-entry log-{{ log.level|lower }}">
+                        <span class="log-time">[{{ log.time }}]</span> {{ log.message }}
+                    </div>
+                    {% else %}
+                    <div class="log-entry log-info"><span class="log-time">[系统]</span> OGD-Collector Pro 采集引擎已就绪</div>
+                    <div class="log-entry log-success"><span class="log-time">[系统]</span> 历史采集数据已加载：{{ collection_summary.collected_platforms }} 个平台可用，{{ collection_summary.total_records }} 条记录</div>
+                    <div class="log-entry log-info"><span class="log-time">[系统]</span> 等待任务启动...</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                <h5 class="mb-0"><i class="bi bi-gear"></i> 采集配置</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <label class="form-label small text-muted">当前任务</label>
+                    <select id="task-select" class="form-select">
+                        <option value="">-- 选择任务 --</option>
+                        {% for task in tasks %}
+                        <option value="{{ task.id }}">#{{ task.id }} {{ task.task_name }} ({{ task.status }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">采集范围</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-provincial" checked>
+                        <label class="form-check-label" for="check-provincial">省级平台 (31个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-subprovincial" checked>
+                        <label class="form-check-label" for="check-subprovincial">副省级/单列市 (13个)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check-prefectural" checked>
+                        <label class="form-check-label" for="check-prefectural">地级市抽样 (60个)</label>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">请求间隔 (秒)</label>
+                    <input type="range" class="form-range" id="delay-range" min="1" max="10" value="2">
+                    <div class="text-end small text-muted"><span id="delay-value">2</span> 秒</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label small text-muted">并发数</label>
+                    <select class="form-select" id="workers-select">
+                        <option value="1">单线程</option>
+                        <option value="3" selected>3线程</option>
+                        <option value="5">5线程</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、平台采集概览 ========== -->
 <div class="d-flex align-items-center mb-3">
     <div class="flex-grow-1"><hr class="my-0"></div>
     <h5 class="mx-3 mb-0 text-muted"><i class="bi bi-layers text-primary me-2"></i>平台采集概览</h5>
@@ -305,139 +442,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-
-<!-- ========== 二、实时采集监控 ========== -->
-<div class="d-flex align-items-center mb-3">
-    <div class="flex-grow-1"><hr class="my-0"></div>
-    <h5 class="mx-3 mb-0 text-muted"><i class="bi bi-broadcast text-danger me-2"></i>实时采集监控</h5>
-    <div class="flex-grow-1"><hr class="my-0"></div>
-</div>
-
-<div class="row g-4 mb-4">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-terminal"></i> 实时采集控制台</h5>
-            </div>
-            <div class="card-body p-4">
-                <!-- 进度概览 -->
-                <div class="row g-3 mb-4">
-                    <div class="col-md-3 text-center">
-                        <div class="p-3 rounded bg-light">
-                            <div class="fs-3 fw-bold text-primary" id="stat-total">{{ collection_summary.total_platforms }}</div>
-                            <div class="small text-muted">总平台</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="p-3 rounded bg-light">
-                            <div class="fs-3 fw-bold text-success" id="stat-success">{{ collection_summary.collected_platforms }}</div>
-                            <div class="small text-muted">已采集</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="p-3 rounded bg-light">
-                            <div class="fs-3 fw-bold text-danger" id="stat-failed">0</div>
-                            <div class="small text-muted">失败</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="p-3 rounded bg-light">
-                            <div class="fs-3 fw-bold text-info" id="stat-current">{{ collection_summary.avg_score }}</div>
-                            <div class="small text-muted">平均得分</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 进度条 -->
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="small text-muted">采集进度</span>
-                        <span class="small fw-bold" id="progress-text">{{ collection_summary.success_rate }}%</span>
-                    </div>
-                    <div class="progress" style="height: 12px;">
-                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
-                             style="width: {{ collection_summary.success_rate }}%"></div>
-                    </div>
-                </div>
-                
-                <!-- 控制按钮 -->
-                <div class="d-flex gap-2 mb-4">
-                    <button id="btn-start" class="btn btn-success" onclick="startTask()">
-                        <i class="bi bi-play-fill"></i> 开始采集
-                    </button>
-                    <button id="btn-pause" class="btn btn-warning" onclick="pauseTask()" disabled>
-                        <i class="bi bi-pause-fill"></i> 暂停
-                    </button>
-                    <button id="btn-stop" class="btn btn-danger" onclick="stopTask()" disabled>
-                        <i class="bi bi-stop-fill"></i> 停止
-                    </button>
-                    <button class="btn btn-outline-secondary" onclick="loadTasks()">
-                        <i class="bi bi-arrow-clockwise"></i> 刷新
-                    </button>
-                </div>
-                
-                <!-- 实时日志 -->
-                <div class="log-panel" id="log-panel">
-                    {% for log in latest_logs %}
-                    <div class="log-entry log-{{ log.level|lower }}">
-                        <span class="log-time">[{{ log.time }}]</span> {{ log.message }}
-                    </div>
-                    {% else %}
-                    <div class="log-entry log-info"><span class="log-time">[系统]</span> OGD-Collector Pro 采集引擎已就绪</div>
-                    <div class="log-entry log-info"><span class="log-time">[系统]</span> 等待任务启动...</div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="mb-0"><i class="bi bi-gear"></i> 采集配置</h5>
-            </div>
-            <div class="card-body p-4">
-                <div class="mb-3">
-                    <label class="form-label small text-muted">当前任务</label>
-                    <select id="task-select" class="form-select">
-                        <option value="">-- 选择任务 --</option>
-                    </select>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label small text-muted">采集范围</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="check-provincial" checked>
-                        <label class="form-check-label" for="check-provincial">省级平台 (31个)</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="check-subprovincial" checked>
-                        <label class="form-check-label" for="check-subprovincial">副省级/单列市 (13个)</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="check-prefectural" checked>
-                        <label class="form-check-label" for="check-prefectural">地级市抽样 (60个)</label>
-                    </div>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label small text-muted">请求间隔 (秒)</label>
-                    <input type="range" class="form-range" id="delay-range" min="1" max="10" value="2">
-                    <div class="text-end small text-muted"><span id="delay-value">2</span> 秒</div>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label small text-muted">并发数</label>
-                    <select class="form-select" id="workers-select">
-                        <option value="1">单线程</option>
-                        <option value="3" selected>3线程</option>
-                        <option value="5">5线程</option>
-                    </select>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -731,20 +735,38 @@ async function createTask() {
     const name = document.getElementById('new-task-name').value;
     const type = document.getElementById('new-task-type').value;
     
-    const res = await fetch('/api/tasks', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({task_name: name, task_type: type})
-    });
-    
-    const data = await res.json();
-    if (data.success) {
-        addLog('success', `任务创建成功: #${data.task_id}`);
-        bootstrap.Modal.getInstance(document.getElementById('newTaskModal')).hide();
-        loadTasks();
-        document.getElementById('task-select').value = data.task_id;
-    } else {
-        addLog('error', `任务创建失败: ${data.message}`);
+    try {
+        const res = await fetch('/api/tasks', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({task_name: name, task_type: type})
+        });
+        
+        if (!res.ok) {
+            const text = await res.text();
+            addLog('error', `服务器错误 ${res.status}: ${text.substring(0, 100)}`);
+            return;
+        }
+        
+        const data = await res.json();
+        if (data.success) {
+            addLog('success', `任务创建成功: #${data.task_id}`);
+            // 关闭模态框
+            const modalEl = document.getElementById('newTaskModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            else modalEl.classList.remove('show');
+            loadTasks();
+            // 延迟选中新建的任务
+            setTimeout(() => {
+                const select = document.getElementById('task-select');
+                if (select) select.value = data.task_id;
+            }, 300);
+        } else {
+            addLog('error', `任务创建失败: ${data.message || '未知错误'}`);
+        }
+    } catch (err) {
+        addLog('error', `请求异常: ${err.message}`);
     }
 }
 
