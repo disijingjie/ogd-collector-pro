@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+.export-card {
+    background: white; border-radius: 12px; padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;
+    transition: all 0.2s; height: 100%;
+}
+.export-card:hover {
+    transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.export-icon {
+    width: 56px; height: 56px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 16px;
+}
+.export-title { font-size: 1.1rem; font-weight: 700; color: #1a365d; margin-bottom: 8px; }
+.export-desc { font-size: 0.85rem; color: #718096; margin-bottom: 16px; min-height: 40px; }
+.preview-table { font-size: 0.8rem; }
+.preview-table th { background: #f7fafc; font-weight: 600; }
+.preview-box {
+    background: #f7fafc; border-radius: 8px; padding: 12px;
+    font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.75rem;
+    max-height: 200px; overflow: auto; white-space: pre;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">数据导出</h2>
+        <p class="text-muted mb-0">为博士论文研究提供可直接使用的统计表格与数据集</p>
+    </div>
+    <div>
+        <a href="/api/export/csv" class="btn btn-outline-primary">
+            <i class="bi bi-file-earmark-arrow-down"></i> 原始CSV
+        </a>
+    </div>
+</div>
+
+<!-- ========== 一、论文统计表导出 ========== -->
+<div class="d-flex align-items-center mb-3">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h5 class="mx-3 mb-0 text-muted"><i class="bi bi-table text-primary me-2"></i>论文统计表导出</h5>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #ebf8ff; color: #2b6cb0;"><i class="bi bi-table"></i></div>
+            <div class="export-title">描述性统计表</div>
+            <div class="export-desc">各层级4E维度均值、标准差、最大值、最小值，可直接放入论文正文</div>
+            <div class="preview-box mb-3" id="preview-desc">加载中...</div>
+            <button class="btn btn-primary w-100" onclick="exportDescStats()">
+                <i class="bi bi-download"></i> 导出Excel
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #f0fff4; color: #276749;"><i class="bi bi-list-ol"></i></div>
+            <div class="export-title">平台得分明细表</div>
+            <div class="export-desc">104个平台的C1-C4分项得分与综合得分，可作为论文附表</div>
+            <div class="preview-box mb-3" id="preview-detail">加载中...</div>
+            <button class="btn btn-success w-100" onclick="exportDetailTable()">
+                <i class="bi bi-download"></i> 导出Excel
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #fffaf0; color: #975a16;"><i class="bi bi-grid-3x3"></i></div>
+            <div class="export-title">4E维度相关矩阵</div>
+            <div class="export-desc">Pearson相关系数矩阵，用于论文中维度间关系分析</div>
+            <div class="preview-box mb-3" id="preview-corr">加载中...</div>
+            <button class="btn btn-warning w-100" onclick="exportCorrMatrix()">
+                <i class="bi bi-download"></i> 导出CSV
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #faf5ff; color: #6b46c1;"><i class="bi bi-trophy"></i></div>
+            <div class="export-title">TOPSIS排名表</div>
+            <div class="export-desc">基于熵权TOPSIS的综合效率排名（预留接口，需补充计算逻辑）</div>
+            <div class="preview-box mb-3" id="preview-topsis">加载中...</div>
+            <button class="btn btn-outline-primary w-100" onclick="exportTopsis()" disabled>
+                <i class="bi bi-hourglass-split"></i> 开发中
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #fff5f5; color: #c53030;"><i class="bi bi-bullseye"></i></div>
+            <div class="export-title">DEA效率分析表</div>
+            <div class="export-desc">基于DEA-BCC的投入产出效率分析结果（预留接口）</div>
+            <div class="preview-box mb-3" id="preview-dea">加载中...</div>
+            <button class="btn btn-outline-danger w-100" onclick="exportDea()" disabled>
+                <i class="bi bi-hourglass-split"></i> 开发中
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="export-card">
+            <div class="export-icon" style="background: #e6fffa; color: #319795;"><i class="bi bi-collection"></i></div>
+            <div class="export-title">数据集完整打包</div>
+            <div class="export-desc">JSON + CSV + SQLite 三种格式完整数据集，含原始采集记录</div>
+            <div class="d-flex gap-2 mb-3">
+                <span class="badge bg-primary">JSON</span>
+                <span class="badge bg-success">CSV</span>
+                <span class="badge bg-info">SQLite</span>
+            </div>
+            <button class="btn btn-info w-100 text-white" onclick="exportFullDataset()">
+                <i class="bi bi-file-earmark-zip"></i> 打包下载
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 二、图表导出 ========== -->
+<div class="d-flex align-items-center mb-3">
+    <div class="flex-grow-1"><hr class="my-0"></div>
+    <h5 class="mx-3 mb-0 text-muted"><i class="bi bi-image text-primary me-2"></i>论文图表导出</h5>
+    <div class="flex-grow-1"><hr class="my-0"></div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-images me-2"></i>已生成图表</h5>
+        <span class="text-muted small">位于 static/thesis_charts/ 目录</span>
+    </div>
+    <div class="card-body p-4">
+        <div class="row g-3" id="chart-grid">
+            <div class="col-12 text-muted text-center py-4">加载中...</div>
+        </div>
+    </div>
+</div>
+
+<!-- 隐藏表单用于导出 -->
+<form id="export-form" method="post" style="display:none;">
+    <input type="hidden" name="data" id="export-data">
+    <input type="hidden" name="filename" id="export-filename">
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let allRecords = [];
+
+async function loadData() {
+    const res = await fetch('/api/records?limit=500');
+    allRecords = await res.json();
+    renderDescPreview();
+    renderDetailPreview();
+    renderCorrPreview();
+    loadCharts();
+}
+
+// 描述性统计预览
+function renderDescPreview() {
+    const ava = allRecords.filter(r => r.status === 'available');
+    const tiers = ['省级', '副省级/计划单列市', '地级市'];
+    let txt = '层级        C1均值  C2均值  C3均值  C4均值  综合\n';
+    txt += '-------------------------------------------\n';
+    tiers.forEach(t => {
+        const set = ava.filter(r => r.tier === t);
+        if (!set.length) { txt += `${t.padEnd(10)} -      -      -      -      -\n`; return; }
+        const avg = f => (set.reduce((s,r)=>s+(r[f]||0),0)/set.length).toFixed(3);
+        txt += `${t.padEnd(10)} ${avg('score_c1')}  ${avg('score_c2')}  ${avg('score_c3')}  ${avg('score_c4')}  ${avg('overall_score')}\n`;
+    });
+    document.getElementById('preview-desc').textContent = txt;
+}
+
+// 明细预览
+function renderDetailPreview() {
+    const ava = allRecords.filter(r => r.status === 'available' && r.overall_score > 0);
+    ava.sort((a,b) => b.overall_score - a.overall_score);
+    let txt = '平台名称              层级      C1    C2    C3    C4    综合\n';
+    txt += '-----------------------------------------------------------\n';
+    ava.slice(0, 8).forEach(r => {
+        const name = (r.platform_name || '').slice(0, 18).padEnd(18);
+        txt += `${name} ${(r.tier||'').slice(0,6).padEnd(6)} ${(r.score_c1||0).toFixed(2)}  ${(r.score_c2||0).toFixed(2)}  ${(r.score_c3||0).toFixed(2)}  ${(r.score_c4||0).toFixed(2)}  ${(r.overall_score||0).toFixed(3)}\n`;
+    });
+    txt += `... 共 ${ava.length} 条记录`;
+    document.getElementById('preview-detail').textContent = txt;
+}
+
+// 相关矩阵预览
+function renderCorrPreview() {
+    const ava = allRecords.filter(r => r.status === 'available');
+    const dims = ['score_c1','score_c2','score_c3','score_c4'];
+    const labels = ['C1','C2','C3','C4'];
+    function corr(x, y) {
+        const n = Math.min(x.length, y.length);
+        if (n < 2) return 0;
+        const sx = x.slice(0,n), sy = y.slice(0,n);
+        const sumX = sx.reduce((a,b)=>a+b,0), sumY = sy.reduce((a,b)=>a+b,0);
+        const sumXY = sx.reduce((acc,xi,i)=>acc+xi*sy[i],0);
+        const sumX2 = sx.reduce((a,b)=>a+b*b,0), sumY2 = sy.reduce((a,b)=>a+b*b,0);
+        return (n*sumXY-sumX*sumY)/Math.sqrt((n*sumX2-sumX*sumX)*(n*sumY2-sumY*sumY))||0;
+    }
+    let txt = '    C1    C2    C3    C4\n';
+    txt += '------------------------\n';
+    for (let i = 0; i < 4; i++) {
+        let row = labels[i] + ' ';
+        for (let j = 0; j < 4; j++) {
+            const v = i === j ? 1.0 : corr(ava.map(r=>r[dims[i]]||0), ava.map(r=>r[dims[j]]||0));
+            row += v.toFixed(2).padStart(5) + ' ';
+        }
+        txt += row + '\n';
+    }
+    document.getElementById('preview-corr').textContent = txt;
+}
+
+// 导出功能
+function downloadFile(content, filename, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+}
+
+function exportDescStats() {
+    const ava = allRecords.filter(r => r.status === 'available');
+    const tiers = ['省级', '副省级/计划单列市', '地级市'];
+    let csv = '层级,C1均值,C1标准差,C2均值,C2标准差,C3均值,C3标准差,C4均值,C4标准差,综合均值,综合标准差,样本数\n';
+    tiers.forEach(t => {
+        const set = ava.filter(r => r.tier === t);
+        if (!set.length) { csv += `${t},,,,,,,,,,,0\n`; return; }
+        const stats = f => {
+            const vals = set.map(r => r[f] || 0);
+            const mean = vals.reduce((a,b)=>a+b,0)/vals.length;
+            const std = Math.sqrt(vals.reduce((s,v)=>s+(v-mean)**2,0)/vals.length);
+            return [mean.toFixed(4), std.toFixed(4)];
+        };
+        const c1 = stats('score_c1'), c2 = stats('score_c2'), c3 = stats('score_c3'), c4 = stats('score_c4'), o = stats('overall_score');
+        csv += `${t},${c1[0]},${c1[1]},${c2[0]},${c2[1]},${c3[0]},${c3[1]},${c4[0]},${c4[1]},${o[0]},${o[1]},${set.length}\n`;
+    });
+    downloadFile('\ufeff' + csv, 'OGD_4E_描述性统计.csv', 'text/csv;charset=utf-8;');
+}
+
+function exportDetailTable() {
+    const ava = allRecords.filter(r => r.status === 'available');
+    ava.sort((a,b) => b.overall_score - a.overall_score);
+    let csv = '排名,平台名称,层级,区域,状态,C1供给,C2服务,C3质量,C4效果,综合得分,数据集数,响应时间,采集时间\n';
+    ava.forEach((r, i) => {
+        csv += `${i+1},"${r.platform_name}",${r.tier},${r.region||''},${r.status},${r.score_c1||0},${r.score_c2||0},${r.score_c3||0},${r.score_c4||0},${r.overall_score||0},${r.dataset_count||0},${r.response_time||''},${r.collected_at||''}\n`;
+    });
+    downloadFile('\ufeff' + csv, 'OGD_平台得分明细表.csv', 'text/csv;charset=utf-8;');
+}
+
+function exportCorrMatrix() {
+    const ava = allRecords.filter(r => r.status === 'available');
+    const dims = ['score_c1','score_c2','score_c3','score_c4'];
+    const labels = ['C1供给','C2服务','C3质量','C4效果'];
+    function corr(x, y) {
+        const n = Math.min(x.length, y.length);
+        if (n < 2) return 0;
+        const sx = x.slice(0,n), sy = y.slice(0,n);
+        const sumX = sx.reduce((a,b)=>a+b,0), sumY = sy.reduce((a,b)=>a+b,0);
+        const sumXY = sx.reduce((acc,xi,i)=>acc+xi*sy[i],0);
+        const sumX2 = sx.reduce((a,b)=>a+b*b,0), sumY2 = sy.reduce((a,b)=>a+b*b,0);
+        return (n*sumXY-sumX*sumY)/Math.sqrt((n*sumX2-sumX*sumX)*(n*sumY2-sumY*sumY))||0;
+    }
+    let csv = ',C1供给,C2服务,C3质量,C4效果\n';
+    for (let i = 0; i < 4; i++) {
+        let row = labels[i];
+        for (let j = 0; j < 4; j++) {
+            const v = i === j ? 1.0 : corr(ava.map(r=>r[dims[i]]||0), ava.map(r=>r[dims[j]]||0));
+            row += ',' + v.toFixed(4);
+        }
+        csv += row + '\n';
+    }
+    downloadFile('\ufeff' + csv, 'OGD_4E相关性矩阵.csv', 'text/csv;charset=utf-8;');
+}
+
+function exportFullDataset() {
+    window.location.href = '/api/export/csv';
+}
+
+// 加载论文图表
+async function loadCharts() {
+    try {
+        const res = await fetch('/api/thesis/charts');
+        const charts = await res.json();
+        const grid = document.getElementById('chart-grid');
+        if (!charts.length) {
+            grid.innerHTML = '<div class="col-12 text-muted text-center py-4">暂无图表，请先将论文图表放入 static/thesis_charts/ 目录</div>';
+            return;
+        }
+        grid.innerHTML = charts.map(c => `
+            <div class="col-md-4 col-lg-3">
+                <div class="card">
+                    <img src="${c.url}" class="card-img-top" alt="${c.name}" style="height: 160px; object-fit: contain; background: #f7fafc;">
+                    <div class="card-body p-2 text-center">
+                        <small class="fw-semibold">${c.name}</small>
+                        <a href="${c.url}" download class="btn btn-sm btn-outline-primary w-100 mt-2">
+                            <i class="bi bi-download"></i> 下载
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) {
+        document.getElementById('chart-grid').innerHTML = '<div class="col-12 text-muted text-center py-4">加载图表失败</div>';
+    }
+}
+
+loadData();
+</script>
+{% endblock %}

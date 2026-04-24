@@ -25,7 +25,7 @@ REQUIRED_TABLES = [
     'collection_snapshots', 'analysis_results', 'collection_logs',
     'access_logs', 'collection_stats', 'platform_features',
     'auto_schedule', 'platform_health_checks', 'api_endpoint_checks',
-    'data_provenance', 'collection_metrics_detail'
+    'data_provenance', 'collection_metrics_detail', 'platform_datasets'
 ]
 
 
@@ -426,6 +426,38 @@ def init_db():
         raw_metadata TEXT,
         error_message TEXT,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 16. 平台数据集穿透采集表（阶段2：数据集级粒度，支撑4E维度验证）
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS platform_datasets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        platform_id INTEGER NOT NULL,
+        platform_code TEXT NOT NULL,
+        -- 数据集基本信息
+        dataset_name TEXT NOT NULL,           -- 数据集名称
+        dataset_url TEXT,                     -- 数据集详情页URL
+        category TEXT,                        -- 主题分类：交通/医疗/教育/环境/经济...
+        data_format TEXT,                     -- 数据格式：CSV/JSON/XML/Excel/API
+        description TEXT,                     -- 数据集描述
+        -- 数据质量指标
+        update_date TEXT,                     -- 最后更新日期
+        publish_date TEXT,                    -- 发布日期
+        download_count INTEGER DEFAULT 0,     -- 下载次数
+        view_count INTEGER DEFAULT 0,         -- 浏览次数
+        -- 4E维度关联
+        related_4e_dim TEXT,                  -- 关联维度：C1/C2/C3/C4，可多值逗号分隔
+        dim_c1_score REAL DEFAULT 0,          -- 该数据集在C1维度的贡献分
+        dim_c3_score REAL DEFAULT 0,          -- 该数据集在C3维度的贡献分
+        dim_c4_score REAL DEFAULT 0,          -- 该数据集在C4维度的贡献分
+        -- 穿透采集元数据
+        penetrated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        parser_type TEXT,                     -- 解析器类型：ckan/huawei/ali/custom
+        raw_data_json TEXT,                   -- 原始解析数据JSON
+        is_valid INTEGER DEFAULT 1,           -- 是否有效
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (platform_id) REFERENCES platforms(id)
     )
     """)
 

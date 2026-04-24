@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+            <li class="breadcrumb-item"><a href="/platforms">平台库</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ platform.name }}</li>
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h2 class="mb-1">{{ platform.name }}</h2>
+            <p class="text-muted mb-0">
+                <span class="tier-badge {% if platform.tier == '省级' %}tier-provincial{% elif platform.tier == '副省级/计划单列市' %}tier-subprovincial{% else %}tier-prefectural{% endif %}">{{ platform.tier }}</span>
+                <span class="ms-2"><i class="bi bi-geo-alt"></i> {{ platform.region }}</span>
+                <span class="ms-2"><i class="bi bi-link-45deg"></i> <a href="{{ platform.url or platform.url_pattern }}" target="_blank">{{ platform.url or platform.url_pattern }}</a></span>
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/platforms" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> 返回列表</a>
+            <a href="{{ platform.url or platform.url_pattern }}" target="_blank" class="btn btn-primary"><i class="bi bi-box-arrow-up-right"></i> 访问平台</a>
+        </div>
+    </div>
+</div>
+
+<!-- 状态横幅 -->
+{% if latest_record %}
+<div class="alert {% if latest_record.status == 'available' %}alert-success{% else %}alert-danger{% endif %} d-flex align-items-center mb-4">
+    <i class="bi {% if latest_record.status == 'available' %}bi-check-circle-fill{% else %}bi-x-circle-fill{% endif %} fs-4 me-3"></i>
+    <div>
+        <div class="fw-bold">最新采集状态：{{ latest_record.status_detail }}</div>
+        <div class="small">采集时间：{{ latest_record.collected_at }} | 响应时间：{{ latest_record.response_time }}秒 | HTTP状态：{{ latest_record.http_status }}</div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-secondary d-flex align-items-center mb-4">
+    <i class="bi bi-hourglass-split fs-4 me-3"></i>
+    <div class="fw-bold">暂无采集记录</div>
+</div>
+{% endif %}
+
+<!-- 4E 得分总览 -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-radar me-2"></i>4E 维度雷达</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="radarChart" height="260"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-calculator me-2"></i>得分构成与计算逻辑</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3" id="score-breakdown">
+                    <div class="col-md-6">
+                        <div class="p-3 rounded" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>C1 供给保障 (Economy)</span>
+                                <span class="fs-4 fw-bold" id="score-c1">-</span>
+                            </div>
+                            <div class="small opacity-75">
+                                数据集数量(40%) + 格式多样性(20%) + API开放(20%) + 批量下载(20%)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>C2 平台服务 (Efficiency)</span>
+                                <span class="fs-4 fw-bold" id="score-c2">-</span>
+                            </div>
+                            <div class="small opacity-75">
+                                响应时间(20%) + HTTPS(10%) + 搜索(20%) + 下载(20%) + 可视化(20%) + API(10%)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded" style="background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%); color: white;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>C3 数据质量 (Quality)</span>
+                                <span class="fs-4 fw-bold" id="score-c3">-</span>
+                            </div>
+                            <div class="small opacity-75">
+                                更新信息(40%) + 元数据(30%) + 反馈渠道(30%)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 rounded" style="background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%); color: white;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>C4 利用效果 (Effectiveness)</span>
+                                <span class="fs-4 fw-bold" id="score-c4">-</span>
+                            </div>
+                            <div class="small opacity-75">
+                                注册功能(30%) + 数据预览(30%) + 应用成果(40%)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 功能检测明细 -->
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>功能检测明细（12项指标）</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-3" id="feature-grid">
+            <!-- 动态填充 -->
+        </div>
+    </div>
+</div>
+
+<!-- 历史采集轨迹 -->
+<div class="card mb-4">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>历史采集轨迹</h5>
+        <span class="badge bg-secondary" id="history-count">0 次采集</span>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>时间</th>
+                        <th>状态</th>
+                        <th>C1</th>
+                        <th>C2</th>
+                        <th>C3</th>
+                        <th>C4</th>
+                        <th>综合</th>
+                        <th>数据集</th>
+                        <th>响应时间</th>
+                        <th>HTTP</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body">
+                    <tr><td colspan="10" class="text-muted text-center py-4">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 原始证据 -->
+{% if latest_record and latest_record.raw_html_snippet %}
+<div class="card mb-4">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>原始采集证据（HTML片段）</h5>
+        <button class="btn btn-sm btn-outline-secondary" onclick="toggleRawHtml()">
+            <i class="bi bi-eye"></i> 显示/隐藏
+        </button>
+    </div>
+    <div class="card-body" id="raw-html-panel" style="display: none;">
+        <div class="alert alert-warning small">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            以下内容为采集时获取的平台首页HTML前5000字符，用于验证功能检测指标的真实性。
+        </div>
+        <pre class="p-3 rounded" style="background: #1a202c; color: #a0aec0; font-size: 0.75rem; max-height: 400px; overflow: auto;"><code>{{ latest_record.raw_html_snippet[:2000] }}{% if latest_record.raw_html_snippet|length > 2000 %}... (共 {{ latest_record.raw_html_snippet|length }} 字符，已截断) ...{% endif %}</code></pre>
+    </div>
+</div>
+{% endif %}
+
+<!-- 数据集穿透入口（阶段2占位） -->
+<div class="card mb-4 border-primary">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-layers me-2"></i>数据集穿透采集（阶段2）</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted mb-3">进一步穿透到该平台的数据集目录，解析每条数据的具体信息（名称、主题、格式、更新日期、下载量），并关联到4E维度。</p>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="text-center p-3 rounded bg-light">
+                    <div class="fs-3 fw-bold text-primary" id="dataset-penetration-count">-</div>
+                    <div class="small text-muted">已穿透数据集</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 rounded bg-light">
+                    <div class="fs-3 fw-bold text-success" id="dataset-c1-count">-</div>
+                    <div class="small text-muted">C1供给相关</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 rounded bg-light">
+                    <div class="fs-3 fw-bold text-info" id="dataset-c3-count">-</div>
+                    <div class="small text-muted">C3质量相关</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3 rounded bg-light">
+                    <div class="fs-3 fw-bold text-warning" id="dataset-c4-count">-</div>
+                    <div class="small text-muted">C4效果相关</div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary" id="btn-penetrate" onclick="startPenetration()">
+                <i class="bi bi-play-fill"></i> 启动数据集穿透采集
+            </button>
+            <span class="ms-3 text-muted small" id="penetration-status">尚未执行穿透采集</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const platformId = {{ platform.id }};
+const latestRecord = {{ latest_record | tojson | safe if latest_record else 'null' }};
+
+// 4E雷达图
+function initRadarChart() {
+    if (!latestRecord) return;
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['C1 供给保障', 'C2 平台服务', 'C3 数据质量', 'C4 利用效果'],
+            datasets: [{
+                label: '{{ platform.name }}',
+                data: [
+                    latestRecord.score_c1 || 0,
+                    latestRecord.score_c2 || 0,
+                    latestRecord.score_c3 || 0,
+                    latestRecord.score_c4 || 0
+                ],
+                backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                borderColor: 'rgba(102, 126, 234, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                pointRadius: 4
+            }, {
+                label: '全国均值',
+                data: [0.35, 0.45, 0.30, 0.25],
+                backgroundColor: 'rgba(200, 200, 200, 0.1)',
+                borderColor: 'rgba(200, 200, 200, 0.6)',
+                borderWidth: 1,
+                borderDash: [5, 5],
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 1.0,
+                    ticks: { stepSize: 0.2, font: { size: 10 } },
+                    pointLabels: { font: { size: 12, weight: 'bold' } }
+                }
+            },
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { size: 11 } } }
+            }
+        }
+    });
+
+    // 填充得分卡片
+    document.getElementById('score-c1').textContent = (latestRecord.score_c1 || 0).toFixed(3);
+    document.getElementById('score-c2').textContent = (latestRecord.score_c2 || 0).toFixed(3);
+    document.getElementById('score-c3').textContent = (latestRecord.score_c3 || 0).toFixed(3);
+    document.getElementById('score-c4').textContent = (latestRecord.score_c4 || 0).toFixed(3);
+}
+
+// 功能检测明细
+function renderFeatures() {
+    if (!latestRecord) {
+        document.getElementById('feature-grid').innerHTML = '<div class="col-12 text-muted">暂无采集数据</div>';
+        return;
+    }
+
+    const features = [
+        { name: 'HTTPS加密', value: latestRecord.has_https, dim: 'C2', icon: 'bi-shield-lock', desc: '平台是否使用HTTPS安全协议' },
+        { name: '搜索功能', value: latestRecord.has_search, dim: 'C2', icon: 'bi-search', desc: '是否提供数据集检索功能' },
+        { name: '数据下载', value: latestRecord.has_download, dim: 'C2', icon: 'bi-download', desc: '是否支持数据下载' },
+        { name: 'API接口', value: latestRecord.has_api, dim: 'C1/C2', icon: 'bi-plug', desc: '是否提供程序接口' },
+        { name: '用户注册', value: latestRecord.has_register, dim: 'C4', icon: 'bi-person-plus', desc: '是否支持用户注册' },
+        { name: '数据预览', value: latestRecord.has_preview, dim: 'C4', icon: 'bi-eye', desc: '是否支持在线预览' },
+        { name: '可视化', value: latestRecord.has_visualization, dim: 'C2', icon: 'bi-bar-chart', desc: '是否提供数据可视化' },
+        { name: '更新信息', value: latestRecord.has_update_info, dim: 'C3', icon: 'bi-calendar-check', desc: '是否标注数据更新日期' },
+        { name: '元数据', value: latestRecord.has_metadata, dim: 'C3', icon: 'bi-file-text', desc: '是否提供数据描述信息' },
+        { name: '反馈渠道', value: latestRecord.has_feedback, dim: 'C3', icon: 'bi-chat-dots', desc: '是否提供反馈/联系渠道' },
+        { name: '批量下载', value: latestRecord.has_bulk_download, dim: 'C1', icon: 'bi-collection', desc: '是否支持批量下载' },
+        { name: '数据集数量', value: latestRecord.dataset_count > 0 ? 1 : 0, dim: 'C1', icon: 'bi-layers', desc: `检测到 ${latestRecord.dataset_count || 0} 个数据集`, raw: latestRecord.dataset_count }
+    ];
+
+    const dimColors = { 'C1': 'primary', 'C2': 'success', 'C3': 'warning', 'C4': 'danger', 'C1/C2': 'info' };
+
+    document.getElementById('feature-grid').innerHTML = features.map(f => `
+        <div class="col-md-4 col-lg-3">
+            <div class="p-3 rounded h-100" style="border: 1px solid ${f.value ? '#28a745' : '#dee2e6'}; background: ${f.value ? '#f8fff9' : '#f8f9fa'};">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="d-flex align-items-center">
+                        <i class="bi ${f.icon} me-2 text-${f.value ? 'success' : 'muted'}"></i>
+                        <span class="fw-bold">${f.name}</span>
+                    </div>
+                    <span class="badge bg-${dimColors[f.dim] || 'secondary'}">${f.dim}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="small text-muted">${f.desc}</span>
+                    <span class="badge bg-${f.value ? 'success' : 'secondary'} fs-6">${f.value ? '✓' : '✗'}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 加载历史记录
+async function loadHistory() {
+    try {
+        const res = await fetch(`/api/platform/${platformId}/history`);
+        const rows = await res.json();
+        document.getElementById('history-count').textContent = `${rows.length} 次采集`;
+
+        if (rows.length === 0) {
+            document.getElementById('history-body').innerHTML = '<tr><td colspan="10" class="text-muted text-center">暂无历史记录</td></tr>';
+            return;
+        }
+
+        document.getElementById('history-body').innerHTML = rows.map(r => `
+            <tr>
+                <td><small>${r.collected_at ? r.collected_at.replace('T', ' ').substring(0, 19) : '-'}</small></td>
+                <td><span class="badge bg-${r.status === 'available' ? 'success' : 'danger'}">${r.status}</span></td>
+                <td>${(r.score_c1 || 0).toFixed(3)}</td>
+                <td>${(r.score_c2 || 0).toFixed(3)}</td>
+                <td>${(r.score_c3 || 0).toFixed(3)}</td>
+                <td>${(r.score_c4 || 0).toFixed(3)}</td>
+                <td><strong>${(r.overall_score || 0).toFixed(3)}</strong></td>
+                <td>${r.dataset_count || 0}</td>
+                <td>${r.response_time || '-'}s</td>
+                <td>${r.http_status || '-'}</td>
+            </tr>
+        `).join('');
+    } catch (e) {
+        console.error(e);
+        document.getElementById('history-body').innerHTML = '<tr><td colspan="10" class="text-muted text-center">加载失败</td></tr>';
+    }
+}
+
+// 加载数据集穿透状态
+async function loadPenetrationStatus() {
+    try {
+        const res = await fetch(`/api/platform/${platformId}/datasets`);
+        const data = await res.json();
+        document.getElementById('dataset-penetration-count').textContent = data.total || 0;
+        document.getElementById('dataset-c1-count').textContent = data.c1_count || 0;
+        document.getElementById('dataset-c3-count').textContent = data.c3_count || 0;
+        document.getElementById('dataset-c4-count').textContent = data.c4_count || 0;
+        if (data.total > 0) {
+            document.getElementById('penetration-status').textContent = `上次穿透：${data.last_penetrate_at || '未知'}`;
+            document.getElementById('btn-penetrate').innerHTML = '<i class="bi bi-arrow-repeat"></i> 重新穿透采集';
+        }
+    } catch (e) {
+        // 表可能不存在，正常
+    }
+}
+
+function toggleRawHtml() {
+    const panel = document.getElementById('raw-html-panel');
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function startPenetration() {
+    alert('数据集穿透采集功能正在开发中（阶段2）。\n\n该功能将进一步解析平台的数据集目录页，提取每条数据的具体信息并关联4E维度。');
+}
+
+// 初始化
+initRadarChart();
+renderFeatures();
+loadHistory();
+loadPenetrationStatus();
+</script>
+{% endblock %}

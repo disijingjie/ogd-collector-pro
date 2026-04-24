@@ -104,7 +104,7 @@ async function loadPlatforms() {
         return `
             <tr>
                 <td><code>${p.code}</code></td>
-                <td><strong>${p.name}</strong></td>
+                <td><a href="/platform/${p.id}" class="text-decoration-none fw-bold">${p.name}</a></td>
                 <td><span class="tier-badge ${tierBadge}">${p.tier}</span></td>
                 <td>${p.region || '-'}</td>
                 <td>${p.platform_type}</td>

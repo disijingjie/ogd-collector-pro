@@ -182,71 +182,7 @@ class CollectorEngine:
             if response.status_code == 200:
                 result['status'] = 'available'
                 result['status_detail'] = '平台可访问'
-                
-                # 解析页面内容
-                soup = BeautifulSoup(response.text, 'html.parser')
-                text = soup.get_text().lower()
-                html_str = response.text.lower()
-                
-                # 保存HTML片段（前5000字符）
-                result['raw_html'] = response.text[:5000]
-                
-                # 功能检测
-                result['has_search'] = 1 if any(k in html_str for k in ['search', '搜索', 'query', 'q=']) else 0
-                result['has_download'] = 1 if any(k in html_str for k in ['download', '下载', 'export', '导出']) else 0
-                result['has_api'] = 1 if any(k in html_str for k in ['api', '接口', 'developer', '开发者']) else 0
-                result['has_register'] = 1 if any(k in html_str for k in ['register', '注册', 'signup', '登录']) else 0
-                result['has_preview'] = 1 if any(k in html_str for k in ['preview', '预览', '查看', 'view']) else 0
-                result['has_visualization'] = 1 if any(k in html_str for k in ['chart', '可视化', '图表', 'map', '地图', 'visual']) else 0
-                result['has_update_info'] = 1 if any(k in html_str for k in ['update', '更新', 'modified', '发布']) else 0
-                result['has_metadata'] = 1 if any(k in html_str for k in ['metadata', '元数据', 'description', '描述']) else 0
-                result['has_feedback'] = 1 if any(k in html_str for k in ['feedback', '反馈', 'contact', '联系', 'suggest']) else 0
-                result['has_bulk_download'] = 1 if any(k in html_str for k in ['bulk', '批量', 'batch', 'zip']) else 0
-                
-                # 数据集数量提取（尝试多种模式）
-                count_patterns = [
-                    r'(\d+)\s*个数据集',
-                    r'(\d+)\s*条数据',
-                    r'数据集[:：]\s*(\d+)',
-                    r'共\s*(\d+)\s*条',
-                    r'(\d+)\s*datasets?',
-                    r'total[:：]\s*(\d+)',
-                ]
-                for pattern in count_patterns:
-                    match = re.search(pattern, text)
-                    if match:
-                        result['dataset_count'] = int(match.group(1))
-                        break
-                if result['dataset_count'] > 100000:  # 过滤异常值
-                    result['dataset_count'] = 0
-                    
-                # 数据格式检测
-                formats = []
-                format_keywords = {
-                    'csv': ['csv'],
-                    'json': ['json'],
-                    'xml': ['xml'],
-                    'excel': ['xlsx', 'xls', 'excel'],
-                    'pdf': ['pdf'],
-                    'api': ['api', '接口'],
-                    'rdf': ['rdf', 'linked data'],
-                }
-                for fmt, keywords in format_keywords.items():
-                    if any(k in html_str for k in keywords):
-                        formats.append(fmt)
-                result['format_types'] = json.dumps(formats)
-                
-                # 应用成果数（尝试提取）
-                app_patterns = [
-                    r'(\d+)\s*个应用',
-                    r'(\d+)\s*款应用',
-                    r'应用[:：]\s*(\d+)',
-                ]
-                for pattern in app_patterns:
-                    match = re.search(pattern, text)
-                    if match:
-                        result['app_count'] = int(match.group(1))
-                        break
+                self._parse_page_content(result, response.text)
                         
             elif response.status_code in [301, 302, 307, 308]:
                 result['status'] = 'redirect'
@@ -276,8 +212,135 @@ class CollectorEngine:
             result['status'] = 'error'
             result['status_detail'] = f'异常: {str(e)[:100]}'
             result['error_message'] = str(e)[:200]
-            
+        
+        # 如果requests失败，尝试Playwright备用采集（SSL错误、反爬、连接错误）
+        if result['status'] in ['unavailable', 'error', 'timeout'] and result['error_message']:
+            self._log('INFO', f'{platform_name} requests采集失败，尝试Playwright备用: {result["status_detail"]}')
+            pw_result = self._detect_with_playwright(url, platform_name)
+            if pw_result['status'] == 'available':
+                self._log('INFO', f'{platform_name} Playwright采集成功')
+                return pw_result
+            else:
+                self._log('INFO', f'{platform_name} Playwright也失败: {pw_result["status_detail"]}')
+        
         return result
+    
+    def _detect_with_playwright(self, url, platform_name):
+        """使用Playwright浏览器自动化进行备用采集，应对SSL错误和反爬"""
+        result = {
+            'status': 'unknown',
+            'status_detail': '',
+            'response_time': 0,
+            'http_status': None,
+            'has_https': 1 if url.startswith('https://') else 0,
+            'has_search': 0, 'has_download': 0, 'has_api': 0,
+            'has_register': 0, 'has_preview': 0, 'has_visualization': 0,
+            'has_update_info': 0, 'has_metadata': 0, 'has_feedback': 0,
+            'has_bulk_download': 0,
+            'dataset_count': 0, 'app_count': 0,
+            'format_types': '[]', 'raw_html': '', 'error_message': ''
+        }
+        try:
+            from playwright.sync_api import sync_playwright
+            start_time = time.time()
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
+                context = browser.new_context(
+                    user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                )
+                page = context.new_page()
+                page.goto(url, wait_until='domcontentloaded', timeout=30000)
+                # 等待JS执行
+                time.sleep(3)
+                html = page.content()
+                title = page.title()
+                browser.close()
+            
+            result['response_time'] = round(time.time() - start_time, 2)
+            result['http_status'] = 200
+            
+            # 判断是否为有效页面（非空、非拦截页）
+            if len(html) < 200 or title == '' or '$_ts' in html[:500]:
+                result['status'] = 'unavailable'
+                result['status_detail'] = 'Playwright: 页面为空或被拦截'
+                return result
+            
+            result['status'] = 'available'
+            result['status_detail'] = f'平台可访问(Playwright) - {title[:30]}'
+            self._parse_page_content(result, html)
+            
+        except Exception as e:
+            result['status'] = 'error'
+            result['status_detail'] = f'Playwright异常: {str(e)[:80]}'
+            result['error_message'] = str(e)[:200]
+        
+        return result
+    
+    def _parse_page_content(self, result, html_text):
+        """解析页面内容，提取功能特征和数据指标"""
+        soup = BeautifulSoup(html_text, 'html.parser')
+        text = soup.get_text().lower()
+        html_str = html_text.lower()
+        
+        # 保存HTML片段（前5000字符）
+        result['raw_html'] = html_text[:5000]
+        
+        # 功能检测
+        result['has_search'] = 1 if any(k in html_str for k in ['search', '搜索', 'query', 'q=']) else 0
+        result['has_download'] = 1 if any(k in html_str for k in ['download', '下载', 'export', '导出']) else 0
+        result['has_api'] = 1 if any(k in html_str for k in ['api', '接口', 'developer', '开发者']) else 0
+        result['has_register'] = 1 if any(k in html_str for k in ['register', '注册', 'signup', '登录']) else 0
+        result['has_preview'] = 1 if any(k in html_str for k in ['preview', '预览', '查看', 'view']) else 0
+        result['has_visualization'] = 1 if any(k in html_str for k in ['chart', '可视化', '图表', 'map', '地图', 'visual']) else 0
+        result['has_update_info'] = 1 if any(k in html_str for k in ['update', '更新', 'modified', '发布']) else 0
+        result['has_metadata'] = 1 if any(k in html_str for k in ['metadata', '元数据', 'description', '描述']) else 0
+        result['has_feedback'] = 1 if any(k in html_str for k in ['feedback', '反馈', 'contact', '联系', 'suggest']) else 0
+        result['has_bulk_download'] = 1 if any(k in html_str for k in ['bulk', '批量', 'batch', 'zip']) else 0
+        
+        # 数据集数量提取（尝试多种模式）
+        count_patterns = [
+            r'(\d+)\s*个数据集',
+            r'(\d+)\s*条数据',
+            r'数据集[:：]\s*(\d+)',
+            r'共\s*(\d+)\s*条',
+            r'(\d+)\s*datasets?',
+            r'total[:：]\s*(\d+)',
+        ]
+        for pattern in count_patterns:
+            match = re.search(pattern, text)
+            if match:
+                result['dataset_count'] = int(match.group(1))
+                break
+        if result['dataset_count'] > 100000:  # 过滤异常值
+            result['dataset_count'] = 0
+            
+        # 数据格式检测
+        formats = []
+        format_keywords = {
+            'csv': ['csv'],
+            'json': ['json'],
+            'xml': ['xml'],
+            'excel': ['xlsx', 'xls', 'excel'],
+            'pdf': ['pdf'],
+            'api': ['api', '接口'],
+            'rdf': ['rdf', 'linked data'],
+        }
+        for fmt, keywords in format_keywords.items():
+            if any(k in html_str for k in keywords):
+                formats.append(fmt)
+        result['format_types'] = json.dumps(formats)
+        
+        # 应用成果数（尝试提取）
+        app_patterns = [
+            r'(\d+)\s*个应用',
+            r'(\d+)\s*款应用',
+            r'应用[:：]\s*(\d+)',
+        ]
+        for pattern in app_patterns:
+            match = re.search(pattern, text)
+            if match:
+                result['app_count'] = int(match.group(1))
+                break
         
     def calculate_4e_scores(self, details):
         """

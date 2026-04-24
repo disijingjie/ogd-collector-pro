@@ -247,13 +247,22 @@
         </div>
         <nav class="nav flex-column mt-3">
             <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
-                <i class="bi bi-speedometer2"></i> 主控台
+                <i class="bi bi-speedometer2"></i> 首页概览
             </a>
-            <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}" href="/dashboard">
-                <i class="bi bi-collection-play"></i> 采集管理
+            <a class="nav-link {% if request.path == '/collection' %}active{% endif %}" href="/collection">
+                <i class="bi bi-collection-play"></i> 采集中心
+            </a>
+            <a class="nav-link {% if request.path == '/analysis' %}active{% endif %}" href="/analysis">
+                <i class="bi bi-bar-chart-line"></i> 分析看板
+            </a>
+            <a class="nav-link {% if request.path == '/platforms' %}active{% endif %}" href="/platforms">
+                <i class="bi bi-grid-3x3"></i> 平台库
+            </a>
+            <a class="nav-link {% if request.path == '/export' %}active{% endif %}" href="/export">
+                <i class="bi bi-download"></i> 数据导出
             </a>
             <a class="nav-link {% if request.path == '/thesis' %}active{% endif %}" href="/thesis">
-                <i class="bi bi-journal-text"></i> 研究成果
+                <i class="bi bi-journal-text"></i> 论文成果
             </a>
         </nav>
         

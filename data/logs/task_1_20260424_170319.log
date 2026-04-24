@@ -1,0 +1,179 @@
+2026-04-24 17:03:19,703 - INFO - 采集任务开始: 共88个平台, 任务ID=1
+2026-04-24 17:03:19,712 - INFO - 开始采集: 北京市 (https://data.beijing.gov.cn)
+2026-04-24 17:03:19,881 - INFO - 采集完成: 北京市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:03:21,885 - INFO - 开始采集: 天津市 (https://data.tj.gov.cn)
+2026-04-24 17:03:22,599 - INFO - 采集完成: 天津市 - 状态:available, 综合得分:0.42
+2026-04-24 17:03:24,604 - INFO - 开始采集: 上海市 (https://data.sh.gov.cn)
+2026-04-24 17:03:24,817 - INFO - 采集完成: 上海市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:03:26,821 - INFO - 开始采集: 重庆市 (https://data.cq.gov.cn)
+2026-04-24 17:03:27,175 - INFO - 采集完成: 重庆市 - 状态:available, 综合得分:0.36
+2026-04-24 17:03:29,180 - INFO - 开始采集: 江苏省 (https://data.jiangsu.gov.cn)
+2026-04-24 17:03:38,587 - INFO - 采集完成: 江苏省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:03:40,591 - INFO - 开始采集: 浙江省 (https://data.zj.gov.cn)
+2026-04-24 17:03:41,182 - INFO - 采集完成: 浙江省 - 状态:available, 综合得分:0.325
+2026-04-24 17:03:43,186 - INFO - 开始采集: 安徽省 (https://data.ah.gov.cn)
+2026-04-24 17:03:43,215 - INFO - 采集完成: 安徽省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:03:45,219 - INFO - 开始采集: 福建省 (https://data.fujian.gov.cn)
+2026-04-24 17:04:00,444 - INFO - 采集完成: 福建省 - 状态:available, 综合得分:0.1
+2026-04-24 17:04:02,449 - INFO - 开始采集: 江西省 (https://data.jiangxi.gov.cn)
+2026-04-24 17:04:02,721 - INFO - 采集完成: 江西省 - 状态:available, 综合得分:0.21
+2026-04-24 17:04:04,725 - INFO - 开始采集: 山东省 (https://data.sd.gov.cn)
+2026-04-24 17:04:20,458 - INFO - 采集完成: 山东省 - 状态:available, 综合得分:0.7
+2026-04-24 17:04:22,471 - INFO - 开始采集: 河北省 (https://data.hebei.gov.cn)
+2026-04-24 17:04:22,542 - INFO - 采集完成: 河北省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:04:24,547 - INFO - 开始采集: 山西省 (https://data.shanxi.gov.cn)
+2026-04-24 17:04:39,591 - INFO - 采集完成: 山西省 - 状态:timeout, 综合得分:0
+2026-04-24 17:04:41,595 - INFO - 开始采集: 内蒙古自治区 (https://data.nmg.gov.cn)
+2026-04-24 17:04:42,153 - INFO - 采集完成: 内蒙古自治区 - 状态:available, 综合得分:0.742
+2026-04-24 17:04:44,161 - INFO - 开始采集: 河南省 (https://data.henan.gov.cn)
+2026-04-24 17:04:44,195 - INFO - 采集完成: 河南省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:04:46,201 - INFO - 开始采集: 湖北省 (https://data.hubei.gov.cn)
+2026-04-24 17:04:46,438 - INFO - 采集完成: 湖北省 - 状态:available, 综合得分:0.335
+2026-04-24 17:04:48,445 - INFO - 开始采集: 湖南省 (https://data.hunan.gov.cn)
+2026-04-24 17:04:48,696 - INFO - 采集完成: 湖南省 - 状态:available, 综合得分:0.545
+2026-04-24 17:04:50,701 - INFO - 开始采集: 广东省 (https://data.gd.gov.cn)
+2026-04-24 17:04:50,726 - INFO - 采集完成: 广东省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:04:52,730 - INFO - 开始采集: 广西壮族自治区 (https://data.gxzf.gov.cn)
+2026-04-24 17:04:54,347 - INFO - 采集完成: 广西壮族自治区 - 状态:available, 综合得分:0.635
+2026-04-24 17:04:56,353 - INFO - 开始采集: 海南省 (https://data.hainan.gov.cn)
+2026-04-24 17:04:57,119 - INFO - 采集完成: 海南省 - 状态:available, 综合得分:0.56
+2026-04-24 17:04:59,124 - INFO - 开始采集: 四川省 (https://data.sc.gov.cn)
+2026-04-24 17:04:59,156 - INFO - 采集完成: 四川省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:01,168 - INFO - 开始采集: 贵州省 (https://data.guizhou.gov.cn)
+2026-04-24 17:05:01,353 - INFO - 采集完成: 贵州省 - 状态:available, 综合得分:0.17
+2026-04-24 17:05:03,357 - INFO - 开始采集: 云南省 (https://data.yn.gov.cn)
+2026-04-24 17:05:18,595 - INFO - 采集完成: 云南省 - 状态:available, 综合得分:0.325
+2026-04-24 17:05:20,600 - INFO - 开始采集: 西藏自治区 (https://data.xizang.gov.cn)
+2026-04-24 17:05:20,627 - INFO - 采集完成: 西藏自治区 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:22,631 - INFO - 开始采集: 陕西省 (https://data.shaanxi.gov.cn)
+2026-04-24 17:05:22,695 - INFO - 采集完成: 陕西省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:24,700 - INFO - 开始采集: 甘肃省 (https://data.gansu.gov.cn)
+2026-04-24 17:05:24,771 - INFO - 采集完成: 甘肃省 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:26,775 - INFO - 开始采集: 青海省 (https://data.qinghai.gov.cn)
+2026-04-24 17:05:41,831 - INFO - 采集完成: 青海省 - 状态:timeout, 综合得分:0
+2026-04-24 17:05:43,835 - INFO - 开始采集: 宁夏回族自治区 (https://data.nx.gov.cn)
+2026-04-24 17:05:43,866 - INFO - 采集完成: 宁夏回族自治区 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:45,870 - INFO - 开始采集: 新疆维吾尔自治区 (https://data.xinjiang.gov.cn)
+2026-04-24 17:05:45,913 - INFO - 采集完成: 新疆维吾尔自治区 - 状态:unavailable, 综合得分:0
+2026-04-24 17:05:47,917 - INFO - 开始采集: 辽宁省 (https://data.ln.gov.cn)
+2026-04-24 17:05:53,110 - INFO - 采集完成: 辽宁省 - 状态:available, 综合得分:0.749
+2026-04-24 17:05:55,114 - INFO - 开始采集: 吉林省 (https://data.jl.gov.cn)
+2026-04-24 17:05:55,576 - INFO - 采集完成: 吉林省 - 状态:available, 综合得分:0.275
+2026-04-24 17:05:57,588 - INFO - 开始采集: 黑龙江省 (https://data.hlj.gov.cn)
+2026-04-24 17:06:12,641 - INFO - 采集完成: 黑龙江省 - 状态:timeout, 综合得分:0
+2026-04-24 17:06:14,646 - INFO - 开始采集: 深圳市 (https://opendata.sz.gov.cn)
+2026-04-24 17:06:15,022 - INFO - 采集完成: 深圳市 - 状态:available, 综合得分:0.79
+2026-04-24 17:06:17,026 - INFO - 开始采集: 杭州市 (https://data.hangzhou.gov.cn)
+2026-04-24 17:06:17,539 - INFO - 采集完成: 杭州市 - 状态:available, 综合得分:0.605
+2026-04-24 17:06:19,543 - INFO - 开始采集: 广州市 (https://data.gz.gov.cn)
+2026-04-24 17:06:19,570 - INFO - 采集完成: 广州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:06:21,576 - INFO - 开始采集: 宁波市 (https://data.ningbo.gov.cn)
+2026-04-24 17:06:21,810 - INFO - 采集完成: 宁波市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:06:23,814 - INFO - 开始采集: 成都市 (https://data.chengdu.gov.cn)
+2026-04-24 17:06:38,856 - INFO - 采集完成: 成都市 - 状态:timeout, 综合得分:0
+2026-04-24 17:06:40,860 - INFO - 开始采集: 青岛市 (https://data.qingdao.gov.cn)
+2026-04-24 17:07:10,911 - INFO - 采集完成: 青岛市 - 状态:timeout, 综合得分:0
+2026-04-24 17:07:12,915 - INFO - 开始采集: 大连市 (https://data.dl.gov.cn)
+2026-04-24 17:07:28,245 - INFO - 采集完成: 大连市 - 状态:available, 综合得分:0.1
+2026-04-24 17:07:30,250 - INFO - 开始采集: 厦门市 (https://data.xm.gov.cn)
+2026-04-24 17:07:30,278 - INFO - 采集完成: 厦门市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:07:32,282 - INFO - 开始采集: 南京市 (https://data.nanjing.gov.cn)
+2026-04-24 17:07:32,319 - INFO - 采集完成: 南京市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:07:34,331 - INFO - 开始采集: 武汉市 (https://data.wuhan.gov.cn)
+2026-04-24 17:07:49,599 - INFO - 采集完成: 武汉市 - 状态:available, 综合得分:0.485
+2026-04-24 17:07:51,603 - INFO - 开始采集: 西安市 (https://data.xa.gov.cn)
+2026-04-24 17:07:51,851 - INFO - 采集完成: 西安市 - 状态:available, 综合得分:0.41
+2026-04-24 17:07:53,855 - INFO - 开始采集: 济南市 (https://data.jinan.gov.cn)
+2026-04-24 17:08:53,922 - INFO - 采集完成: 济南市 - 状态:timeout, 综合得分:0
+2026-04-24 17:08:55,926 - INFO - 开始采集: 沈阳市 (https://data.shenyang.gov.cn)
+2026-04-24 17:08:56,571 - INFO - 采集完成: 沈阳市 - 状态:available, 综合得分:0.649
+2026-04-24 17:08:58,574 - INFO - 开始采集: 苏州市 (https://data.suzhou.gov.cn)
+2026-04-24 17:08:59,214 - INFO - 采集完成: 苏州市 - 状态:available, 综合得分:0.15
+2026-04-24 17:09:01,220 - INFO - 开始采集: 无锡市 (https://data.wuxi.gov.cn)
+2026-04-24 17:09:16,377 - INFO - 采集完成: 无锡市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:18,381 - INFO - 开始采集: 常州市 (https://data.changzhou.gov.cn)
+2026-04-24 17:09:18,413 - INFO - 采集完成: 常州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:20,417 - INFO - 开始采集: 宁波市 (https://data.ningbo.gov.cn)
+2026-04-24 17:09:20,611 - INFO - 采集完成: 宁波市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:22,615 - INFO - 开始采集: 嘉兴市 (https://data.jiaxing.gov.cn)
+2026-04-24 17:09:22,965 - INFO - 采集完成: 嘉兴市 - 状态:available, 综合得分:0.32
+2026-04-24 17:09:24,969 - INFO - 开始采集: 湖州市 (https://data.huzhou.gov.cn)
+2026-04-24 17:09:25,265 - INFO - 采集完成: 湖州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:27,282 - INFO - 开始采集: 福州市 (https://data.fuzhou.gov.cn)
+2026-04-24 17:09:27,309 - INFO - 采集完成: 福州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:29,314 - INFO - 开始采集: 厦门市 (https://data.xm.gov.cn)
+2026-04-24 17:09:29,337 - INFO - 采集完成: 厦门市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:31,341 - INFO - 开始采集: 泉州市 (https://data.quanzhou.gov.cn)
+2026-04-24 17:09:31,370 - INFO - 采集完成: 泉州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:09:33,374 - INFO - 开始采集: 济南市 (https://data.jinan.gov.cn)
+2026-04-24 17:10:33,426 - INFO - 采集完成: 济南市 - 状态:timeout, 综合得分:0
+2026-04-24 17:10:35,430 - INFO - 开始采集: 青岛市 (https://data.qingdao.gov.cn)
+2026-04-24 17:11:05,477 - INFO - 采集完成: 青岛市 - 状态:timeout, 综合得分:0
+2026-04-24 17:11:07,481 - INFO - 开始采集: 烟台市 (https://data.yantai.gov.cn)
+2026-04-24 17:11:37,557 - INFO - 采集完成: 烟台市 - 状态:timeout, 综合得分:0
+2026-04-24 17:11:39,561 - INFO - 开始采集: 石家庄市 (https://data.sjz.gov.cn)
+2026-04-24 17:11:39,586 - INFO - 采集完成: 石家庄市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:11:41,590 - INFO - 开始采集: 唐山市 (https://data.tangshan.gov.cn)
+2026-04-24 17:11:41,622 - INFO - 采集完成: 唐山市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:11:43,625 - INFO - 开始采集: 太原市 (https://data.taiyuan.gov.cn)
+2026-04-24 17:11:43,841 - INFO - 采集完成: 太原市 - 状态:available, 综合得分:0.32
+2026-04-24 17:11:45,845 - INFO - 开始采集: 呼和浩特市 (https://data.hhht.gov.cn)
+2026-04-24 17:11:45,875 - INFO - 采集完成: 呼和浩特市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:11:47,884 - INFO - 开始采集: 郑州市 (https://data.zhengzhou.gov.cn)
+2026-04-24 17:11:47,919 - INFO - 采集完成: 郑州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:11:49,924 - INFO - 开始采集: 洛阳市 (https://data.luoyang.gov.cn)
+2026-04-24 17:11:49,956 - INFO - 采集完成: 洛阳市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:11:51,959 - INFO - 开始采集: 武汉市 (https://data.wuhan.gov.cn)
+2026-04-24 17:12:07,198 - INFO - 采集完成: 武汉市 - 状态:available, 综合得分:0.485
+2026-04-24 17:12:09,202 - INFO - 开始采集: 襄阳市 (https://data.xiangyang.gov.cn)
+2026-04-24 17:12:09,490 - INFO - 采集完成: 襄阳市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:11,494 - INFO - 开始采集: 长沙市 (https://data.changsha.gov.cn)
+2026-04-24 17:12:11,999 - INFO - 采集完成: 长沙市 - 状态:available, 综合得分:0.36
+2026-04-24 17:12:14,003 - INFO - 开始采集: 株洲市 (https://data.zhuzhou.gov.cn)
+2026-04-24 17:12:14,192 - INFO - 采集完成: 株洲市 - 状态:available, 综合得分:0.15
+2026-04-24 17:12:16,197 - INFO - 开始采集: 珠海市 (https://data.zhuhai.gov.cn)
+2026-04-24 17:12:16,227 - INFO - 采集完成: 珠海市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:18,231 - INFO - 开始采集: 佛山市 (https://data.foshan.gov.cn)
+2026-04-24 17:12:18,263 - INFO - 采集完成: 佛山市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:20,266 - INFO - 开始采集: 东莞市 (https://data.dongguan.gov.cn)
+2026-04-24 17:12:20,302 - INFO - 采集完成: 东莞市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:22,307 - INFO - 开始采集: 中山市 (https://data.zhongshan.gov.cn)
+2026-04-24 17:12:22,574 - INFO - 采集完成: 中山市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:24,587 - INFO - 开始采集: 惠州市 (https://data.huizhou.gov.cn)
+2026-04-24 17:12:24,654 - INFO - 采集完成: 惠州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:26,657 - INFO - 开始采集: 南宁市 (https://data.nanning.gov.cn)
+2026-04-24 17:12:34,856 - INFO - 采集完成: 南宁市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:36,862 - INFO - 开始采集: 海口市 (https://data.haikou.gov.cn)
+2026-04-24 17:12:36,900 - INFO - 采集完成: 海口市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:38,904 - INFO - 开始采集: 绵阳市 (https://data.mianyang.gov.cn)
+2026-04-24 17:12:38,931 - INFO - 采集完成: 绵阳市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:40,935 - INFO - 开始采集: 贵阳市 (https://data.guiyang.gov.cn)
+2026-04-24 17:12:40,969 - INFO - 采集完成: 贵阳市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:42,974 - INFO - 开始采集: 昆明市 (https://data.kunming.gov.cn)
+2026-04-24 17:12:43,008 - INFO - 采集完成: 昆明市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:45,012 - INFO - 开始采集: 拉萨市 (https://data.lasa.gov.cn)
+2026-04-24 17:12:45,043 - INFO - 采集完成: 拉萨市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:47,047 - INFO - 开始采集: 西安市 (https://data.xa.gov.cn)
+2026-04-24 17:12:47,308 - INFO - 采集完成: 西安市 - 状态:available, 综合得分:0.41
+2026-04-24 17:12:49,313 - INFO - 开始采集: 宝鸡市 (https://data.baoji.gov.cn)
+2026-04-24 17:12:49,345 - INFO - 采集完成: 宝鸡市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:51,349 - INFO - 开始采集: 兰州市 (https://data.lanzhou.gov.cn)
+2026-04-24 17:12:51,604 - INFO - 采集完成: 兰州市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:53,617 - INFO - 开始采集: 西宁市 (https://data.xining.gov.cn)
+2026-04-24 17:12:55,705 - INFO - 采集完成: 西宁市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:12:57,711 - INFO - 开始采集: 银川市 (https://data.yinchuan.gov.cn)
+2026-04-24 17:12:57,950 - INFO - 采集完成: 银川市 - 状态:available, 综合得分:0.22
+2026-04-24 17:12:59,955 - INFO - 开始采集: 乌鲁木齐市 (https://data.wlmq.gov.cn)
+2026-04-24 17:12:59,979 - INFO - 采集完成: 乌鲁木齐市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:13:01,983 - INFO - 开始采集: 沈阳市 (https://data.shenyang.gov.cn)
+2026-04-24 17:13:02,593 - INFO - 采集完成: 沈阳市 - 状态:available, 综合得分:0.649
+2026-04-24 17:13:04,597 - INFO - 开始采集: 大连市 (https://data.dl.gov.cn)
+2026-04-24 17:13:19,721 - INFO - 采集完成: 大连市 - 状态:timeout, 综合得分:0
+2026-04-24 17:13:21,725 - INFO - 开始采集: 长春市 (https://data.changchun.gov.cn)
+2026-04-24 17:13:36,813 - INFO - 采集完成: 长春市 - 状态:timeout, 综合得分:0
+2026-04-24 17:13:38,818 - INFO - 开始采集: 吉林市 (https://data.jilin.gov.cn)
+2026-04-24 17:13:38,852 - INFO - 采集完成: 吉林市 - 状态:unavailable, 综合得分:0
+2026-04-24 17:13:40,855 - INFO - 开始采集: 哈尔滨市 (https://data.harbin.gov.cn)
+2026-04-24 17:13:41,464 - INFO - 采集完成: 哈尔滨市 - 状态:available, 综合得分:0.81
+2026-04-24 17:13:41,472 - WARNING - 保存快照失败: Object of type datetime is not JSON serializable
+2026-04-24 17:13:41,474 - INFO - 采集任务完成: 成功31/88

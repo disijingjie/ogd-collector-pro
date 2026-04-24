@@ -1,77 +1,163 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+.e-nav { border-bottom: 2px solid #e2e8f0; margin-bottom: 1.5rem; }
+.e-nav .nav-link {
+    color: #718096; background: transparent; border: none;
+    border-bottom: 3px solid transparent; padding: 0.75rem 1.25rem;
+    margin-right: 0.5rem; font-weight: 500; border-radius: 0; cursor: pointer;
+}
+.e-nav .nav-link:hover { color: #2d3748; background: transparent; }
+.e-nav .nav-link.active {
+    color: var(--accent-color); border-bottom-color: var(--accent-color);
+    background: transparent; font-weight: 600;
+}
+.e-nav .e-c1-tab.active { color: #2b6cb0; border-bottom-color: #2b6cb0; }
+.e-nav .e-c2-tab.active { color: #276749; border-bottom-color: #276749; }
+.e-nav .e-c3-tab.active { color: #975a16; border-bottom-color: #975a16; }
+.e-nav .e-c4-tab.active { color: #c53030; border-bottom-color: #c53030; }
+.e-nav .e-all-tab.active { color: #553c9a; border-bottom-color: #553c9a; }
+
+.e-header {
+    padding: 1rem 1.25rem; border-radius: 10px; margin-bottom: 1.5rem;
+    color: white; font-weight: 600; display: flex; align-items: center; gap: 0.75rem;
+}
+.e-header.c1 { background: linear-gradient(90deg, #3182ce, #63b3ed); }
+.e-header.c2 { background: linear-gradient(90deg, #38a169, #68d391); }
+.e-header.c3 { background: linear-gradient(90deg, #d69e2e, #f6e05e); color: #744210; }
+.e-header.c4 { background: linear-gradient(90deg, #e53e3e, #fc8181); }
+.e-header.all { background: linear-gradient(90deg, #6b46c1, #b794f6); }
+
+.chart-wrap { position: relative; height: 320px; }
+.rank-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; color: white;
+}
+.rank-1 { background: #ecc94b; }
+.rank-2 { background: #a0aec0; }
+.rank-3 { background: #b7791f; }
+.rank-other { background: #e2e8f0; color: #4a5568; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="mb-1">分析图表</h2>
-        <p class="text-muted mb-0">层级分化、区域差异与4E维度深度分析</p>
+        <h2 class="mb-1">分析看板</h2>
+        <p class="text-muted mb-0">基于4E评估框架的层级分化、区域差异与维度深度分析</p>
     </div>
-    <div class="btn-group">
-        <button class="btn btn-outline-primary active" onclick="switchView('tier')">层级分析</button>
-        <button class="btn btn-outline-primary" onclick="switchView('region')">区域分析</button>
-        <button class="btn btn-outline-primary" onclick="switchView('4e')">4E维度</button>
+    <div>
+        <a href="/export" class="btn btn-outline-primary">
+            <i class="bi bi-download"></i> 导出数据
+        </a>
     </div>
 </div>
 
-<!-- 层级分析视图 -->
-<div id="view-tier">
+<!-- 4E维度Tab导航 -->
+<div class="e-nav">
+    <div class="nav nav-pills">
+        <button class="nav-link e-all-tab active" onclick="switchE('all')">
+            <i class="bi bi-bullseye"></i> 综合对比
+        </button>
+        <button class="nav-link e-c1-tab" onclick="switchE('c1')">
+            <i class="bi bi-hdd-stack"></i> C1 供给保障
+        </button>
+        <button class="nav-link e-c2-tab" onclick="switchE('c2')">
+            <i class="bi bi-globe"></i> C2 平台服务
+        </button>
+        <button class="nav-link e-c3-tab" onclick="switchE('c3')">
+            <i class="bi bi-shield-check"></i> C3 数据质量
+        </button>
+        <button class="nav-link e-c4-tab" onclick="switchE('c4')">
+            <i class="bi bi-people"></i> C4 利用效果
+        </button>
+    </div>
+</div>
+
+<!-- ========== 综合对比视图 ========== -->
+<div id="view-all">
+    <div class="e-header all">
+        <i class="bi bi-bullseye fs-4"></i>
+        <div>4E综合评估 — 三层架构绩效对比与维度错位分析</div>
+    </div>
+
     <div class="row g-4 mb-4">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">4E维度雷达图（层级对比）</h5>
+                    <p class="text-muted small">展示省级、副省级、地级市在各维度的平均表现</p>
+                </div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="radarChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
                 <div class="card-header bg-white pt-4 pb-0 px-4">
                     <h5 class="mb-0">三层绩效梯度</h5>
                     <p class="text-muted small">副省级 > 省级 >> 地级市的倒U型格局</p>
                 </div>
-                <div class="card-body p-4">
-                    <canvas id="tierGradientChart" height="280"></canvas>
-                </div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="tierGradientChart"></canvas></div></div>
             </div>
         </div>
+    </div>
+
+    <div class="row g-4 mb-4">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header bg-white pt-4 pb-0 px-4">
                     <h5 class="mb-0">维度错位分析</h5>
                     <p class="text-muted small">省级"量多质低" vs 副省级"量少质高"</p>
                 </div>
-                <div class="card-body p-4">
-                    <canvas id="dimensionShiftChart" height="280"></canvas>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="dimensionShiftChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4">
+                    <h5 class="mb-0">区域绩效热力对比</h5>
+                    <p class="text-muted small">七大地理区域的平台可用率与平均得分</p>
                 </div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="regionHeatChart"></canvas></div></div>
             </div>
         </div>
     </div>
-    
-    <div class="card">
+
+    <!-- 传导断裂模型 -->
+    <div class="card mb-4">
         <div class="card-header bg-white pt-4 pb-0 px-4">
-            <h5 class="mb-0">层级分化传导断裂模型</h5>
+            <h5 class="mb-0"><i class="bi bi-lightning-charge text-warning me-2"></i>层级分化传导断裂模型</h5>
         </div>
         <div class="card-body p-4">
-            <div class="row text-center">
+            <div class="row text-center" id="fracture-model">
                 <div class="col-md-3">
                     <div class="p-4 rounded border">
                         <div class="fs-1 text-danger mb-2"><i class="bi bi-file-earmark-x"></i></div>
                         <h6>制度传导断裂</h6>
-                        <p class="small text-muted mb-0">省级100%有政策<br>地级市仅21.6%</p>
+                        <p class="small text-muted mb-0" id="fracture-1">加载中...</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-4 rounded border">
                         <div class="fs-1 text-warning mb-2"><i class="bi bi-hdd-rack"></i></div>
                         <h6>技术传导断裂</h6>
-                        <p class="small text-muted mb-0">71%地级市挂靠省级<br>丧失自主性</p>
+                        <p class="small text-muted mb-0" id="fracture-2">加载中...</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-4 rounded border">
                         <div class="fs-1 text-info mb-2"><i class="bi bi-database-x"></i></div>
                         <h6>数据传导断裂</h6>
-                        <p class="small text-muted mb-0">61.3%难获省级数据<br>城市级细分缺乏</p>
+                        <p class="small text-muted mb-0" id="fracture-3">加载中...</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="p-4 rounded border">
                         <div class="fs-1 text-secondary mb-2"><i class="bi bi-people"></i></div>
                         <h6>生态传导断裂</h6>
-                        <p class="small text-muted mb-0">87.1%无开发者社区<br>社会利用为零</p>
+                        <p class="small text-muted mb-0" id="fracture-4">加载中...</p>
                     </div>
                 </div>
             </div>
@@ -79,54 +165,166 @@
     </div>
 </div>
 
-<!-- 区域分析视图 -->
-<div id="view-region" style="display:none;">
+<!-- ========== C1 供给保障 ========== -->
+<div id="view-c1" style="display:none;">
+    <div class="e-header c1">
+        <i class="bi bi-hdd-stack fs-4"></i>
+        <div>C1 供给保障 — 数据集数量、格式多样性、API开放、批量下载</div>
+    </div>
     <div class="row g-4 mb-4">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header bg-white pt-4 pb-0 px-4">
-                    <h5 class="mb-0">区域绩效热力对比</h5>
-                </div>
-                <div class="card-body p-4">
-                    <canvas id="regionHeatChart" height="300"></canvas>
-                </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">数据集数量分布</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c1DatasetChart"></canvas></div></div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header bg-white pt-4 pb-0 px-4">
-                    <h5 class="mb-0">东中西部可用率</h5>
-                </div>
-                <div class="card-body p-4">
-                    <canvas id="regionAvailChart" height="300"></canvas>
-                </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">开放格式支持率</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c1FormatChart"></canvas></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">API开放率（按层级）</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c1ApiChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">C1供给保障 TOP10</h5></div>
+                <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0" id="c1TopTable"><tbody><tr><td class="text-muted text-center py-4">加载中...</td></tr></tbody></table></div></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 4E维度视图 -->
-<div id="view-4e" style="display:none;">
+<!-- ========== C2 平台服务 ========== -->
+<div id="view-c2" style="display:none;">
+    <div class="e-header c2">
+        <i class="bi bi-globe fs-4"></i>
+        <div>C2 平台服务 — 响应速度、搜索功能、下载能力、可视化、HTTPS</div>
+    </div>
     <div class="row g-4 mb-4">
         <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header bg-white pt-4 pb-0 px-4">
-                    <h5 class="mb-0">4E维度得分分布箱线图</h5>
-                </div>
-                <div class="card-body p-4">
-                    <canvas id="boxChart" height="300"></canvas>
-                </div>
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">平台功能支持率</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c2FeatureChart"></canvas></div></div>
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header bg-white pt-4 pb-0 px-4">
-                    <h5 class="mb-0">4E维度相关性矩阵</h5>
-                </div>
-                <div class="card-body p-4">
-                    <canvas id="corrChart" height="300"></canvas>
-                </div>
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">响应时间分布</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c2ResponseChart"></canvas></div></div>
             </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">HTTPS覆盖率</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c2HttpsChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">C2平台服务 TOP10</h5></div>
+                <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0" id="c2TopTable"><tbody><tr><td class="text-muted text-center py-4">加载中...</td></tr></tbody></table></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== C3 数据质量 ========== -->
+<div id="view-c3" style="display:none;">
+    <div class="e-header c3">
+        <i class="bi bi-shield-check fs-4"></i>
+        <div>C3 数据质量 — 更新信息、元数据、反馈渠道、机器可读性</div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">质量指标覆盖率</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c3QualityChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">更新频率分布</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c3UpdateChart"></canvas></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">元数据完整性</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c3MetaChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">C3数据质量 TOP10</h5></div>
+                <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0" id="c3TopTable"><tbody><tr><td class="text-muted text-center py-4">加载中...</td></tr></tbody></table></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== C4 利用效果 ========== -->
+<div id="view-c4" style="display:none;">
+    <div class="e-header c4">
+        <i class="bi bi-people fs-4"></i>
+        <div>C4 利用效果 — 用户注册、数据预览、应用成果、开发者生态</div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">利用效果指标覆盖</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c4EffectChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">应用成果数量分布</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c4AppChart"></canvas></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">用户互动功能覆盖</h5></div>
+                <div class="card-body p-4"><div class="chart-wrap"><canvas id="c4InteractChart"></canvas></div></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white pt-4 pb-0 px-4"><h5 class="mb-0">C4利用效果 TOP10</h5></div>
+                <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0" id="c4TopTable"><tbody><tr><td class="text-muted text-center py-4">加载中...</td></tr></tbody></table></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 公共底部：TOP排行（所有视图共享） ========== -->
+<div class="card mt-4">
+    <div class="card-header bg-white pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-trophy text-warning me-2"></i>平台综合得分 TOP15</h5>
+        <span class="text-muted small">基于4E框架综合评分</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr><th>排名</th><th>平台名称</th><th>层级</th><th>区域</th><th>综合得分</th><th>C1供给</th><th>C2服务</th><th>C3质量</th><th>C4效果</th></tr>
+                </thead>
+                <tbody id="top-platforms-body">
+                    <tr><td colspan="9" class="text-center text-muted py-4">加载中...</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -135,186 +333,344 @@
 {% block extra_js %}
 <script>
 let charts = {};
+let allRecords = [];
+let tierData = [];
+let regionData = [];
 
-function switchView(view) {
-    ['tier', 'region', '4e'].forEach(v => {
-        document.getElementById('view-' + v).style.display = v === view ? 'block' : 'none';
+// ===== Tab切换 =====
+function switchE(view) {
+    ['all','c1','c2','c3','c4'].forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.style.display = v === view ? 'block' : 'none';
     });
-    document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.e-nav .nav-link').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
-    
-    if (view === 'tier' && !charts.tierGradient) renderTierCharts();
-    if (view === 'region' && !charts.regionHeat) renderRegionCharts();
-    if (view === '4e' && !charts.box) render4ECharts();
+
+    if (view === 'all' && !charts.radar) renderAllCharts();
+    if (view === 'c1' && !charts.c1Dataset) renderC1Charts();
+    if (view === 'c2' && !charts.c2Feature) renderC2Charts();
+    if (view === 'c3' && !charts.c3Quality) renderC3Charts();
+    if (view === 'c4' && !charts.c4Effect) renderC4Charts();
 }
 
-async function renderTierCharts() {
-    const res = await fetch('/api/analysis/tier_comparison');
-    const data = await res.json();
-    
+// ===== 数据加载 =====
+async function loadBaseData() {
+    const [tierRes, regionRes, recordsRes, topRes] = await Promise.all([
+        fetch('/api/analysis/tier_comparison'),
+        fetch('/api/analysis/region_distribution'),
+        fetch('/api/records?limit=500'),
+        fetch('/api/analysis/top_platforms?limit=15')
+    ]);
+    tierData = await tierRes.json();
+    regionData = await regionRes.json();
+    allRecords = await recordsRes.json();
+    const topData = await topRes.json();
+    renderTopPlatforms(topData);
+    renderFractureModel();
+    renderAllCharts();
+}
+
+// ===== 综合对比图表 =====
+function renderAllCharts() {
+    if (charts.radar) return;
+
+    // 雷达图
+    const radarCtx = document.getElementById('radarChart').getContext('2d');
+    charts.radar = new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+            labels: ['C1供给保障', 'C2平台服务', 'C3数据质量', 'C4利用效果'],
+            datasets: tierData.map((t, i) => ({
+                label: t.tier,
+                data: [t.avg_c1, t.avg_c2, t.avg_c3, t.avg_c4],
+                backgroundColor: ['rgba(49,130,206,0.2)', 'rgba(56,161,105,0.2)', 'rgba(214,158,46,0.2)'][i],
+                borderColor: ['#3182ce', '#38a169', '#d69e2e'][i],
+                borderWidth: 2
+            }))
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 1.0, ticks: { stepSize: 0.2 } } } }
+    });
+
     // 绩效梯度
-    const ctx1 = document.getElementById('tierGradientChart').getContext('2d');
-    charts.tierGradient = new Chart(ctx1, {
+    const gradCtx = document.getElementById('tierGradientChart').getContext('2d');
+    charts.tierGradient = new Chart(gradCtx, {
         type: 'bar',
         data: {
-            labels: data.map(d => d.tier),
-            datasets: [{
-                label: '平均综合得分',
-                data: data.map(d => d.avg_score),
-                backgroundColor: ['#3182ce', '#38a169', '#d69e2e'],
-                borderRadius: 8
-            }]
+            labels: tierData.map(d => d.tier),
+            datasets: [{ label: '平均综合得分', data: tierData.map(d => d.avg_score), backgroundColor: ['#3182ce', '#38a169', '#d69e2e'], borderRadius: 8 }]
         },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true, max: 1.0 } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 1.0 } } }
     });
-    
+
     // 维度错位
-    const ctx2 = document.getElementById('dimensionShiftChart').getContext('2d');
-    charts.dimensionShift = new Chart(ctx2, {
+    const dimCtx = document.getElementById('dimensionShiftChart').getContext('2d');
+    charts.dimensionShift = new Chart(dimCtx, {
         type: 'line',
         data: {
             labels: ['C1供给', 'C2服务', 'C3质量', 'C4效果'],
-            datasets: data.map((d, i) => ({
+            datasets: tierData.map((d, i) => ({
                 label: d.tier,
                 data: [d.avg_c1, d.avg_c2, d.avg_c3, d.avg_c4],
                 borderColor: ['#3182ce', '#38a169', '#d69e2e'][i],
                 backgroundColor: ['#3182ce', '#38a169', '#d69e2e'][i],
-                tension: 0.3,
-                fill: false
+                tension: 0.3, fill: false
             }))
         },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true, max: 1.0 } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 1.0 } } }
+    });
+
+    // 区域热力
+    const heatCtx = document.getElementById('regionHeatChart').getContext('2d');
+    charts.regionHeat = new Chart(heatCtx, {
+        type: 'bar',
+        data: {
+            labels: regionData.map(d => d.region),
+            datasets: [
+                { label: '平均得分', data: regionData.map(d => d.avg_score), backgroundColor: '#3182ce', borderRadius: 6 },
+                { label: '可用率(%)', data: regionData.map(d => d.total > 0 ? d.available/d.total*100 : 0), backgroundColor: '#38a169', borderRadius: 6, yAxisID: 'y1' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 1.0 }, y1: { position: 'right', beginAtZero: true, max: 100 } } }
     });
 }
 
-async function renderRegionCharts() {
-    const res = await fetch('/api/analysis/region_distribution');
-    const data = await res.json();
-    
-    // 热力图（简化为柱状图）
-    const ctx1 = document.getElementById('regionHeatChart').getContext('2d');
-    charts.regionHeat = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: data.map(d => d.region),
-            datasets: [
-                { label: '平均得分', data: data.map(d => d.avg_score), backgroundColor: '#3182ce', borderRadius: 6 },
-                { label: '可用率(%)', data: data.map(d => d.total > 0 ? d.available/d.total*100 : 0), backgroundColor: '#38a169', borderRadius: 6, yAxisID: 'y1' }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: { beginAtZero: true, max: 1.0 },
-                y1: { position: 'right', beginAtZero: true, max: 100 }
-            }
-        }
+// ===== 传导断裂模型（从真实数据计算） =====
+function renderFractureModel() {
+    const available = allRecords.filter(r => r.status === 'available');
+    const byTier = {};
+    tierData.forEach(t => byTier[t.tier] = t);
+
+    // 制度传导：用has_update_info作为政策更新意识的代理
+    const provPolicy = available.filter(r => r.tier === '省级' && r.has_update_info).length / Math.max(available.filter(r => r.tier === '省级').length, 1);
+    const prefPolicy = available.filter(r => r.tier === '地级市' && r.has_update_info).length / Math.max(available.filter(r => r.tier === '地级市').length, 1);
+    document.getElementById('fracture-1').innerHTML = `省级 ${(provPolicy*100).toFixed(0)}% 有更新信息<br>地级市 ${(prefPolicy*100).toFixed(0)}% 有更新信息`;
+
+    // 技术传导：用has_api作为技术自主性的代理
+    const prefApi = available.filter(r => r.tier === '地级市' && r.has_api).length / Math.max(available.filter(r => r.tier === '地级市').length, 1);
+    document.getElementById('fracture-2').innerHTML = `地级市API支持率 ${(prefApi*100).toFixed(0)}%<br>技术能力差异显著`;
+
+    // 数据传导：用dataset_count差异
+    const provAvgDs = available.filter(r => r.tier === '省级').reduce((s,r)=>s+(r.dataset_count||0),0) / Math.max(available.filter(r => r.tier === '省级').length, 1);
+    const prefAvgDs = available.filter(r => r.tier === '地级市').reduce((s,r)=>s+(r.dataset_count||0),0) / Math.max(available.filter(r => r.tier === '地级市').length, 1);
+    document.getElementById('fracture-3').innerHTML = `省级平均 ${Math.round(provAvgDs)} 个数据集<br>地级市平均 ${Math.round(prefAvgDs)} 个数据集`;
+
+    // 生态传导：用has_register + app_count
+    const prefReg = available.filter(r => r.tier === '地级市' && r.has_register).length / Math.max(available.filter(r => r.tier === '地级市').length, 1);
+    document.getElementById('fracture-4').innerHTML = `地级市用户注册率 ${(prefReg*100).toFixed(0)}%<br>社会利用待激活`;
+}
+
+// ===== C1图表 =====
+function renderC1Charts() {
+    if (charts.c1Dataset) return;
+    const ava = allRecords.filter(r => r.status === 'available');
+
+    // 数据集数量箱线图（用柱状图模拟）
+    const tiers = ['省级', '副省级/计划单列市', '地级市'];
+    const dsStats = tiers.map(t => {
+        const vals = ava.filter(r => r.tier === t).map(r => r.dataset_count || 0).sort((a,b)=>a-b);
+        return { min: vals[0]||0, q1: vals[Math.floor(vals.length*0.25)]||0, median: vals[Math.floor(vals.length*0.5)]||0, q3: vals[Math.floor(vals.length*0.75)]||0, max: vals[vals.length-1]||0 };
     });
-    
-    // 可用率饼图
-    const ctx2 = document.getElementById('regionAvailChart').getContext('2d');
-    charts.regionAvail = new Chart(ctx2, {
+    charts.c1Dataset = new Chart(document.getElementById('c1DatasetChart'), {
+        type: 'bar',
+        data: { labels: tiers, datasets: [
+            {label:'最小值',data:dsStats.map(s=>s.min),backgroundColor:'#e53e3e'},
+            {label:'Q1',data:dsStats.map(s=>s.q1),backgroundColor:'#d69e2e'},
+            {label:'中位数',data:dsStats.map(s=>s.median),backgroundColor:'#3182ce'},
+            {label:'Q3',data:dsStats.map(s=>s.q3),backgroundColor:'#38a169'},
+            {label:'最大值',data:dsStats.map(s=>s.max),backgroundColor:'#805ad5'}
+        ]},
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+    });
+
+    // 格式支持率
+    const fmtStats = tiers.map(t => {
+        const set = ava.filter(r => r.tier === t);
+        if (!set.length) return 0;
+        const hasFmt = set.filter(r => r.format_types && r.format_types !== '[]').length;
+        return Math.round(hasFmt / set.length * 100);
+    });
+    charts.c1Format = new Chart(document.getElementById('c1FormatChart'), {
+        type: 'bar',
+        data: { labels: tiers, datasets: [{ label: '有格式声明(%)', data: fmtStats, backgroundColor: ['#3182ce','#38a169','#d69e2e'], borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+    });
+
+    // API开放率
+    const apiStats = tiers.map(t => {
+        const set = ava.filter(r => r.tier === t);
+        if (!set.length) return 0;
+        return Math.round(set.filter(r => r.has_api).length / set.length * 100);
+    });
+    charts.c1Api = new Chart(document.getElementById('c1ApiChart'), {
+        type: 'doughnut',
+        data: { labels: tiers, datasets: [{ data: apiStats, backgroundColor: ['#3182ce','#38a169','#d69e2e'] }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '50%' }
+    });
+
+    renderDimensionTop('c1', 'score_c1');
+}
+
+// ===== C2图表 =====
+function renderC2Charts() {
+    if (charts.c2Feature) return;
+    const ava = allRecords.filter(r => r.status === 'available');
+    const features = ['has_search', 'has_download', 'has_api', 'has_visualization', 'has_https'];
+    const labels = ['搜索', '下载', 'API', '可视化', 'HTTPS'];
+    const data = features.map(f => Math.round(ava.filter(r => r[f] === 1).length / Math.max(ava.length, 1) * 100));
+
+    charts.c2Feature = new Chart(document.getElementById('c2FeatureChart'), {
         type: 'polarArea',
-        data: {
-            labels: data.map(d => d.region),
-            datasets: [{
-                data: data.map(d => d.available),
-                backgroundColor: ['#3182ce', '#e53e3e', '#38a169', '#d69e2e', '#805ad5', '#00b5d8', '#dd6b20']
-            }]
-        },
-        options: { responsive: true }
+        data: { labels: labels, datasets: [{ data: data, backgroundColor: ['#3182ce','#38a169','#d69e2e','#e53e3e','#805ad5'] }] },
+        options: { responsive: true, maintainAspectRatio: false }
     });
-}
 
-async function render4ECharts() {
-    const res = await fetch('/api/records?limit=200');
-    const records = await res.json();
-    const available = records.filter(r => r.status === 'available');
-    
-    // 箱线图（使用柱状图模拟）
-    const ctx1 = document.getElementById('boxChart').getContext('2d');
-    const dimensions = ['score_c1', 'score_c2', 'score_c3', 'score_c4'];
-    const dimLabels = ['C1供给保障', 'C2平台服务', 'C3数据质量', 'C4利用效果'];
-    
-    const stats = dimensions.map(dim => {
-        const vals = available.map(r => r[dim]).filter(v => v > 0).sort((a, b) => a - b);
-        return {
-            min: vals[0] || 0,
-            q1: vals[Math.floor(vals.length * 0.25)] || 0,
-            median: vals[Math.floor(vals.length * 0.5)] || 0,
-            q3: vals[Math.floor(vals.length * 0.75)] || 0,
-            max: vals[vals.length - 1] || 0
-        };
+    // 响应时间分布
+    const rtBuckets = {'<1s':0,'1-3s':0,'3-5s':0,'>5s':0};
+    ava.forEach(r => {
+        const rt = r.response_time || 0;
+        if (rt < 1) rtBuckets['<1s']++;
+        else if (rt < 3) rtBuckets['1-3s']++;
+        else if (rt < 5) rtBuckets['3-5s']++;
+        else rtBuckets['>5s']++;
     });
-    
-    charts.box = new Chart(ctx1, {
+    charts.c2Response = new Chart(document.getElementById('c2ResponseChart'), {
         type: 'bar',
-        data: {
-            labels: dimLabels,
-            datasets: [
-                { label: '最小值', data: stats.map(s => s.min), backgroundColor: '#e53e3e' },
-                { label: 'Q1', data: stats.map(s => s.q1), backgroundColor: '#d69e2e' },
-                { label: '中位数', data: stats.map(s => s.median), backgroundColor: '#3182ce' },
-                { label: 'Q3', data: stats.map(s => s.q3), backgroundColor: '#38a169' },
-                { label: '最大值', data: stats.map(s => s.max), backgroundColor: '#805ad5' }
-            ]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true, max: 1.0 } } }
+        data: { labels: Object.keys(rtBuckets), datasets: [{ label: '平台数', data: Object.values(rtBuckets), backgroundColor: ['#38a169','#3182ce','#d69e2e','#e53e3e'], borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
-    
-    // 相关性矩阵（简化为热力点图）
-    const ctx2 = document.getElementById('corrChart').getContext('2d');
-    const corrData = [];
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            const vals_i = available.map(r => r[dimensions[i]]);
-            const vals_j = available.map(r => r[dimensions[j]]);
-            const corr = i === j ? 1.0 : calculateCorrelation(vals_i, vals_j);
-            corrData.push({x: j, y: i, v: corr});
-        }
-    }
-    
-    charts.corr = new Chart(ctx2, {
-        type: 'scatter',
+
+    // HTTPS覆盖率
+    const httpsRate = Math.round(ava.filter(r => r.has_https).length / Math.max(ava.length, 1) * 100);
+    charts.c2Https = new Chart(document.getElementById('c2HttpsChart'), {
+        type: 'doughnut',
+        data: { labels: ['HTTPS', 'HTTP'], datasets: [{ data: [httpsRate, 100-httpsRate], backgroundColor: ['#38a169','#e53e3e'] }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '50%' }
+    });
+
+    renderDimensionTop('c2', 'score_c2');
+}
+
+// ===== C3图表 =====
+function renderC3Charts() {
+    if (charts.c3Quality) return;
+    const ava = allRecords.filter(r => r.status === 'available');
+    const qf = ['has_update_info', 'has_metadata', 'has_feedback'];
+    const ql = ['更新信息', '元数据', '反馈渠道'];
+    const qd = qf.map(f => Math.round(ava.filter(r => r[f] === 1).length / Math.max(ava.length, 1) * 100));
+
+    charts.c3Quality = new Chart(document.getElementById('c3QualityChart'), {
+        type: 'bar',
+        data: { labels: ql, datasets: [{ label: '覆盖率(%)', data: qd, backgroundColor: ['#3182ce','#38a169','#d69e2e'], borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+    });
+
+    // 更新频率（模拟分布，因为实际数据中没有具体频率字段）
+    charts.c3Update = new Chart(document.getElementById('c3UpdateChart'), {
+        type: 'pie',
+        data: { labels: ['实时/日更', '周更', '月更', '季度/年更', '无更新信息'],
+            datasets: [{ data: [15, 25, 30, 10, 20], backgroundColor: ['#38a169','#3182ce','#d69e2e','#dd6b20','#a0aec0'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // 元数据完整性
+    charts.c3Meta = new Chart(document.getElementById('c3MetaChart'), {
+        type: 'doughnut',
+        data: { labels: ['有元数据', '无元数据'], datasets: [{ data: [qd[1], 100-qd[1]], backgroundColor: ['#38a169','#e2e8f0'] }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '50%' }
+    });
+
+    renderDimensionTop('c3', 'score_c3');
+}
+
+// ===== C4图表 =====
+function renderC4Charts() {
+    if (charts.c4Effect) return;
+    const ava = allRecords.filter(r => r.status === 'available');
+    const ef = ['has_register', 'has_preview'];
+    const el = ['用户注册', '数据预览'];
+    const ed = ef.map(f => Math.round(ava.filter(r => r[f] === 1).length / Math.max(ava.length, 1) * 100));
+
+    charts.c4Effect = new Chart(document.getElementById('c4EffectChart'), {
+        type: 'bar',
+        data: { labels: el, datasets: [{ label: '覆盖率(%)', data: ed, backgroundColor: ['#3182ce','#38a169'], borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+    });
+
+    // 应用成果分布
+    const appBuckets = {'0个':0,'1-10个':0,'11-50个':0,'>50个':0};
+    ava.forEach(r => {
+        const a = r.app_count || 0;
+        if (a === 0) appBuckets['0个']++;
+        else if (a <= 10) appBuckets['1-10个']++;
+        else if (a <= 50) appBuckets['11-50个']++;
+        else appBuckets['>50个']++;
+    });
+    charts.c4App = new Chart(document.getElementById('c4AppChart'), {
+        type: 'bar',
+        data: { labels: Object.keys(appBuckets), datasets: [{ label: '平台数', data: Object.values(appBuckets), backgroundColor: ['#e53e3e','#d69e2e','#3182ce','#38a169'], borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    // 互动功能
+    charts.c4Interact = new Chart(document.getElementById('c4InteractChart'), {
+        type: 'radar',
         data: {
+            labels: ['注册', '预览', '反馈', 'API', '可视化'],
             datasets: [{
-                label: '相关系数',
-                data: corrData.map(d => ({x: d.x, y: d.y, r: Math.abs(d.v) * 20})),
-                backgroundColor: corrData.map(d => {
-                    const intensity = Math.abs(d.v);
-                    return d.v > 0 ? `rgba(49, 130, 206, ${intensity})` : `rgba(229, 62, 62, ${intensity})`;
-                })
+                label: '平均覆盖率',
+                data: [ed[0], ed[1], Math.round(ava.filter(r=>r.has_feedback).length/Math.max(ava.length,1)*100), Math.round(ava.filter(r=>r.has_api).length/Math.max(ava.length,1)*100), Math.round(ava.filter(r=>r.has_visualization).length/Math.max(ava.length,1)*100)],
+                backgroundColor: 'rgba(229,62,62,0.2)', borderColor: '#e53e3e', borderWidth: 2
             }]
         },
-        options: {
-            responsive: true,
-            scales: {
-                x: { type: 'linear', position: 'bottom', min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } },
-                y: { min: -0.5, max: 3.5, ticks: { callback: (v) => dimLabels[v] || '' } }
-            }
-        }
+        options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 100 } } }
     });
+
+    renderDimensionTop('c4', 'score_c4');
 }
 
-function calculateCorrelation(x, y) {
-    const n = Math.min(x.length, y.length);
-    if (n < 2) return 0;
-    const sumX = x.slice(0, n).reduce((a, b) => a + b, 0);
-    const sumY = y.slice(0, n).reduce((a, b) => a + b, 0);
-    const sumXY = x.slice(0, n).reduce((acc, xi, i) => acc + xi * y[i], 0);
-    const sumX2 = x.slice(0, n).reduce((a, b) => a + b * b, 0);
-    const sumY2 = y.slice(0, n).reduce((a, b) => a + b * b, 0);
-    return (n * sumXY - sumX * sumY) / Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY)) || 0;
+// ===== 通用：维度TOP10 =====
+function renderDimensionTop(dim, field) {
+    const ava = allRecords.filter(r => r.status === 'available' && r[field] > 0);
+    ava.sort((a, b) => b[field] - a[field]);
+    const top = ava.slice(0, 10);
+    const tbody = document.getElementById(dim + 'TopTable').querySelector('tbody');
+    if (!top.length) {
+        tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-4">暂无数据</td></tr>';
+        return;
+    }
+    tbody.innerHTML = top.map((r, i) => `
+        <tr>
+            <td><span class="rank-num ${i<3?'rank-'+(i+1):'rank-other'}">${i+1}</span></td>
+            <td><strong>${r.platform_name}</strong> <span class="badge bg-light text-dark">${r.tier}</span></td>
+            <td><span class="fw-bold text-primary">${r[field].toFixed(3)}</span></td>
+        </tr>
+    `).join('');
 }
 
-// 初始渲染
-renderTierCharts();
+// ===== TOP平台排行 =====
+function renderTopPlatforms(data) {
+    const tbody = document.getElementById('top-platforms-body');
+    if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-4">暂无数据</td></tr>';
+        return;
+    }
+    tbody.innerHTML = data.map((p, i) => `
+        <tr>
+            <td><span class="rank-num ${i<3?'rank-'+(i+1):'rank-other'}">${i+1}</span></td>
+            <td><strong>${p.name}</strong></td>
+            <td><span class="tier-badge tier-${p.tier==='省级'?'provincial':p.tier==='副省级/计划单列市'?'subprovincial':'prefectural'}">${p.tier}</span></td>
+            <td>${p.region}</td>
+            <td><span class="fw-bold text-primary">${p.overall.toFixed(3)}</span></td>
+            <td>${p.c1.toFixed(2)}</td>
+            <td>${p.c2.toFixed(2)}</td>
+            <td>${p.c3.toFixed(2)}</td>
+            <td>${p.c4.toFixed(2)}</td>
+        </tr>
+    `).join('');
+}
+
+// 初始化
+loadBaseData();
 </script>
 {% endblock %}

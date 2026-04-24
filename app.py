@@ -142,12 +142,19 @@ def index():
     return render_template('index.html', stats=stats, title='OGD-Collector Pro | 主控台')
 
 
+@app.route('/collection')
+@login_required
+def collection_page():
+    """采集中心"""
+    return redirect(url_for('collector_page'))
+
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    """数据看板"""
+    """数据看板（已迁移到分析看板）"""
     record_access()
-    return render_template('dashboard.html', title='数据看板 | OGD-Collector Pro')
+    return redirect(url_for('analysis_page'))
 
 
 @app.route('/collector')
@@ -286,6 +293,37 @@ def platforms_page():
     return render_template('platforms.html', title='平台详情 | OGD-Collector Pro', embed=embed)
 
 
+@app.route('/platform/<int:platform_id>')
+@login_required
+def platform_detail_page(platform_id):
+    """平台详情页（4E得分拆解 + 功能检测明细 + 历史轨迹）"""
+    record_access()
+    conn = get_db()
+    cursor = conn.cursor()
+
+    # 平台基础信息
+    cursor.execute("SELECT * FROM platforms WHERE id=?", (platform_id,))
+    row = cursor.fetchone()
+    if not row:
+        conn.close()
+        return "平台不存在", 404
+    platform = dict(zip([d[0] for d in cursor.description], row))
+
+    # 最新采集记录
+    cursor.execute("""
+        SELECT * FROM collection_records
+        WHERE platform_id=? ORDER BY id DESC LIMIT 1
+    """, (platform_id,))
+    row = cursor.fetchone()
+    latest_record = dict(zip([d[0] for d in cursor.description], row)) if row else None
+
+    conn.close()
+    return render_template('platform_detail.html',
+                           platform=platform,
+                           latest_record=latest_record,
+                           title=f'{platform["name"]} | 平台详情 | OGD-Collector Pro')
+
+
 @app.route('/analysis')
 @login_required
 def analysis_page():
@@ -303,6 +341,70 @@ def thesis_page():
 
 
 # ===== API接口 =====
+
+@app.route('/api/platform/<int:platform_id>/history')
+@login_required
+def api_platform_history(platform_id):
+    """获取指定平台的历史采集记录"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT * FROM collection_records
+        WHERE platform_id=? ORDER BY id DESC LIMIT 50
+    """, (platform_id,))
+    columns = [d[0] for d in cursor.description]
+    records = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(records)
+
+
+@app.route('/api/platform/<int:platform_id>/datasets')
+@login_required
+def api_platform_datasets(platform_id):
+    """获取平台已穿透的数据集列表（阶段2）"""
+    conn = get_db()
+    cursor = conn.cursor()
+    # 检查平台数据集表是否存在
+    cursor.execute("""
+        SELECT name FROM sqlite_master
+        WHERE type='table' AND name='platform_datasets'
+    """)
+    if not cursor.fetchone():
+        conn.close()
+        return jsonify({'total': 0, 'c1_count': 0, 'c3_count': 0, 'c4_count': 0,
+                        'datasets': [], 'last_penetrate_at': None})
+    cursor.execute("""
+        SELECT * FROM platform_datasets
+        WHERE platform_id=? ORDER BY id DESC LIMIT 100
+    """, (platform_id,))
+    columns = [d[0] for d in cursor.description]
+    datasets = [dict(zip(columns, row)) for row in cursor.fetchall()]
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_datasets WHERE platform_id=?
+    """, (platform_id,))
+    total = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_datasets WHERE platform_id=? AND related_4e_dim LIKE '%C1%'
+    """, (platform_id,))
+    c1_count = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_datasets WHERE platform_id=? AND related_4e_dim LIKE '%C3%'
+    """, (platform_id,))
+    c3_count = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT COUNT(*) FROM platform_datasets WHERE platform_id=? AND related_4e_dim LIKE '%C4%'
+    """, (platform_id,))
+    c4_count = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT MAX(penetrated_at) FROM platform_datasets WHERE platform_id=?
+    """, (platform_id,))
+    last_at = cursor.fetchone()[0]
+    conn.close()
+    return jsonify({
+        'total': total, 'c1_count': c1_count, 'c3_count': c3_count, 'c4_count': c4_count,
+        'datasets': datasets, 'last_penetrate_at': last_at
+    })
+
 
 @app.route('/api/stats')
 @login_required
@@ -820,26 +922,25 @@ def api_access_logs():
 @app.route('/monitoring')
 @login_required
 def monitoring_page():
-    """实时监控面板"""
+    """实时监控面板（已合并到采集中心）"""
     record_access()
-    embed = request.args.get('embed', '')
-    return render_template('monitoring.html', title='实时监控 | OGD-Collector Pro', embed=embed)
+    return redirect(url_for('collector_page'))
+
 
 @app.route('/provenance')
 @login_required
 def provenance_page():
-    """数据来源溯源页面"""
+    """数据来源溯源页面（已合并到论文成果）"""
     record_access()
-    embed = request.args.get('embed', '')
-    return render_template('provenance.html', title='数据来源 | OGD-Collector Pro', embed=embed)
+    return redirect(url_for('thesis_page') + '?tab=provenance')
+
 
 @app.route('/data-archive')
 @login_required
 def data_archive_page():
-    """数据归集中心"""
+    """数据归集中心（已合并到论文成果）"""
     record_access()
-    embed = request.args.get('embed', '')
-    return render_template('data_archive.html', title='数据归集 | OGD-Collector Pro', embed=embed)
+    return redirect(url_for('thesis_page') + '?tab=archive')
 
 
 @app.route('/api/monitoring/realtime')
@@ -1117,49 +1218,17 @@ def api_export_provenance():
 @app.route('/source-code')
 @login_required
 def source_code_page():
-    """采集源码公开页面"""
-    import hashlib
-    base_dir = Path(__file__).parent
-    
-    def read_code(filename):
-        path = base_dir / filename
-        if path.exists():
-            return path.read_text(encoding='utf-8')
-        return f'# 文件不存在: {filename}'
-    
-    def sha256_file(filename):
-        path = base_dir / filename
-        if path.exists():
-            return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
-        return 'N/A'
-    
-    engine_full = read_code('collector_engine.py')
-    auto_full = read_code('auto_collect.py')
-    models_full = read_code('models.py')
-    app_full = read_code('app.py')
-    
-    # 截断显示（保留前200行）
-    def truncate_code(code, max_lines=200):
-        lines = code.split('\n')
-        if len(lines) > max_lines:
-            return '\n'.join(lines[:max_lines]) + f'\n\n# ... ({len(lines) - max_lines} 行省略，点击下载查看完整代码) ...'
-        return code
-    
-    embed = request.args.get('embed', '')
-    return render_template('source_code.html',
-        title='采集源码 | OGD-Collector Pro',
-        engine_code=truncate_code(engine_full),
-        auto_code=truncate_code(auto_full),
-        models_code=truncate_code(models_full),
-        app_code=truncate_code(app_full),
-        checksums={
-            'engine': sha256_file('collector_engine.py'),
-            'auto': sha256_file('auto_collect.py'),
-            'models': sha256_file('models.py'),
-            'app': sha256_file('app.py')
-        },
-        embed=embed
-    )
+    """采集源码公开页面（已合并到论文成果）"""
+    record_access()
+    return redirect(url_for('thesis_page') + '?tab=source')
+
+
+@app.route('/export')
+@login_required
+def export_page():
+    """论文数据导出中心"""
+    record_access()
+    return render_template('export.html', title='数据导出 | OGD-Collector Pro')
 
 
 @app.route('/api/source/download/<filename>')
