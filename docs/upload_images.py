@@ -1,9 +1,11 @@
 import os
 import paramiko
 
-SERVER_IP = "106.53.188.187"
-SERVER_USER = "ubuntu"
-SERVER_PASSWORD = "wenming890503"
+SERVER_IP = os.environ.get("SERVER_IP", "106.53.188.187")
+SERVER_USER = os.environ.get("SERVER_USER", "ubuntu")
+SERVER_PASSWORD = os.environ.get("SERVER_PASSWORD", "")
+if not SERVER_PASSWORD:
+    raise ValueError("请设置环境变量 SERVER_PASSWORD")
 LOCAL_DIR = r"C:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\static\thesis_charts"
 REMOTE_DIR = "/opt/ogd-collector-pro/static/thesis_charts"
 
