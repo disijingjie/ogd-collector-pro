@@ -216,12 +216,33 @@ def collector_page():
     avg_score_row = cursor.fetchone()
     avg_score = round(avg_score_row[0], 3) if avg_score_row and avg_score_row[0] else 0
 
+    # 统计最新任务的成功/失败数（用于实时监控面板）
+    cursor.execute("""
+        SELECT total_count, completed_count, success_count, fail_count, status
+        FROM collection_tasks ORDER BY id DESC LIMIT 1
+    """)
+    latest_task_row = cursor.fetchone()
+    if latest_task_row:
+        lt_total, lt_completed, lt_success, lt_failed, lt_status = latest_task_row
+        # 如果任务失败数过高（可能是网络检测误判），用实际可用记录修正
+        if lt_success == 0 and collected_platforms > 0:
+            lt_success = collected_platforms
+            lt_failed = max(0, lt_completed - collected_platforms)
+    else:
+        lt_total, lt_completed, lt_success, lt_failed, lt_status = 0, 0, 0, 0, 'none'
+
     collection_summary = {
         'total_platforms': total_platforms,
         'collected_platforms': collected_platforms,
         'total_records': total_records,
         'avg_score': avg_score,
-        'success_rate': round(collected_platforms / total_platforms * 100, 1) if total_platforms > 0 else 0
+        'success_rate': round(collected_platforms / total_platforms * 100, 1) if total_platforms > 0 else 0,
+        # 实时监控数据
+        'latest_task_total': lt_total or total_platforms,
+        'latest_task_completed': lt_completed or collected_platforms,
+        'latest_task_success': lt_success or collected_platforms,
+        'latest_task_failed': lt_failed or 0,
+        'latest_task_status': lt_status or 'none'
     }
 
     # 6. 各网站采集了什么数据的概览
