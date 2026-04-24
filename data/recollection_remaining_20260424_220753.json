@@ -1,0 +1,51 @@
+{
+  "collected_at": "2026-04-24T22:07:53.733362",
+  "total": 5,
+  "results": [
+    {
+      "code": "heilongjiang",
+      "name": "黑龙江省",
+      "status": "unavailable",
+      "detail": "HTTPSConnectionPool(host='data.hlj.gov.cn', port=443): Max retries exceeded with",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:06:56.229119"
+    },
+    {
+      "code": "shanghai",
+      "name": "上海市",
+      "status": "unavailable",
+      "detail": "HTTP状态码: 412",
+      "response_time": 0.29,
+      "http_status": 412,
+      "collected_at": "2026-04-24T22:07:41.605297"
+    },
+    {
+      "code": "hebei",
+      "name": "河北省",
+      "status": "unavailable",
+      "detail": "HTTPSConnectionPool(host='data.hebei.gov.cn', port=443): Max retries exceeded wi",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:07:44.686746"
+    },
+    {
+      "code": "shaanxi",
+      "name": "陕西省",
+      "status": "unavailable",
+      "detail": "HTTPSConnectionPool(host='data.shaanxi.gov.cn', port=443): Max retries exceeded ",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:07:47.712525"
+    },
+    {
+      "code": "xinjiang",
+      "name": "新疆维吾尔自治区",
+      "status": "unavailable",
+      "detail": "HTTPSConnectionPool(host='data.xinjiang.gov.cn', port=443): Max retries exceeded",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:07:50.732367"
+    }
+  ]
+}

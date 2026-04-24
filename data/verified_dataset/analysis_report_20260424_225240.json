@@ -1,0 +1,48 @@
+{
+  "computed_at": "2026-04-24T22:52:40.875323",
+  "sample_size": 22,
+  "indicators": [
+    "has_https",
+    "has_search",
+    "has_download",
+    "has_api",
+    "has_visualization",
+    "has_update_info",
+    "has_metadata",
+    "has_feedback",
+    "has_register",
+    "has_preview",
+    "has_bulk_download"
+  ],
+  "topsis_weights": {
+    "has_https": 0.017811353649971405,
+    "has_search": 0.05945121341615934,
+    "has_download": 0.11298032973313178,
+    "has_api": 0.09810676907668472,
+    "has_visualization": 0.0981067690766846,
+    "has_update_info": 0.21260443036958593,
+    "has_metadata": 0.11298032973313185,
+    "has_feedback": 0.1662831504208991,
+    "has_register": 0.11298032973313185,
+    "has_preview": 0.0086953247906191,
+    "has_bulk_download": 2.5867093405195145e-16
+  },
+  "dematel_summary": {
+    "center": {
+      "供给保障(C1)": -3.0355995523567847,
+      "平台服务(C2)": -3.1779624144437517,
+      "数据质量(C3)": -3.0414081123374173,
+      "利用效果(C4)": -3.226133026332736
+    },
+    "cause": {
+      "供给保障(C1)": 0.0,
+      "平台服务(C2)": 0.0,
+      "数据质量(C3)": 2.220446049250313e-16,
+      "利用效果(C4)": 0.0
+    }
+  },
+  "fsqca_summary": {
+    "high_performance_count": 11,
+    "valid_configurations": 4
+  }
+}

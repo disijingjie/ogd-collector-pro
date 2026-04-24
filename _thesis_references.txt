@@ -1,0 +1,125 @@
+参考文献
+丁先存, 王晓慧. 政府数据开放的法治保障研究[J]. 中国行政管理, 2020(8): 25-31.
+丁敬达, 屠旭程, 徐中阳. 政府开放数据影响力评价与提升路径研究——基于31个省级平台的组态分析[J]. 情报理论与实践, 2026(已网络首发).
+丁晓强, 李明. 公共数据授权运营的定价机制研究[J]. 经济学动态, 2024(3): 45-58.
+付熙雯. 数字中国建设中政府数据开放利用政策的优化[J]. 陕西师范大学学报(哲学社会科学版), 2022, 51(5): 88-99.
+刘园园, 段尧清, 俞享. 基于超效率SBM-fsQCA的政府数据开放有效路径研究[J]. 情报科学, 2023, 41(5): 112-120.
+刘崇瑞, 孙宗锋. 地方政府数据开放绩效评估及驱动机制——基于fsQCA与回归分析的混合方法[J]. 图书与情报, 2025(1): 45-56.
+卢新元, 陈泽茵, 卢泉, 等. 省级政府数据开放平台的数据开放水平构型研究[J]. 知识管理论坛, 2023, 8(4): 33-44.
+吴应强, 李白杨, 石乐怡. 政府数据开放平台效率评估及影响因素实证研究——基于无导向SBM-Malmquist-Tobit模型[J]. 现代情报, 2024, 44(3): 45-55.
+吴迪, 袁勤俭. 我国省级政府数据开放平台服务的优化策略研究[J]. 现代情报, 2023, 43(7): 88-98.
+孙嘉睿, 安小米. 开放政府数据质量评估指标体系研究[J]. 情报理论与实践, 2022, 45(7): 88-97.
+孟天广, 赵娟. 数字治理的效率与价值: 基于政府数据开放的研究[J]. 政治学研究, 2023(2): 68-82.
+孟天广, 赵娟, 张小劲. 制度-技术-应用: 数字治理视角下的政府数据开放评估框架[J]. 行政论坛, 2023, 30(3): 47-56.
+孟望生, 范鼎浩, 李丁. 政府数据开放对城市绿色创新效率的影响——基于政府数据开放平台上线的准自然实验[J]. 技术经济, 2024, 43(8): 78-89.
+张会平, 汤志伟. 公共数据授权运营的制度框架与风险治理[J]. 公共管理学报, 2023, 20(2): 1-14.
+朱红灿, 方心悦. 社会技术系统理论视角下政府数据开放平台生态系统成熟度评估研究[J]. 电子政务, 2022(5): 34-45.
+李利文, 卢阳阳. 政府数据开放绩效的影响因素与组态路径——基于fsQCA方法[J]. 公共治理研究, 2023, 5(4): 56-68.
+李盛基, 周十同. 我国政府数据开放研究热点、趋势与理论框架——以热点演进为视角[J]. 情报科学, 2024, 42(1): 166-176.
+杜佳璘, 袁永仪, 胡广伟, 等. 政府数据开放平台数据资源利用效率评估[J]. 图书馆学研究, 2024(3): 56-66.
+樊博, 刘新萍, 郑磊. 我国政府数据开放的政策创新扩散研究[J]. 现代情报, 2023, 43(5): 22-32.
+段尧清, 王晓曦, 李彦如. 政府开放数据赋能水平的影响因素关联研究[J]. 图书情报工作, 2026(已网络首发).
+毛太田, 张晓娟, 李贺. 政府数据开放平台利用绩效评估研究——基于PSM模型[J]. 科技情报研究, 2024, 6(2): 67-78.
+汪克亮, 付丽翔. 公共数据开放与城市绿色发展效率——来自政府数据平台上线的准自然实验[J]. 科技进步与对策, 2025, 42(5): 56-66.
+海伦, 邓崧. 基于数据包络法的城市政府数据开放平台效率评估[J]. 电子政务, 2018(9): 52-62.
+王博, 温继文. 基于元数据的林业开放政府数据质量评估[J]. 情报学报, 2021, 40(5): 512-523.
+王林川, 寿志勤, 吴慈生. 政府数据开放平台服务绩效评价指标体系研究：基于公共价值视角[J]. 中国行政管理, 2022(8): 25-34.
+王琳, 杨莹, 邱均平. 基于公众感知的政府数据开放平台信息服务质量评价体系研究[J]. 情报科学, 2022, 40(3): 166-175.
+王芳. 情报学视角下的政府信息公开、共享与数据开放研究：二十年回顾与未来展望[J]. 图书与情报, 2022(3): 2-13.
+石绍宾, 李兆辉, 陈卓. 信息公开的力量：公共数据开放提高政府支出效率了吗[J]. 财经问题研究, 2025(2): 34-45.
+翟云, 李勇坚. 数字政府建设与数据要素化配置[J]. 电子政务, 2022(5): 2-13.
+范佳佳. 政府开放数据利用效率评估研究[J]. 图书馆论坛, 2018, 38(9): 22-31.
+莫祖英, 侯征, 刘燕权. 基于IPA分析的政府开放数据关键性质量问题研究[J]. 情报资料工作, 2021(4): 73-82.
+莫祖英, 丁怡雅. 政府数据开放公众反馈机制构建研究[J]. 情报杂志, 2021, 40(8): 176-183.
+袁静, 刘晓媛, 王思君. 政府数据开放平台成熟度评估指标构建及实证研究[J]. 图书馆建设, 2025(2): 45-55.
+邓崧, 姚承慧. 基于DEA模型的省级政府数据开放效率评价研究[J]. 云南行政学院学报, 2020, 22(5): 98-107.
+邹祥, 贾永飞. 政府数据开放与企业绿色创新效率：理论机制与实证检验[J]. 统计与决策, 2025, 41(3): 56-65.
+郑磊, 吕文增. 开放政府数据评估: 从可用到好用[J]. 电子政务, 2023(6): 12-25.
+郑磊, 刘新萍, 张忻璐. 可用-有用-好用: 政府数据开放三层评估逻辑[J]. 电子政务, 2023(5): 2-13.
+郭鑫, 聂磊, 王继民, 等. 面向数据检索的我国政府开放数据质量评估方法研究[J]. 数据分析与知识发现, 2024, 8(5): 88-99.
+门理想, 赵芷墨, 李亚兰, 等. 我国政府数据开放的公共价值共创逻辑、现状及优化路径——基于公共价值战略三角模型[J]. 情报理论与实践, 2023, 46(8): 56-65.
+陈兰杰, 李婷. 基于战略三角模型的开放政府数据公共价值实现机制研究[J]. 情报探索, 2021(8): 42-51.
+陈兰杰, 贾佳琪. 基于价值网理论的开放政府数据公共价值实现模型研究[J]. 甘肃科技, 2022, 38(12): 45-52.
+陈媛媛, 李燕. 政府数据开放平台绩效评估与优化路径——基于固定效应模型的实证研究[J]. 情报学报, 2024, 43(5): 78-89.
+陈朝兵, 张田. 2011-2020年国内外政府数据开放平台建设研究述评[J]. 图书情报知识, 2022(2): 55-67.
+韩啸, 陈亮. 政府数据开放价值创造缘何失败?——基于价值共同破坏视角的新解释[J]. 公共管理评论, 2021, 3(4): 88-106.
+韩磊, 胡广伟. 政府数据开放平台建设效率评估及其启示[J]. 数字图书馆论坛, 2018(6): 19-27.
+马捷, 栾泽权, 靖继鹏. 基于组合赋权法的政府开放数据质量评估框架研究[J]. 图书情报工作, 2024, 68(12): 88-98.
+马海群, 王今. 基于DEA的政府开放数据网站效率评价[J]. 数字图书馆论坛, 2016(7): 38-45.
+黄先海, 虞柳明, 戴岭. 政府数据开放与创新驱动:内涵、机制及实践路径[J]. 东南学术, 2023(4): 78-89.
+黄璜. 以用促建以用促优: 政府数据开放的价值取向[J]. 中国行政管理, 2018(10): 16-22.
+黄璜, 张权. 政府数据开放评估的四维模型[J]. 电子政务, 2021(7): 2-16.
+黄璜. 数字治理的整体优化框架[J]. 中国行政管理, 2022(3): 6-14.
+黄璜. 数据治理即服务: 授权运营的制度逻辑[J]. 公共管理学报, 2024, 21(1): 1-15.
+黄璜, 孙学智, 吴培熠. 数据-平台-服务-效果: 政府数据开放四维评估模型[J]. 中国行政管理, 2021(8): 52-60.
+Alogaiel A, Alrwais A. Evaluating open government data quality in Saudi Arabia[J]. Information Technology & People, 2023, 36(5): 1523-1545.
+Alqahtani F M, Makki R A. DEMATEL-ISM integrated analysis of key factors influencing smart city development[J]. Sustainable Cities and Society, 2023, 95: 104565.
+Attard J, Orsi F, Genova F, et al. A systematic review of open government data initiatives[J]. Government Information Quarterly, 2015, 32(4): 399-418.
+Attard J, Orlandi F, Scerri S, et al. A systematic review of open government data initiatives[J]. Government Information Quarterly, 2015, 32(4): 399-418.
+Banker R D, Charnes A, Cooper W W. Some models for estimating technical and scale inefficiencies in data envelopment analysis[J]. Management Science, 1984, 30(9): 1078-1092.
+Barati M. Information privacy concerns in open government data projects[J]. Government Information Quarterly, 2023, 40(2): 101789.
+Bartolacci F, Castellano N G, Mastroberardino P. Improved public service performance measurement system using DEA and Bootstrap[J]. Socio-Economic Planning Sciences, 2022, 82: 101252.
+Batini C, Cappiello C, Francalanci C, et al. Methodologies for data quality assessment and improvement[J]. ACM Computing Surveys, 2009, 41(3): 1-52.
+Benington J, Moore M H. Public value: Theory and practice[M]. London: Palgrave Macmillan, 2011.
+Benmohamed A, Shen K. Public value creation in OGD use: An empirical study[J]. Government Information Quarterly, 2023, 40(2): 101797.
+Charnes A, Cooper W W, Rhodes E. Measuring the efficiency of decision making units[J]. European Journal of Operational Research, 1978, 2(6): 429-444.
+Chen Y. Effect of entropy weight in entropy-weight TOPSIS method[J]. Expert Systems with Applications, 2023, 228: 120415.
+Chen Y, Zhang L, Wang H. Cross-city configurational analysis of public data openness effects[J]. Government Information Quarterly, 2023, 40(4): 101851.
+Cheng Y, Li H. Institutional dilemmas of public data authorized operation in China[J]. Government Information Quarterly, 2023, 40(4): 101841.
+Chiu D K W, Ma W, Leung H F, et al. A survey on open government data[J]. ACM Computing Surveys, 2020, 52(3): 1-36.
+Chu Z, Cheng L, Wang L. Factors influencing the effectiveness of open government data in China[J]. Government Information Quarterly, 2022, 39(2): 101666.
+De Waele M, Bannister F, Connolly R. Conceptualizing public sector performance measurement[J]. Public Management Review, 2023, 25(5): 1023-1045.
+Fiss P C. Building better causal theories: A fuzzy set approach to typologies in organization research[J]. Academy of Management Journal, 2011, 54(2): 393-420.
+Gao Y, Janssen M, Zhang C. Understanding the evolution of open government data research: A bibliometric analysis[J]. Government Information Quarterly, 2024, 41(1): 101885.
+Guo Y, Li J, Chen X. How digital government empowers public service delivery in China[J]. Public Administration and Development, 2023, 43(4): 345-360.
+Han Y, Liu Z, Chen W. Improved TOPSIS multi-criteria evaluation model with combined weighting[J]. Expert Systems with Applications, 2023, 227: 120395.
+Hwang C L, Yoon K. Multiple attribute decision making: Methods and applications[M]. Berlin: Springer, 1981.
+Janssen M, Charalabidis Y, Zuiderwijk A. Benefits, adoption barriers and myths of open data and open government[J]. Information Systems Management, 2012, 29(4): 258-268.
+Jetzek T, Avital M, Bjorn-Andersen N. Data-driven innovation through open government data[J]. Journal of Theoretical and Applied Electronic Commerce Research, 2014, 9(2): 59-71.
+Kassen M. Understanding motivations for citizen data re-use[J]. Government Information Quarterly, 2022, 39(3): 101708.
+Kempeneer S, Wolswinkel A. Rethinking the role of open government data in citizen participation[J]. Information Polity, 2023, 28(2): 161-178.
+Krejnus J, Stejskal J, Hajek P. 平台效率 measurement of e-government services using DEA[J]. Government Information Quarterly, 2022, 39(2): 101670.
+Li Y. Application of entropy-weight TOPSIS model in comprehensive evaluation[J]. Soft Computing, 2023, 27(8): 5121-5135.
+Lin Y, Yao S. Construction and application of government data openness evaluation index system in China[J]. Government Information Quarterly, 2023, 40(3): 101818.
+Linden T. Measuring the value of open data[J]. Proceedings of the ACM on Human-Computer Interaction, 2020, 4(CSCW2): 1-23.
+Liu S, Xia J, Zhu Q. Institutional barriers to public data open utilization in China[J]. Government Information Quarterly, 2023, 40(4): 101855.
+Liu Y, Wu A, Yang L. Regional disparities in open government data performance: Evidence from China[J]. Government Information Quarterly, 2022, 39(3): 101704.
+Liu Z, Zhang H. Performance evaluation and key influencing factor identification based on TOPSIS[J]. Mathematical Problems in Engineering, 2023, 2023: 8824481.
+Long X, Song J. Operational performance evaluation of e-government microblogs using DEA and grey relational analysis[J]. Information Technology & People, 2022, 35(6): 1568-1588.
+MacLean D, Titah R A. Systematic literature review of public value in digital government[J]. Government Information Quarterly, 2022, 39(4): 101727.
+Maestre-Gongora G, Rangel-Carrillo M P. 数据质量 evaluation method for open government data from a value assessment perspective[J]. Government Information Quarterly, 2022, 39(3): 101701.
+Matheus R, Ribeiro M M, Viscusi G. Digital transparency and OGD usefulness: An empirical analysis[J]. Government Information Quarterly, 2022, 39(4): 101738.
+Meuleman L, Huyben S, Daan N. The Open Government Data Index: A longitudinal assessment[J]. Government Information Quarterly, 2022, 39(2): 101672.
+Milić P, Stanković J, Radenković M. Cross-national comparative perspective on open government data transparency indicators[J]. Information Polity, 2022, 27(3): 293-312.
+Mitu N E, Stanciu C D. Analytical review of public sector performance and efficiency[J]. Administratie si Management Public, 2022, 38: 125-143.
+Mkude C G, Peter M A. Examining e-government challenges interdependence using DEMATEL[J]. International Journal of Electronic Government Research, 2023, 19(1): 1-18.
+Molodtsov S D, Nikiforova G V. Comprehensive evaluation framework for OGD portal usability[J]. Government Information Quarterly, 2023, 40(3): 101831.
+Moore M H. Creating public value: Strategic management in government[M]. Cambridge: Harvard University Press, 1995.
+Moore M H. Creating public value: Strategic management in government[M]. Cambridge: Harvard University Press, 1995.
+Nikiforova G V, McBride K. User-centered evaluation of OGD portal usability[J]. Government Information Quarterly, 2023, 40(2): 101791.
+Norman-Major K. Balancing the 4Es: The equity dimension in public performance[J]. Public Policy and Administration, 2022, 37(2): 184-201.
+OECD. Open government data: Towards empirical analysis of open government data initiatives[R]. Paris: OECD Publishing, 2020.
+Park S, Chung D, Lee M. An OGD evaluation framework: Data quality, platform quality, and service quality[J]. Sustainability, 2022, 14(15): 9323.
+Pipino L L, Lee Y W, Wang R Y. Data quality assessment[J]. Communications of the ACM, 2002, 45(4): 211-218.
+Pirannejad A, Ingrams A. Open government maturity model: A global perspective[J]. Government Information Quarterly, 2023, 40(1): 101740.
+Quarati A. Usage trends and metadata quality of open government data[J]. Government Information Quarterly, 2023, 40(1): 101737.
+Raca M, Stojanovic L, Stojanovic N. An integrated framework for OGD evaluation and improvement[J]. Government Information Quarterly, 2022, 39(4): 101735.
+Ragin C C. Redesigning social inquiry: Fuzzy sets and beyond[M]. Chicago: University of Chicago Press, 2008.
+Safarov I, Meijer A, Grimmelikhuijsen S. Utilization of open government data: A systematic literature review[J]. Information Polity, 2017, 22(4): 221-244.
+Sarantis D. A comparative review of OGD evaluation methodologies[J]. Government Information Quarterly, 2022, 39(4): 101731.
+Stufflebeam D L. The CIPP model for evaluation[M]. In: Kellaghan T, Stufflebeam D L (eds). International Handbook of Educational Evaluation. Springer, 2003: 31-62.
+Tan J, Pei Y. Government data openness and urban-rural income gap in China[J]. Economic Modelling, 2023, 121: 106212.
+Tornatzky L G, Fleischer M. The processes of technological innovation[M]. Lexington: Lexington Books, 1990.
+Ubaldi B. Open government data: Towards empirical analysis of open government data initiatives[R]. Paris: OECD Working Papers on Public Governance, 2013.
+Vivek S D, Beatty S E, Dalela V. Triangulation in management research: A methodological necessity[J]. Organizational Research Methods, 2022, 25(4): 672-698.
+Wang R Y, Strong D R. Beyond accuracy: What data quality means to data consumers[J]. Journal of Management Information Systems, 1996, 12(4): 5-33.
+Wang R Y, Strong D R. Beyond accuracy: What data quality means to data consumers[J]. Journal of Management Information Systems, 1996, 12(4): 5-33.
+Wirtz B W, Weyerer J C, Geyer C. Open government: A systematic literature review[J]. Public Management Review, 2022, 24(3): 368-392.
+Yan Z, Liu J, Chen S. Empirical examination of OGD policy impact on enterprise performance[J]. Information & Management, 2023, 60(4): 103790.
+Yu H, Robinson D G. The new ambiguity of 'open government'[J]. UCLA Law Review, 2012, 59(2): 178-208.
+Yuan Q, Gasco-Hernandez M. Public value creation through public sector open innovation[J]. Government Information Quarterly, 2023, 40(1): 101752.
+Zhang H, Li Q, Liu Y. Evaluating smart city construction in China's new first-tier cities using entropy-weight TOPSIS[J]. Sustainable Cities and Society, 2023, 95: 104557.
+Zhao Y, Fan B, Wang J. Institutional evolution logic of government data opening from the perspective of data factor marketization[J]. Information & Management, 2024, 61(3): 103938.
+Zhou X, Wu Y, Li M. OGD policy and enterprise performance improvement[J]. Journal of Innovation & Knowledge, 2023, 8(3): 100384.
+Zuiderwijk A, Reuver M D. Why do open government data initiatives fail? An analysis of failure factors[J]. Government Information Quarterly, 2023, 40(3): 101823.
+Çaldağ H G, Gökalp E. A polyphonic literature review on open government data[J]. Government Information Quarterly, 2023, 40(2): 101787.

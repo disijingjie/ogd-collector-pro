@@ -1,0 +1,449 @@
+{
+  "verification_metadata": {
+    "generated_at": "2026-04-24T22:10:37.682858",
+    "verification_code": "OGD-DS-V1-20260424_221037",
+    "data_source": "OGD-Collector Pro 三层架构采集系统",
+    "collection_method": "HTTP请求 + HTML解析 + 功能特征检测",
+    "sample_definition": "31个省级行政区中建有独立数据开放平台的28个",
+    "excluded": [
+      "青海省(无独立平台)",
+      "甘肃省(无独立平台)",
+      "西藏自治区(无独立平台)"
+    ],
+    "total_platforms": 31,
+    "target_sample": 28,
+    "successfully_collected": 22,
+    "failed_collection": 5
+  },
+  "collection_summary": [
+    {
+      "code": "anhui",
+      "name": "安徽省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T19:59:50.855853",
+      "url": "http://data.ahzwfw.gov.cn:8000"
+    },
+    {
+      "code": "beijing",
+      "name": "北京市",
+      "region": "华北",
+      "status": "available",
+      "collected_at": "2026-04-24T19:59:50.640139",
+      "url": "https://data.beijing.gov.cn"
+    },
+    {
+      "code": "chongqing",
+      "name": "重庆市",
+      "region": "西南",
+      "status": "available",
+      "collected_at": "2026-04-24T18:23:36.923179",
+      "url": "https://data.cq.gov.cn"
+    },
+    {
+      "code": "fujian",
+      "name": "福建省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T18:23:55.766864",
+      "url": "https://data.fujian.gov.cn"
+    },
+    {
+      "code": "guangdong",
+      "name": "广东省",
+      "region": "华南",
+      "status": "available",
+      "collected_at": "2026-04-24T19:59:51.271744",
+      "url": "https://gddata.gd.gov.cn"
+    },
+    {
+      "code": "guangxi",
+      "name": "广西壮族自治区",
+      "region": "华南",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:49.384249",
+      "url": "https://data.gxzf.gov.cn"
+    },
+    {
+      "code": "guizhou",
+      "name": "贵州省",
+      "region": "西南",
+      "status": "available",
+      "collected_at": "2026-04-24T18:25:02.146824",
+      "url": "https://data.guizhou.gov.cn"
+    },
+    {
+      "code": "hainan",
+      "name": "海南省",
+      "region": "华南",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:57.869691",
+      "url": "https://data.hainan.gov.cn"
+    },
+    {
+      "code": "henan",
+      "name": "河南省",
+      "region": "华中",
+      "status": "available",
+      "collected_at": "2026-04-24T22:03:11.248914",
+      "url": "https://data.hnzwfw.gov.cn"
+    },
+    {
+      "code": "hubei",
+      "name": "湖北省",
+      "region": "华中",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:42.318933",
+      "url": "https://data.hubei.gov.cn"
+    },
+    {
+      "code": "hunan",
+      "name": "湖南省",
+      "region": "华中",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:44.781308",
+      "url": "https://data.hunan.gov.cn"
+    },
+    {
+      "code": "jiangsu",
+      "name": "江苏省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T22:03:06.149595",
+      "url": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html"
+    },
+    {
+      "code": "jiangxi",
+      "name": "江西省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T18:23:58.633992",
+      "url": "https://data.jiangxi.gov.cn"
+    },
+    {
+      "code": "jilin",
+      "name": "吉林省",
+      "region": "东北",
+      "status": "available",
+      "collected_at": "2026-04-24T18:25:52.418502",
+      "url": "https://data.jl.gov.cn"
+    },
+    {
+      "code": "liaoning",
+      "name": "辽宁省",
+      "region": "东北",
+      "status": "available",
+      "collected_at": "2026-04-24T18:25:49.991299",
+      "url": "https://data.ln.gov.cn"
+    },
+    {
+      "code": "neimenggu",
+      "name": "内蒙古自治区",
+      "region": "华北",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:38.007659",
+      "url": "https://data.nmg.gov.cn"
+    },
+    {
+      "code": "shandong",
+      "name": "山东省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T18:24:16.364157",
+      "url": "https://data.sd.gov.cn"
+    },
+    {
+      "code": "shanxi",
+      "name": "山西省",
+      "region": "华北",
+      "status": "available",
+      "collected_at": "2026-04-24T22:03:21.331081",
+      "url": "http://data.shanxi.gov.cn"
+    },
+    {
+      "code": "sichuan",
+      "name": "四川省",
+      "region": "西南",
+      "status": "available",
+      "collected_at": "2026-04-24T22:04:16.631512",
+      "url": "https://scdata.net.cn"
+    },
+    {
+      "code": "tianjin",
+      "name": "天津市",
+      "region": "华北",
+      "status": "available",
+      "collected_at": "2026-04-24T18:23:32.161279",
+      "url": "https://data.tj.gov.cn"
+    },
+    {
+      "code": "yunnan",
+      "name": "云南省",
+      "region": "西南",
+      "status": "available",
+      "collected_at": "2026-04-24T18:25:19.495713",
+      "url": "https://data.yn.gov.cn"
+    },
+    {
+      "code": "zhejiang",
+      "name": "浙江省",
+      "region": "华东",
+      "status": "available",
+      "collected_at": "2026-04-24T18:23:51.545409",
+      "url": "https://data.zj.gov.cn"
+    }
+  ],
+  "failed_platforms": [
+    {
+      "code": "hebei",
+      "name": "河北省",
+      "region": "华北",
+      "status": "unavailable",
+      "collected_at": "2026-04-24T22:03:18.935449",
+      "url": "https://data.hebei.gov.cn",
+      "failure_reason": "连接错误: HTTPSConnectionPool(host='data.hebei.gov.cn', port",
+      "http_status": null
+    },
+    {
+      "code": "heilongjiang",
+      "name": "黑龙江省",
+      "region": "东北",
+      "status": "timeout",
+      "collected_at": "2026-04-24T22:03:01.501103",
+      "url": "https://data.hlj.gov.cn",
+      "failure_reason": "请求超时(>15秒)",
+      "http_status": null
+    },
+    {
+      "code": "shaanxi",
+      "name": "陕西省",
+      "region": "西北",
+      "status": "unavailable",
+      "collected_at": "2026-04-24T22:03:28.720122",
+      "url": "https://data.shaanxi.gov.cn",
+      "failure_reason": "连接错误: HTTPSConnectionPool(host='data.shaanxi.gov.cn', po",
+      "http_status": null
+    },
+    {
+      "code": "shanghai",
+      "name": "上海市",
+      "region": "华东",
+      "status": "unavailable",
+      "collected_at": "2026-04-24T22:03:08.404395",
+      "url": "https://data.sh.gov.cn",
+      "failure_reason": "HTTP状态码: 412",
+      "http_status": 412
+    },
+    {
+      "code": "xinjiang",
+      "name": "新疆维吾尔自治区",
+      "region": "西北",
+      "status": "unavailable",
+      "collected_at": "2026-04-24T22:03:36.157023",
+      "url": "https://data.xinjiang.gov.cn",
+      "failure_reason": "连接错误: HTTPSConnectionPool(host='data.xinjiang.gov.cn', p",
+      "http_status": null
+    }
+  ],
+  "data_quality_checks": {},
+  "topsis_results": [
+    {
+      "rank": 1,
+      "province": "四川省",
+      "code": "sichuan",
+      "region": "西南",
+      "topsis_score": 0.8545,
+      "dataset_count": 44558,
+      "response_time": 31.09
+    },
+    {
+      "rank": 2,
+      "province": "辽宁省",
+      "code": "liaoning",
+      "region": "东北",
+      "topsis_score": 0.3954,
+      "dataset_count": 236,
+      "response_time": 1.21
+    },
+    {
+      "rank": 3,
+      "province": "内蒙古自治区",
+      "code": "neimenggu",
+      "region": "华北",
+      "topsis_score": 0.3953,
+      "dataset_count": 219,
+      "response_time": 0.47
+    },
+    {
+      "rank": 4,
+      "province": "北京市",
+      "code": "beijing",
+      "region": "华北",
+      "topsis_score": 0.3941,
+      "dataset_count": 0,
+      "response_time": 32.86
+    },
+    {
+      "rank": 4,
+      "province": "山东省",
+      "code": "shandong",
+      "region": "华东",
+      "topsis_score": 0.3941,
+      "dataset_count": 0,
+      "response_time": 15.64
+    },
+    {
+      "rank": 6,
+      "province": "广西壮族自治区",
+      "code": "guangxi",
+      "region": "华南",
+      "topsis_score": 0.3777,
+      "dataset_count": 0,
+      "response_time": 0.51
+    },
+    {
+      "rank": 7,
+      "province": "海南省",
+      "code": "hainan",
+      "region": "华南",
+      "topsis_score": 0.3158,
+      "dataset_count": 0,
+      "response_time": 6.45
+    },
+    {
+      "rank": 8,
+      "province": "湖南省",
+      "code": "hunan",
+      "region": "华中",
+      "topsis_score": 0.3105,
+      "dataset_count": 0,
+      "response_time": 0.43
+    },
+    {
+      "rank": 9,
+      "province": "山西省",
+      "code": "shanxi",
+      "region": "华北",
+      "topsis_score": 0.31,
+      "dataset_count": 0,
+      "response_time": 0.37
+    },
+    {
+      "rank": 10,
+      "province": "云南省",
+      "code": "yunnan",
+      "region": "西南",
+      "topsis_score": 0.2852,
+      "dataset_count": 0,
+      "response_time": 15.33
+    },
+    {
+      "rank": 11,
+      "province": "江苏省",
+      "code": "jiangsu",
+      "region": "华东",
+      "topsis_score": 0.2574,
+      "dataset_count": 0,
+      "response_time": 2.63
+    },
+    {
+      "rank": 12,
+      "province": "天津市",
+      "code": "tianjin",
+      "region": "华北",
+      "topsis_score": 0.2349,
+      "dataset_count": 0,
+      "response_time": 0.7
+    },
+    {
+      "rank": 13,
+      "province": "河南省",
+      "code": "henan",
+      "region": "华中",
+      "topsis_score": 0.2268,
+      "dataset_count": 0,
+      "response_time": 0.7
+    },
+    {
+      "rank": 14,
+      "province": "重庆市",
+      "code": "chongqing",
+      "region": "西南",
+      "topsis_score": 0.2172,
+      "dataset_count": 0,
+      "response_time": 0.43
+    },
+    {
+      "rank": 15,
+      "province": "湖北省",
+      "code": "hubei",
+      "region": "华中",
+      "topsis_score": 0.2086,
+      "dataset_count": 0,
+      "response_time": 0.26
+    },
+    {
+      "rank": 16,
+      "province": "浙江省",
+      "code": "zhejiang",
+      "region": "华东",
+      "topsis_score": 0.1988,
+      "dataset_count": 0,
+      "response_time": 0.65
+    },
+    {
+      "rank": 17,
+      "province": "吉林省",
+      "code": "jilin",
+      "region": "东北",
+      "topsis_score": 0.1976,
+      "dataset_count": 0,
+      "response_time": 0.41
+    },
+    {
+      "rank": 18,
+      "province": "广东省",
+      "code": "guangdong",
+      "region": "华南",
+      "topsis_score": 0.1492,
+      "dataset_count": 0,
+      "response_time": 0.4
+    },
+    {
+      "rank": 19,
+      "province": "江西省",
+      "code": "jiangxi",
+      "region": "华东",
+      "topsis_score": 0.1474,
+      "dataset_count": 0,
+      "response_time": 0.84
+    },
+    {
+      "rank": 20,
+      "province": "福建省",
+      "code": "fujian",
+      "region": "华东",
+      "topsis_score": 0.0285,
+      "dataset_count": 0,
+      "response_time": 0.17
+    },
+    {
+      "rank": 20,
+      "province": "贵州省",
+      "code": "guizhou",
+      "region": "西南",
+      "topsis_score": 0.0285,
+      "dataset_count": 0,
+      "response_time": 0.21
+    },
+    {
+      "rank": 22,
+      "province": "安徽省",
+      "code": "anhui",
+      "region": "华东",
+      "topsis_score": 0.0127,
+      "dataset_count": 0,
+      "response_time": 0.2
+    }
+  ]
+}

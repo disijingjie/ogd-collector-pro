@@ -1,0 +1,126 @@
+{
+  "task_id": 3,
+  "collected_at": "2026-04-24T22:05:16.861423",
+  "total": 13,
+  "success": 4,
+  "failed": 9,
+  "results": [
+    {
+      "code": "heilongjiang",
+      "name": "黑龙江省",
+      "status": "timeout",
+      "detail": "请求超时(>15秒)",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:03:01.504164"
+    },
+    {
+      "code": "jiangsu",
+      "name": "江苏省",
+      "status": "available",
+      "detail": "平台可访问",
+      "response_time": 2.63,
+      "http_status": 200,
+      "collected_at": "2026-04-24T22:03:06.153180"
+    },
+    {
+      "code": "shanghai",
+      "name": "上海市",
+      "status": "unavailable",
+      "detail": "HTTP状态码: 412",
+      "response_time": 0.25,
+      "http_status": 412,
+      "collected_at": "2026-04-24T22:03:08.412169"
+    },
+    {
+      "code": "henan",
+      "name": "河南省",
+      "status": "available",
+      "detail": "平台可访问",
+      "response_time": 0.7,
+      "http_status": 200,
+      "collected_at": "2026-04-24T22:03:11.251875"
+    },
+    {
+      "code": "hebei",
+      "name": "河北省",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.hebei.gov.cn', port",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:03:18.940287"
+    },
+    {
+      "code": "shanxi",
+      "name": "山西省",
+      "status": "available",
+      "detail": "平台可访问",
+      "response_time": 0.37,
+      "http_status": 200,
+      "collected_at": "2026-04-24T22:03:21.334122"
+    },
+    {
+      "code": "shaanxi",
+      "name": "陕西省",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.shaanxi.gov.cn', po",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:03:28.723232"
+    },
+    {
+      "code": "xinjiang",
+      "name": "新疆维吾尔自治区",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.xinjiang.gov.cn', p",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:03:36.159868"
+    },
+    {
+      "code": "xizang",
+      "name": "西藏自治区",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.xizang.gov.cn', por",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:03:43.464358"
+    },
+    {
+      "code": "sichuan",
+      "name": "四川省",
+      "status": "available",
+      "detail": "平台可访问",
+      "response_time": 31.09,
+      "http_status": 200,
+      "collected_at": "2026-04-24T22:04:16.634091"
+    },
+    {
+      "code": "gansu",
+      "name": "甘肃省",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.gansu.gov.cn', port",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:04:23.943200"
+    },
+    {
+      "code": "ningxia",
+      "name": "宁夏回族自治区",
+      "status": "unavailable",
+      "detail": "连接错误: HTTPSConnectionPool(host='data.nx.gov.cn', port=44",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:04:31.459888"
+    },
+    {
+      "code": "qinghai",
+      "name": "青海省",
+      "status": "timeout",
+      "detail": "请求超时(>15秒)",
+      "response_time": 0,
+      "http_status": null,
+      "collected_at": "2026-04-24T22:05:14.852896"
+    }
+  ]
+}
