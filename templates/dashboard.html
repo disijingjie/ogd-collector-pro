@@ -10,10 +10,7 @@
 .section-divider i {
     font-size: 1.2rem;
 }
-</style>
-/* ===== monitoring CSS ===== */
 
-<style>
 /* 实时监控风格 */
 .monitor-card {
     background: white;
@@ -149,8 +146,6 @@
 .chart-container { height: 280px; }
 </style>
 
-/* ===== provenance CSS ===== */
-
 <style>
 .source-card {
     background: white;
@@ -212,8 +207,6 @@
     opacity: 0.8;
 }
 </style>
-
-/* ===== data_archive CSS ===== */
 
 <style>
 .archive-card {
@@ -1106,12 +1099,14 @@
                                 <div class="mt-2">左侧输入代码后点击校验</div>
                             </div>
                         </div>
+                        {% if checksums is defined %}
                         <hr class="my-3">
                         <h6 class="fw-bold mb-2 small">生产环境哈希</h6>
                         <div class="small font-monospace text-muted mb-1">engine: <span class="text-dark">{{ checksums.engine }}</span></div>
                         <div class="small font-monospace text-muted mb-1">auto: <span class="text-dark">{{ checksums.auto }}</span></div>
                         <div class="small font-monospace text-muted mb-1">models: <span class="text-dark">{{ checksums.models }}</span></div>
                         <div class="small font-monospace text-muted">app: <span class="text-dark">{{ checksums.app }}</span></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -1127,12 +1122,16 @@
     <div class="card-body p-4">
         <div class="row g-3">
             <div class="col-md-6">
+                {% if checksums is defined %}
                 <table class="table table-sm table-borderless">
                     <tr><td class="text-muted">collector_engine.py</td><td class="font-monospace">{{ checksums.engine }}</td></tr>
                     <tr><td class="text-muted">auto_collect.py</td><td class="font-monospace">{{ checksums.auto }}</td></tr>
                     <tr><td class="text-muted">models.py</td><td class="font-monospace">{{ checksums.models }}</td></tr>
                     <tr><td class="text-muted">app.py</td><td class="font-monospace">{{ checksums.app }}</td></tr>
                 </table>
+                {% else %}
+                <div class="text-muted small">代码完整性校验信息仅在源码页面可用</div>
+                {% endif %}
             </div>
             <div class="col-md-6">
                 <div class="alert alert-light border h-100 mb-0">

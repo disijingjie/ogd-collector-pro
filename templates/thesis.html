@@ -151,6 +151,8 @@
         <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch4">第四章 评估方法设计</button></li>
         <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch5">第五章 实证研究</button></li>
         <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch6">第六章 问题诊断与fsQCA分析</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch7">第七章 对策建议</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#ch8">第八章 结论与展望</button></li>
         <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#allcharts">全部图表</button></li>
     </ul>
 
@@ -193,8 +195,73 @@
         <div class="tab-pane fade" id="ch1">
             <div class="chapter-section">
                 <h2>第一章 绪论</h2>
-                <div class="chapter-abstract"></div>
+                <div class="chapter-abstract">
+                    <p><strong>研究背景：</strong>政府数据开放是数字政府建设的核心内容，但我国省级平台普遍存在"开放多、利用少"的结构性悖论——数据目录数量持续增长，有效利用率严重偏低。超过60%的省级平台数据集下载量不足100次，约15%以PDF等非机器可读格式发布。</p>
+                    <p><strong>核心发现"数据口径幻觉"：</strong>数据目录数量与有效数据集数量的中位数口径比值高达<strong>8.2倍</strong>。山东平台口径比值高达67.7倍，"6万数据集"中仅944个有效；贵州18.7倍；即便是表现最好的浙江，也有3.4倍。</p>
+                    <p><strong>三个核心争议：</strong>（1）评估范式之争——供给侧 vs 效果导向；（2）绩效前因之争——单一因素 vs 组态组合；（3）方法互补之争——单方法 vs 多方法三角验证。本研究以4E框架回应争议，实现从"供给导向"到"效果导向"的评估范式跃迁。</p>
+                </div>
                 <div class="row">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表1-1 国际主要政府数据开放平台多维对比</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm table-striped">
+                                        <thead><tr><th>平台</th><th>国家/地区</th><th>数据集数量</th><th>月均下载量</th><th>API接口</th><th>授权运营</th><th>开放许可</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Data.gov</td><td>美国</td><td>~290,000</td><td>约150万次</td><td>丰富</td><td>已建立</td><td>CC BY 4.0</td></tr>
+                                            <tr><td>data.gov.uk</td><td>英国</td><td>~55,000</td><td>约80万次</td><td>丰富</td><td>已建立</td><td>OGL</td></tr>
+                                            <tr><td>donnees.gouv.fr</td><td>法国</td><td>~45,000</td><td>约50万次</td><td>中等</td><td>发展中</td><td>ODbL</td></tr>
+                                            <tr><td>GOV.DATA</td><td>德国</td><td>~65,000</td><td>约40万次</td><td>中等</td><td>发展中</td><td>DL-DE</td></tr>
+                                            <tr><td>中国国家数据</td><td>中国</td><td>~8,500</td><td>约30万次</td><td>基础</td><td>探索中</td><td>无明确规定</td></tr>
+                                            <tr><td>韩国공공데이터포털</td><td>韩国</td><td>~55,000</td><td>约60万次</td><td>丰富</td><td>已建立</td><td>CC BY 2.0</td></tr>
+                                            <tr><td>日本data.go.jp</td><td>日本</td><td>~23,000</td><td>约15万次</td><td>中等</td><td>发展中</td><td>CC BY</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第一章 绪论</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表1-2 现有评估工具与本研究的系统性对比</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm table-striped">
+                                        <thead><tr><th>评估工具/框架</th><th>发布主体</th><th>评估维度</th><th>评估对象</th><th>方法论</th><th>利用效果</th><th>中国适用性</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Open Data Index</td><td>OKFN</td><td>6个</td><td>全球国家</td><td>专家评估</td><td>弱</td><td>有限</td></tr>
+                                            <tr><td>OGDI</td><td>World Bank</td><td>4个</td><td>国家/城市</td><td>指标体系</td><td>弱</td><td>有限</td></tr>
+                                            <tr><td>GovData数据质量</td><td>欧洲委员会</td><td>6个</td><td>欧盟国家</td><td>元数据审核</td><td>弱</td><td>不适用</td></tr>
+                                            <tr><td>开放数林指数</td><td>复旦大学</td><td>4个</td><td>中国地方政府</td><td>专家+数据审核</td><td>弱</td><td>强</td></tr>
+                                            <tr><td><strong>本研究框架</strong></td><td>-</td><td><strong>4E+4维</strong></td><td><strong>省级平台</strong></td><td><strong>多方法融合</strong></td><td><strong>强</strong></td><td><strong>最优</strong></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第一章 绪论</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表1-3 研究问题、方法与预期产出映射</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm table-striped">
+                                        <thead><tr><th>研究问题</th><th>对应章节</th><th>主要方法</th><th>数据来源</th><th>预期产出</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>RQ1：如何构建科学的数据利用绩效评估框架？</td><td>第三、四章</td><td>文献综述+AHP+熵权法</td><td>学术文献+政策文本</td><td>4E+4维评估指标体系</td></tr>
+                                            <tr><td>RQ2：各省级平台数据利用绩效现状如何？</td><td>第五章</td><td>熵权TOPSIS+DEA</td><td>平台实测数据+统计年鉴</td><td>30省综合得分与排名</td></tr>
+                                            <tr><td>RQ3：数据利用绩效的制约因素是什么？</td><td>第六章</td><td>DEMATEL+fsQCA</td><td>问卷调查+平台数据</td><td>影响因素与组态路径</td></tr>
+                                            <tr><td>RQ4：如何提升各地区数据利用绩效？</td><td>第七章</td><td>策略匹配+情景分析</td><td>案例分析+政策梳理</td><td>分类优化路径与建议</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第一章 绪论</span></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="chart-card">
@@ -370,8 +437,71 @@
         <div class="tab-pane fade" id="ch2">
             <div class="chapter-section">
                 <h2>第二章 理论基础</h2>
-                <div class="chapter-abstract"></div>
+                <div class="chapter-abstract">
+                    <p><strong>理论整合：</strong>本章系统梳理了政府数据开放（OGD）概念演进、数据质量评估、公共部门绩效评估和4E评估框架四个维度的理论基础，构建了"公共价值理论—4E框架—TOE框架"三位一体的整合分析框架。</p>
+                    <p><strong>4E评估框架：</strong>以Economy（供给保障）、Efficiency（平台效率）、Quality（数据质量）、Effectiveness（利用效果）四个维度构建评估体系，实现从"供给导向"向"效果导向"的范式转型。与开放数林指数相比，利用效果维度从2个指标/15%权重扩展至10个指标/25%权重。</p>
+                    <p><strong>核心发现：</strong>OGD概念演进呈现三个趋势——从政治话语向技术-制度复合话语转变、从供给侧导向向需求侧导向转变、从单一开放模式向多元运营模式转变。</p>
+                </div>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表2-1 全球OGD运营模式比较</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>运营模式</th><th>代表国家</th><th>主导主体</th><th>优势</th><th>挑战</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>集中式公共模式</td><td>美国、英国</td><td>政府</td><td>标准化程度高</td><td>灵活性不足</td></tr>
+                                            <tr><td>联邦/分权模式</td><td>德国、日本</td><td>各层级政府</td><td>适应性强</td><td>协调成本高</td></tr>
+                                            <tr><td>政企合作模式</td><td>韩国、法国</td><td>政府+企业</td><td>可持续性强</td><td>监管复杂</td></tr>
+                                            <tr><td>市场驱动模式</td><td>澳大利亚</td><td>市场主体</td><td>效率高</td><td>公平性差</td></tr>
+                                            <tr><td>开放社区模式</td><td>印度、肯尼亚</td><td>NGO+社区</td><td>创新活跃</td><td>可持续性弱</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第二章 理论基础</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表2-2 数据质量维度演进三阶段</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>阶段</th><th>代表研究</th><th>核心维度</th><th>评估重点</th><th>局限性</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>第一阶段：准确性导向（2000-2010）</td><td>Redman(1996); Pipino等(2002)</td><td>准确性、完整性</td><td>数据本身质量</td><td>忽视用户需求和场景</td></tr>
+                                            <tr><td>第二阶段：多维综合（2010-2018）</td><td>Batini & Scannapieco(2015)</td><td>准确性、完整性、一致性、时效性</td><td>数据生命周期质量</td><td>缺乏利用效果维度</td></tr>
+                                            <tr><td>第三阶段：价值导向（2018-至今）</td><td>本研究（2022-2024）</td><td>准确性、完整性、机器可读性、元数据质量、利用可及性</td><td>数据价值实现</td><td>部分指标量化困难</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第二章 理论基础</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表2-3 主要绩效评估方法比较</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>方法</th><th>类型</th><th>适用场景</th><th>优势</th><th>劣势</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>AHP层次分析法</td><td>主观赋权</td><td>多指标决策</td><td>专家判断、逻辑清晰</td><td>主观性强</td></tr>
+                                            <tr><td>熵权法</td><td>客观赋权</td><td>数据驱动评估</td><td>信息熵客观赋权</td><td>忽视指标相关性</td></tr>
+                                            <tr><td>TOPSIS</td><td>综合评价</td><td>多方案排序</td><td>直观、计算简便</td><td>依赖权重输入</td></tr>
+                                            <tr><td>DEA数据包络分析</td><td>效率评价</td><td>相对效率比较</td><td>无需预设权重</td><td>仅评价效率不评价绝对水平</td></tr>
+                                            <tr><td>DEMATEL</td><td>因果分析</td><td>因素关系识别</td><td>揭示因果关系网络</td><td>依赖专家打分</td></tr>
+                                            <tr><td>fsQCA</td><td>组态分析</td><td>多重因果识别</td><td>处理因果复杂性</td><td>样本量要求较高</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第二章 理论基础</span></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="chart-card">
@@ -407,8 +537,39 @@
         <div class="tab-pane fade" id="ch3">
             <div class="chapter-section">
                 <h2>第三章 评估框架与指标体系</h2>
-                <div class="chapter-abstract"></div>
+                <div class="chapter-abstract">
+                    <p><strong>4E+4维评估体系：</strong>构建了包含<strong>4个一级维度、12个二级指标、39个三级指标</strong>的政府数据开放平台数据利用绩效评估指标体系。4E维度为：Economy供给保障（C1）、Efficiency平台效率（C2）、Quality数据质量（C3）、Effectiveness利用效果（C4）。</p>
+                    <p><strong>指标权重：</strong>采用AHP-Delphi法确定指标权重，利用效果维度权重约25%，数据质量约23%，平台效率约26%，供给保障约26%。纳入授权运营、数据沙箱等前瞻性指标，兼顾评估的系统性和前瞻性。</p>
+                    <p><strong>三层样本架构：</strong>31个省级平台（全样本）+ 13个副省级/计划单列市（定向采集+问卷）+ 287个地级市（全样本统计+分层抽样60个实测），形成"省-副省-地市"三层评估体系。</p>
+                </div>
                 <div class="row">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表3-1 基于4E框架的评估指标体系（一级与二级维度）</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>一级维度</th><th>二级指标</th><th>指标说明</th><th>权重</th></tr></thead>
+                                        <tbody>
+                                            <tr><td rowspan="3"><strong>C1 供给保障</strong><br>Economy</td><td>数据集规模</td><td>有效数据集数量、覆盖领域广度</td><td>~9%</td></tr>
+                                            <tr><td>数据格式多样性</td><td>开放格式种类（CSV/JSON/XML/API等）</td><td>~8%</td></tr>
+                                            <tr><td>开放许可规范</td><td>开放许可类型、使用约束清晰度</td><td>~9%</td></tr>
+                                            <tr><td rowspan="3"><strong>C2 平台效率</strong><br>Efficiency</td><td>平台可用性</td><td>响应时间、稳定性、HTTPS覆盖率</td><td>~9%</td></tr>
+                                            <tr><td>搜索与发现</td><td>检索功能完备性、分类体系清晰度</td><td>~8%</td></tr>
+                                            <tr><td>下载与利用</td><td>批量下载、API可用性、预览功能</td><td>~9%</td></tr>
+                                            <tr><td rowspan="3"><strong>C3 数据质量</strong><br>Quality</td><td>元数据完整性</td><td>字段描述、更新频率标注、来源说明</td><td>~8%</td></tr>
+                                            <tr><td>机器可读性</td><td>结构化比例、非PDF格式占比</td><td>~8%</td></tr>
+                                            <tr><td>更新及时性</td><td>数据更新周期、历史版本保留</td><td>~7%</td></tr>
+                                            <tr><td rowspan="3"><strong>C4 利用效果</strong><br>Effectiveness</td><td>用户参与度</td><td>注册用户数、活跃下载量</td><td>~8%</td></tr>
+                                            <tr><td>应用成果数</td><td>基于开放数据开发的应用/产品数量</td><td>~9%</td></tr>
+                                            <tr><td>授权运营成效</td><td>授权运营交易额、数据产品数量</td><td>~8%</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第三章 评估框架与指标体系</span></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="chart-card">
@@ -653,8 +814,38 @@
         <div class="tab-pane fade" id="ch5">
             <div class="chapter-section">
                 <h2>第五章 实证研究</h2>
-                <div class="chapter-abstract"></div>
+                <div class="chapter-abstract">
+                    <p><strong>TOPSIS综合排名：</strong>30个省级平台综合绩效呈"头部集中、尾部分散"格局。东部沿海省份（浙江、上海、广东、北京、江苏）综合得分均在<strong>0.75以上</strong>，后9名省份得分均低于<strong>0.50</strong>。浙江以0.892居首，西藏以0.123垫底。</p>
+                    <p><strong>层级分化：</strong>副省级平台平均得分最高（<strong>0.623</strong>），省级次之（<strong>0.405</strong>），地级市已建平台平均<strong>0.318</strong>，尚有<strong>78.4%</strong>的地级市未建平台。呈现"副省级领先、省级中等、地级市两极分化"的层级梯度。</p>
+                    <p><strong>DEA效率评价：</strong>30个平台平均技术效率（TE）为0.712，仅8个平台达到效率前沿（TE=1.0）。交叉分析揭示"阈值效应"：当TE低于0.7时综合得分普遍偏低；TE超过0.9时综合得分才有较大可能进入前10名。</p>
+                    <p><strong>时间趋势（2020-2024）：</strong>全国省级平台平均综合得分从0.182增长至0.405，年均复合增长率<strong>17.5%</strong>。但增长呈"先快后慢"特征：2020-2022年年均增长率22.3%，2023-2025年降至13.8%。供给保障维度增长最快（年均19.2%），数据质量维度增长最慢（年均8.7%）。</p>
+                </div>
                 <div class="row">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表5-1 30个省级平台TOPSIS综合得分与DEA效率排名（前10名）</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>排名</th><th>省份</th><th>TOPSIS得分</th><th>等级</th><th>DEA效率(TE)</th><th>类型</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>浙江</td><td>0.892</td><td>优秀</td><td>1.000</td><td>高绩效高效率</td></tr>
+                                            <tr><td>2</td><td>广东</td><td>0.856</td><td>优秀</td><td>1.000</td><td>高绩效高效率</td></tr>
+                                            <tr><td>3</td><td>上海</td><td>0.834</td><td>优秀</td><td>0.987</td><td>高绩效高效率</td></tr>
+                                            <tr><td>4</td><td>北京</td><td>0.801</td><td>优秀</td><td>0.956</td><td>高绩效高效率</td></tr>
+                                            <tr><td>5</td><td>江苏</td><td>0.778</td><td>良好</td><td>0.923</td><td>高绩效高效率</td></tr>
+                                            <tr><td>6</td><td>山东</td><td>0.645</td><td>良好</td><td>0.812</td><td>高绩效低效率</td></tr>
+                                            <tr><td>7</td><td>福建</td><td>0.612</td><td>良好</td><td>0.876</td><td>高绩效高效率</td></tr>
+                                            <tr><td>8</td><td>贵州</td><td>0.587</td><td>中等</td><td>0.945</td><td>高绩效高效率</td></tr>
+                                            <tr><td>9</td><td>四川</td><td>0.534</td><td>中等</td><td>0.834</td><td>中等绩效</td></tr>
+                                            <tr><td>10</td><td>湖北</td><td>0.512</td><td>中等</td><td>0.789</td><td>中等绩效</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第五章 实证研究</span></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="chart-card">
@@ -760,8 +951,52 @@
         <div class="tab-pane fade" id="ch6">
             <div class="chapter-section">
                 <h2>第六章 问题诊断与fsQCA分析</h2>
-                <div class="chapter-abstract"></div>
+                <div class="chapter-abstract">
+                    <p><strong>DEMATEL因果识别：</strong>数据质量是影响数据利用绩效的最关键驱动因素，其<strong>中心度（4.23）</strong>和<strong>原因度（+1.87）</strong>均居12个二级指标之首。对利用效果的路径系数（<strong>0.47</strong>）显著高于供给数量（0.23），证实了"质量优于数量"的核心假设。</p>
+                    <p><strong>fsQCA三条高绩效路径：</strong>（1）<strong>技术驱动型</strong>（覆盖度0.312）：高制度保障×高技术能力×高数据供给；（2）<strong>效率-区域型</strong>（覆盖度0.287）：高数据质量×高技术能力×强区域协同；（3）<strong>生态协同型</strong>（覆盖度0.245）：高制度保障×强用户生态×高技术能力。三条路径总覆盖度达<strong>0.844</strong>，具有高度解释力。</p>
+                    <p><strong>核心诊断：</strong>我国省级数据开放平台正在经历"分化期"——先行平台已进入良性循环（数据多→用户多→反馈多→改进快），落后平台则陷入"低水平陷阱"。"数据口径幻觉"是当前评估体系的系统性偏差，以目录数量为基准的评估严重高估实际供给能力。</p>
+                </div>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表6-1 DEMATEL因果分析结果（中心度与原因度排名前5）</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>因素</th><th>中心度</th><th>原因度</th><th>类型</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>数据质量</td><td>4.23</td><td>+1.87</td><td>原因因素</td></tr>
+                                            <tr><td>制度保障</td><td>3.89</td><td>+1.56</td><td>原因因素</td></tr>
+                                            <tr><td>技术能力</td><td>3.67</td><td>+0.92</td><td>原因因素</td></tr>
+                                            <tr><td>平台服务</td><td>3.45</td><td>-0.34</td><td>结果因素</td></tr>
+                                            <tr><td>利用效果</td><td>3.21</td><td>-1.23</td><td>结果因素</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第六章 问题诊断与fsQCA分析</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表6-2 fsQCA高绩效组态路径分析结果</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>路径</th><th>条件组合</th><th>原始覆盖度</th><th>唯一覆盖度</th><th>一致性</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>H1 技术驱动型</td><td>S1*P1*Q1</td><td>0.312</td><td>0.089</td><td>0.923</td></tr>
+                                            <tr><td>H2 效率-区域型</td><td>Q1*T1*R1</td><td>0.287</td><td>0.076</td><td>0.901</td></tr>
+                                            <tr><td>H3 生态协同型</td><td>S1*E1*T1</td><td>0.245</td><td>0.054</td><td>0.887</td></tr>
+                                            <tr><td colspan="2"><strong>解的覆盖度</strong></td><td colspan="3"><strong>0.844</strong></td></tr>
+                                            <tr><td colspan="2"><strong>解的一致性</strong></td><td colspan="3"><strong>0.904</strong></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第六章 问题诊断与fsQCA分析</span></div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="chart-card">
@@ -815,6 +1050,106 @@
                                     <span class="chart-tag">第六章 问题诊断与fsQCA分析</span>
                                     <span class="text-muted small"><i class="bi bi-zoom-in me-1"></i>点击放大</span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="ch7">
+            <div class="chapter-section">
+                <h2>第七章 对策建议</h2>
+                <div class="chapter-abstract">
+                    <p><strong>三层次政策建议体系：</strong>基于"TOPSIS评估→DEA效率分析→DEMATEL因果识别→fsQCA组态探索"的四步分析链，提出包含<strong>国家层面制度重构</strong>、<strong>平台层面运营升级</strong>和<strong>区域层面差异化路径</strong>的三层次政策建议体系，并制定了2025—2030年三阶段实施路线图。</p>
+                    <p><strong>国家层面：</strong>建立全国统一的数据开放质量标准体系，推行"数据开放效果审计"制度；完善数据产权"三权分置"（数据资源持有权、数据加工使用权、数据产品经营权）在政府数据领域的落地方案；构建省级平台"对标赶超"机制，建立绩效公示与排名制度。</p>
+                    <p><strong>平台层面：</strong>实施"数据质量优先"战略，将有效数据集比例纳入平台考核核心指标；推进"API优先"开放策略，提升数据机器可读比例；建立用户需求反馈闭环机制，从"供给侧推送"转向"需求侧拉动"。</p>
+                    <p><strong>区域差异化路径：</strong>针对东部领先型平台，重点推进授权运营和数据产品化；针对中部追赶型平台，强化制度保障和技术能力建设；针对西部滞后型平台，优先解决"有没有"问题，建立省级统一数据开放平台。</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表7-1 "组态-对策"对应矩阵</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>平台类型</th><th>fsQCA路径</th><th>核心短板</th><th>优先策略</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>东部领先型</td><td>H1 技术驱动型</td><td>利用生态深化</td><td>授权运营+数据产品化</td></tr>
+                                            <tr><td>中部追赶型</td><td>H2 效率-区域型</td><td>制度保障不足</td><td>制度建设+技术投入</td></tr>
+                                            <tr><td>西部滞后型</td><td>H3 生态协同型</td><td>基础供给薄弱</td><td>统一平台建设+质量治理</td></tr>
+                                            <tr><td>低绩效陷阱型</td><td>非高绩效组态</td><td>多维度薄弱</td><td>重点突破+外部帮扶</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第七章 对策建议</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">表7-2 2025-2030年三阶段实施路线图</div>
+                                <div class="chart-desc">
+                                    <table class="table table-sm">
+                                        <thead><tr><th>阶段</th><th>时间</th><th>核心任务</th><th>关键指标</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>筑基期</td><td>2025-2026</td><td>统一标准体系建立；省级平台全覆盖</td><td>100%省级平台达标</td></tr>
+                                            <tr><td>提升期</td><td>2027-2028</td><td>数据质量专项治理；API开放率提升至80%</td><td>有效数据集比例≥50%</td></tr>
+                                            <tr><td>深化期</td><td>2029-2030</td><td>授权运营全面推广；生态协同机制成熟</td><td>平均综合得分≥0.60</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第七章 对策建议</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="ch8">
+            <div class="chapter-section">
+                <h2>第八章 结论与展望</h2>
+                <div class="chapter-abstract">
+                    <p><strong>核心结论：</strong>（1）我国省级政府数据开放平台数据利用绩效存在显著区域差异，呈"头部集中、尾部分散"格局；（2）"数据口径幻觉"是当前评估体系的系统性偏差，以数据目录数量为基准的评估结果存在系统性高估；（3）数据质量是影响数据利用绩效的最关键驱动因素，对利用效果的路径系数（0.47）显著高于供给数量（0.23）；（4）高绩效平台存在三条等效路径，为差异化施策提供了实证依据。</p>
+                    <p><strong>理论贡献：</strong>（1）构建了以"效果导向"为核心的4E评估框架，形成从供给导向到效果导向的评估范式跃迁；（2）发现并测量了"数据口径幻觉"现象，揭示了现有评估体系的系统性偏差；（3）将fsQCA与多期DID相结合，形成"宏观因果识别+微观机制揭示"的混合研究设计，为政府数据开放研究提供了新的方法论范式。</p>
+                    <p><strong>研究局限与展望：</strong>样本聚焦省级平台，地级市数据以分层抽样为主；数据利用效果的测量仍面临"价值量化"的方法论挑战；未来研究可引入大语言模型辅助数据质量自动评估，探索动态监测与实时评估的技术路径。</p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-body">
+                                <div class="chart-title">研究核心指标汇总</div>
+                                <div class="chart-desc">
+                                    <div class="row text-center g-3">
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded" style="background:linear-gradient(135deg,#bee3f8,#ebf8ff);">
+                                                <div style="font-size:2rem;font-weight:700;color:#2c5282;">331</div>
+                                                <div class="small text-muted">平台样本</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded" style="background:linear-gradient(135deg,#c6f6d5,#f0fff4);">
+                                                <div style="font-size:2rem;font-weight:700;color:#276749;">39</div>
+                                                <div class="small text-muted">评估指标</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded" style="background:linear-gradient(135deg,#feebc8,#fffaf0);">
+                                                <div style="font-size:2rem;font-weight:700;color:#744210;">5</div>
+                                                <div class="small text-muted">研究方法</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="p-3 rounded" style="background:linear-gradient(135deg,#fed7d7,#fff5f5);">
+                                                <div style="font-size:2rem;font-weight:700;color:#742a2a;">3</div>
+                                                <div class="small text-muted">高绩效路径</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-meta"><span class="chart-tag">第八章 结论与展望</span></div>
                             </div>
                         </div>
                     </div>

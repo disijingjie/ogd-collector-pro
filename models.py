@@ -714,6 +714,36 @@ def init_provenance_data():
 
 
 
+def init_schedule_data():
+    """初始化论文研究专用定时采集任务"""
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM auto_schedule")
+    if cursor.fetchone()[0] > 0:
+        conn.close()
+        print("[INFO] 定时任务数据已存在，跳过初始化")
+        return
+
+    from datetime import datetime, timedelta
+    now = datetime.now()
+    tomorrow_2am = (now + timedelta(days=1)).replace(hour=2, minute=0, second=0)
+
+    schedules = [
+        ('每日省级平台巡检', '0 2 * * *', 'provincial', 1, tomorrow_2am.isoformat()),
+        ('每周全量三层架构采集', '0 3 * * 1', 'full', 1, (now + timedelta(days=(7-now.weekday())%7 or 7)).replace(hour=3, minute=0, second=0).isoformat()),
+        ('每月4E评估指标更新', '0 4 1 * *', 'full', 1, (now.replace(day=1) + timedelta(days=32)).replace(day=1, hour=4, minute=0, second=0).isoformat()),
+        ('副省级平台专项监测', '0 6 * * *', 'subprovincial', 1, (now + timedelta(days=1)).replace(hour=6, minute=0, second=0).isoformat()),
+    ]
+
+    cursor.executemany("""
+        INSERT INTO auto_schedule (schedule_name, cron_expression, task_type, is_active, next_run_at, created_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, [(s[0], s[1], s[2], s[3], s[4], now.isoformat()) for s in schedules])
+    conn.commit()
+    conn.close()
+    print(f"[OK] 已初始化 {len(schedules)} 条定时采集任务")
+
+
 if __name__ == '__main__':
     init_db()
     init_platforms_data()

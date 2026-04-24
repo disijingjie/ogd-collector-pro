@@ -19,7 +19,7 @@ from functools import wraps
 
 # 确保能导入本地模块
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from models import get_db, init_db, init_platforms_data, init_provenance_data, ensure_db, DB_PATH
+from models import get_db, init_db, init_platforms_data, init_provenance_data, init_schedule_data, ensure_db, DB_PATH
 from collector_engine import CollectorEngine, create_collection_task
 
 app = Flask(__name__)
@@ -156,6 +156,8 @@ def collector_page():
     """采集任务管理"""
     conn = get_db()
     cursor = conn.cursor()
+
+    # 1. 任务列表
     cursor.execute("""
         SELECT id, task_name, task_type, status, total_count, completed_count, success_count, fail_count, started_at, completed_at
         FROM collection_tasks ORDER BY id DESC
@@ -163,7 +165,6 @@ def collector_page():
     tasks = []
     for row in cursor.fetchall():
         task = dict(zip(['id', 'task_name', 'task_type', 'status', 'total', 'completed', 'success', 'failed', 'started', 'completed_time'], row))
-        # 确保数值字段为整数
         for key in ['id', 'total', 'completed', 'success', 'failed']:
             if task.get(key) is not None:
                 try:
@@ -171,9 +172,88 @@ def collector_page():
                 except (ValueError, TypeError):
                     task[key] = 0
         tasks.append(task)
+
+    # 2. 平台层级统计
+    cursor.execute("SELECT tier, COUNT(*) as count FROM platforms GROUP BY tier")
+    platform_stats = {row[0]: row[1] for row in cursor.fetchall()}
+
+    # 3. 最新采集记录样本（最近8条，含4E得分）
+    cursor.execute("""
+        SELECT platform_name, tier, overall_score, score_c1, score_c2, score_c3, score_c4,
+               dataset_count, status, collected_at
+        FROM collection_records
+        ORDER BY collected_at DESC, id DESC
+        LIMIT 8
+    """)
+    latest_records = []
+    for row in cursor.fetchall():
+        latest_records.append({
+            'platform_name': row[0], 'tier': row[1], 'overall_score': row[2] or 0,
+            'score_c1': row[3] or 0, 'score_c2': row[4] or 0, 'score_c3': row[5] or 0, 'score_c4': row[6] or 0,
+            'dataset_count': row[7] or 0, 'status': row[8] or 'unknown', 'collected_at': row[9]
+        })
+
+    # 4. 最新采集日志（最近15条）
+    cursor.execute("""
+        SELECT log_level, message, created_at
+        FROM collection_logs
+        ORDER BY created_at DESC, id DESC
+        LIMIT 15
+    """)
+    latest_logs = []
+    for row in cursor.fetchall():
+        latest_logs.append({'level': row[0], 'message': row[1], 'time': row[2]})
+    latest_logs.reverse()  # 按时间正序
+
+    # 5. 总体采集统计
+    cursor.execute("SELECT COUNT(*) FROM platforms")
+    total_platforms = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(DISTINCT platform_id) FROM collection_records WHERE status='available'")
+    collected_platforms = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM collection_records")
+    total_records = cursor.fetchone()[0]
+    cursor.execute("SELECT AVG(overall_score) FROM collection_records WHERE overall_score > 0")
+    avg_score_row = cursor.fetchone()
+    avg_score = round(avg_score_row[0], 3) if avg_score_row and avg_score_row[0] else 0
+
+    collection_summary = {
+        'total_platforms': total_platforms,
+        'collected_platforms': collected_platforms,
+        'total_records': total_records,
+        'avg_score': avg_score,
+        'success_rate': round(collected_platforms / total_platforms * 100, 1) if total_platforms > 0 else 0
+    }
+
+    # 6. 各网站采集了什么数据的概览
+    cursor.execute("""
+        SELECT p.name, p.tier, p.url, p.region,
+               COUNT(cr.id) as record_count,
+               MAX(cr.collected_at) as last_collected,
+               AVG(cr.overall_score) as avg_score
+        FROM platforms p
+        LEFT JOIN collection_records cr ON p.id = cr.platform_id
+        GROUP BY p.id
+        ORDER BY p.tier, p.region, p.name
+        LIMIT 20
+    """)
+    platform_overview = []
+    for row in cursor.fetchall():
+        platform_overview.append({
+            'name': row[0], 'tier': row[1], 'url': row[2], 'region': row[3],
+            'record_count': row[4] or 0, 'last_collected': row[5], 'avg_score': round(row[6], 2) if row[6] else 0
+        })
+
     conn.close()
     embed = request.args.get('embed', '')
-    return render_template('collector.html', tasks=tasks, title='采集管理 | OGD-Collector Pro', embed=embed)
+    return render_template('collector.html',
+                           tasks=tasks,
+                           platform_stats=platform_stats,
+                           latest_records=latest_records,
+                           latest_logs=latest_logs,
+                           collection_summary=collection_summary,
+                           platform_overview=platform_overview,
+                           title='采集管理 | OGD-Collector Pro',
+                           embed=embed)
 
 
 @app.route('/platforms')
@@ -1316,6 +1396,7 @@ def before_first_request():
     ensure_db()
     init_platforms_data()
     init_provenance_data()
+    init_schedule_data()
 
 
 # ===== 后台定时任务调度器 =====
@@ -1428,6 +1509,7 @@ if __name__ == '__main__':
     ensure_db()
     init_platforms_data()
     init_provenance_data()
+    init_schedule_data()
 
     print("=" * 60)
     print("OGD-Collector Pro 启动中...")
