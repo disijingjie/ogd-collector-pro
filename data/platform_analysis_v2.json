@@ -1,0 +1,612 @@
+[
+  {
+    "code": "anhui",
+    "name": "安徽省",
+    "url": "http://data.ahzwfw.gov.cn:8000",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": []
+  },
+  {
+    "code": "beijing",
+    "name": "北京市",
+    "url": "https://data.beijing.gov.cn",
+    "status": "success",
+    "dataset_count": 4454,
+    "candidates": [
+      {
+        "value": 4454,
+        "confidence": "high",
+        "pattern": "数据集:",
+        "context": " 2 3 4 Previous Next    单位数 71个     数据集 4454个     数据接口 4454个     数据量 1.95亿条  推荐数据   "
+      }
+    ],
+    "dataset_page_url": "https://data.beijing.gov.cn/zyml/kfml/index.htm",
+    "notes": [],
+    "best_candidate": {
+      "value": 4454,
+      "confidence": "high",
+      "pattern": "数据集:",
+      "context": " 2 3 4 Previous Next    单位数 71个     数据集 4454个     数据接口 4454个     数据量 1.95亿条  推荐数据   "
+    }
+  },
+  {
+    "code": "chongqing",
+    "name": "重庆市",
+    "url": "https://data.cq.gov.cn",
+    "status": "success",
+    "dataset_count": 107,
+    "candidates": [
+      {
+        "value": 107,
+        "confidence": "high",
+        "pattern": "开放X个",
+        "context": "》 《重庆市政务数据资源管理暂行办法》 《中华人民共和国网络安全法》 现已开放 107 个部门; 39 个区县; 19,803 类资源; 155,015 个数据项; 2"
+      },
+      {
+        "value": 22550,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个部门; 39 个区县; 19,803 类资源; 155,015 个数据项; 22,550 个数据集(其中包含 9,968 个API接口) 数据预览 快速查看本网站提供的全"
+      }
+    ],
+    "dataset_page_url": "https://data.cq.gov.cn/opendata/directory",
+    "notes": [],
+    "best_candidate": {
+      "value": 107,
+      "confidence": "high",
+      "pattern": "开放X个",
+      "context": "》 《重庆市政务数据资源管理暂行办法》 《中华人民共和国网络安全法》 现已开放 107 个部门; 39 个区县; 19,803 类资源; 155,015 个数据项; 2"
+    }
+  },
+  {
+    "code": "fujian",
+    "name": "福建省",
+    "url": "https://data.fujian.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": "https://www.fjbigdata.com.cn/",
+    "notes": []
+  },
+  {
+    "code": "gansu",
+    "name": "甘肃省",
+    "url": "https://data.gansu.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.gansu.gov.cn/\nCall log:\n  - navigating to \"https://data.gansu.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "guangdong",
+    "name": "广东省",
+    "url": "https://gddata.gd.gov.cn",
+    "status": "success",
+    "dataset_count": 97528,
+    "candidates": [
+      {
+        "value": 97528,
+        "confidence": "high",
+        "pattern": "数据集:",
+        "context": "开发者中心 GData，欢迎来到广东省 省级部门 52个 地市 21个 数据集 97,528个 政府数据 302.745亿条 数据应用 182 个 搜索 热门关键词： 统计"
+      }
+    ],
+    "dataset_page_url": null,
+    "notes": [],
+    "best_candidate": {
+      "value": 97528,
+      "confidence": "high",
+      "pattern": "数据集:",
+      "context": "开发者中心 GData，欢迎来到广东省 省级部门 52个 地市 21个 数据集 97,528个 政府数据 302.745亿条 数据应用 182 个 搜索 热门关键词： 统计"
+    }
+  },
+  {
+    "code": "guangxi",
+    "name": "广西壮族自治区",
+    "url": "https://data.gxzf.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": "https://data.gxzf.gov.cn/portal/catalog/",
+    "notes": []
+  },
+  {
+    "code": "guizhou",
+    "name": "贵州省",
+    "url": "https://data.guizhou.gov.cn",
+    "status": "success",
+    "dataset_count": 25169,
+    "candidates": [
+      {
+        "value": 25169,
+        "confidence": "high",
+        "pattern": "数据资源:",
+        "context": "互动中心 开放生态  数据统计  资讯动态  开放部门 1665 个 数据资源 25169 个 开放文件 22248 个 数据接口 14646 个 省级部门市级部门主题场景"
+      }
+    ],
+    "dataset_page_url": "https://data.guizhou.gov.cn/data-catalog",
+    "notes": [],
+    "best_candidate": {
+      "value": 25169,
+      "confidence": "high",
+      "pattern": "数据资源:",
+      "context": "互动中心 开放生态  数据统计  资讯动态  开放部门 1665 个 数据资源 25169 个 开放文件 22248 个 数据接口 14646 个 省级部门市级部门主题场景"
+    }
+  },
+  {
+    "code": "hainan",
+    "name": "海南省",
+    "url": "https://data.hainan.gov.cn",
+    "status": "success",
+    "dataset_count": 35835,
+    "candidates": [
+      {
+        "value": 334,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "交流 全部 数据集 数据接口 现已开放数据: 35835个目录、 22个主题、 334个数据集、 2853个数据部门、 38314个数据接口 数据分类 部门分类 主题"
+      },
+      {
+        "value": 35835,
+        "confidence": "medium",
+        "pattern": "个目录",
+        "context": "数据接口 数据应用 开放指数 互动交流 全部 数据集 数据接口 现已开放数据: 35835个目录、 22个主题、 334个数据集、 2853个数据部门、 38314个数据"
+      }
+    ],
+    "dataset_page_url": "https://data.hainan.gov.cn/sjj/index.htm",
+    "notes": [],
+    "best_candidate": {
+      "value": 35835,
+      "confidence": "medium",
+      "pattern": "个目录",
+      "context": "数据接口 数据应用 开放指数 互动交流 全部 数据集 数据接口 现已开放数据: 35835个目录、 22个主题、 334个数据集、 2853个数据部门、 38314个数据"
+    }
+  },
+  {
+    "code": "hebei",
+    "name": "河北省",
+    "url": "https://data.hebei.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.hebei.gov.cn/\nCall log:\n  - navigating to \"https://data.hebei.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "heilongjiang",
+    "name": "黑龙江省",
+    "url": "https://data.hlj.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.hlj.gov.cn/\nCall log:\n  - navigating to \"https://data.hlj.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "henan",
+    "name": "河南省",
+    "url": "https://data.hnzwfw.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": []
+  },
+  {
+    "code": "hubei",
+    "name": "湖北省",
+    "url": "https://data.hubei.gov.cn",
+    "status": "success",
+    "dataset_count": 24119,
+    "candidates": [
+      {
+        "value": 24119,
+        "confidence": "high",
+        "pattern": "开放X个",
+        "context": "口 数据应用 特色服务 开放动态 统计分析 互动交流 用户中心  全省现已开放 24119 个数据目录, 21878个数据集, 5983 个数据接口, 528个创新应用, "
+      },
+      {
+        "value": 21878,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "放动态 统计分析 互动交流 用户中心  全省现已开放 24119 个数据目录, 21878个数据集, 5983 个数据接口, 528个创新应用,  116375 万条数据"
+      },
+      {
+        "value": 116375,
+        "confidence": "medium",
+        "pattern": "万条",
+        "context": "数据目录, 21878个数据集, 5983 个数据接口, 528个创新应用,  116375 万条数据, 已提供 238 万次数据下载， 73257 万次接口调用  数据企业"
+      }
+    ],
+    "dataset_page_url": "https://hqdeclare.hubei-data.com/portal/#/home",
+    "notes": [],
+    "best_candidate": {
+      "value": 24119,
+      "confidence": "high",
+      "pattern": "开放X个",
+      "context": "口 数据应用 特色服务 开放动态 统计分析 互动交流 用户中心  全省现已开放 24119 个数据目录, 21878个数据集, 5983 个数据接口, 528个创新应用, "
+    }
+  },
+  {
+    "code": "hunan",
+    "name": "湖南省",
+    "url": "https://data.hunan.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": "https://data.hunan.gov.cn/business/catalog/list.do",
+    "notes": []
+  },
+  {
+    "code": "jiangsu",
+    "name": "江苏省",
+    "url": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": "https://data.jszwfw.gov.cn:8118/extranet",
+    "notes": []
+  },
+  {
+    "code": "jiangxi",
+    "name": "江西省",
+    "url": "https://data.jiangxi.gov.cn",
+    "status": "success",
+    "dataset_count": 534,
+    "candidates": [
+      {
+        "value": 534,
+        "confidence": "high",
+        "pattern": "数据目录:",
+        "context": "动态 互动交流 数据指数 开发者中心 搜索 领域分类 部门分类 开放数据目录  534个  开放接口目录  203个  数据项总数  654项  数据总量  15,4"
+      }
+    ],
+    "dataset_page_url": "https://data.jiangxi.gov.cn/",
+    "notes": [],
+    "best_candidate": {
+      "value": 534,
+      "confidence": "high",
+      "pattern": "数据目录:",
+      "context": "动态 互动交流 数据指数 开发者中心 搜索 领域分类 部门分类 开放数据目录  534个  开放接口目录  203个  数据项总数  654项  数据总量  15,4"
+    }
+  },
+  {
+    "code": "jilin",
+    "name": "吉林省",
+    "url": "https://data.jl.gov.cn",
+    "status": "success",
+    "dataset_count": 12,
+    "candidates": [
+      {
+        "value": 12,
+        "confidence": "high",
+        "pattern": "开放目录:",
+        "context": "公共数据开放平台 搜索 请登录 首页 数据目录 政策动态 303 个 开放目录 12 个 开放接口目录(个) 289 个 开放数据集目录(个) 主题分类部门分类 生态"
+      }
+    ],
+    "dataset_page_url": null,
+    "notes": [],
+    "best_candidate": {
+      "value": 12,
+      "confidence": "high",
+      "pattern": "开放目录:",
+      "context": "公共数据开放平台 搜索 请登录 首页 数据目录 政策动态 303 个 开放目录 12 个 开放接口目录(个) 289 个 开放数据集目录(个) 主题分类部门分类 生态"
+    }
+  },
+  {
+    "code": "liaoning",
+    "name": "辽宁省",
+    "url": "https://data.ln.gov.cn",
+    "status": "success",
+    "dataset_count": 26,
+    "candidates": [
+      {
+        "value": 26,
+        "confidence": "high",
+        "pattern": "开放X个",
+        "context": "动交流 开发者中心 以开放推进数字辽宁建设 以数据赋能制造强省振兴  现已开放 26 个部门，4,120 个数据目录，236 条数据接口，2169万 条数据   搜索"
+      },
+      {
+        "value": 236,
+        "confidence": "medium",
+        "pattern": "条数据",
+        "context": "建设 以数据赋能制造强省振兴  现已开放 26 个部门，4,120 个数据目录，236 条数据接口，2169万 条数据   搜索 高级搜索 数据需求填报 场景导航 领域"
+      }
+    ],
+    "dataset_page_url": null,
+    "notes": [],
+    "best_candidate": {
+      "value": 26,
+      "confidence": "high",
+      "pattern": "开放X个",
+      "context": "动交流 开发者中心 以开放推进数字辽宁建设 以数据赋能制造强省振兴  现已开放 26 个部门，4,120 个数据目录，236 条数据接口，2169万 条数据   搜索"
+    }
+  },
+  {
+    "code": "neimenggu",
+    "name": "内蒙古自治区",
+    "url": "https://data.nmg.gov.cn",
+    "status": "success",
+    "dataset_count": 22,
+    "candidates": [
+      {
+        "value": 22,
+        "confidence": "high",
+        "pattern": "开放X个",
+        "context": "册 首页 数据目录 数据服务 数据应用 地图服务 数据统计 互动交流 现已开放 22个主题， 37个部门， 访问量1,575,223 ,下载量3,726 219条数"
+      }
+    ],
+    "dataset_page_url": "https://data.nmg.gov.cn/oportal/catalog/",
+    "notes": [],
+    "best_candidate": {
+      "value": 22,
+      "confidence": "high",
+      "pattern": "开放X个",
+      "context": "册 首页 数据目录 数据服务 数据应用 地图服务 数据统计 互动交流 现已开放 22个主题， 37个部门， 访问量1,575,223 ,下载量3,726 219条数"
+    }
+  },
+  {
+    "code": "ningxia",
+    "name": "宁夏回族自治区",
+    "url": "https://data.nx.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.nx.gov.cn/\nCall log:\n  - navigating to \"https://data.nx.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "qinghai",
+    "name": "青海省",
+    "url": "https://data.qinghai.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.qinghai.gov.cn/\nCall log:\n  - navigating to \"https://data.qinghai.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "shaanxi",
+    "name": "陕西省",
+    "url": "https://data.shaanxi.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.shaanxi.gov.cn/\nCall log:\n  - navigating to \"https://data.shaanxi.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "shandong",
+    "name": "山东省",
+    "url": "https://data.sd.gov.cn",
+    "status": "success",
+    "dataset_count": 58,
+    "candidates": [
+      {
+        "value": 58,
+        "confidence": "high",
+        "pattern": "开放X个",
+        "context": "权运营专区 数据统计 互动交流 开放生态 数据隐私计算平台 登录 注册 现已开放58个部门，63,656个数据目录，537.0亿条数据，1.31万条数据接口，108"
+      },
+      {
+        "value": 31,
+        "confidence": "medium",
+        "pattern": "万条",
+        "context": "登录 注册 现已开放58个部门，63,656个数据目录，537.0亿条数据，1.31万条数据接口，108个创新应用 查看更多 搜索 高级搜索 看数据 海量数据，预览"
+      }
+    ],
+    "dataset_page_url": "https://data.sd.gov.cn/portal/catalog/index?filterParam=org_code&filterParamCode=szbm&page=1",
+    "notes": [],
+    "best_candidate": {
+      "value": 58,
+      "confidence": "high",
+      "pattern": "开放X个",
+      "context": "权运营专区 数据统计 互动交流 开放生态 数据隐私计算平台 登录 注册 现已开放58个部门，63,656个数据目录，537.0亿条数据，1.31万条数据接口，108"
+    }
+  },
+  {
+    "code": "shanghai",
+    "name": "上海市",
+    "url": "https://data.sh.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": []
+  },
+  {
+    "code": "shanxi",
+    "name": "山西省",
+    "url": "http://data.shanxi.gov.cn",
+    "status": "success",
+    "dataset_count": 489,
+    "candidates": [
+      {
+        "value": 489,
+        "confidence": "high",
+        "pattern": "数据资源:",
+        "context": " 资料中心 \t 网站统计 \t 开放生态  现已开放：政务部门 43个，数据资源 489个，服务接口 16个，数据总量 16692842条，数据项 2174个     "
+      }
+    ],
+    "dataset_page_url": "http://data.shanxi.gov.cn/solr/riPage.do?type=1",
+    "notes": [],
+    "best_candidate": {
+      "value": 489,
+      "confidence": "high",
+      "pattern": "数据资源:",
+      "context": " 资料中心 \t 网站统计 \t 开放生态  现已开放：政务部门 43个，数据资源 489个，服务接口 16个，数据总量 16692842条，数据项 2174个     "
+    }
+  },
+  {
+    "code": "sichuan",
+    "name": "四川省",
+    "url": "https://scdata.net.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": "https://scdata.net.cn/oportal/catalog/",
+    "notes": []
+  },
+  {
+    "code": "tianjin",
+    "name": "天津市",
+    "url": "https://data.tj.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [
+      {
+        "value": 1000,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "数据集量质同升。在科学研究、工业制造、医疗卫生等20个以上重点行业领域，推动建设1000个数据集，重点打造100个以上模态丰富、赋能效果显著的行业高质量数据集。  ——"
+      }
+    ],
+    "dataset_page_url": "https://data.tj.gov.cn/zwgk/zcwj/202511/t20251114_7177875.html",
+    "notes": [
+      "dataset_page_found"
+    ]
+  },
+  {
+    "code": "xinjiang",
+    "name": "新疆维吾尔自治区",
+    "url": "https://data.xinjiang.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.xinjiang.gov.cn/\nCall log:\n  - navigating to \"https://data.xinjiang.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "xizang",
+    "name": "西藏自治区",
+    "url": "https://data.xizang.gov.cn",
+    "status": "error",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.xizang.gov.cn/\nCall log:\n  - navigating to \"https://data.xizang.gov.cn/\", waiting until \"domcontentloaded\"\n"
+  },
+  {
+    "code": "yunnan",
+    "name": "云南省",
+    "url": "https://data.yn.gov.cn",
+    "status": "success",
+    "dataset_count": null,
+    "candidates": [],
+    "dataset_page_url": null,
+    "notes": []
+  },
+  {
+    "code": "zhejiang",
+    "name": "浙江省",
+    "url": "https://data.zj.gov.cn",
+    "status": "success",
+    "dataset_count": 3920,
+    "candidates": [
+      {
+        "value": 3920,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "旅游厅 数据更新时间：2026-04-24 05:01:01 数据集全览 省级 3,920 个数据集 杭州市 3,541 个数据集 宁波市 1,871 个数据集 温州市 1"
+      },
+      {
+        "value": 3541,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "-04-24 05:01:01 数据集全览 省级 3,920 个数据集 杭州市 3,541 个数据集 宁波市 1,871 个数据集 温州市 1,854 个数据集 嘉兴市 1"
+      },
+      {
+        "value": 1871,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 数据集全览 省级 3,920 个数据集 杭州市 3,541 个数据集 宁波市 1,871 个数据集 温州市 1,854 个数据集 嘉兴市 1,352 个数据集 湖州市 1"
+      },
+      {
+        "value": 1854,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 杭州市 3,541 个数据集 宁波市 1,871 个数据集 温州市 1,854 个数据集 嘉兴市 1,352 个数据集 湖州市 1,231 个数据集 绍兴市 1"
+      },
+      {
+        "value": 1352,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 宁波市 1,871 个数据集 温州市 1,854 个数据集 嘉兴市 1,352 个数据集 湖州市 1,231 个数据集 绍兴市 1,670 个数据集 金华市 1"
+      },
+      {
+        "value": 1231,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 温州市 1,854 个数据集 嘉兴市 1,352 个数据集 湖州市 1,231 个数据集 绍兴市 1,670 个数据集 金华市 1,917 个数据集 衢州市 1"
+      },
+      {
+        "value": 1670,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 嘉兴市 1,352 个数据集 湖州市 1,231 个数据集 绍兴市 1,670 个数据集 金华市 1,917 个数据集 衢州市 1,522 个数据集 舟山市 7"
+      },
+      {
+        "value": 1917,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 湖州市 1,231 个数据集 绍兴市 1,670 个数据集 金华市 1,917 个数据集 衢州市 1,522 个数据集 舟山市 736 个数据集 台州市 1,5"
+      },
+      {
+        "value": 1522,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 绍兴市 1,670 个数据集 金华市 1,917 个数据集 衢州市 1,522 个数据集 舟山市 736 个数据集 台州市 1,537 个数据集 丽水市 978"
+      },
+      {
+        "value": 736,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": " 个数据集 金华市 1,917 个数据集 衢州市 1,522 个数据集 舟山市 736 个数据集 台州市 1,537 个数据集 丽水市 978 个数据集 数据全景 数据"
+      },
+      {
+        "value": 1537,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "17 个数据集 衢州市 1,522 个数据集 舟山市 736 个数据集 台州市 1,537 个数据集 丽水市 978 个数据集 数据全景 数据领域数据场景 医疗卫生 查看更"
+      },
+      {
+        "value": 978,
+        "confidence": "medium",
+        "pattern": "个数据集",
+        "context": "22 个数据集 舟山市 736 个数据集 台州市 1,537 个数据集 丽水市 978 个数据集 数据全景 数据领域数据场景 医疗卫生 查看更多 资源能源 查看更多 其"
+      },
+      {
+        "value": 961,
+        "confidence": "medium",
+        "pattern": "万条",
+        "context": "入库”原则开展源头贯标，实现“有好数用”，完成信用领域50张表、228个字段项，961万条数据的质量校核，合格率100%。（二）“制度创新+多管齐下”推动数据流通。一"
+      },
+      {
+        "value": 961,
+        "confidence": "medium",
+        "pattern": "万条",
+        "context": "入库”原则开展源头贯标，实现“有好数用”，完成信用领域50张表、228个字段项，961万条数据的质量校核，合格率100%。（二）“制度创新+多管齐下”推动数据流通。一"
+      }
+    ],
+    "dataset_page_url": "https://data.beijing.gov.cn",
+    "notes": [],
+    "best_candidate": {
+      "value": 3920,
+      "confidence": "medium",
+      "pattern": "个数据集",
+      "context": "旅游厅 数据更新时间：2026-04-24 05:01:01 数据集全览 省级 3,920 个数据集 杭州市 3,541 个数据集 宁波市 1,871 个数据集 温州市 1"
+    }
+  }
+]

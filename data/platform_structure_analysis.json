@@ -1,0 +1,659 @@
+[
+  {
+    "code": "anhui",
+    "name": "安徽省",
+    "url": "http://data.ahzwfw.gov.cn:8000",
+    "status": "success",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "beijing",
+    "name": "北京市",
+    "url": "https://data.beijing.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 71,
+    "dataset_count_patterns": [
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 71,
+        "context": "单位数\n71个\n\n \n\n数据集\n4454个\n\n \n\n数据接口\n4454个\n\n \n\n数据量\n1.95亿条"
+      }
+    ],
+    "dataset_page_url": "https://data.beijing.gov.cn/zyml/kfml/index.htm",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "chongqing",
+    "name": "重庆市",
+    "url": "https://data.cq.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 107,
+    "dataset_count_patterns": [
+      {
+        "pattern": "个数据集",
+        "value": 22550,
+        "context": "重庆市公共数据开放系统 首页 数据目录 应用成果 地图服务 互动交流"
+      },
+      {
+        "pattern": "css_selector:[class*=\"count\"]",
+        "value": 107,
+        "context": "现已开放 107 个部门; 39 个区县; 19,803 类资源; 155,015 个数据项; 22,550 个数据集(其中包含 9,968 个API接口)"
+      },
+      {
+        "pattern": "css_selector:[class*=\"count\"]",
+        "value": 107,
+        "context": "现已开放 107 个部门; 39 个区县; 19,803 类资源; 155,015 个数据项; 22,550 个数据集(其中包含 9,968 个API接口)"
+      }
+    ],
+    "dataset_page_url": "https://data.cq.gov.cn/opendata/directory",
+    "api_endpoints": [
+      ";position:absolute;bottom:-10px;width:0;height:0;border-left:10px solid rgba(0,0,0,0);border-right:10px solid rgba(0,0,0,0);border-top:10px solid #ff5c20}.home-layout .common-centerContainerApplyDetail .app-detail .container{overflow:auto;background:#f3f6fc;padding-bottom:50px;font-family:PingFangSC-Semibold}.home-layout .common-centerContainerApplyDetail .app-detail .container .left{width:100%}.home-layout .common-centerContainerApplyDetail .app-detail .container .right{width:100%;overflow:auto;height:100%}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .right-container{margin-top:10px;background:#fff}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .right-container .icon{width:1.3em;height:1.3em}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline{padding:40px 150px 70px 200px}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__timestamp{font-size:18px;text-align:left;font-weight:600;color:#333;font-family:PingFangSC-Medium}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__tail{border-left:2px dashed #0077e5}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__dot{width:25px;height:25px;left:-7px;color:#fff;border-radius:50%;background:#0077e5;-webkit-box-shadow:0 2px 8px 0 #0077e5;box-shadow:0 2px 8px 0 #0077e5}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__wrapper{padding-left:40px}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__content{text-align:left}.home-layout .common-centerContainerApplyDetail .app-detail .container .right .el-timeline .el-timeline-item__content>div{color:#666;margin-top:10px;font-family:PingFangSC-Regular}.home-layout .common-centerContainerApplyDetail .app-detail .container .title{height:62px;line-height:62px;text-align:left;color:#333;font-size:16px;font-weight:700}.home-layout .common-centerContainerApplyDetail .app-detail .container .table{border-top:1px solid #dcdfe6;border-left:1px solid #dcdfe6}.home-layout .common-centerContainerApplyDetail .app-detail .container .table .el-row{display:-webkit-box;display:-ms-flexbox;display:flex}.home-layout .common-centerContainerApplyDetail .app-detail .container .table .el-row .el-col{height:100%;min-height:70px;border-right:1px solid #dcdfe6;border-bottom:1px solid #dcdfe6}.home-layout .common-centerContainerApplyDetail .app-detail .container .table .el-row .el-col:nth-child(odd){display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;color:#999;background-color:#f2f6fc}.home-layout .common-centerContainerApplyDetail .app-detail .container .table .el-row .el-col:nth-child(2n){display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;padding-left:20px;color:#333}.home-layout .common-centerContainerApplyDetail .app-detail .container .people{height:300px;margin-top:10px;padding:0 20px;background:#fff}.home-layout .common-centerContainerApplyDetail .app-detail .container .app-inter{margin-top:10px;padding:0 20px;background:#fff;padding:20px}.home-layout .common-centerContainerApplyDetail .app-detail .container .data{width:100%;margin-top:10px;padding:0 20px;background:#fff}.home-layout .common-centerContainerApplyDetail .app-detail .container .data .icon-title{color:#ff5c20;padding:10px 0;text-align:left}.home-layout .common-centerContainerApplyDetail .app-detail .container .data .data-table{padding-bottom:37px}.home-layout .common-centerContainerApplyDetail .app-detail .container .data .el-table .el-table__body,.home-layout .common-centerContainerApplyDetail .app-detail .container .data .el-table .el-table__header{width:100%!important}.home-layout .common-centerContainerApplyDetail .app-detail .container .data .el-table .el-table__header tr th{background-color:#f5f7fa!important}.home-layout .common-centerContainerApplyDetail .app-detail .container .data .el-table .el-table__header tr th .cell{color:#999}.home-layout .common-commentContainer,.home-layout .common-debugContainer,.home-layout .common-favoriteContainer,.home-layout .common-followContainer{padding:40px 24px}.home-layout .common-registerContainer{padding:10px 24px}.home-layout .common-registerContainer .top-wrap{padding-bottom:0}.home-layout .common-registerContainer .top-wrap .status-wrap{font-size:12px}.home-layout .common-registerContainer .top-wrap .status-wrap .status-item{margin-left:10px;padding:2px 6px;cursor:pointer}.home-layout .common-registerContainer .top-wrap .active{color:#1890ff;background:#e8f4ff}.home-layout .common-registerContainer .apply-detail{position:relative}.home-layout .common-registerContainer .apply-detail .title{color:#333;font-size:16px;text-align:center;margin:30px auto;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAAEx0v4+AAAAAXNSR0IArs4c6QAAA5VJREFUOBGdVGtsFFUUvq+5O/vClpYGWh4xUhrSBInxhxhIRTQlNSXB2o3G+MNHCPjAVqAghLgkBAKBtKYWAugPQ6JkiFFBQEJliY+gUWMT369UjEEihe7Sdmfnce/x3sGdLGEXgvfH3JPzffc73z1zZhD6b0E6TZiOuz7a8IpITv62CJTZ4fs3H0Erre6GMhhChVOb+rFGnj/SdT8y+U+9jYvmGLe3nynLvi4JH6yqDo4XEef0lg5wJ+4L3L14sme1QdjvuKquLnLXqheCpHTl8Lb5LSPCzQW22Yqja2ov2OeO8xmtoihD6r9OXj6cOhwmNHBNoSKzdLePdR8Ez41eQ7Qsi34+5Zs+RuienS1bf3TO7tqIfDfKF85Oh8SuTLpKOvnlBEOid07bAeH+sxRJN8rmPvF2WPppq3tyjOEZ0pCxgfa+s3Dx42mubddEZrZ+V7SB05k0O//3+SoKVOx9fO9oEbjl/Yr1VFNYutLpwon1rdLPP4k9byjobiUi4uZSQvHoBJ3YQ0pJ6zIbn1t7ZtOAzuW/6H0MR+KjKBL/raat/0pIXHE0HfM9cRtImQWwKOPxBDZjWbNl8259MCwdoWPLhaAjBOAk+oM9SKLJUekXhjRJL6ofa9QLl1hWSwC/b/biTxFjtZJQyZse/UTjegWlc549xRfyUq2cdAI3tjnqEllmNnx2lXL1iXve70ledGxTCcTe6Bg4VwqWxiRLRMSIcnj94df+LAXKxgAQDkdZgkrelFDpoM6DmpPC2KXNINx5SEokBdoSdOdGhyphSizhuIVtiLJazAwXEyYIM7I3dJhWP5Hxxf4sGk9c3nH3hlxRfDyzc2qEi5VSSI6kz0AIDkgeiS7Zerqi4NrBlxdIjB/CgDhgMNT7+2HXku0HCl/tu4Mg0SaFZ2ApmRI0gIJl3tPzqy4YTk6xut67P1y3yJdS9QVGEMEcYyUra95yfjk0F7nunQREFgluECzUTIt38Lxnw+/sOoer33vpXmB4KhDlCrByR+0L48PvWgufafRtezojiArf4UgN988ePdXcnHJLzYSCul8j83PNguC4csAJEE4Iyb26bPeXMJwxUQyakFA3ksJQs+Gg+geGAuelaioOBDutTlpNG+oMRLkPHpfqPiYmuf6O/r9K+fprQ6hTtVa1oMLC+hc36A9Wh3gyqcKx/P72/fkwdwsBSaVSwo9XOYZpgOEZUJ9IZv+vmK77LyOndR9zVMsIAAAAAElFTkSuQmCC),url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAAEx0v4+AAAAAXNSR0IArs4c6QAAA5VJREFUOBGdVGtsFFUUvq+5O/vClpYGWh4xUhrSBInxhxhIRTQlNSXB2o3G+MNHCPjAVqAghLgkBAKBtKYWAugPQ6JkiFFBQEJliY+gUWMT369UjEEihe7Sdmfnce/x3sGdLGEXgvfH3JPzffc73z1zZhD6b0E6TZiOuz7a8IpITv62CJTZ4fs3H0Erre6GMhhChVOb+rFGnj/SdT8y+U+9jYvmGLe3nynLvi4JH6yqDo4XEef0lg5wJ+4L3L14sme1QdjvuKquLnLXqheCpHTl8Lb5LSPCzQW22Yqja2ov2OeO8xmtoihD6r9OXj6cOhwmNHBNoSKzdLePdR8Ez41eQ7Qsi34+5Zs+RuienS1bf3TO7tqIfDfKF85Oh8SuTLpKOvnlBEOid07bAeH+sxRJN8rmPvF2WPppq3tyjOEZ0pCxgfa+s3Dx42mubddEZrZ+V7SB05k0O//3+SoKVOx9fO9oEbjl/Yr1VFNYutLpwon1rdLPP4k9byjobiUi4uZSQvHoBJ3YQ0pJ6zIbn1t7ZtOAzuW/6H0MR+KjKBL/raat/0pIXHE0HfM9cRtImQWwKOPxBDZjWbNl8259MCwdoWPLhaAjBOAk+oM9SKLJUekXhjRJL6ofa9QLl1hWSwC/b/biTxFjtZJQyZse/UTjegWlc549xRfyUq2cdAI3tjnqEllmNnx2lXL1iXve70ledGxTCcTe6Bg4VwqWxiRLRMSIcnj94df+LAXKxgAQDkdZgkrelFDpoM6DmpPC2KXNINx5SEokBdoSdOdGhyphSizhuIVtiLJazAwXEyYIM7I3dJhWP5Hxxf4sGk9c3nH3hlxRfDyzc2qEi5VSSI6kz0AIDkgeiS7Zerqi4NrBlxdIjB/CgDhgMNT7+2HXku0HCl/tu4Mg0SaFZ2ApmRI0gIJl3tPzqy4YTk6xut67P1y3yJdS9QVGEMEcYyUra95yfjk0F7nunQREFgluECzUTIt38Lxnw+/sOoer33vpXmB4KhDlCrByR+0L48PvWgufafRtezojiArf4UgN988ePdXcnHJLzYSCul8j83PNguC4csAJEE4Iyb26bPeXMJwxUQyakFA3ksJQs+Gg+geGAuelaioOBDutTlpNG+oMRLkPHpfqPiYmuf6O/r9K+fprQ6hTtVa1oMLC+hc36A9Wh3gyqcKx/P72/fkwdwsBSaVSwo9XOYZpgOEZUJ9IZv+vmK77LyOndR9zVMsIAAAAAElFTkSuQmCC);background-repeat:no-repeat;background-position:42.3%,57.7%}.home-layout .common-registerContainer .apply-detail .detail-item{width:80%;margin:0 auto;text-align:center;margin-bottom:66px}.home-layout .common-registerContainer .apply-detail .detail-item .con{display:inline-block;vertical-align:middle;width:60%;text-align:left;padding-left:10px;border-radius:4px;border:1px solid #dcdfe6;background-color:#f2f6fc}.home-layout .common-registerContainer .apply-detail .detail-item .input{min-height:34px;line-height:34px;padding:0 5px;word-break:break-all;vertical-align:top}.home-layout .common-registerContainer .apply-detail .detail-item .area{vertical-align:top;min-height:120px;padding-top:10px}.home-layout .common-registerContainer .apply-detail .detail-item .tit{display:inline-block;width:80px;text-align:right;color:#999;margin-right:10px;line-height:34px}.home-layout .common-registerContainer .apply-detail .mt10{margin-bottom:15px}.home-layout .common-registerContainer .apply-detail .back{position:absolute;top:30px;right:50px;width:43px;height:43px;cursor:pointer}.home-layout .common-registerDetail .register-detail .content{background:#fff;margin:0 auto;text-align:center;padding:0 120px 80px;position:relative}.home-layout .common-registerDetail .register-detail .content .title{display:inline-block;line-height:40px;width:100%;text-align:right;padding-right:10px;font-size:14px}.home-layout .common-registerDetail .register-detail .content .el-row{margin-top:24px;line-height:40px}.home-layout .common-registerDetail .register-detail .content .el-row .title-img:first-child{margin-right:10px}.home-layout .common-registerDetail .register-detail .content .el-row .title-img:last-child{margin-left:10px}.home-layout .common-registerDetail .register-detail .content .el-row .mid-title{display:inline-block;color:#333;font-size:16px;margin:20px 0 15px}.home-layout .common-registerDetail .register-detail .content .el-row /deep/ .el-table__header-wrapper thead>tr>th{background:#fafafa;padding:0}.home-layout .common-registerDetail .register-detail .content .el-row .fileArea{text-align:left}.home-layout .common-registerDetail .register-detail .content .el-row .fileArea img{width:13px;height:13px;margin-bottom:2px}.home-layout .common-registerDetail .register-detail .content .el-row .fileArea .file{color:#1890ff;font-size:14px;text-align:left;cursor:pointer}.home-layout .common-registerDetail .register-detail .content .back{position:absolute;top:20px;right:25px}.home-layout .common-registerDetail .register-detail .content .back img{cursor:pointer}.home-layout .common-myApp .ant-btn-background-ghost.ant-btn-primary,.home-layout .common-paperApp .ant-btn-background-ghost.ant-btn-primary,.home-layout .common-publishApp .ant-btn-background-ghost.ant-btn-primary{margin:20px 20px 0 0}.home-layout .common-openCompetition{margin-bottom:100px}.home-layout .common-openCompetition .content{background:#fff;padding:20px 20px 166px}.home-layout .common-openCompetition .content .item{height:59px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border-bottom:1px solid #dedede}.home-layout .common-openCompetition .content .item .title{color:#333;font-family:PingFang SC;font-size:16px;font-weight:400}.home-layout .common-openCompetition .content .item .title .year{display:inline-block;width:54px;height:44px;line-height:44px;border-radius:3px;background:#e8f2ff;color:#1890ff;text-align:center;font-family:PangMenZhengDaoBiaoTiTi-1;font-weight:400;margin-right:16px;font-size:16px}.home-layout .common-openCompetition .content .item .btn{color:#999;text-align:right;font-family:PingFang SC;font-size:14px;cursor:pointer}.home-layout .common-openCompetitionDetails{width:100%;height:100%;background-image:url(/opendata/static/img/bg.0551076f.png)!important;background-size:100% 100%!important;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.home-layout .common-openCompetitionDetails .bread-crumbs{width:1200px}.home-layout .common-openCompetitionDetails .header{width:100%;height:597px;position:relative}.home-layout .common-openCompetitionDetails .header img{width:100%;height:100%}.home-layout .common-openCompetitionDetails .header img:nth-child(2){width:1065px;height:285px;position:absolute;left:25%;top:172px}.home-layout .common-openCompetitionDetails .header img:nth-child(3){width:329px;height:39px;position:absolute;right:30px;top:20px}.home-layout .common-openCompetitionDetails .content{width:1200px;height:100%}.home-layout .common-openCompetitionDetails .content .module{width:100%;height:100%;padding:30px 20px;border-radius:20px;border:4px solid #fff;background:linear-gradient(136deg,#0a6cff,#59b7fe);margin-bottom:60px}.home-layout .common-openCompetitionDetails .content .module .title{font-family:PingFang SC;font-size:26px;font-style:normal;font-weight:600;background:-webkit-gradient(linear,left top,left bottom,color-stop(44.82%,#fff),to(#b4faff));background:linear-gradient(180deg,#fff 44.82%,#b4faff);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:rgba(0,0,0,0);margin:0 10px;text-align:center;margin-bottom:30px}.home-layout .common-openCompetitionDetails .content .module .cont{margin:0 10px;background:#fff;padding:10px}.home-layout .common-openCompetitionDetails .content .module .cont img{width:100%}.home-layout .common-openCompetitionDetails .content .awardInfo{width:100%;height:500px}.map-container{position:relative;height:calc(100vh - 115px)}.map-container #mapDiv{position:absolute;width:100%;height:100%}.map-container .mapType-container{position:absolute;top:70px;right:25px;z-index:2000}.map-container .mapType-container .type-item{width:70px;height:70px;border:1px solid #dedede;margin-bottom:10px;-webkit-transition:border .2s ease-in-out;transition:border .2s ease-in-out;cursor:pointer}.map-container .mapType-container .type-item:hover{border:1px solid #1890ff}.map-container .search-container{width:300px;height:430px}.map-container .search-container .el-input-group__append{width:80px;height:38px;line-height:38px;text-align:center;background:#1890ff}.map-container .search-container .el-input-group__append .search_btn{display:inline-block;width:100%;height:38px;color:#fff;cursor:pointer}.map-container .search-container .search_query .el-input{height:40px}.map-container .search-container .search_query .el-input .el-input__inner{height:40px;line-height:40px}.map-container .search-container .search_cont{width:300px;height:460px;background:#fff;border:1px solid #eaeaea;margin-top:10px;border-radius:4px}.map-container .search-container .search_cont .search_cont_title{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;color:#1890ff;padding:8px 15px;border-bottom:1px solid #eaeaea;font-size:14px}.map-container .search-container .search_cont #pageDiv .el-button{padding:5px 8px}.map-container .search-container .search_cont #pageDiv .el-input{width:30px}.map-container .search-container .search_cont #pageDiv .el-input .el-input__inner{width:30px;height:20px;padding:5px 10px}.map-container .search-container .search_cont #searchDiv ul li{color:#1890ff;padding:0 10px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-bottom:5px}.map-container .search-container .search_cont #searchDiv ul li .xuhao{color:#fff;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGsSURBVHgBtZVPTsJAFMbfTGXDqluNMWXNQnoDWEC6xBMYl6z0CHoCj6CeQNw17YJ4gjaBAzRqdEvcmUKf7yEYaJnp1MYvIaXz5/3evJn5KqBEr57XPQA4R4AuvTrchoixFCJOs+zpJAjGuvlC1fHheQ4FvYOfwDolFKR36PuJMeCt3+9IKScghA0mQpxnWdY7DsO4FLDKHDEyDr4FEUK4+ZXIwjiASeXgLJqzLikoAS+DwRDWG/lHdflQKAGWlEOoKT5xSoBAPIWawtyp290DITpQX44a8A/KAxKoK7rlSgDV7xlqiu6CGpAB3ENdAOKONxVu8rvnTaDcf1RKjny/td1Q2GQiXvC1h6piqyDTyzcXAOwlbFyVIGuz2+eoSrs2dlSNk2oBRpCS4KUALcQguBYQRZHdaDSGFASaYQjNILj9hVDwr1br7HM06tC5T5bLZey6bmIMmE6nl/xcLBYPNHG+sxJSPnMaf0192G63b6BMlLlDE/Z+yBnCP0VSjzwXTMQZzWazKzAUr5jn7OvT7YFjWRZna3Od6TvNz1W5+P9mHJXGTtN0vCllXt91GNSLSC44IgAAAABJRU5ErkJggg==);background-size:100% 100%;width:24px;height:24px;line-height:18px;text-align:center}.map-container .search-container .search_cont #searchDiv ul li .name{cursor:pointer}.map-container .search-container .search_cont #searchDiv ul li .collect{cursor:pointer;margin-left:auto}.map-container .search-container .search_cont #searchDiv ul li .collect img{width:16px;height:16px}.map-container .search-container .search_cont .prompt{padding:0 10px;display:none;font-size:13px;margin-top:10px}.map-container .search-container .search_cont .prompt strong{color:#1890ff}.map-container .search-container .search_cont .statistics{width:100%;padding:0 10px;display:none;height:650px;background:#fff;margin-top:10px;border-radius:4px;overflow-y:auto}.map-container .search-container .search_cont .lineData,.map-container .search-container .search_cont .suggests{padding:0 10px;display:none;font-size:13px;margin-top:10px}.map-container .search-container .search_cont .result{display:none;font-size:12px;line-height:30px}.map-container .search-container .el-pagination{width:270px;-ms-flex-wrap:wrap;flex-wrap:wrap;white-space:normal}.map-container .search-container .el-pagination,.map-container .search-container .el-pagination .el-pager{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.map-container .search-container .el-pagination .el-pager li{margin:3px 0;padding:0 2px;height:25px;line-height:25px;font-size:12px;min-width:25px}.map-container .search-container .el-pagination button{min-width:0}.map-container .navbar{position:absolute;top:0;left:0;z-index:2000;width:100%;border:0;margin-bottom:0;border-bottom:1px solid #b5b9c0;height:68px;background-image:url(/opendata/static/img/map-header.7d570004.png);background-repeat:no-repeat;background-position:top,50%;background-size:100% 100%}.map-container .navbar .navbar-cont{padding:0 20px;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;color:#fff}.map-container .navbar .navbar-cont .navbar-title{font-size:24px;font-weight:700;letter-spacing:.4px}.map-container .navbar .navbar-cont .navbar-back{font-size:16px;cursor:pointer}.map-container .navbar .navbar-cont .navbar-back span{vertical-align:middle}.map-container .sidebar{width:370px;height:calc(100vh - 115px);position:absolute;left:0;z-index:2000;border-top:1px solid #eaeaea}.map-container .sidebar .sidebar-tabs{height:100%;background-color:#1890ff;width:57px;float:left;border-right:1px solid #c4c3c3}.map-container .sidebar .sidebar-tabs ul li{cursor:pointer;text-align:center;margin:10px 0}.map-container .sidebar .sidebar-tabs ul .tabActive{color:#fff;background-color:#1890ff}.map-container .sidebar .sidebar-content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:313px;height:100%;background-color:hsla(0,0%,100%,.95);-webkit-box-shadow:0 0 3px rgb(0 0 0);box-shadow:0 0 3px rgb(0 0 0);overflow-x:hidden;overflow-y:auto;padding:10px 0}.map-container .sidebar .sidebar-content .navigate-container{width:100%}.map-container .sidebar .sidebar-content .navigate-container .navigate-tab{display:-webkit-box;display:-ms-flexbox;display:flex;border-bottom:1px solid #eaeaea}.map-container .sidebar .sidebar-content .navigate-container .navigate-tab li{width:50%;height:40px;line-height:40px;text-align:center;cursor:pointer}.map-container .sidebar .sidebar-content .navigate-container .navigate-tab li:first-child{border-right:1px solid #eaeaea}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont{width:100%}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .el-radio-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;padding:0 10px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .el-radio-group .el-radio{margin-right:8px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .el-radio-group .el-radio .el-radio__label{padding-left:3px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate{padding:0 10px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate .cont-coordinate-item{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:15px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate .cont-coordinate-item .label{display:-webkit-box;display:-ms-flexbox;display:flex;text-align:right;width:50px;font-size:14px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate .cont-coordinate-item .el-button{padding:5px 10px}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate .search-restip{margin-bottom:15px;font-size:14px;color:#f49c15}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultBusDiv,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultDrivediv{height:550px;overflow-y:auto}.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultBusDiv div,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultBusDiv p,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultBusDiv span,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultBusDiv strong,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultDrivediv div,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultDrivediv p,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultDrivediv span,.map-container .sidebar .sidebar-content .navigate-container .navigate-cont .cont-coordinate #resultDrivediv strong{font-size:14px!important}.map-container ::-webkit-scrollbar-track-piece{background-color:rgba(0,0,0,.1);border-radius:10px}.map-container ::-webkit-scrollbar{width:4px}.map-container ::-webkit-scrollbar-thumb{background-clip:padding-box;width:4px;height:47px;border-radius:3px;background-color:rgba(159,210,246,.9)}.map-container .common-footer .footer .nav{height:40px;line-height:40px;background-color:#163b6a;text-align:center}.map-container .common-footer .footer .nav .bar{color:#fff;padding-right:35px}.map-container .common-footer .footer .nav .bar:hover{color:#1890ff}.map-container .common-footer .footer .nav .bar:nth-child(n+2):before{content:",
+      ">9,968</span> 个API接口)\n    </div></div></div><div data-v-684c2320=",
+      ";display:inline-block;vertical-align:middle;width:1px;height:14px;background-color:#fff;margin-right:35px}.home-layout .common-footer .footer .info{height:160px;background-color:#131b34;padding:34px 120px 25px}.home-layout .common-footer .footer .info,.home-layout .common-footer .footer .info .info-list{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.home-layout .common-footer .footer .info .info-list{cursor:pointer;width:158px;padding:15px 20px;height:110px;background:#1e2b48}.home-layout .common-footer .footer .info .info-list img{width:60px;height:68px}.home-layout .common-footer .footer .info .info-list .pointer{width:115px;height:55px}.home-layout .common-footer .footer .info .lwba img{width:82px;height:82px}.home-layout .common-footer .footer .info .government img{width:80px;height:80px}.home-layout .common-footer .footer .info .code{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;color:#b0b8d0;margin-right:42px;font-size:12px}.home-layout .common-footer .footer .info .code img{margin-top:17px;width:62px;height:59px}.home-layout .common-footer .footer .info .code p{margin-top:10px}.home-layout .common-footer .footer .info .content{width:320px;color:#b1b9d1;font-size:14px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.home-layout .common-footer .footer .info .content p{margin-bottom:10px}.home-layout .common-footer .footer .info .tbody_{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.home-layout .common-footer .footer .info .monad{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-pack:distribute;justify-content:space-around}.home-layout .common-footer .footer .info .Phone{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;margin-left:64px}.home-layout .common-footer .footer .info .Phone td:first-child{margin-right:20px}.home-layout .common-footer .footer .info .ICP_{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.home-layout .common-footer .footer .info table{position:relative;margin:0 auto;border-collapse:collapse;color:#fff;width:850px;height:115px}.home-layout .common-footer .footer .info table .copyright,.home-layout .common-footer .footer .info table .more{text-align:center;margin-right:10px;color:#96aec5}.home-layout .common-footer .footer .info table .hand{cursor:pointer}.home-layout .common-footer .footer .info table .more{color:#c6c6c6}.home-layout .common-footer .footer .tips{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;font-size:14px;color:#b1b9d1}.home-layout .common-footer .footer .tips p{margin-bottom:12px;opacity:.4}.home-layout .common-footer .footer .er-code{position:absolute;right:-170px;top:0;text-align:center}.home-layout .common-footer .footer .er-code img{width:90px;height:90px}.home-layout .common-footer .footer .er-code p{margin-top:10px}.home-layout .common-footer .footer .img-ab{position:absolute;left:-190px;top:0;text-align:center}.home-layout .common-footer .footer .img-ab img{width:67px;height:80px}.home-layout .common-footer .footer .img-ab1{top:10px;left:-100px;position:absolute;text-align:center}.home-layout .common-search-container .search-container .search-wrap{height:150px;padding-top:40px;background:#fff;padding-left:calc(50% - 310px)}.home-layout .common-search-container .search-container .search-wrap .border{height:48px;width:500px;padding:2px;border-radius:4px;vertical-align:top;background:-webkit-gradient(linear,left top,left bottom,from(#5bb5f9),color-stop(#2864fa),to(#5bb5f9));background:linear-gradient(#5bb5f9,#2864fa,#5bb5f9)}.home-layout .common-search-container .search-container .search-wrap .border .ant-input-affix-wrapper{width:496px;height:44px;font-size:17px}.home-layout .common-search-container .search-container .search-wrap .border .ant-input-affix-wrapper .ant-input{border:none;border-radius:2px;padding-left:39px;height:100%}.home-layout .common-search-container .search-container .search-wrap .ant-btn{width:100px;height:48px;margin-left:20px;font-size:18px;border:none;background:-webkit-gradient(linear,left top,right top,from(#33b1ff),to(#187cff));background:linear-gradient(90deg,#33b1ff,#187cff)}.home-layout .common-search-container .search-container .search-wrap .hot-word{padding:0 10px;color:#1890ff;margin-top:6px}.home-layout .common-search-container .result-wrap{padding-top:20px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.home-layout .common-search-container .result-wrap .left-result{width:762px;background:#fff;vertical-align:top;margin-bottom:80px}.home-layout .common-search-container .result-wrap .left-result .tab-wrap{height:54px;line-height:54px;color:#fff;background-color:#1890ff}.home-layout .common-search-container .result-wrap .left-result .tab-wrap .tab-item{padding:0 45px;font-size:16px;text-align:center;cursor:pointer;vertical-align:top}.home-layout .common-search-container .result-wrap .left-result .tab-wrap .active{color:#1890ff;border-top:4px solid #0c73d1;line-height:50px;background-color:#fff;font-weight:700}.home-layout .common-search-container .result-wrap .left-result .res-table .no-data{text-align:center;height:66px;line-height:66px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item{margin:20px 20px 0 20px;padding-bottom:10px;border-bottom:1px solid #dedede}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-top{color:#1890ff}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-top .table-icon{vertical-align:super;font-size:20px;padding-right:10px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-top .table-tit{width:600px;font-size:18px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-mid{margin:5px 0}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-mid div{color:#828282}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-mid div:first-child .left-txt{display:inline-block;width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-mid div:nth-child(2){margin:0 20px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-mid div:nth-child(2) .left-txt{display:inline-block;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-bot{width:640px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .item-bot .left-txt{color:#333;margin-left:5px}.home-layout .common-search-container .result-wrap .left-result .res-table .table-item .brief-txt{width:588px}.home-layout .common-search-container .result-wrap .left-result .res-table .img-wrap{vertical-align:top}.home-layout .common-search-container .result-wrap .left-result .res-table .img-wrap .img{width:90px;height:90px;border-radius:8px;margin-right:10px}.home-layout .common-search-container .result-wrap .left-result .res-table .ant-pagination{text-align:center;margin:25px 0}.home-layout .common-search-container .result-wrap .left-result .result-table .result-icon{font-size:80px;margin-right:10px}.home-layout .common-search-container .result-wrap .right-recommend{width:403px;margin-left:20px;margin-bottom:80px}.home-layout .common-search-container .result-wrap .right-recommend .rec-box{border:1px solid #d2dce7;background:#fff}.home-layout .common-search-container .result-wrap .right-recommend .rec-box:nth-child(2){margin-top:20px}.home-layout .common-search-container .result-wrap .right-recommend .rec-box .rec-tit{height:53px;line-height:52px;color:#1890ff;padding-left:23px;border-bottom:1px solid #dedede}.home-layout .common-search-container .result-wrap .right-recommend .rec-box .rec-con{padding:8px 42px;color:#3f3f3f}.home-layout .common-search-container .result-wrap .right-recommend .rec-box .rec-con .rec-con-item{height:35px;line-height:35px}.home-layout .customer-page p{margin-bottom:0!important}.home-layout .customer-page .bread{margin-left:140px}.home-layout .customer-page .customer{margin:0 140px 80px;width:calc(100vw - 280px);min-width:1196px;height:676px;background:#fff;border-radius:0 0 0 0;opacity:1;border:1px solid #d2dce7}.home-layout .customer-page .customer .box{display:-webkit-box;display:-ms-flexbox;display:flex;height:calc(100% - 50px)}.home-layout .customer-page .customer-title{padding:0 20px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;height:50px;line-height:50px;background:#fff;-webkit-box-shadow:0 2px 8px 0 rgba(0,0,0,.06);box-shadow:0 2px 8px 0 rgba(0,0,0,.06);border-bottom:1px solid #d1dbe6;font-size:14px;font-family:PingFang SC;font-weight:600;margin:0}.home-layout .customer-page .customer-title .close{cursor:pointer;color:#006eed}.home-layout .customer-page .customer-title .close:hover{color:#0084ff}.home-layout .customer-page .customer-list{background-color:#f2f5f7;width:255px;padding:0 10px;height:100%}.home-layout .customer-page .customer-content{width:calc(100% - 255px);border-right:1px solid #d1dbe6}.home-layout .customer-page .customer-content_container{height:calc(100% - 160px);overflow-y:auto}.home-layout .customer-page .customer-content_container_list{padding:0 20px}.home-layout .customer-page .customer-content_container_list .customer-item{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1;flex:1;margin:20px 0}.home-layout .customer-page .customer-content_container_list .user-item{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.home-layout .customer-page .customer-content_container_list .customer-de-container>div{background:#f2f5f7;padding:12px 16px;border-radius:0 8px 8px 8px}.home-layout .customer-page .customer-content_container_list .customer-de-container .title{margin-bottom:16px}.home-layout .customer-page .customer-content_container_list .customer-de-container .loading>span{margin:0 2px;display:inline-block;width:6px;height:6px;background:#006eed;border-radius:50%}.home-layout .customer-page .customer-content_container_list .customer-de-container .loading span:first-child{-webkit-animation:loading 4s linear 1s infinite;animation:loading 4s linear 1s infinite}.home-layout .customer-page .customer-content_container_list .customer-de-container .loading span:nth-child(2){-webkit-animation:loading 2s linear 2s infinite;animation:loading 2s linear 2s infinite}.home-layout .customer-page .customer-content_container_list .customer-de-container .loading span:last-child{-webkit-animation:loading 3s linear 3s infinite;animation:loading 3s linear 3s infinite}.home-layout .customer-page .customer-content_container_list .customer-de-container .icon{margin-right:8px}.home-layout .customer-page .customer-content_container_list .customer-de-container .icon-daochu1024-07:before{color:#ff3d31!important;font-size:20px}.home-layout .customer-page .customer-content_container_list .customer-de-container .el-icon-question{color:#ff872f;font-size:20px}.home-layout .customer-page .customer-content_container_list .customer-de-container .quest{display:grid;grid-template-columns:repeat(2,minmax(200px,300px));color:#006eed;grid-gap:16px}.home-layout .customer-page .customer-content_container_list .customer-de-container .quest>span:hover{text-decoration:underline;cursor:pointer}.home-layout .customer-page .customer-content_container_list .customer-de-container.right>div{border-radius:8px 0 8px 8px!important;word-break:break-all}.home-layout .customer-page .customer-content_footer{position:relative;height:160px}.home-layout .customer-page .customer-content_footer .el-textarea .el-textarea__inner{border:none!important;border-top:1px solid #d1dbe6!important}.home-layout .customer-page .customer-content_footer .btn{position:absolute;right:16px;bottom:16px}@-webkit-keyframes loading{0%{-webkit-transform:scale(1);transform:scale(1)}30%{-webkit-transform:scale(1.25);transform:scale(1.25)}50%{-webkit-transform:scale(1.5);transform:scale(1.5)}70%{-webkit-transform:scale(1.25);transform:scale(1.25)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes loading{0%{-webkit-transform:scale(1);transform:scale(1)}30%{-webkit-transform:scale(1.25);transform:scale(1.25)}50%{-webkit-transform:scale(1.5);transform:scale(1.5)}70%{-webkit-transform:scale(1.25);transform:scale(1.25)}to{-webkit-transform:scale(1);transform:scale(1)}}.home-layout .common-server-container .server-container .server-wrap{height:1404px;border:1px solid #d2dce7;background-color:#fff}.home-layout .common-server-container .server-container .server-wrap .tit-box{text-align:center;margin:20px 43px;border-bottom:1px solid #dedede}.home-layout .common-server-container .server-container .server-wrap .tit-box .tit{color:#333;font-size:24px;margin-bottom:20px}.home-layout .common-server-container .server-container .server-wrap .tit-box .share-wrap{position:relative;bottom:40px;right:-350px}.home-layout .common-server-container .server-container .server-wrap .tit-box .share-wrap span{width:50px;cursor:pointer}.home-layout .common-server-container .server-container .server-wrap .tit-box .share-wrap .qr-code{position:absolute;width:200px;height:200px;top:30px;left:0}.home-layout .common-server-container .server-container .server-wrap .con{width:80%;margin:0 auto;margin-top:20px}.home-layout .common-server-container .server-container .server-wrap .con div,.home-layout .common-server-container .server-container .server-wrap .con p{line-height:1.8}.home-layout .common-server-container .server-container .server-wrap .btn-wrap{width:200px;margin:0 auto;margin-top:20px}.home-layout .common-server-container .server-container .server-wrap .btn-wrap .agree-btn{margin-right:10px}.home-layout .common-server-container .server-container .c3{color:#333}.home-layout .common-server-container .server-container .c82{color:#828282}.home-layout .common-server-container .server-container .ml20{margin-left:20px}.home-layout .bread-crumbs{height:40px;line-height:40px}.home-layout .bread-crumbs .back:hover,.home-layout .bread-crumbs .home{color:#1890ff}.home-layout .filter-cell{margin-bottom:20px}.home-layout .filter-cell .content,.home-layout .filter-cell .type{width:100%;background-color:#fff}.home-layout .filter-cell .type label{width:50%;height:38px;line-height:38px;text-align:center;background-color:#fff;color:#608cb9;border:1px solid #d2dce7;vertical-align:top}.home-layout .filter-cell .type input:checked+label{color:#fff;background-color:#0077e5;cursor:auto;border:none}.home-layout .filter-cell .content{height:280px;padding:10px 20px;border:1px solid #d2dce7;border-top:0;overflow:auto}.home-layout .filter-cell .content label{line-height:30px;text-align:left;background-color:#fff;color:#4672a0}.home-layout .filter-cell .content label .label{text-align:left;width:140px;vertical-align:top}.home-layout .filter-cell .content label .label.isAll{width:80px}.home-layout .filter-cell .content label .value{text-align:right;width:calc(100% - 140px);word-break:break-all}.home-layout .filter-cell .content label .value.isAll{width:calc(100% - 80px)}.home-layout .filter-cell .content input:checked+label{color:#1890ff;cursor:auto;font-weight:500}.home-layout .common-dataSet .filter-left{width:300px;vertical-align:top}.home-layout .common-dataSet .filter-left .filter-cell+.filter-cell .type label{width:100%}.home-layout .common-dataSet .ctx-right{margin-left:16px;width:882px}.home-layout .common-dataSet .ctx-right .file-format{height:80px;padding:20px 0 0 36px;background-color:#fff}.home-layout .common-dataSet .ctx-right .file-format .ant-checkbox-wrapper{margin-right:20px;width:100px;height:40px;line-height:38px;padding-left:14px;border-radius:4px;border:1px solid #d2dce7}.home-layout .common-dataSet .ctx-right .file-format .ant-checkbox-wrapper.ant-checkbox-wrapper-checked{border:1px solid #1890ff}.home-layout .common-dataSet .ctx-right .file-format .ant-checkbox-wrapper.ant-checkbox-wrapper-checked>span+span{color:#1890ff}.home-layout .common-dataSet .ctx-right .table-list{background-color:#fff;border:1px solid #d2dce7}.home-layout .common-dataSet .ctx-right .table-list .order{padding:8px 20px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;color:#666;border-bottom:1px solid #d2dce7;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.home-layout .common-dataSet .ctx-right .table-list .order .table-count{color:#d0021b}.home-layout .common-dataSet .ctx-right .table-list .order .check-order{font-size:12px}.home-layout .common-dataSet .ctx-right .table-list .order .check-order .ant-radio-button-wrapper{font-size:12px;border-color:#fff;border-radius:0}.home-layout .common-dataSet .ctx-right .table-list .order .check-order .ant-radio-button-wrapper:before{width:0}.home-layout .common-dataSet .ctx-right .table-list .order .check-order .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{-webkit-box-shadow:none;box-shadow:none;background-color:#e8f4ff}.home-layout .common-dataSet .ctx-right .table-list .list{padding:8px 20px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item{position:relative;display:block}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta h4 a{color:#1890ff;font-size:18px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta h4 a .title{max-width:450px;vertical-align:text-bottom;padding-left:10px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .ant-rate{margin-left:10px;font-size:18px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .desc-ctx{color:#333;margin-right:30px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .btn{position:absolute;top:20px;right:0}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .btn:hover{background:#1890ff}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .btn:hover span{color:#fff!important}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .downBtn{position:absolute;top:20px;right:0;display:inline-block;padding:16px;cursor:pointer}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .downBtn img{height:16px;width:16px;vertical-align:middle}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .downBtn span{color:#006eed}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .downBtn:hover span{color:#006eed!important;text-decoration:underline;text-underline-position:below}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .favorite{position:absolute;bottom:0;right:0}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .favorite.actived{color:#f5a623}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra{position:absolute;left:-20px;bottom:10px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra .count-name{display:inline-block;min-width:100px;color:#828282;margin-left:20px;height:25px;line-height:25px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra .count-name .active-color{color:#ff6a1e}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-content{-webkit-box-flex:0;-ms-flex:none;flex:none}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-content .favorite{bottom:8px;right:0}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-content .favorite.actived{color:#f5a623}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action{padding-top:15px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action em{display:none}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action .ant-btn{border:1px solid #1890ff;color:#1890ff}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action .ant-btn:hover{background-color:#1890ff;color:#fff}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx{vertical-align:bottom;height:25px;line-height:25px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.src{width:160px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.domain,.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.update{width:88px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.abstract{width:539px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .file-type{height:25px;line-height:25px}.home-layout .common-dataSet .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .file-type+.file-type{margin-left:20px}.home-layout .common-dataSet .ctx-right .table-list .ant-pagination{margin:50px auto;text-align:center}.home-layout .common-dataSet .ctx-right .table-list .ant-pagination .ant-pagination-item-active{background-color:#1890ff}.home-layout .common-dataSet .ctx-right .table-list .ant-pagination .ant-pagination-item-active>a{color:#fff}.home-layout .comment-box{width:100%;margin-top:20px}.home-layout .comment-box p{width:100%;height:54px;line-height:52px;background-color:#1890ff;font-size:16px;color:#fff;padding-left:23px;margin-bottom:0}.home-layout .comment-box .comment-content{background-color:#fff;padding:20px}.home-layout .comment-box .comment-content .comment span{font-size:16px;color:#333;display:inline-block;margin-bottom:20px}.home-layout .comment-box .comment-content .comment .ant-form{margin-top:20px}.home-layout .comment-box .comment-content .comment .ant-form-item-control-wrapper .ant-input{width:500px}.home-layout .comment-box .comment-content .ant-form-item-control,.home-layout .comment-box .comment-content .ant-form-item-control .ant-form-item-children,.home-layout .comment-box .comment-content .ant-form-item-control .ant-form-item-children .right-code{display:-webkit-box;display:-ms-flexbox;display:flex}.home-layout .comment-box .comment-content .ant-btn-primary span{height:30px;line-height:30px;font-size:14px;color:#fff}.home-layout .comment-box .comment-content .comment-list .cell+.cell{margin-top:10px}.home-layout .comment-box .comment-content .comment-list .name{width:62px;margin-left:10px}.home-layout .comment-box .comment-content .comment-list .discuss{padding:0 10px;height:40px;line-height:40px;background-color:#f2f6fc;width:1025px;vertical-align:middle}.home-layout .comment-box .comment-content .comment-list .ant-pagination{text-align:right;margin:20px 0 0}.home-layout .common-dataSet-detail .title{padding:0 25px;height:54px;line-height:52px;font-size:18px;background-color:#fff;border:1px solid #d2dce7;color:#1890ff}.home-layout .common-dataSet-detail .title .name{max-width:699px;vertical-align:bottom;padding:0 20px 0 10px}.home-layout .common-dataSet-detail .title .debug,.home-layout .common-dataSet-detail .title .favorite,.home-layout .common-dataSet-detail .title .follow{font-size:14px;margin-left:20px}.home-layout .common-dataSet-detail .title .debug.marked,.home-layout .common-dataSet-detail .title .favorite.marked,.home-layout .common-dataSet-detail .title .follow.marked{color:#f5a623}.home-layout .common-dataSet-detail .title .debug{color:#d0021b}.home-layout .common-dataSet-detail .table-info{padding:20px;margin-top:6px;background-color:#fff}.home-layout .common-dataSet-detail .table-info .link_class{color:#1890ff;cursor:pointer}.home-layout .common-dataSet-detail .five-cards{margin-top:6px;height:54px;background-color:#1890ff}.home-layout .common-dataSet-detail .five-cards .ant-radio-button-wrapper{color:#fff;background-color:#1890ff;border:none;border-radius:0;width:155px;text-align:center;height:54px;line-height:54px;font-size:16px;vertical-align:top}.home-layout .common-dataSet-detail .five-cards .ant-radio-button-wrapper:before{width:0}.home-layout .common-dataSet-detail .five-cards .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{-webkit-box-shadow:none;box-shadow:none;color:#1890ff;background-color:#fff}.home-layout .common-dataSet-detail .five-cards .ant-radio-button-wrapper.ant-radio-button-wrapper-checked:before{content:",
+      ";display:block;width:155px;height:7px;background-color:#0077e5!important;opacity:1;position:absolute;left:0}.home-layout .common-dataSet-detail .card-ctx{background-color:#fff;padding:20px}.home-layout .common-dataSet-detail .card-ctx.map-bg{background-color:#000837}.home-layout .common-dataSet-detail .card-ctx .ant-table-wrapper .ant-table-tbody>tr>td,.home-layout .common-dataSet-detail .card-ctx .ant-table-wrapper .ant-table-thead>tr>th{padding:0 5px;height:40px;text-align:center}.home-layout .common-dataSet-detail .card-ctx .ant-list{padding-right:5px;height:372px;overflow:auto}.home-layout .common-dataSet-detail .card-ctx .ant-list .ant-list-item{position:relative;display:block}.home-layout .common-dataSet-detail .card-ctx .ant-list .ant-list-item .ant-list-item-meta h4 a{color:#1890ff;font-size:18px}.home-layout .common-dataSet-detail .card-ctx .ant-list .ant-list-item .ant-list-item-meta .desc-ctx{color:#333;margin-right:30px}.home-layout .common-dataSet-detail .card-ctx .ant-list .ant-list-item .ant-list-item-extra{position:absolute;top:12px;right:0}.home-layout .common-dataSet-detail .card-ctx .ant-list .ant-list-item .ant-list-item-extra .count-name{color:#828282;margin-left:20px}.home-layout .common-dataSet-detail .card-ctx .app{text-align:left}.home-layout .common-dataSet-detail .card-ctx .app .no-apps{height:30px;text-align:center}.home-layout .common-dataSet-detail .card-ctx .app .cell{width:125px;padding-top:140px;color:#333;text-align:center}.home-layout .common-dataSet-detail .card-ctx .app .cell img{top:0;left:0;width:125px;height:125px;border-radius:4px;border:1px solid #eaeaea}.home-layout .common-dataSet-detail .card-ctx .app .cell+.cell{margin-left:20px}.home-layout .common-dataSet-detail .card-ctx .map{height:440px;text-align:center}.home-layout .common-dataSet-detail .card-ctx .visualization{height:730px;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.home-layout .common-dataSet-detail .card-ctx .visualization .vis-left{width:310px;border:1px dashed #1890ff}.home-layout .common-dataSet-detail .card-ctx .visualization .vis-right{width:900px;border:1px dashed #1890ff}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container{width:100%;height:100%}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-container{width:100%;overflow:auto;height:calc(100% - 160px)}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-container::-webkit-scrollbar{width:2px}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-container::-webkit-scrollbar-thumb{background-color:#b5dbff}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container /deep/ .ant-form-item{margin-bottom:0}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-title{padding:10px 20px 0;position:relative;text-align:left;font-size:16px;color:#000;font-weight:600;font-family:PingFangSC-Medium}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-title:after{content:",
+      ";position:absolute;height:8px;width:63px;opacity:.4;background-image:-webkit-gradient(linear,left top,right top,from(#1890ff),to(#e7f4ff));background-image:linear-gradient(90deg,#1890ff,#e7f4ff);left:20px;bottom:0}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-type{padding:0 20px;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-type>div{margin-top:10px;height:50px;width:50px;display:inline-block;border:1px solid #eee;border-radius:4px;cursor:pointer;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-type .active{background-color:#1890ff;-webkit-box-shadow:0 2px 6px 0 rgba(24,144,255,.5);box-shadow:0 2px 6px 0 rgba(24,144,255,.5)}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-type .default{margin:10px 50px 0}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-type /deep/ svg{height:2em;width:2em}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-title,.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .latitude-title{margin-top:8px}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-select{display:-webkit-box;display:-ms-flexbox;display:flex;padding:10px 20px 0}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item{height:185px;margin:10px;border:1px dashed #1890ff}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item .data-item-title{margin:10px;color:#333;font-size:14px;font-family:PingFangSC-Medium}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item .data-item-field,.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item .data-item-query{margin-bottom:10px}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item .data-item-field>div:first-child,.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .data-item .data-item-query>div:first-child{text-align:left;margin-left:15px;margin-bottom:6px}.home-layout .common-dataSet-detail .card-ctx .visualization .chart-container .chart-btn button{margin:0 10px}.home-layout .common-dataSet-detail .score{margin-top:20px;background-color:#fff}.home-layout .common-dataSet-detail .score .block-name{font-size:16px;height:54px;line-height:54px;color:#fff;background-color:#1890ff;padding-left:20px}.home-layout .common-dataSet-detail .score .comments{padding:20px;background-color:#fff}.home-layout .common-dataSet-detail .score .comments .user{height:40px;line-height:40px;text-align:right}.home-layout .common-dataSet-detail .score .comments .user .content{height:40px;line-height:40px;background-color:#f2f6fc;width:1035px;text-align:left;padding:0 10px;vertical-align:middle;margin-left:13px}.home-layout .common-dataSet-detail .score .score-comment{margin-top:20px;padding:20px}.home-layout .common-dataSet-detail .score .score-comment .ant-input{margin-top:20px}.home-layout .common-dataSet-detail .score .score-comment .ant-input+.ant-input{width:270px}.home-layout .common-dataSet-detail .score .score-comment img{margin-left:20px}.home-layout .common-dataSet-detail .score .score-comment .ant-btn{margin-top:20px}.home-layout .common-dataSet-detail .debug-modal .ant-modal-content .ant-modal-close{color:#fff}.home-layout .common-dataSet-detail .debug-modal .ant-modal-content .ant-modal-header{background-color:#1890ff}.home-layout .common-dataSet-detail .debug-modal .ant-modal-content .ant-modal-header .ant-modal-title{color:#fff}.home-layout .collect_table_details.ctx{padding-top:0!important}.home-layout .common-column .filter-left{width:300px;vertical-align:top}.home-layout .common-column .filter-left .filter-cell .type label{width:100%}.home-layout .common-column .ctx-right{margin-left:16px;width:882px}.home-layout .common-column .ctx-right .table-list{background-color:#fff;border:1px solid #d2dce7}.home-layout .common-column .ctx-right .table-list .order{padding:0 25px;height:39px;line-height:38px;color:#666;border-bottom:1px solid #d2dce7;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.home-layout .common-column .ctx-right .table-list .order .table-count{color:#d0021b}.home-layout .common-column .ctx-right .table-list .order .ant-btn{font-size:12px;margin:7px 0 0 77px;background:#e8f4ff!important}.home-layout .common-column .ctx-right .table-list .cell{margin:0 25px;height:140px;border-bottom:1px solid #eaeaea}.home-layout .common-column .ctx-right .table-list .list{padding:8px 20px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta h4 a{color:#1890ff;font-size:18px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .ant-rate{margin-left:10px;font-size:18px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta .desc-ctx{color:#333;margin-right:30px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra{position:absolute;bottom:12px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra .count-name{display:inline-block;min-width:100px;color:#828282;margin-left:20px;height:25px;line-height:25px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-extra .count-name .active-color{color:#ff6a1e}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action{padding-top:15px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action em{display:none}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action .ant-btn{border:1px solid #1890ff;color:#1890ff}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-action .ant-btn:hover{background-color:#1890ff;color:#fff}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx{vertical-align:bottom;height:25px;line-height:25px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.src{width:166px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.update{width:88px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .desc-ctx.abstract{width:539px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .file-type{height:25px;line-height:25px}.home-layout .common-column .ctx-right .table-list .list .ant-list .ant-list-item .ant-list-item-meta-description .file-type+.file-type{margin-left:20px}.home-layout .common-column .ctx-right .table-list .ant-pagination{margin:50px auto;text-align:center}.home-layout .common-column .ctx-right .table-list .ant-pagination .ant-pagination-item-active{background-color:#1890ff}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-close,.home-layout .common-column .ctx-right .table-list .ant-pagination .ant-pagination-item-active>a{color:#fff}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-header{background-color:#1890ff}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-header .ant-modal-title{color:#fff}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div{width:100%;max-height:555px;overflow:auto}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table{table-layout:fixed;width:190%;border-collapse:collapse;text-align:center}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead{background-color:#f2f6fc}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead th{height:40px;line-height:25px;border:1px solid #dcdfe6;color:#000;font-size:14px;font-weight:400;padding:0 7px;width:3.7%}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead th:nth-child(14),.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead th:nth-child(15),.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead th:nth-child(16),.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table thead th:nth-child(17){width:10.2%}.home-layout .common-column .column-modal .ant-modal-content .ant-modal-body div table tbody td{border:1px solid #dcdfe6;color:#333;padding:0 7px;font-size:14px;height:40px}.home-layout .common-column-detail .title{padding:0 25px;height:54px;line-height:52px;font-size:18px;background-color:#fff;border:1px solid #d2dce7;color:#1890ff}.home-layout .common-column-detail .title .name{max-width:699px;vertical-align:bottom;padding:0 20px 0 10px}.home-layout .common-column-detail .title .debug,.home-layout .common-column-detail .title .favorite,.home-layout .common-column-detail .title .follow{font-size:14px;margin-left:20px}.home-layout .common-column-detail .title .debug.marked,.home-layout .common-column-detail .title .favorite.marked,.home-layout .common-column-detail .title .follow.marked{color:#f5a623}.home-layout .common-column-detail .title .debug{color:#d0021b}.home-layout .common-column-detail .table-info{padding:20px;margin-top:6px;background-color:#fff}.home-layout .common-column-detail .five-cards{margin-top:6px;height:54px;background-color:#1890ff}.home-layout .common-column-detail .five-cards .ant-radio-button-wrapper{color:#fff;background-color:#1890ff;border:none;border-radius:0;width:155px;text-align:center;height:54px;line-height:54px;font-size:16px;vertical-align:top}.home-layout .common-column-detail .five-cards .ant-radio-button-wrapper:before{width:0}.home-layout .common-column-detail .five-cards .ant-radio-button-wrapper.ant-radio-button-wrapper-checked{-webkit-box-shadow:none;box-shadow:none;color:#1890ff;background-color:#fff}.home-layout .common-column-detail .five-cards .ant-radio-button-wrapper.ant-radio-button-wrapper-checked:before{content:"
+    ],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "fujian",
+    "name": "福建省",
+    "url": "https://data.fujian.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 4851,
+    "dataset_count_patterns": [
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 4851,
+        "context": "4851"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 5084,
+        "context": "5084"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 5304,
+        "context": "5304"
+      },
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 61,
+        "context": "61\n个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 184,
+        "context": "184\n个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 4900,
+        "context": "4900\n万\n次"
+      }
+    ],
+    "dataset_page_url": "https://www.fjbigdata.com.cn/",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "gansu",
+    "name": "甘肃省",
+    "url": "https://data.gansu.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.gansu.gov.cn/\nCall log:\n  - navigating to \"https://data.gansu.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "guangdong",
+    "name": "广东省",
+    "url": "https://gddata.gd.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://gddata.gd.gov.cn/\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://gddata.gd.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "guangxi",
+    "name": "广西壮族自治区",
+    "url": "https://data.gxzf.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.gxzf.gov.cn/\" is interrupted by another navigation to \"https://gddata.gd.gov.cn/\"\nCall log:\n  - navigating to \"https://data.gxzf.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "guizhou",
+    "name": "贵州省",
+    "url": "https://data.guizhou.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.guizhou.gov.cn/\" is interrupted by another navigation to \"https://data.gxzf.gov.cn/\"\nCall log:\n  - navigating to \"https://data.guizhou.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "hainan",
+    "name": "海南省",
+    "url": "https://data.hainan.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.hainan.gov.cn/\" is interrupted by another navigation to \"https://data.guizhou.gov.cn/\"\nCall log:\n  - navigating to \"https://data.hainan.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "hebei",
+    "name": "河北省",
+    "url": "https://data.hebei.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.hebei.gov.cn/\nCall log:\n  - navigating to \"https://data.hebei.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "heilongjiang",
+    "name": "黑龙江省",
+    "url": "https://data.hlj.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.hlj.gov.cn/\nCall log:\n  - navigating to \"https://data.hlj.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "henan",
+    "name": "河南省",
+    "url": "https://data.hnzwfw.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "hubei",
+    "name": "湖北省",
+    "url": "https://data.hubei.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 21878,
+    "dataset_count_patterns": [
+      {
+        "pattern": "个数据集",
+        "value": 21878,
+        "context": "动交流 用户中心  全省现已开放 24119 个数据目录, 21878个数据集, 5983 个数据接口, 528个创新应用,  1"
+      },
+      {
+        "pattern": "万条",
+        "value": 116375,
+        "context": "8个数据集, 5983 个数据接口, 528个创新应用,  116375 万条数据, 已提供 238 万次数据下载， 73257 万"
+      },
+      {
+        "pattern": "万+数据",
+        "value": 116375,
+        "context": "8个数据集, 5983 个数据接口, 528个创新应用,  116375 万条数据, 已提供 238 万次数据下载， 73257 万"
+      },
+      {
+        "pattern": "css_selector:[class*=\"count\"]",
+        "value": 24119,
+        "context": "24119"
+      },
+      {
+        "pattern": "css_selector:[class*=\"count\"]",
+        "value": 21878,
+        "context": "21878"
+      },
+      {
+        "pattern": "css_selector:[class*=\"count\"]",
+        "value": 5983,
+        "context": "5983"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 24119,
+        "context": "24119"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 21878,
+        "context": "21878"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 5983,
+        "context": "5983"
+      }
+    ],
+    "dataset_page_url": "https://hqdeclare.hubei-data.com/portal/#/home",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "hunan",
+    "name": "湖南省",
+    "url": "https://data.hunan.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_CERT_DATE_INVALID at https://data.hunan.gov.cn/\nCall log:\n  - navigating to \"https://data.hunan.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "jiangsu",
+    "name": "江苏省",
+    "url": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "jiangxi",
+    "name": "江西省",
+    "url": "https://data.jiangxi.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.jiangxi.gov.cn/\" is interrupted by another navigation to \"https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html\"\nCall log:\n  - navigating to \"https://data.jiangxi.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "jilin",
+    "name": "吉林省",
+    "url": "https://data.jl.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.jl.gov.cn/\" is interrupted by another navigation to \"https://data.jiangxi.gov.cn/\"\nCall log:\n  - navigating to \"https://data.jl.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "liaoning",
+    "name": "辽宁省",
+    "url": "https://data.ln.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.ln.gov.cn/\" is interrupted by another navigation to \"https://data.jl.gov.cn/\"\nCall log:\n  - navigating to \"https://data.ln.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "neimenggu",
+    "name": "内蒙古自治区",
+    "url": "https://data.nmg.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: Navigation to \"https://data.nmg.gov.cn/\" is interrupted by another navigation to \"https://data.ln.gov.cn/oportal/index\"\nCall log:\n  - navigating to \"https://data.nmg.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "ningxia",
+    "name": "宁夏回族自治区",
+    "url": "https://data.nx.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.nx.gov.cn/\nCall log:\n  - navigating to \"https://data.nx.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "qinghai",
+    "name": "青海省",
+    "url": "https://data.qinghai.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.qinghai.gov.cn/\nCall log:\n  - navigating to \"https://data.qinghai.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "shaanxi",
+    "name": "陕西省",
+    "url": "https://data.shaanxi.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.shaanxi.gov.cn/\nCall log:\n  - navigating to \"https://data.shaanxi.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "shandong",
+    "name": "山东省",
+    "url": "https://data.sd.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 31,
+    "dataset_count_patterns": [
+      {
+        "pattern": "万条",
+        "value": 31,
+        "context": "58个部门，63,656个数据目录，537.0亿条数据，1.31万条数据接口，108个创新应用 查看更多 搜索 高级搜索 看"
+      },
+      {
+        "pattern": "万+数据",
+        "value": 31,
+        "context": "58个部门，63,656个数据目录，537.0亿条数据，1.31万条数据接口，108个创新应用 查看更多 搜索 高级搜索 看"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 74,
+        "context": "74"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 153,
+        "context": "153"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 42,
+        "context": "42"
+      },
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 2026,
+        "context": "最新数据\nNEW DATA\n热门数据\nHOT DATA\n推荐数据\nRECOMMEND\n最新上线目录\n最新上线接口\n最新更新数据\n[2026-04-24 23:3"
+      },
+      {
+        "pattern": "css_selector:[id*=\"data\"]",
+        "value": 2026,
+        "context": "《山东省义务教育学校名录信息》数据下架公示\n公示日期：2026-01-28\n下架状态：未下架\n《山东省普通高中名录信息》数据下架公示\n公示日期：2026-01-"
+      }
+    ],
+    "dataset_page_url": "https://data.sd.gov.cn/portal/catalog/index?filterParam=org_code&filterParamCode=szbm&page=1",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "shanghai",
+    "name": "上海市",
+    "url": "https://data.sh.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "shanxi",
+    "name": "山西省",
+    "url": "http://data.shanxi.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 43,
+    "dataset_count_patterns": [
+      {
+        "pattern": "css_selector:[id*=\"count\"]",
+        "value": 43,
+        "context": "现已开放：政务部门 43个，数据资源 489个，服务接口 16个，数据总量 16692842条，数据项 2174个"
+      }
+    ],
+    "dataset_page_url": "http://data.shanxi.gov.cn/solr/riPage.do?type=1",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "sichuan",
+    "name": "四川省",
+    "url": "https://scdata.net.cn",
+    "status": "success",
+    "dataset_count_homepage": 48,
+    "dataset_count_patterns": [
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 48,
+        "context": "48 个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 48,
+        "context": "48"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 21,
+        "context": "21 个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"total\"]",
+        "value": 48,
+        "context": "48 个\n部门数量\n21 个\n市州数量\n9115 个\n目录数量\n44,558 个\n资源数量\n17.70亿\n数据总量\n75 个\n应用个数"
+      },
+      {
+        "pattern": "css_selector:[id*=\"data\"]",
+        "value": 17,
+        "context": "17.70亿"
+      }
+    ],
+    "dataset_page_url": "https://scdata.net.cn/oportal/catalog/",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "tianjin",
+    "name": "天津市",
+    "url": "https://data.tj.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 2026,
+    "dataset_count_patterns": [
+      {
+        "pattern": "css_selector:[class*=\"data\"]",
+        "value": 2026,
+        "context": "习近平：把“义乌发展经验”进一步总结好运用好 探索走出符合各自实际的高质量发展之路\n[2026-04-24]\n学习手记｜总书记为全民阅读躬身示范\n[2026-0"
+      }
+    ],
+    "dataset_page_url": "https://data.tj.gov.cn/zwgk/zcwj/202511/t20251114_7177875.html",
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "xinjiang",
+    "name": "新疆维吾尔自治区",
+    "url": "https://data.xinjiang.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.xinjiang.gov.cn/\nCall log:\n  - navigating to \"https://data.xinjiang.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "xizang",
+    "name": "西藏自治区",
+    "url": "https://data.xizang.gov.cn",
+    "status": "error",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.xizang.gov.cn/\nCall log:\n  - navigating to \"https://data.xizang.gov.cn/\", waiting until \"networkidle\"\n"
+  },
+  {
+    "code": "yunnan",
+    "name": "云南省",
+    "url": "https://data.yn.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": null,
+    "dataset_count_patterns": [],
+    "dataset_page_url": null,
+    "api_endpoints": [],
+    "html_snippets": [],
+    "error": null
+  },
+  {
+    "code": "zhejiang",
+    "name": "浙江省",
+    "url": "https://data.zj.gov.cn",
+    "status": "success",
+    "dataset_count_homepage": 961,
+    "dataset_count_patterns": [
+      {
+        "pattern": "个数据集",
+        "value": 3920,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 3541,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1871,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1854,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1352,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1231,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1670,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1917,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1522,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 736,
+        "context": "1,917 个数据集 衢州市 1,522 个数据集 舟山市 736 个数据集 台州市 1,537 个数据集 丽水市 978 个"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 1537,
+        "context": "浙江省人民政府  |   登录   |   注册   |   条件"
+      },
+      {
+        "pattern": "个数据集",
+        "value": 978,
+        "context": "市 736 个数据集 台州市 1,537 个数据集 丽水市 978 个数据集 数据全景 数据领域数据场景 医疗卫生 查看更多 "
+      },
+      {
+        "pattern": "万条",
+        "value": 961,
+        "context": "标，实现“有好数用”，完成信用领域50张表、228个字段项，961万条数据的质量校核，合格率100%。（二）“制度创新+多管齐"
+      },
+      {
+        "pattern": "万条",
+        "value": 961,
+        "context": "标，实现“有好数用”，完成信用领域50张表、228个字段项，961万条数据的质量校核，合格率100%。（二）“制度创新+多管齐"
+      },
+      {
+        "pattern": "万+数据",
+        "value": 6800,
+        "context": "、疾病、药品）+全生命周期”的立体数据维度，建成标准化档案超6800万份，涉及指标超100亿条。遵循医疗保障等相关数据标准，对数"
+      },
+      {
+        "pattern": "万+数据",
+        "value": 10,
+        "context": "州全市信号机联网率已达96.8%，2346条可变车道数据实现100%联网开放，为“轻量化、高效益”的车路云协同模式奠定了坚实"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 44436,
+        "context": "44436个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 22218,
+        "context": "22218个"
+      },
+      {
+        "pattern": "css_selector:[class*=\"num\"]",
+        "value": 259314,
+        "context": "259314项"
+      },
+      {
+        "pattern": "css_selector:[class*=\"total\"]",
+        "value": 44436,
+        "context": "44436个\n开放资源数\n22218个\n数据接口数\n259314项\n数据项数\n667.80亿条\n数据条数"
+      }
+    ],
+    "dataset_page_url": "https://data.beijing.gov.cn",
+    "api_endpoints": [
+      ";  color: #333333;  height: 100%;}html {  font-size: 16px;  height: 100%;}a, ins {  text-decoration: none;}a {  color: #333333;}a:hover {  color: #1d72c2;  transition: all 0.2s;  -webkit-transition: all 0.2s;  -o-transition: all 0.2s;  -moz-transition: all 0.2s;}.w1440{margin: 0 auto;width: 1440px;position: relative;}.dop-header{width:100%;height: 168px;background-image: linear-gradient(180deg, #E2F2FE 0%, #F6FBFF 100%);}.first {position: fixed;z-index: 99999;}.dop-header-about{height: 104px;display: flex;justify-content: space-between;align-items: center;position: relative;}.dop-logo {float: left;width: 480px;height: 104px;display: flex;justify-content: space-between;align-items: center;}.dop-logo .logo-province img{width: 280px;}.dop-logo .line{width: 1px;background: #cecece;height: 35px;margin: 0px 10px;}.dop-logo .logo-open{width: auto;height: 55px;padding:7px 0 0;}.dop-logo .logo-open img{width: 165px;}.dop-tool{padding:10px 0 0;display: flex;flex-direction: column;}.dop-tool #login-box{height: 32px;line-height: 32px;text-align: right;}.dop-tool #login-box li {display: inline-block;position: relative;font-size: 16px;}.dop-tool #login-box li a {height: 32px;color: #000000;display: block;padding: 0 8px;}.dop-tool #login-box li#doplnms a {text-align: center;color:#fff;background: #f48022;border-radius: 4px;}.dop-tool #login-box li#doplnmsout a {text-align: center;color:#fff;background: #f48022;border-radius: 4px;}.dop-tool #login-box li#doploginuser {display: none}.dop-tool #login-box li .icon-provice{display: inline-block;padding: 0 8px 0 22px;height: 30px;background: url(./static/images/icon-provice.png) left center no-repeat;background-size: auto 60%;}.dop-tool #login-box li .login-drop {display:none;position:absolute;z-index:999;top:28px;left:-20px;width:90px;height:88px;padding:15px 2px 0;background: url(./static/images/pop-login-bg.png) no-repeat;}.dop-tool #login-box li .login-drop a {display: block;width: 86px;height: 30px;line-height: 30px;color: #333;text-align: center;cursor: pointer;font-size: 14px;}.dop-tool #login-box li .login-drop a:hover {background: #F5F5F5;}.dop-tool #login-box li:hover .login-drop{display: block;}  /**导航菜单**/.dop-header-menu-wrap{width:100%;height: 64px;background: #1792FF;}.dop-header-menu{height: 64px;}.dop-header-menu ul li{float:left;margin: 0 30px;height: 64px;line-height:64px;position: relative;}.dop-header-menu ul li:first-child {margin-left: 0;}.dop-header-menu ul li:last-child {margin-right: 0;}.dop-header-menu ul li .line{position:absolute;bottom:2px;width:0;height:2px;left:50%;transform:translateX(-50%);background:#fff;}.dop-header-menu ul li:hover .line,.dop-header-menu ul li.active .line{width:100%;transition: all 0.3s linear;}.dop-header-menu ul li a{display:block;color: #fff;font-size: 20px;padding: 0 12px;height:62px;}.dop-header-menu > ul > li:hover > a,.dop-header-menu > ul > li.active > a{color: #eee;}.dop-header-menu ul li .drop-down{position: absolute;top:63px;background:#0082e0;border-radius: 0 0 4px 4px;display: none;z-index: 11;}.dop-header-menu ul li .drop-down li{display:block;margin:0;width: 100%;height: 30px;line-height: 30px;margin: 3px 0;overflow: hidden;}.dop-header-menu ul li .drop-down li a{height: 30px;padding: 0;text-align: center;font-size: 16px;}.dop-header-menu ul li .drop-down li a:hover{border-bottom:none;color: #ddd;}/* .dop-header-menu ul li:hover .drop-down{display: block;} */.back-top{display:none;position:fixed;z-index:10;right:0;bottom:5px;width:46px;height:46px;cursor:pointer;border-radius:5px;background:#7a7e86 url(./static/images/back-top.png) center center no-repeat;}  /**老年 加大字体模式**/.old_type .xxxxx{font-size: 20px;}body.old_type{font-size: 20px;}.old_type{font-size: 20px;}.old_type .dop-tool{}.old_type .dop-tool #login-box li{font-size: 20px;}.old_type .dop-header-menu ul li a{font-size: 22px;padding: 0 4px;}.old_type .dop-header-menu ul li a{font-size: 22px;padding: 0 4px;}.old_type .dop-header-menu ul li .drop-down li a{font-size: 16px;}.old_type .index-block1 .index-search-wrap{scale: 1.1;}.old_type .index-block1 .index-help .dialogue{scale: 1.2;}.old_type .index-title-box{font-size: 54px;}.old_type .index-block2 .introduce .list h2{font-size: 34px;}.old_type .index-tab1 span{font-size: 36px;}.old_type .index-tab2 span{font-size: 36px;}.old_type .carousel ul li .name{font-size: 28px;}.old_type .index-block2 .introduce .list .text{font-size: 20px;}.old_type .index-block3 ul li .name{font-size: 24px;}.old_type .index-block3 ul li .value{font-size: 44px;}.old_type .index-block3 ul li .text{font-size: 22px;}.old_type .index-block5 ul li .name{font-size: 28px;}.old_type .index-block6 .list ul li .name{font-size: 22px;}.old_type .index-block6 .list .panel-box .panel-item .panel-title{font-size: 30px;}.old_type .index-block7 .list ul li .name{font-size: 22px;}.old_type .el-breadcrumb{font-size: 18px;}.old_type .node-label{font-size: 22px;}.old_type .child-node{font-size: 20px;}.old_type .parent-node-right span{font-size: 18px;}.old_type .search-area .search-item .search-title{font-size: 20px;}.old_type .search-area .search-item .checkbox-group .el-checkbox .el-checkbox__label{font-size: 20px;}.old_type .data-catalog .right-content .content .mid-content .content-total{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .source-code{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .data-name span{font-size: 26px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .data-name i{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .base-info{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .other-info{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-right .item-right-top .update-time{font-size: 18px;}.old_type .form-content .line .line-left{font-size: 20px;}.old_type .datalog-detail .mid-content .mid-content-left .info-name{font-size: 20px;}.old_type .data-preview .mid-content .mid-content-left .info-name{font-size: 20px;}.old_type .tag{font-size: 20px;}.old_type .tag2{font-size: 20px;}.old_type .table-content .table-header-item{font-size: 20px;}.old_type .table-content .table-row-item{font-size: 20px;}.old_type .el-form-item__label{font-size: 20px;}.old_type .el-table{font-size: 20px;}.old_type .datalog-detail .title .title-name .name{font-size: 40px;}.old_type .data-preview .title .title-name .name{font-size: 40px;}.old_type .visible-title .tips{font-size: 20px;}.old_type .tabs2 .tab-item{font-size: 20px;}.old_type .el-input-group__append .el-button{font-size: 20px;}.old_type .el-input-group__append .el-input{font-size: 20px;}.old_type .el-input-group__prepend .el-button{font-size: 20px;}.old_type .el-input-group__prepend .el-input{font-size: 20px;}.old_type .el-input__inner{font-size: 20px;}.old_type .el-button{font-size: 20px;}.old_type .el-table th{font-size: 20px;}.old_type .datalog-detail .title .title-name .name i{font-size: 20px;}.old_type .data-preview .title .title-name .name i{font-size: 20px;}.old_type .api-use-flow .flow-area-text-item .text-num{font-size: 40px;}.old_type .api-use-flow .flow-area-text-item .text-title{font-size: 24px;}.old_type .api-use-flow .bottom-text-area .text-area-item span{font-size: 20px;}.old_type .api-test .base-info .bi-line .bi-line-left{font-size: 20px;}.old_type .api-test .return-result .bi-line .bi-line-left{font-size: 20px;}.old_type .api-test .base-info .bi-line .bi-line-right{font-size: 20px;}.old_type .api-test .return-result .bi-line .bi-line-right{font-size: 20px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap h2{font-size: 66px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li .num span{font-size: 50px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li{font-size: 24px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li label{font-size: 20px;}.old_type .open-zone .data-zone-main .data-zone-list ul li .name{font-size: 28px;}.old_type .box-tag{font-size: 20px;}.old_type .el-tabs__item{font-size: 30px;}.old_type .catalog_list .catalog_item .header_box{font-size: 30px;}.old_type .catalog_list .catalog_item .catalog_name{font-size: 20px;}.old_type .title_info{font-size: 22px;}.old_type .article-detail-title .title{font-size: 36px;}.old_type .article-detail-main{font-size: 20px;}.old_type .open-index .provincal-depart-echart .pd-chart-title .pd-chart-btns .btn{font-size: 20px;}.old_type .number-charts .number-chart-top .number-chart-title{font-size: 28px;}.old_type .number-charts .chart .chart-item .bar-top .bar-top-left .bar-top-left-name{font-size: 20px;}.old_type .number-charts .number-chart-top .number-chart-unit{font-size: 20px;}.old_type .number-charts .chart .chart-item .bar-top .bar-top-right{font-size: 20px;}.old_type .city-open .co-chart-title .co-chart-btns .btn{font-size: 20px;}.old_type .open-data-update .opu-chart-title .opu-chart-btns .btn{font-size: 20px;}.old_type .word-cloud .openDataUpdateChart-title{font-size: 28px;}.old_type .inter-comunication .frequent-question .fq-title .fq-title-name{font-size: 50px;}.old_type .inter-comunication .frequent-question .fq-content .fq-content-left .fq-col{font-size: 20px;}.old_type .tabs .tab-item{font-size: 30px;}.old_type .inter-comunication .total-datanum{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-title{font-size: 30px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-info span{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-desc{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-reply{font-size: 20px;}.old_type .el-dialog__title{font-size: 30px;}.old_type .el-form-item__content{font-size: 20px;}.old_type .el-checkbox__label{font-size: 20px;}.old_type .el-select-dropdown__item{font-size: 20px;}.old_type .data-list .data-item{font-size: 20px;}.old_type .el-upload__tip{font-size: 18px;}.old_type .btn-group .btn1{font-size: 20px;}.old_type .btn-group .btn2{font-size: 20px;}.old_type .xxxxx{font-size: 20px;}.old_type .xxxxx{font-size: 20px;}.old_type .bottom-btns .btn-item .btn-name{font-size: 18px;}.old_type .bottom-btns .btn-item .data-name{font-size: 18px;}.old_type .x-left{font-size: 20px;}.old_type .el-pagination button{font-size: 20px;}.old_type .el-pagination span:not([class*=",
+      ";  color: #333333;  height: 100%;}html {  font-size: 16px;  height: 100%;}a, ins {  text-decoration: none;}a {  color: #333333;}a:hover {  color: #1d72c2;  transition: all 0.2s;  -webkit-transition: all 0.2s;  -o-transition: all 0.2s;  -moz-transition: all 0.2s;}.w1440{margin: 0 auto;width: 1440px;position: relative;}.dop-header{width:100%;height: 168px;background-image: linear-gradient(180deg, #E2F2FE 0%, #F6FBFF 100%);}.first {position: fixed;z-index: 99999;}.dop-header-about{height: 104px;display: flex;justify-content: space-between;align-items: center;position: relative;}.dop-logo {float: left;width: 480px;height: 104px;display: flex;justify-content: space-between;align-items: center;}.dop-logo .logo-province img{width: 280px;}.dop-logo .line{width: 1px;background: #cecece;height: 35px;margin: 0px 10px;}.dop-logo .logo-open{width: auto;height: 55px;padding:7px 0 0;}.dop-logo .logo-open img{width: 165px;}.dop-tool{padding:10px 0 0;display: flex;flex-direction: column;}.dop-tool #login-box{height: 32px;line-height: 32px;text-align: right;}.dop-tool #login-box li {display: inline-block;position: relative;font-size: 16px;}.dop-tool #login-box li a {height: 32px;color: #000000;display: block;padding: 0 8px;}.dop-tool #login-box li#doplnms a {text-align: center;color:#fff;background: #f48022;border-radius: 4px;}.dop-tool #login-box li#doplnmsout a {text-align: center;color:#fff;background: #f48022;border-radius: 4px;}.dop-tool #login-box li#doploginuser {display: none}.dop-tool #login-box li .icon-provice{display: inline-block;padding: 0 8px 0 22px;height: 30px;background: url(./static/images/icon-provice.png) left center no-repeat;background-size: auto 60%;}.dop-tool #login-box li .login-drop {display:none;position:absolute;z-index:999;top:28px;left:-20px;width:90px;height:88px;padding:15px 2px 0;background: url(./static/images/pop-login-bg.png) no-repeat;}.dop-tool #login-box li .login-drop a {display: block;width: 86px;height: 30px;line-height: 30px;color: #333;text-align: center;cursor: pointer;font-size: 14px;}.dop-tool #login-box li .login-drop a:hover {background: #F5F5F5;}.dop-tool #login-box li:hover .login-drop{display: block;}  /**导航菜单**/.dop-header-menu-wrap{width:100%;height: 64px;background: #1792FF;}.dop-header-menu{height: 64px;}.dop-header-menu ul li{float:left;margin: 0 30px;height: 64px;line-height:64px;position: relative;}.dop-header-menu ul li:first-child {margin-left: 0;}.dop-header-menu ul li:last-child {margin-right: 0;}.dop-header-menu ul li .line{position:absolute;bottom:2px;width:0;height:2px;left:50%;transform:translateX(-50%);background:#fff;}.dop-header-menu ul li:hover .line,.dop-header-menu ul li.active .line{width:100%;transition: all 0.3s linear;}.dop-header-menu ul li a{display:block;color: #fff;font-size: 20px;padding: 0 12px;height:62px;}.dop-header-menu > ul > li:hover > a,.dop-header-menu > ul > li.active > a{color: #eee;}.dop-header-menu ul li .drop-down{position: absolute;top:63px;background:#0082e0;border-radius: 0 0 4px 4px;display: none;z-index: 11;}.dop-header-menu ul li .drop-down li{display:block;margin:0;width: 100%;height: 30px;line-height: 30px;margin: 3px 0;overflow: hidden;}.dop-header-menu ul li .drop-down li a{height: 30px;padding: 0;text-align: center;font-size: 16px;}.dop-header-menu ul li .drop-down li a:hover{border-bottom:none;color: #ddd;}/* .dop-header-menu ul li:hover .drop-down{display: block;} */.back-top{display:none;position:fixed;z-index:10;right:0;bottom:5px;width:46px;height:46px;cursor:pointer;border-radius:5px;background:#7a7e86 url(./static/images/back-top.png) center center no-repeat;}  /**老年 加大字体模式**/.old_type .xxxxx{font-size: 20px;}body.old_type{font-size: 20px;}.old_type{font-size: 20px;}.old_type .dop-tool{}.old_type .dop-tool #login-box li{font-size: 20px;}.old_type .dop-header-menu ul li a{font-size: 22px;padding: 0 4px;}.old_type .dop-header-menu ul li a{font-size: 22px;padding: 0 4px;}.old_type .dop-header-menu ul li .drop-down li a{font-size: 16px;}.old_type .index-block1 .index-search-wrap{scale: 1.1;}.old_type .index-block1 .index-help .dialogue{scale: 1.2;}.old_type .index-title-box{font-size: 54px;}.old_type .index-block2 .introduce .list h2{font-size: 34px;}.old_type .index-tab1 span{font-size: 36px;}.old_type .index-tab2 span{font-size: 36px;}.old_type .carousel ul li .name{font-size: 28px;}.old_type .index-block2 .introduce .list .text{font-size: 20px;}.old_type .index-block3 ul li .name{font-size: 24px;}.old_type .index-block3 ul li .value{font-size: 44px;}.old_type .index-block3 ul li .text{font-size: 22px;}.old_type .index-block5 ul li .name{font-size: 28px;}.old_type .index-block6 .list ul li .name{font-size: 22px;}.old_type .index-block6 .list .panel-box .panel-item .panel-title{font-size: 30px;}.old_type .index-block7 .list ul li .name{font-size: 22px;}.old_type .el-breadcrumb{font-size: 18px;}.old_type .node-label{font-size: 22px;}.old_type .child-node{font-size: 20px;}.old_type .parent-node-right span{font-size: 18px;}.old_type .search-area .search-item .search-title{font-size: 20px;}.old_type .search-area .search-item .checkbox-group .el-checkbox .el-checkbox__label{font-size: 20px;}.old_type .data-catalog .right-content .content .mid-content .content-total{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .source-code{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .data-name span{font-size: 26px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .data-name i{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .base-info{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-left .other-info{font-size: 18px;}.old_type .data-catalog .right-content .content .content-list .content-item .item-right .item-right-top .update-time{font-size: 18px;}.old_type .form-content .line .line-left{font-size: 20px;}.old_type .datalog-detail .mid-content .mid-content-left .info-name{font-size: 20px;}.old_type .data-preview .mid-content .mid-content-left .info-name{font-size: 20px;}.old_type .tag{font-size: 20px;}.old_type .tag2{font-size: 20px;}.old_type .table-content .table-header-item{font-size: 20px;}.old_type .table-content .table-row-item{font-size: 20px;}.old_type .el-form-item__label{font-size: 20px;}.old_type .el-table{font-size: 20px;}.old_type .datalog-detail .title .title-name .name{font-size: 40px;}.old_type .data-preview .title .title-name .name{font-size: 40px;}.old_type .visible-title .tips{font-size: 20px;}.old_type .tabs2 .tab-item{font-size: 20px;}.old_type .el-input-group__append .el-button{font-size: 20px;}.old_type .el-input-group__append .el-input{font-size: 20px;}.old_type .el-input-group__prepend .el-button{font-size: 20px;}.old_type .el-input-group__prepend .el-input{font-size: 20px;}.old_type .el-input__inner{font-size: 20px;}.old_type .el-button{font-size: 20px;}.old_type .el-table th{font-size: 20px;}.old_type .datalog-detail .title .title-name .name i{font-size: 20px;}.old_type .data-preview .title .title-name .name i{font-size: 20px;}.old_type .api-use-flow .flow-area-text-item .text-num{font-size: 40px;}.old_type .api-use-flow .flow-area-text-item .text-title{font-size: 24px;}.old_type .api-use-flow .bottom-text-area .text-area-item span{font-size: 20px;}.old_type .api-test .base-info .bi-line .bi-line-left{font-size: 20px;}.old_type .api-test .return-result .bi-line .bi-line-left{font-size: 20px;}.old_type .api-test .base-info .bi-line .bi-line-right{font-size: 20px;}.old_type .api-test .return-result .bi-line .bi-line-right{font-size: 20px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap h2{font-size: 66px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li .num span{font-size: 50px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li{font-size: 24px;}.old_type .open-zone .data-zone-pic .open-zone-search-wrap .open-zone-total ul li label{font-size: 20px;}.old_type .open-zone .data-zone-main .data-zone-list ul li .name{font-size: 28px;}.old_type .box-tag{font-size: 20px;}.old_type .el-tabs__item{font-size: 30px;}.old_type .catalog_list .catalog_item .header_box{font-size: 30px;}.old_type .catalog_list .catalog_item .catalog_name{font-size: 20px;}.old_type .title_info{font-size: 22px;}.old_type .article-detail-title .title{font-size: 36px;}.old_type .article-detail-main{font-size: 20px;}.old_type .open-index .provincal-depart-echart .pd-chart-title .pd-chart-btns .btn{font-size: 20px;}.old_type .number-charts .number-chart-top .number-chart-title{font-size: 28px;}.old_type .number-charts .chart .chart-item .bar-top .bar-top-left .bar-top-left-name{font-size: 20px;}.old_type .number-charts .number-chart-top .number-chart-unit{font-size: 20px;}.old_type .number-charts .chart .chart-item .bar-top .bar-top-right{font-size: 20px;}.old_type .city-open .co-chart-title .co-chart-btns .btn{font-size: 20px;}.old_type .open-data-update .opu-chart-title .opu-chart-btns .btn{font-size: 20px;}.old_type .word-cloud .openDataUpdateChart-title{font-size: 28px;}.old_type .inter-comunication .frequent-question .fq-title .fq-title-name{font-size: 50px;}.old_type .inter-comunication .frequent-question .fq-content .fq-content-left .fq-col{font-size: 20px;}.old_type .tabs .tab-item{font-size: 30px;}.old_type .inter-comunication .total-datanum{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-title{font-size: 30px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-info span{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-desc{font-size: 20px;}.old_type .inter-comunication .fq-content-list .fq-content-item .fq-data-reply{font-size: 20px;}.old_type .el-dialog__title{font-size: 30px;}.old_type .el-form-item__content{font-size: 20px;}.old_type .el-checkbox__label{font-size: 20px;}.old_type .el-select-dropdown__item{font-size: 20px;}.old_type .data-list .data-item{font-size: 20px;}.old_type .el-upload__tip{font-size: 18px;}.old_type .btn-group .btn1{font-size: 20px;}.old_type .btn-group .btn2{font-size: 20px;}.old_type .xxxxx{font-size: 20px;}.old_type .xxxxx{font-size: 20px;}.old_type .bottom-btns .btn-item .btn-name{font-size: 18px;}.old_type .bottom-btns .btn-item .data-name{font-size: 18px;}.old_type .x-left{font-size: 20px;}.old_type .el-pagination button{font-size: 20px;}.old_type .el-pagination span:not([class*=",
+      ">   一、场景概述　　为破解传统医保管理中存在的“数据孤岛、服务粗放、治理滞后”等问题，浙江省创新建设智慧医保“一人一画像”服务平台。平台以“1库+1档+1中心+N应用”为架构，归集整合多部门公共数据与医保业务数据，为全省5700余万参保人构建动态精准的数字画像，推动医保服务向“主动精准”、治理模式向“数据驱动”转型，逐步形成覆盖参保、救助、健康、商保等多场景的治理服务体系。111N体系架构图　　二、总体思路　　（一）归集整合各类基础数据。通过省级一体化数字资源系统（IRS）实现跨部门数据归集整合。归集人口数据、民政困难群众数据、医保参保及结算数据等的政府数据，整合定点医疗机构的诊疗记录、药品使用数据、医保定点零售药店的购药数据，以及商业保险机构的理赔数据、核保模型参数等企业数据。构建“公共数据为基底、企业数据为补充、动态更新为特色”的数据供给体系。　　（二）构建医保垂域高质量数据集。构建“8类主体（参保人、家庭、企业、区域、医疗机构、医生、疾病、药品）+全生命周期”的立体数据维度，建成标准化档案超6800万份，涉及指标超100亿条。遵循医疗保障等相关数据标准，对数据进行标准化处理，统一数据格式、编码规则、数据字典等，通过“数据校验规则库+人工抽样核查”双重机制进行数据质量管控，确保数据准确率在99%以上。搭建实时数据更新平台，实现医保数据、人口数据、诊疗数据等每日定时更新，部分关键业务数据实现秒级同步更新。　　（三）建设“111N”体系架构。建成“一个数据库”，整合各类基础数据，确保数据的全面性、准确性和一致性。形成“一批业务档案”，形成对人、户、企业、区域、医院、医生、疾病、药品等全方位的档案。构建“一个决策支持中心”，推动数据的可视化展示与高效利用。打造“N个场景应用”，全面赋能医保改革、管理、服务，形成全民参保、病贫共济、浙里医小档等应用。　　（四）探索“人工智能+医保”的深度应用。面向医保工作人员，借助大模型训练智能小助理，查指标、调档案、找功能、办业务，穿透繁琐的功能层级，一链直达；面向决策人员，依托海量真实数据、历史信息，通过大数据支持下的政策仿真模拟，以精细测算辅助决策。　　三、创新举措　　一是构建“111N”体系架构，实现数据、档案、决策、应用的一体化支撑。二是深度融合通用大模型与医保业务数据，打造医保垂域智能体，提升政策咨询与风险研判精度。三是建立“省级统筹、市级协同、县级主战、网格末梢”四级联动机制，实现数据上行、服务下行、责任压实。四是推行“数据筛选+网格落地”主动治理模式，通过移动端赋能基层网格员，实现精准触达与服务闭环。五是在商保协同领域创新“双平台一通道”结算模式，政府主导制定医保商保数据交换和同步结算规则，通过标准化API接口实现医保端与商保端双向实时调用。　　四、主要成效　　在治理提升方面，推动全省户籍人口参保率稳定在99%以上，49.6万涉及困难群体家庭纳入“一户一档”监测，医疗救助资金使用效率大幅提升，基金监管实现从人工巡查向实时预警转变。在服务优化方面，商保理赔周期从平均30天缩短至最快10分钟，健康管理推动慢性病干预依从性提升明显。在产业发展方面，商保机构核保人力成本降低40%，接入纯商业健康保险产品451个，赔付超100万笔，形成数据驱动服务生态。</div><span data-v-00ab2dc2=",
+      ">省教育厅API网关日志数据</span><!----></div><div data-v-00ab2dc2="
+    ],
+    "html_snippets": [],
+    "error": null
+  }
+]

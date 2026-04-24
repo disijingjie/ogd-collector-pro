@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平台提取规则映射表 | OGD-Collector V3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+        }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #333;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        .rules-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .rules-table th:first-child { border-radius: 8px 0 0 0; }
+        .rules-table th:last-child { border-radius: 0 8px 0 0; }
+        .rules-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        .rules-table tr:hover { background: #f8f9ff; }
+        .method-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-right: 5px;
+            margin-bottom: 3px;
+        }
+        .method-css { background: #e3f2fd; color: #1565c0; }
+        .method-regex { background: #f3e5f5; color: #7b1fa2; }
+        .method-api { background: #e8f5e9; color: #2e7d32; }
+        .location-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .confidence-high { color: #2e7d32; font-weight: 600; }
+        .confidence-medium { color: #f9a825; font-weight: 600; }
+        .confidence-low { color: #c62828; font-weight: 600; }
+        .code-snippet {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85em;
+            display: inline-block;
+            max-width: 300px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .section-desc {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .excluded-section {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .excluded-section h3 {
+            color: #c53030;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回总览</a>
+
+        <div class="header">
+            <h1>平台提取规则映射表</h1>
+            <p>V3版本 | {{ rules.last_updated }} | 共 {{ rules.platforms|length }}个平台</p>
+        </div>
+
+        <div class="card">
+            <div class="section-desc">
+                <h3 style="margin-bottom: 10px; color: #667eea;">采集标准说明</h3>
+                <p><strong>数据集数量定义：</strong>{{ rules.collection_standards.dataset_count_definition }}</p>
+                <p><strong>测量单位：</strong>{{ rules.collection_standards.measurement_unit }}</p>
+                <p style="margin-top: 10px;"><strong>置信度分级：</strong></p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    {% for level, desc in rules.collection_standards.confidence_levels.items() %}
+                    <li><span class="confidence-{{ level }}">{{ level }}</span>: {{ desc }}</li>
+                    {% endfor %}
+                </ul>
+                <p style="margin-top: 10px;"><strong>交叉验证来源：</strong>{{ rules.collection_standards.cross_validation | join('、') }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">各平台提取规则明细</h2>
+            <table class="rules-table">
+                <thead>
+                    <tr>
+                        <th>平台</th>
+                        <th>首页URL</th>
+                        <th>数据目录页URL</th>
+                        <th>主策略</th>
+                        <th>主策略位置</th>
+                        <th>备用策略</th>
+                        <th>备用策略位置</th>
+                        <th>当前值</th>
+                        <th>置信度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for platform in rules.platforms %}
+                    <tr>
+                        <td><strong>{{ platform.name }}</strong></td>
+                        <td><a href="{{ platform.urls.homepage }}" target="_blank" style="color: #667eea; word-break: break-all;">{{ platform.urls.homepage[:40] }}...</a></td>
+                        <td>
+                            {% if platform.urls.dataset_page %}
+                                <a href="{{ platform.urls.dataset_page }}" target="_blank" style="color: #667eea; word-break: break-all;">{{ platform.urls.dataset_page[:40] }}...</a>
+                            {% else %}
+                                <span style="color: #999;">未配置</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if platform.extraction_rules.primary %}
+                                <span class="method-tag method-{{ platform.extraction_rules.primary.method.split(':')[0] }}">{{ platform.extraction_rules.primary.method }}</span>
+                                <br><small style="color: #666;">{{ platform.extraction_rules.primary.description }}</small>
+                            {% else %}
+                                <span style="color: #999;">未配置</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if platform.extraction_rules.primary %}
+                                <span class="location-tag">{{ platform.extraction_rules.primary.location }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if platform.extraction_rules.secondary %}
+                                <span class="method-tag method-{{ platform.extraction_rules.secondary.method.split(':')[0] }}">{{ platform.extraction_rules.secondary.method }}</span>
+                                <br><small style="color: #666;">{{ platform.extraction_rules.secondary.description }}</small>
+                            {% else %}
+                                <span style="color: #999;">未配置</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if platform.extraction_rules.secondary %}
+                                <span class="location-tag">{{ platform.extraction_rules.secondary.location }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if platform.dataset_count.value %}
+                                <strong>{{ "{:,}".format(platform.dataset_count.value) }}</strong>
+                            {% else %}
+                                <span style="color: #999;">待采集</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="confidence-{{ platform.dataset_count.confidence }}">{{ platform.dataset_count.confidence }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="excluded-section">
+            <h3>排除的平台（无独立数据开放平台）</h3>
+            <p style="margin-bottom: 15px; color: #666;">以下{{ rules.excluded_platforms|length }}个省级行政区未建设独立的数据开放平台，数据归集至省级政务服务平台，不纳入本研究范围。</p>
+            <table class="rules-table">
+                <thead>
+                    <tr>
+                        <th>平台代码</th>
+                        <th>平台名称</th>
+                        <th>排除原因</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in rules.excluded_platforms %}
+                    <tr>
+                        <td>{{ p.code }}</td>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.reason }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h2 class="card-title">自动化配置</h2>
+            <div class="info-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">基准采集频率</div>
+                    <div style="font-size: 1.1em; font-weight: 600;">{{ rules.automation_config.frequency.baseline }}</div>
+                </div>
+                <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">周度跟踪</div>
+                    <div style="font-size: 1.1em; font-weight: 600;">{{ rules.automation_config.frequency.weekly }}</div>
+                </div>
+                <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">日常快照</div>
+                    <div style="font-size: 1.1em; font-weight: 600;">{{ rules.automation_config.frequency.daily }}</div>
+                </div>
+                <div style="padding: 15px; background: #f8f9ff; border-radius: 8px;">
+                    <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">执行环境</div>
+                    <div style="font-size: 1.1em; font-weight: 600;">{{ rules.automation_config.execution_environment }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 30px; color: white; opacity: 0.8;">
+            <p>OGD-Collector Pro V3 | 武汉大学博士研究生论文研究支持系统</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1053 @@
+{
+  "version": "3.0.0",
+  "description": "OGD-Collector Pro V3 - 平台数据集数量提取规则映射表",
+  "last_updated": "2026-04-25",
+  "sample_scope": "23个有独立数据开放平台的省级行政区（31省-8个无平台=23个）",
+  "excluded_platforms": [
+    {"code": "gansu", "name": "甘肃省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "hebei", "name": "河北省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "heilongjiang", "name": "黑龙江省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "ningxia", "name": "宁夏回族自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "qinghai", "name": "青海省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "shaanxi", "name": "陕西省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "xinjiang", "name": "新疆维吾尔自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
+    {"code": "xizang", "name": "西藏自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"}
+  ],
+  "platforms": [
+    {
+      "code": "beijing",
+      "name": "北京市",
+      "province": "北京",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.beijing.gov.cn",
+        "dataset_page": "https://data.beijing.gov.cn/",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": "[class*='data-num']",
+          "pattern": "数据集\\s*([0-9,]+)\\s*个",
+          "description": "首页统计面板中的'数据集'数字"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据集\\s*([0-9,]+)\\s*个",
+          "description": "首页文本中匹配'数据集X个'"
+        }
+      },
+      "dataset_count": {
+        "value": 4454,
+        "unit": "个",
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://data.beijing.gov.cn/",
+        "source_text": "数据集 4454个",
+        "collected_at": "2026-04-25",
+        "verification": "首页统计面板直接显示，上下文明确"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": true,
+        "response_time_ms": 1200
+      },
+      "notes": "北京市政务数据资源网，数据集数量包含市级和区级数据"
+    },
+    {
+      "code": "tianjin",
+      "name": "天津市",
+      "province": "天津",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.tj.gov.cn",
+        "dataset_page": "https://data.tj.gov.cn/html/dataCatalog.html",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "dataset_page",
+          "selector": ".total-num, .data-count",
+          "pattern": "([0-9,]+)",
+          "description": "数据目录页的总数显示"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据集|数据目录|开放目录",
+          "description": "查找首页中的数据相关统计"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "首页未找到明确的数据集数量，需深入数据目录页"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1500
+      },
+      "notes": "天津市信息资源统一开放平台，需进一步分析数据目录页"
+    },
+    {
+      "code": "shanxi",
+      "name": "山西省",
+      "province": "山西",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.shanxi.gov.cn",
+        "dataset_page": "https://data.shanxi.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-num, .count-num",
+          "pattern": "([0-9,]+)",
+          "description": "首页统计数字"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "开放数据目录\\s*([0-9,]+)",
+          "description": "匹配'开放数据目录X个'"
+        }
+      },
+      "dataset_count": {
+        "value": 534,
+        "unit": "个",
+        "type": "开放数据目录",
+        "confidence": "medium",
+        "source_url": "https://data.shanxi.gov.cn",
+        "source_text": "开放数据目录 534个",
+        "collected_at": "2026-04-25",
+        "verification": "第一轮采集到534，但上下文不够明确，需重新验证"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "山西省政府数据开放平台"
+    },
+    {
+      "code": "neimenggu",
+      "name": "内蒙古自治区",
+      "province": "内蒙古",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.nmg.gov.cn",
+        "dataset_page": "https://data.nmg.gov.cn/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*条数据目录",
+          "description": "匹配'X条数据目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".num",
+          "pattern": "([0-9,]+)",
+          "description": "CSS选择器.num"
+        }
+      },
+      "dataset_count": {
+        "value": 219,
+        "unit": "条",
+        "type": "数据目录",
+        "confidence": "high",
+        "source_url": "https://data.nmg.gov.cn",
+        "source_text": "219条数据目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'219条数据目录'，非部门数(22个主题)"
+      },
+      "platform_features": {
+        "has_api": false,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 3000
+      },
+      "notes": "内蒙古自治区公共数据开放平台，第一轮误将22个主题数当作数据集数，已修正"
+    },
+    {
+      "code": "liaoning",
+      "name": "辽宁省",
+      "province": "辽宁",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.ln.gov.cn",
+        "dataset_page": "https://data.ln.gov.cn/oportal/catalog",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个数据目录",
+          "description": "匹配'X个数据目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-count, .catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "CSS选择器匹配数据目录计数"
+        }
+      },
+      "dataset_count": {
+        "value": 4120,
+        "unit": "个",
+        "type": "数据目录",
+        "confidence": "high",
+        "source_url": "https://data.ln.gov.cn",
+        "source_text": "4,120个数据目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'4,120个数据目录'，非部门数(26个部门)"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1800
+      },
+      "notes": "辽宁省公共数据开放平台，第一轮误将26个部门数当作数据集数，已修正"
+    },
+    {
+      "code": "jilin",
+      "name": "吉林省",
+      "province": "吉林",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.jl.gov.cn",
+        "dataset_page": "https://data.jl.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个开放目录",
+          "description": "匹配'X个开放目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".open-dir-num",
+          "pattern": "([0-9,]+)",
+          "description": "开放目录数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 303,
+        "unit": "个",
+        "type": "开放目录",
+        "confidence": "high",
+        "source_url": "https://data.jl.gov.cn",
+        "source_text": "303个开放目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'303个开放目录'，非接口目录数(12个)"
+      },
+      "platform_features": {
+        "has_api": false,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2500
+      },
+      "notes": "吉林省公共数据开放平台，第一轮误将12个接口目录数当作数据集数，已修正"
+    },
+    {
+      "code": "shanghai",
+      "name": "上海市",
+      "province": "上海",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.sh.gov.cn",
+        "dataset_page": "https://data.sh.gov.cn/view/data-resource/index.html",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".resource-count, .data-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页资源计数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据资源|数据集|开放数据",
+          "description": "查找数据相关统计"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮未找到明确的数据集数量，需深入分析"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": true,
+        "response_time_ms": 1000
+      },
+      "notes": "上海市公共数据开放平台，平台较先进但首页未直接显示总数，需分析数据目录页"
+    },
+    {
+      "code": "jiangsu",
+      "name": "江苏省",
+      "province": "江苏",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://jszwb.jiangsu.gov.cn",
+        "dataset_page": "https://jszwb.jiangsu.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".catalog-num, .data-total",
+          "pattern": "([0-9,]+)",
+          "description": "首页目录总数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据目录|数据集|开放目录",
+          "description": "查找数据相关统计"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮未找到明确的数据集数量，需深入分析"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1500
+      },
+      "notes": "江苏省公共数据开放平台"
+    },
+    {
+      "code": "zhejiang",
+      "name": "浙江省",
+      "province": "浙江",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.zjzwfw.gov.cn",
+        "dataset_page": "https://data.zjzwfw.gov.cn/eods/web/page/catalog.html",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".dataset-count, .catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页数据集计数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据集|数据目录|([0-9,]+)\\s*个",
+          "description": "匹配数据集相关数字"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮抓到259314，但上下文为'数据项'而非'数据集'，需重新采集"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": true,
+        "response_time_ms": 1200
+      },
+      "notes": "浙江省公共数据平台，第一轮误将数据项数(259314)当作数据集数，需重新找数据集数量"
+    },
+    {
+      "code": "anhui",
+      "name": "安徽省",
+      "province": "安徽",
+      "tier": "省级",
+      "urls": {
+        "homepage": "http://data.ahzwfw.gov.cn:8000",
+        "dataset_page": "http://data.ahzwfw.gov.cn:8000/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-count, .catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页数据计数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据目录|数据集|([0-9,]+)\\s*个",
+          "description": "匹配数据相关数字"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮未找到，需深入分析数据目录页"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 3000
+      },
+      "notes": "安徽省政务数据开放平台"
+    },
+    {
+      "code": "fujian",
+      "name": "福建省",
+      "province": "福建",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.fujian.gov.cn",
+        "dataset_page": "https://data.fujian.gov.cn/#/oportal/catalog",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".num",
+          "pattern": "目录数\\s*([0-9,]+)",
+          "description": "首页'目录数'CSS选择器"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "目录数\\s*([0-9,]+)",
+          "description": "匹配'目录数X'"
+        }
+      },
+      "dataset_count": {
+        "value": 6722,
+        "unit": "个",
+        "type": "目录数",
+        "confidence": "medium",
+        "source_url": "https://data.fujian.gov.cn/#/oportal/index",
+        "source_text": "目录数 6722",
+        "collected_at": "2026-04-25",
+        "verification": "CSS选择器.num提取到多个值(4851,5084,5304,6722,2938)，取最大值6722，但无明确上下文，需重新验证"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "福建省公共数据资源统一开放平台，CSS动态渲染多个num值，需确认哪个对应目录总数"
+    },
+    {
+      "code": "jiangxi",
+      "name": "江西省",
+      "province": "江西",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.jiangxi.gov.cn",
+        "dataset_page": "https://data.jiangxi.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "开放数据目录\\s*([0-9,]+)\\s*个",
+          "description": "匹配'开放数据目录X个'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".catalog-num",
+          "pattern": "([0-9,]+)",
+          "description": "CSS选择器匹配"
+        }
+      },
+      "dataset_count": {
+        "value": 534,
+        "unit": "个",
+        "type": "开放数据目录",
+        "confidence": "medium",
+        "source_url": "https://data.jiangxi.gov.cn",
+        "source_text": "开放数据目录 534个",
+        "collected_at": "2026-04-25",
+        "verification": "第一轮采集到534，上下文需进一步验证"
+      },
+      "platform_features": {
+        "has_api": false,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2500
+      },
+      "notes": "江西省政府数据开放平台"
+    },
+    {
+      "code": "shandong",
+      "name": "山东省",
+      "province": "山东",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.sd.gov.cn",
+        "dataset_page": "https://data.sd.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个数据目录",
+          "description": "匹配'X个数据目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".catalog-total",
+          "pattern": "([0-9,]+)",
+          "description": "数据目录总数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 63656,
+        "unit": "个",
+        "type": "数据目录",
+        "confidence": "high",
+        "source_url": "https://data.sd.gov.cn",
+        "source_text": "63,656个数据目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'63,656个数据目录'，非部门数(58个部门)"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1800
+      },
+      "notes": "山东省公共数据开放平台，第一轮误将58个部门数当作数据集数，已修正为63656个数据目录"
+    },
+    {
+      "code": "henan",
+      "name": "河南省",
+      "province": "河南",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.henan.gov.cn",
+        "dataset_page": "https://data.henan.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-count, .catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页数据计数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据目录|数据集|([0-9,]+)\\s*个",
+          "description": "匹配数据相关数字"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮未找到，需深入分析"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "河南省公共数据开放平台"
+    },
+    {
+      "code": "hubei",
+      "name": "湖北省",
+      "province": "湖北",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.hubei.gov.cn",
+        "dataset_page": "https://data.hubei.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个数据目录",
+          "description": "匹配'X个数据目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "数据目录计数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 24119,
+        "unit": "个",
+        "type": "数据目录",
+        "confidence": "high",
+        "source_url": "https://data.hubei.gov.cn",
+        "source_text": "24,119个数据目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'24,119个数据目录'，非数据集数(21,878)"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1500
+      },
+      "notes": "湖北省公共数据开放平台，统一口径使用'数据目录数'"
+    },
+    {
+      "code": "hunan",
+      "name": "湖南省",
+      "province": "湖南",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.hunan.gov.cn",
+        "dataset_page": "https://data.hunan.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "dataset_page_text",
+          "pattern": "共\\s*([0-9,]+)\\s*条目录",
+          "description": "数据目录页'共X条目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "dataset_page",
+          "selector": ".total-count",
+          "pattern": "([0-9,]+)",
+          "description": "目录页总数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 634,
+        "unit": "条",
+        "type": "目录",
+        "confidence": "high",
+        "source_url": "https://data.hunan.gov.cn/odweb/catalog/index.htm",
+        "source_text": "共634条目录",
+        "collected_at": "2026-04-25",
+        "verification": "数据目录页分页信息明确：'共634条目录'"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "湖南省政务数据开放平台，首页未显示总数，需从数据目录页获取"
+    },
+    {
+      "code": "guangdong",
+      "name": "广东省",
+      "province": "广东",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://gddata.gd.gov.cn",
+        "dataset_page": "https://gddata.gd.gov.cn/dataCatalog/index",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据集\\s*([0-9,]+)\\s*个",
+          "description": "匹配'数据集X个'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".dataset-num",
+          "pattern": "([0-9,]+)",
+          "description": "数据集数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 97528,
+        "unit": "个",
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://gddata.gd.gov.cn/index",
+        "source_text": "数据集 97,528个",
+        "collected_at": "2026-04-25",
+        "verification": "首页统计面板明确显示，上下文清晰"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": true,
+        "response_time_ms": 1200
+      },
+      "notes": "广东省数据资源统一开放平台，全国数据集数量最多的省级平台"
+    },
+    {
+      "code": "guangxi",
+      "name": "广西壮族自治区",
+      "province": "广西",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.gxzf.gov.cn",
+        "dataset_page": "https://data.gxzf.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "dataset_page",
+          "selector": ".total-num",
+          "pattern": "([0-9,]+)",
+          "description": "数据目录页'目录总数'"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "dataset_page_text",
+          "pattern": "目录总数（个）\\s*([0-9,]+)",
+          "description": "匹配'目录总数（个）X'"
+        }
+      },
+      "dataset_count": {
+        "value": 10162,
+        "unit": "个",
+        "type": "目录总数",
+        "confidence": "medium",
+        "source_url": "https://data.gxzf.gov.cn/",
+        "source_text": "目录总数（个） 10,162",
+        "collected_at": "2026-04-25",
+        "verification": "数据目录页显示，但第一轮首页抓取的10037疑似访问次数，需确认"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2500
+      },
+      "notes": "广西壮族自治区公共数据开放平台"
+    },
+    {
+      "code": "hainan",
+      "name": "海南省",
+      "province": "海南",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.hainan.gov.cn",
+        "dataset_page": "https://data.hainan.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个目录",
+          "description": "匹配'X个目录'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".dir-count",
+          "pattern": "([0-9,]+)",
+          "description": "目录数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 35835,
+        "unit": "个",
+        "type": "目录",
+        "confidence": "high",
+        "source_url": "https://data.hainan.gov.cn",
+        "source_text": "35835个目录",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'35835个目录'，非数据集数(334个)"
+      },
+      "platform_features": {
+        "has_api": false,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "海南省数据开放平台，首页同时显示35835个目录和334个数据集，统一口径使用目录数"
+    },
+    {
+      "code": "chongqing",
+      "name": "重庆市",
+      "province": "重庆",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.cq.gov.cn",
+        "dataset_page": "https://data.dsjj.cq.gov.cn/opendata/catalog",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)\\s*个数据集",
+          "description": "匹配'X个数据集'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".dataset-count",
+          "pattern": "([0-9,]+)",
+          "description": "数据集数CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 22550,
+        "unit": "个",
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://data.dsjj.cq.gov.cn/opendata/home",
+        "source_text": "22,550个数据集",
+        "collected_at": "2026-04-25",
+        "verification": "上下文明确：'22,550个数据集'，非部门数(107个)"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": true,
+        "response_time_ms": 1500
+      },
+      "notes": "重庆市公共数据开放系统，第一轮误将107个部门数当作数据集数，已修正"
+    },
+    {
+      "code": "sichuan",
+      "name": "四川省",
+      "province": "四川",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://www.scdata.net.cn",
+        "dataset_page": "https://www.scdata.net.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "regex",
+          "location": "dataset_page_text",
+          "pattern": "目录数量\\s*([0-9,]+)\\s*个",
+          "description": "数据目录页'目录数量X个'"
+        },
+        "secondary": {
+          "method": "css_selector",
+          "location": "dataset_page",
+          "selector": ".catalog-num",
+          "pattern": "([0-9,]+)",
+          "description": "目录页CSS选择器"
+        }
+      },
+      "dataset_count": {
+        "value": 9115,
+        "unit": "个",
+        "type": "目录数量",
+        "confidence": "medium",
+        "source_url": "https://www.scdata.net.cn/odweb/catalog/index.htm",
+        "source_text": "目录数量 9115个",
+        "collected_at": "2026-04-25",
+        "verification": "数据目录页显示，但第一轮首页抓取的3465疑似访问次数，需确认9115是否准确"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2000
+      },
+      "notes": "四川省公共数据开放平台，首页不显示总数，需从数据目录页获取"
+    },
+    {
+      "code": "guizhou",
+      "name": "贵州省",
+      "province": "贵州",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.guizhou.gov.cn",
+        "dataset_page": "https://data.guizhou.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页数字计数器"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "([0-9,]+)",
+          "description": "匹配首页数字"
+        }
+      },
+      "dataset_count": {
+        "value": 9042,
+        "unit": "个",
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://data.guizhou.gov.cn",
+        "source_text": "数字计数器显示9042",
+        "collected_at": "2026-04-25",
+        "verification": "首页动态数字计数器，上下文为数据资源统计"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 1800
+      },
+      "notes": "贵州省政府数据开放平台"
+    },
+    {
+      "code": "yunnan",
+      "name": "云南省",
+      "province": "云南",
+      "tier": "省级",
+      "urls": {
+        "homepage": "https://data.yn.gov.cn",
+        "dataset_page": "https://data.yn.gov.cn/odweb/catalog/index.htm",
+        "api_base": null
+      },
+      "extraction_rules": {
+        "primary": {
+          "method": "css_selector",
+          "location": "homepage",
+          "selector": ".data-count, .catalog-count",
+          "pattern": "([0-9,]+)",
+          "description": "首页数据计数"
+        },
+        "secondary": {
+          "method": "regex",
+          "location": "homepage_text",
+          "pattern": "数据目录|数据集|([0-9,]+)\\s*个",
+          "description": "匹配数据相关数字"
+        }
+      },
+      "dataset_count": {
+        "value": null,
+        "unit": "个",
+        "type": "待确认",
+        "confidence": "low",
+        "source_url": null,
+        "source_text": null,
+        "collected_at": "2026-04-25",
+        "verification": "第一轮未找到，需深入分析"
+      },
+      "platform_features": {
+        "has_api": true,
+        "has_search": true,
+        "has_download": true,
+        "has_visualization": false,
+        "response_time_ms": 2500
+      },
+      "notes": "云南省公共数据开放平台"
+    }
+  ],
+  "collection_standards": {
+    "dataset_count_definition": "平台可访问的数据目录/数据集条目总数，优先从数据目录页枚举获取，次选首页自我报告数",
+    "measurement_unit": "条/个（统一折算）",
+    "confidence_levels": {
+      "high": "有明确上下文（'数据集X个'、'数据目录X个'等），或数据目录页分页可直接计算",
+      "medium": "有数字但上下文不够明确，或CSS选择器提取到多个候选值",
+      "low": "未找到明确数字，或数字疑似非数据集数（如访问次数、部门数）"
+    },
+    "cross_validation": [
+      "开放数林指数年度报告",
+      "清华大学数据治理研究中心评估",
+      "平台自我报告的年度统计"
+    ]
+  },
+  "automation_config": {
+    "frequency": {
+      "baseline": "每月1次（论文主分析数据）",
+      "weekly": "每周1次（趋势跟踪）",
+      "daily": "每天1次（案例标本，不进入主分析）"
+    },
+    "execution_environment": "服务器端（腾讯云106.53.188.187）",
+    "notification": "采集完成后自动更新网站展示，异常时发送告警"
+  }
+}
