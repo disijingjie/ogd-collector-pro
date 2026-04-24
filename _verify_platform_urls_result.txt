@@ -1,0 +1,45 @@
+================================================================================
+验证结果汇总
+================================================================================
+
+[OK] 可访问: 9/16
+  江苏: https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html
+    标题: 江苏省公共数据开放网站
+  山西: http://data.shanxi.gov.cn
+    标题: 山西省公共数据开放网站-首页
+  青海: http://data.qinghai.gov.cn
+    标题: Welcome to nginx!
+  黑龙江: http://116.182.12.53:8001/oportal/index
+    标题: æ¿å¡æ°æ®å¼æ¾å¹³å°ç»´æ¤éç¥
+  河南: https://data.hnzwfw.gov.cn/
+    标题: æ²³åæ¿å¡æå¡ç½
+  四川: https://scdata.net.cn/
+    标题: 公共数据开放网
+  吉林: https://data.jl.gov.cn/
+    标题: åæçå¬å±æ°æ®å¼æ¾å¹³å°
+  辽宁: https://data.ln.gov.cn/
+    标题: 辽宁省公共数据开放平台
+  海南: https://data.hainan.gov.cn/
+    标题: æµ·åçæ¿åºæ°æ®ç»ä¸å¼æ¾å¹³å°
+
+[FAIL] 仍不可访问: 7
+  上海: https://data.sh.gov.cn
+  河北: http://data.hebei.gov.cn
+  陕西: http://data.shaanxi.gov.cn
+  甘肃: http://data.gansu.gov.cn
+  宁夏: http://data.nx.gov.cn
+  新疆: http://data.xinjiang.gov.cn
+  西藏: http://data.xizang.gov.cn
+
+================================================================================
+JSON格式更新建议
+================================================================================
+{
+  "江苏": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html",
+  "黑龙江": "http://116.182.12.53:8001/oportal/index",
+  "河南": "https://data.hnzwfw.gov.cn/",
+  "四川": "https://scdata.net.cn/",
+  "吉林": "https://data.jl.gov.cn/",
+  "辽宁": "https://data.ln.gov.cn/",
+  "海南": "https://data.hainan.gov.cn/"
+}

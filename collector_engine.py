@@ -277,7 +277,9 @@ class CollectorEngine:
         return result
     
     def _parse_page_content(self, result, html_text):
-        """解析页面内容，提取功能特征和数据指标"""
+        """解析页面内容，提取功能特征和数据指标
+        增强版：支持更多数据集计数模式、DOM元素解析、Script变量提取
+        """
         soup = BeautifulSoup(html_text, 'html.parser')
         text = soup.get_text().lower()
         html_str = html_text.lower()
@@ -297,23 +299,123 @@ class CollectorEngine:
         result['has_feedback'] = 1 if any(k in html_str for k in ['feedback', '反馈', 'contact', '联系', 'suggest']) else 0
         result['has_bulk_download'] = 1 if any(k in html_str for k in ['bulk', '批量', 'batch', 'zip']) else 0
         
-        # 数据集数量提取（尝试多种模式）
+        # ========== 数据集数量提取（增强版）==========
+        dataset_count = 0
+        
+        # 策略1: 文本正则匹配（扩展模式）
         count_patterns = [
+            # 标准模式
             r'(\d+)\s*个数据集',
             r'(\d+)\s*条数据',
             r'数据集[:：]\s*(\d+)',
             r'共\s*(\d+)\s*条',
             r'(\d+)\s*datasets?',
             r'total[:：]\s*(\d+)',
+            # 山东模式: "现已开放58个部门，63,656个数据目录"
+            r'(?:现已开放|已开放|开放)\s*[\d,]+\s*个[^，]*，\s*([\d,]+)\s*个(?:数据目录|目录)',
+            # 四川模式: "9115个目录数量"
+            r'([\d,]+)\s*个(?:数据)?目录',
+            r'目录数量[:：]?\s*([\d,]+)',
+            # 通用资源数
+            r'([\d,]+)\s*个资源',
+            r'资源数量[:：]?\s*([\d,]+)',
+            # 数据总量
+            r'数据总量[:：]?\s*([\d,]+)',
+            r'([\d,]+)\s*(?:万|亿)?条数据',
+            # 部门数+数据集数组合
+            r'(?:部门|单位)[^\d]*(\d+)\s*个[^，]*数据集[^\d]*(\d+)',
         ]
         for pattern in count_patterns:
-            match = re.search(pattern, text)
+            match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                result['dataset_count'] = int(match.group(1))
-                break
-        if result['dataset_count'] > 100000:  # 过滤异常值
-            result['dataset_count'] = 0
-            
+                # 提取数字，去掉逗号
+                num_str = match.group(1).replace(',', '')
+                try:
+                    val = int(num_str)
+                    if 0 < val < 10000000:  # 合理范围过滤
+                        dataset_count = val
+                        break
+                except ValueError:
+                    continue
+        
+        # 策略2: 特定DOM元素解析
+        if dataset_count == 0:
+            # 搜索class/id包含count/num/total的元素
+            selector_keywords = ['count', 'num', 'total', 'sum', 'amount', 'catalog', 'dataset']
+            for keyword in selector_keywords:
+                # class匹配
+                for elem in soup.find_all(attrs={"class": re.compile(keyword, re.I)}):
+                    elem_text = elem.get_text(strip=True)
+                    # 提取纯数字
+                    num_match = re.search(r'([\d,]+)', elem_text)
+                    if num_match:
+                        try:
+                            val = int(num_match.group(1).replace(',', ''))
+                            if 10 < val < 10000000:
+                                dataset_count = val
+                                break
+                        except:
+                            pass
+                if dataset_count > 0:
+                    break
+                
+                # id匹配
+                for elem in soup.find_all(attrs={"id": re.compile(keyword, re.I)}):
+                    elem_text = elem.get_text(strip=True)
+                    num_match = re.search(r'([\d,]+)', elem_text)
+                    if num_match:
+                        try:
+                            val = int(num_match.group(1).replace(',', ''))
+                            if 10 < val < 10000000:
+                                dataset_count = val
+                                break
+                        except:
+                            pass
+                if dataset_count > 0:
+                    break
+        
+        # 策略3: Script变量提取
+        if dataset_count == 0:
+            for script in soup.find_all('script'):
+                if script.string:
+                    js_patterns = [
+                        r'(?:datasetCount|totalCount|dataCount|catalogCount|resourceCount)\s*[:=]\s*(\d+)',
+                        r'["\']?total["\']?\s*[:：]\s*(\d+)',
+                        r'["\']?count["\']?\s*[:：]\s*(\d+)',
+                    ]
+                    for pattern in js_patterns:
+                        match = re.search(pattern, script.string, re.I)
+                        if match:
+                            try:
+                                val = int(match.group(1))
+                                if 0 < val < 10000000:
+                                    dataset_count = val
+                                    break
+                            except:
+                                pass
+                    if dataset_count > 0:
+                        break
+        
+        # 策略4: 特定ID搜索（基于已知平台模式）
+        if dataset_count == 0:
+            known_ids = ['cataNums', 'resNums', 'dataNums', 'statistics-openDataCount', 
+                        'statistics-openCatalogCount', 'dataset-count', 'catalog-count']
+            for elem_id in known_ids:
+                elem = soup.find(id=elem_id)
+                if elem:
+                    elem_text = elem.get_text(strip=True)
+                    num_match = re.search(r'([\d,\.]+)', elem_text)
+                    if num_match:
+                        try:
+                            val = int(float(num_match.group(1).replace(',', '')))
+                            if 0 <= val < 10000000:
+                                dataset_count = val
+                                break
+                        except:
+                            pass
+        
+        result['dataset_count'] = dataset_count
+        
         # 数据格式检测
         formats = []
         format_keywords = {
@@ -330,17 +432,26 @@ class CollectorEngine:
                 formats.append(fmt)
         result['format_types'] = json.dumps(formats)
         
-        # 应用成果数（尝试提取）
+        # 应用成果数（增强提取）
+        app_count = 0
         app_patterns = [
             r'(\d+)\s*个应用',
             r'(\d+)\s*款应用',
             r'应用[:：]\s*(\d+)',
+            r'创新应用[:：]?\s*(\d+)',
+            r'([\d,]+)\s*个(?:创新)?应用',
         ]
         for pattern in app_patterns:
             match = re.search(pattern, text)
             if match:
-                result['app_count'] = int(match.group(1))
-                break
+                try:
+                    val = int(match.group(1).replace(',', ''))
+                    if 0 <= val < 10000:
+                        app_count = val
+                        break
+                except:
+                    continue
+        result['app_count'] = app_count
         
     def calculate_4e_scores(self, details):
         """
