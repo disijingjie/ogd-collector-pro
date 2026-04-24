@@ -1,0 +1,249 @@
+[
+  {
+    "code": "beijing",
+    "name": "北京市",
+    "dataset_count": 4454,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.beijing.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "chongqing",
+    "name": "重庆市",
+    "dataset_count": 22550,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.cq.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "fujian",
+    "name": "福建省",
+    "dataset_count": 6722,
+    "type": "目录数",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.fujian.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "guangdong",
+    "name": "广东省",
+    "dataset_count": 97528,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://gddata.gd.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "guangxi",
+    "name": "广西壮族自治区",
+    "dataset_count": 10162,
+    "type": "目录总数",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:dataset_page",
+    "source_url": "https://data.gxzf.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "guizhou",
+    "name": "贵州省",
+    "dataset_count": 9042,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.guizhou.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "hainan",
+    "name": "海南省",
+    "dataset_count": 35835,
+    "type": "目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.hainan.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "hubei",
+    "name": "湖北省",
+    "dataset_count": 24119,
+    "type": "数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.hubei.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "hunan",
+    "name": "湖南省",
+    "dataset_count": 634,
+    "type": "目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:dataset_page",
+    "source_url": "https://data.hunan.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "jiangxi",
+    "name": "江西省",
+    "dataset_count": 534,
+    "type": "开放数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.jiangxi.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "jilin",
+    "name": "吉林省",
+    "dataset_count": 303,
+    "type": "开放目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.jl.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "liaoning",
+    "name": "辽宁省",
+    "dataset_count": 4120,
+    "type": "数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.ln.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "neimenggu",
+    "name": "内蒙古自治区",
+    "dataset_count": 219,
+    "type": "数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.nmg.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "shandong",
+    "name": "山东省",
+    "dataset_count": 63656,
+    "type": "数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:homepage",
+    "source_url": "https://data.sd.gov.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "sichuan",
+    "name": "四川省",
+    "dataset_count": 9115,
+    "type": "目录数量",
+    "confidence": "high",
+    "status": "success",
+    "method": "confirmed:dataset_page",
+    "source_url": "https://www.scdata.net.cn",
+    "note": "基于第一轮深度分析确认的值"
+  },
+  {
+    "code": "tianjin",
+    "name": "天津市",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  },
+  {
+    "code": "shanxi",
+    "name": "山西省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "error",
+    "method": null,
+    "source_url": null,
+    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.shanxi.gov.cn/\nCall log:\n  - navigating to "
+  },
+  {
+    "code": "shanghai",
+    "name": "上海市",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  },
+  {
+    "code": "jiangsu",
+    "name": "江苏省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  },
+  {
+    "code": "zhejiang",
+    "name": "浙江省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  },
+  {
+    "code": "anhui",
+    "name": "安徽省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  },
+  {
+    "code": "henan",
+    "name": "河南省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "error",
+    "method": null,
+    "source_url": null,
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.henan.gov.cn/\nCall log:\n  - navigating to \"htt"
+  },
+  {
+    "code": "yunnan",
+    "name": "云南省",
+    "dataset_count": null,
+    "type": null,
+    "confidence": "low",
+    "status": "not_found",
+    "method": null,
+    "source_url": null
+  }
+]
