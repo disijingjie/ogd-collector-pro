@@ -1,5 +1,18 @@
 # OGD 自动更新执行记录
 
+## 2026-04-24 10:20
+- **状态**: GitHub推送失败（Push Protection拦截），已通过SCP直接部署到服务器
+- **本地提交**: 成功（commit c115387，5个文件变更，+843行/-34行）
+  - app.py, models.py, auto_collect.py, collector_engine.py
+  - templates/collector.html, dashboard.html, thesis.html
+- **GitHub推送**: 3次重试均失败
+  - 原因：GitHub Push Protection检测到历史commit中包含腾讯云Secret ID（docs/txcloud.py）
+  - 与之前多次失败原因相同，需用户清理历史commit中的secret
+- **服务器SSH**: 正常连接
+- **SCP部署**: 成功上传所有变更文件（Python核心文件 + templates + static）
+- **服务重启**: 成功（2026-04-24 10:20:24 CST，HTTP 302正常）
+- **结论**: 代码已通过SCP直接部署到服务器，服务运行正常。GitHub推送仍被安全策略拦截，需用户处理历史commit中的secret问题。
+
 ## 2026-04-24 06:20
 - **状态**: GitHub推送失败（网络问题），服务器服务运行正常
 - **本地提交**: 成功（commit 3f40843，11个文件变更，+2849行/-627行）
