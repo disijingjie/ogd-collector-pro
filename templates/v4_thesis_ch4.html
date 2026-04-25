@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章 研究设计与数据来源</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 40px 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { color: #1e3a8a; margin-bottom: 20px; }
+        h3 { color: #3b82f6; margin: 20px 0 12px; }
+        .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
+        .platform-card { background: #f8fafc; border-radius: 8px; padding: 16px; border-left: 4px solid #3b82f6; }
+        .platform-name { font-weight: bold; color: #1e3a8a; margin-bottom: 8px; }
+        .platform-meta { font-size: 0.9em; color: #666; }
+        .nav { text-align: center; margin: 20px 0; }
+        .nav a { color: #3b82f6; text-decoration: none; margin: 0 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f8fafc; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>第四章 研究设计与数据来源</h1>
+        <p>一平台一议采集方法论 | 22样本数据 | 口径标准化体系</p>
+    </div>
+    <div class="nav">
+        <a href="/thesis/">← 首页</a>
+        <a href="/thesis/ch3">← 上一章</a>
+        <a href="/thesis/ch5">下一章 →</a>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>4.1 "一平台一议"采集方法论（OPOS）</h2>
+            <p>本研究首创"一平台一议"（One-Platform-One-Strategy, OPOS）采集方法论，针对每个平台的技术架构和数据呈现方式，制定差异化的采集策略。</p>
+            
+            <h3>OPOS四步法</h3>
+            <table>
+                <tr><th>步骤</th><th>名称</th><th>内容</th></tr>
+                <tr><td>Step 1</td><td>观察（Observe）</td><td>分析平台首页结构、数据呈现方式、技术架构</td></tr>
+                <tr><td>Step 2</td><td>试点（Pilot）</td><td>小规模测试采集，验证数据可提取性</td></tr>
+                <tr><td>Step 3</td><td>优化（Optimize）</td><td>根据试点结果调整采集参数和策略</td></tr>
+                <tr><td>Step 4</td><td>规模化（Scale）</td><td>执行完整采集，记录元数据和置信度</td></tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>4.2 31省平台策略库</h2>
+            <p>以下为22个有效样本的采集策略摘要：</p>
+            <div class="platform-grid">
+                {% for code, platform in platforms.items() %}
+                <div class="platform-card">
+                    <div class="platform-name">{{ platform.name }}</div>
+                    <div class="platform-meta">
+                        类型：{{ platform.type }}<br>
+                        URL：{{ platform.url }}<br>
+                        策略：{{ platform.strategy }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4.3 数据口径标准化体系</h2>
+            <p>建立五类口径转换系数，解决平台间统计口径不一致问题：</p>
+            <table>
+                <tr><th>口径类型</th><th>转换系数</th><th>典型平台</th></tr>
+                <tr><td>数据集（原始数据）</td><td>1.0</td><td>广东、浙江</td></tr>
+                <tr><td>数据目录（条目）</td><td>0.8</td><td>山东、湖北</td></tr>
+                <tr><td>数据产品（加工后）</td><td>0.5</td><td>河南</td></tr>
+                <tr><td>数据登记（登记项）</td><td>0.3</td><td>云南</td></tr>
+                <tr><td>首批清单（历史）</td><td>0.4</td><td>山西</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="nav">
+        <a href="/thesis/">← 首页</a>
+        <a href="/thesis/ch3">← 上一章</a>
+        <a href="/thesis/ch5">下一章 →</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博士论文 - 省级政府数据开放平台绩效评估研究</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-4px); }
+        .stat-number { font-size: 2.5em; font-weight: bold; color: #3b82f6; }
+        .stat-label { color: #666; margin-top: 8px; }
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .chapter-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.2s;
+            border-left: 4px solid #3b82f6;
+        }
+        .chapter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        .chapter-num { color: #3b82f6; font-weight: bold; font-size: 0.9em; }
+        .chapter-title { font-size: 1.2em; font-weight: bold; margin: 8px 0; }
+        .chapter-desc { color: #666; font-size: 0.95em; }
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>省级政府数据开放平台绩效评估研究</h1>
+        <p>基于4E框架的实证分析 | 博士论文全场景展示系统 V4.0</p>
+    </div>
+    
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">31</div>
+                <div class="stat-label">省级行政区</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">22</div>
+                <div class="stat-label">有效样本</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">34万+</div>
+                <div class="stat-label">数据集总量</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">评估方法</div>
+            </div>
+        </div>
+        
+        <h2 style="margin-bottom: 24px; color: #1e3a8a;">论文章节导航</h2>
+        <div class="chapters-grid">
+            <a href="/thesis/ch1" class="chapter-card">
+                <div class="chapter-num">CHAPTER 01</div>
+                <div class="chapter-title">绪论</div>
+                <div class="chapter-desc">研究背景、问题提出、研究意义与创新点</div>
+            </a>
+            <a href="/thesis/ch2" class="chapter-card">
+                <div class="chapter-num">CHAPTER 02</div>
+                <div class="chapter-title">文献综述</div>
+                <div class="chapter-desc">OGD概念演进、评估工具综述、研究述评</div>
+            </a>
+            <a href="/thesis/ch3" class="chapter-card">
+                <div class="chapter-num">CHAPTER 03</div>
+                <div class="chapter-title">理论基础与4E框架</div>
+                <div class="chapter-desc">公共价值理论、数据要素化理论、4E框架构建</div>
+            </a>
+            <a href="/thesis/ch4" class="chapter-card">
+                <div class="chapter-num">CHAPTER 04</div>
+                <div class="chapter-title">研究设计与数据来源</div>
+                <div class="chapter-desc">一平台一议采集方法、22样本数据、口径标准化</div>
+            </a>
+            <a href="/thesis/ch5" class="chapter-card">
+                <div class="chapter-num">CHAPTER 05</div>
+                <div class="chapter-title">绩效评估实证分析</div>
+                <div class="chapter-desc">TOPSIS/DEA/DEMATEL/fsQCA四种方法实证结果</div>
+            </a>
+            <a href="/thesis/ch6" class="chapter-card">
+                <div class="chapter-num">CHAPTER 06</div>
+                <div class="chapter-title">影响因素分析</div>
+                <div class="chapter-desc">DEMATEL因果关系、fsQCA组态分析、交叉验证</div>
+            </a>
+            <a href="/thesis/ch7" class="chapter-card">
+                <div class="chapter-num">CHAPTER 07</div>
+                <div class="chapter-title">绩效提升策略</div>
+                <div class="chapter-desc">绩效差异解释、转型趋势、差异化策略与政策建议</div>
+            </a>
+            <a href="/thesis/ch8" class="chapter-card">
+                <div class="chapter-num">CHAPTER 08</div>
+                <div class="chapter-title">结论与展望</div>
+                <div class="chapter-desc">研究结论、理论贡献、实践启示与未来方向</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>OGD-Collector Pro V4.0 | 服务器：腾讯云 106.53.188.187</p>
+        <p>数据来源：自主采集 + 第三方验证 | 最后更新：2026-04-25</p>
+    </div>
+</body>
+</html>

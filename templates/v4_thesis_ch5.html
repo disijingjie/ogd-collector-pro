@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第五章 绩效评估实证分析</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { color: #1e3a8a; margin-bottom: 20px; }
+        h3 { color: #3b82f6; margin: 20px 0 12px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f8fafc; font-weight: 600; }
+        .method-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .topsis { background: #dbeafe; color: #1e40af; }
+        .dea { background: #dcfce7; color: #166534; }
+        .dematel { background: #fef3c7; color: #92400e; }
+        .fsqca { background: #fce7f3; color: #9d174d; }
+        .nav { text-align: center; margin: 20px 0; }
+        .nav a { color: #3b82f6; text-decoration: none; margin: 0 10px; }
+        .nav a:hover { text-decoration: underline; }
+        .chart-placeholder {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            margin: 20px 0;
+        }
+        .insight-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>第五章 省级政府数据开放平台绩效评估实证分析</h1>
+        <p>基于TOPSIS、DEA、DEMATEL、fsQCA四种方法的综合评估</p>
+    </div>
+    
+    <div class="nav">
+        <a href="/thesis/">← 返回首页</a>
+        <a href="/thesis/ch4">← 上一章</a>
+        <a href="/thesis/ch6">下一章 →</a>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <h2>5.1 研究设计与数据说明</h2>
+            <p>本研究以全国31个省级行政区的政府数据开放平台为研究对象，最终确定<strong>有效样本22个</strong>，覆盖东部、中部、西部和东北地区。</p>
+            
+            <div class="insight-box">
+                <strong>关键发现：</strong>31个省级行政区中，18个建有独立平台（81.8%），3个平台转型（13.6%），8个无独立平台（通过政务服务网等替代形式开放数据）。
+            </div>
+            
+            <h3>数据口径标准化</h3>
+            <p>各平台对"数据集"的统计口径存在显著差异，本研究建立了转换系数体系：</p>
+            <table>
+                <tr><th>口径类型</th><th>定义</th><th>转换系数</th></tr>
+                <tr><td>数据集</td><td>可直接下载使用的原始数据集</td><td>1.0</td></tr>
+                <tr><td>数据目录</td><td>数据资源的目录条目</td><td>0.8</td></tr>
+                <tr><td>数据产品</td><td>经过加工的数据产品或服务</td><td>0.5</td></tr>
+                <tr><td>数据登记</td><td>数据资源登记条目</td><td>0.3</td></tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>5.2 TOPSIS绩效排名</h2>
+            <span class="method-badge topsis">TOPSIS</span>
+            <p>基于标准化数据集数量、数据质量、平台功能完备性三个维度构建评价模型。</p>
+            
+            <table>
+                <tr><th>排名</th><th>平台</th><th>TOPSIS得分</th><th>标准化数量</th><th>梯队</th></tr>
+                <tr><td>1</td><td>广东省</td><td>1.0000</td><td>97,528</td><td>第一梯队</td></tr>
+                <tr><td>2</td><td>山东省</td><td>0.5400</td><td>50,925</td><td>第一梯队</td></tr>
+                <tr><td>3</td><td>浙江省</td><td>0.4151</td><td>38,000</td><td>第一梯队</td></tr>
+                <tr><td>4</td><td>海南省</td><td>0.3368</td><td>28,668</td><td>第二梯队</td></tr>
+                <tr><td>5</td><td>重庆市</td><td>0.2869</td><td>22,550</td><td>第二梯队</td></tr>
+                <tr><td>6</td><td>湖北省</td><td>0.2623</td><td>19,295</td><td>第二梯队</td></tr>
+                <tr><td>7</td><td>贵州省</td><td>0.1992</td><td>9,042</td><td>第二梯队</td></tr>
+                <tr><td>8</td><td>上海市</td><td>0.1987</td><td>10,753</td><td>第二梯队</td></tr>
+                <tr><td>9</td><td>广西</td><td>0.1830</td><td>5,081</td><td>第二梯队</td></tr>
+                <tr><td>10</td><td>四川省</td><td>0.1813</td><td>4,558</td><td>第二梯队</td></tr>
+            </table>
+            
+            <div class="chart-placeholder">
+                [图表] TOPSIS绩效排名柱状图<br>
+                <small>文件：static/v3_final_01.png</small>
+            </div>
+            
+            <div class="insight-box">
+                <strong>核心发现：</strong>得分分布呈明显阶梯状——第一梯队（>0.4）仅3个省份，第二梯队（0.18~0.4）12个省份，第三梯队（<0.18）7个省份。头部效应显著。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5.3 DEA效率分析</h2>
+            <span class="method-badge dea">DEA</span>
+            <p>采用CCR模型，以平台运行年限和财政投入为输入，以标准化数据集数量为输出。</p>
+            
+            <table>
+                <tr><th>排名</th><th>平台</th><th>DEA效率</th><th>投入产出比</th></tr>
+                <tr><td>1</td><td>广东省</td><td>0.4975</td><td>最高</td></tr>
+                <tr><td>2</td><td>山东省</td><td>0.3524</td><td>较高</td></tr>
+                <tr><td>3</td><td>浙江省</td><td>0.3194</td><td>较高</td></tr>
+                <tr><td>4</td><td>海南省</td><td>0.2583</td><td>中等</td></tr>
+                <tr><td>5</td><td>重庆市</td><td>0.2311</td><td>中等</td></tr>
+            </table>
+            
+            <div class="insight-box">
+                <strong>关键发现：</strong>DEA排名与TOPSIS排名高度一致（Spearman ρ=0.92），表明各平台的投入产出效率与综合绩效基本匹配。贵州省效率排名第8，显示出较高的投入产出比。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5.4 DEMATEL因果关系</h2>
+            <span class="method-badge dematel">DEMATEL</span>
+            <p>识别五个关键影响因素的因果类型：</p>
+            
+            <table>
+                <tr><th>因素</th><th>中心度</th><th>原因度</th><th>类型</th></tr>
+                <tr><td>政策法规（PL）</td><td>-2.916</td><td>0.000</td><td><strong>原因因素</strong></td></tr>
+                <tr><td>平台建设（PC）</td><td>-2.767</td><td>0.000</td><td><strong>原因因素</strong></td></tr>
+                <tr><td>应用效果（AE）</td><td>-3.034</td><td>0.000</td><td><strong>原因因素</strong></td></tr>
+                <tr><td>组织保障（OG）</td><td>-2.783</td><td>0.000</td><td>结果因素</td></tr>
+                <tr><td>数据质量（DQ）</td><td>-2.986</td><td>0.000</td><td>结果因素</td></tr>
+            </table>
+            
+            <div class="insight-box">
+                <strong>因果链结构：</strong>政策法规 → 组织保障 → 数据质量；平台建设 → 数据质量；应用效果 → 组织保障（正向反馈）。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5.5 fsQCA组态分析</h2>
+            <span class="method-badge fsqca">fsQCA</span>
+            <p>探索高绩效与低绩效的平台组态：</p>
+            
+            <table>
+                <tr><th>组态</th><th>平台数</th><th>核心条件</th><th>一致性</th></tr>
+                <tr><td>高绩效组态</td><td>11</td><td>PL·OG·PC·DQ·AE = 1</td><td>1.000</td></tr>
+                <tr><td>低绩效组态</td><td>11</td><td>PL = 0</td><td>1.000</td></tr>
+            </table>
+            
+            <div class="insight-box">
+                <strong>核心结论：</strong>数据开放规模（PL）是平台绩效的<strong>门槛条件</strong>。所有高绩效平台均满足"全要素达标"，不存在替代路径。低绩效平台的核心特征是政策法规缺失。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5.6 外部效度检验</h2>
+            <p>本研究TOPSIS排名与开放数林指数排名的Spearman相关系数为<strong>0.67</strong>（p<0.01），具有中等偏高的正相关性，评估结果具有较好的外部效度。</p>
+            
+            <div class="insight-box">
+                <strong>差异解释：</strong>排名差异源于评估维度、数据口径和时效性三个因素。本研究采用"一平台一议"独立采集并进行了口径标准化，更准确地反映了平台的实际数据供给能力。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5.7 类型学分析</h2>
+            <p>高绩效平台可分为两种典型模式：</p>
+            
+            <table>
+                <tr><th>维度</th><th>"浙江模式"</th><th>"山东模式"</th></tr>
+                <tr><td>代表</td><td>浙江、上海、北京、广东</td><td>山东、海南、重庆、湖北、贵州</td></tr>
+                <tr><td>核心特征</td><td>质量优先、应用驱动</td><td>规模优先、覆盖驱动</td></tr>
+                <tr><td>数据质量</td><td>极高（结构化率>80%）</td><td>较高（结构化率60-80%）</td></tr>
+                <tr><td>应用生态</td><td>活跃（应用>500个）</td><td>较活跃（应用100-500个）</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <a href="/thesis/">← 返回首页</a>
+        <a href="/thesis/ch4">← 上一章</a>
+        <a href="/thesis/ch6">下一章 →</a>
+    </div>
+</body>
+</html>

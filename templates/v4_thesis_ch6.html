@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第六章 影响因素分析</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 40px 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { color: #1e3a8a; margin-bottom: 20px; }
+        h3 { color: #3b82f6; margin: 20px 0 12px; }
+        .factor-card { background: #f8fafc; border-radius: 8px; padding: 20px; margin: 12px 0; border-left: 4px solid; }
+        .cause { border-color: #22c55e; }
+        .effect { border-color: #f59e0b; }
+        .nav { text-align: center; margin: 20px 0; }
+        .nav a { color: #3b82f6; text-decoration: none; margin: 0 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f8fafc; font-weight: 600; }
+        .insight-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>第六章 省级政府数据开放平台绩效影响因素分析</h1>
+        <p>DEMATEL因果关系 + fsQCA组态分析</p>
+    </div>
+    <div class="nav">
+        <a href="/thesis/">← 首页</a>
+        <a href="/thesis/ch5">← 上一章</a>
+        <a href="/thesis/ch7">下一章 →</a>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>6.1 DEMATEL因果关系分析</h2>
+            <p>基于22个平台的编码数据，识别六个影响因素的因果类型：</p>
+            
+            <div class="factor-card cause">
+                <strong>原因因素（驱动型）</strong>
+                <p>对其他因素影响较大，是系统中的"驱动力"</p>
+            </div>
+            
+            <table>
+                <tr><th>因素</th><th>中心度</th><th>原因度</th><th>类型</th></tr>
+                <tr><td>政策法规（PL）</td><td>-2.916</td><td>≈0</td><td><strong style="color:#22c55e">原因因素</strong></td></tr>
+                <tr><td>平台建设（PC）</td><td>-2.767</td><td>≈0</td><td><strong style="color:#22c55e">原因因素</strong></td></tr>
+                <tr><td>应用效果（AE）</td><td>-3.034</td><td>≈0</td><td><strong style="color:#22c55e">原因因素</strong></td></tr>
+                <tr><td>组织保障（OG）</td><td>-2.783</td><td>≈0</td><td>结果因素</td></tr>
+                <tr><td>数据质量（DQ）</td><td>-2.986</td><td>≈0</td><td>结果因素</td></tr>
+            </table>
+            
+            <div class="insight-box">
+                <strong>因果链：</strong>政策法规 → 组织保障 → 数据质量；平台建设 → 数据质量；应用效果 → 组织保障（正向反馈循环）
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6.2 fsQCA组态分析</h2>
+            <p>探索高绩效和低绩效的平台组态路径：</p>
+            
+            <table>
+                <tr><th>组态</th><th>平台数</th><th>核心条件</th><th>典型平台</th></tr>
+                <tr><td>高绩效组态</td><td>11</td><td>PL·OG·PC·DQ·AE·OP = 1</td><td>广东、山东、浙江、海南等</td></tr>
+                <tr><td>低绩效A型</td><td>8</td><td>PL=0, OG=1, PC=1, DQ=1</td><td>福建、辽宁、江苏、湖南等</td></tr>
+                <tr><td>低绩效B型</td><td>3</td><td>PL=0, OG=0, PC=0, DQ=0</td><td>河南、云南、山西</td></tr>
+            </table>
+            
+            <div class="insight-box">
+                <strong>核心发现：</strong>高绩效平台的实现路径唯一——"全要素达标"。不存在替代路径，说明平台建设是系统工程，短板效应明显。
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <a href="/thesis/">← 首页</a>
+        <a href="/thesis/ch5">← 上一章</a>
+        <a href="/thesis/ch7">下一章 →</a>
+    </div>
+</body>
+</html>
