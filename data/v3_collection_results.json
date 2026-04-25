@@ -178,13 +178,14 @@
   {
     "code": "shanxi",
     "name": "山西省",
-    "dataset_count": null,
-    "type": null,
+    "dataset_count": 124,
+    "type": "数据目录(首批)",
     "confidence": "low",
-    "status": "error",
-    "method": null,
-    "source_url": null,
-    "error": "Page.goto: net::ERR_CONNECTION_TIMED_OUT at https://data.shanxi.gov.cn/\nCall log:\n  - navigating to "
+    "status": "success",
+    "method": "third_party:首批清单(2023年7月)",
+    "source_url": "http://data.shanxi.gov.cn/",
+    "note": "平台访问超时，使用2023年7月上线时首批清单124条数据，标注为历史数据",
+    "collected_at": "2026-04-25 11:17:46"
   },
   {
     "code": "shanghai",
@@ -200,12 +201,14 @@
   {
     "code": "jiangsu",
     "name": "江苏省",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "not_found",
-    "method": null,
-    "source_url": null
+    "dataset_count": 644,
+    "type": "数据目录",
+    "confidence": "high",
+    "status": "success",
+    "method": "homepage:新URL访问",
+    "source_url": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html",
+    "note": "通过新URL成功访问，数据目录总量644个，省级数据总量16975.2万条",
+    "collected_at": "2026-04-25 11:35:00"
   },
   {
     "code": "zhejiang",
@@ -222,31 +225,36 @@
     "code": "anhui",
     "name": "安徽省",
     "dataset_count": null,
-    "type": null,
+    "type": "未知",
     "confidence": "low",
     "status": "not_found",
-    "method": null,
-    "source_url": null
+    "method": "pending:平台维护中",
+    "source_url": "https://data.ahzwfw.gov.cn/",
+    "note": "平台显示系统维护中，暂无法获取数据",
+    "collected_at": "2026-04-25 11:32:57"
   },
   {
     "code": "henan",
     "name": "河南省",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "error",
-    "method": null,
-    "source_url": null,
-    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://data.henan.gov.cn/\nCall log:\n  - navigating to \"htt"
+    "dataset_count": 931,
+    "type": "数据产品",
+    "confidence": "medium",
+    "status": "success",
+    "method": "dataset_page:产品中心",
+    "source_url": "https://hndataops.com/portal/product",
+    "note": "平台转型为运营服务平台，统计的是数据产品数量（约931个），由公司承接运营",
+    "collected_at": "2026-04-25 11:35:00"
   },
   {
     "code": "yunnan",
     "name": "云南省",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "not_found",
-    "method": null,
-    "source_url": null
+    "dataset_count": 428,
+    "type": "数据登记",
+    "confidence": "medium",
+    "status": "success",
+    "method": "dataset_page:登记中心",
+    "source_url": "https://data.yn.gov.cn/sjdj/#/registrationCenter",
+    "note": "平台转型为登记平台",
+    "collected_at": "2026-04-25 11:32:47"
   }
 ]
