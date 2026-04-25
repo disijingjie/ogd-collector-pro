@@ -4,14 +4,46 @@
   "last_updated": "2026-04-25",
   "sample_scope": "23个有独立数据开放平台的省级行政区（31省-8个无平台=23个）",
   "excluded_platforms": [
-    {"code": "gansu", "name": "甘肃省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "hebei", "name": "河北省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "heilongjiang", "name": "黑龙江省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "ningxia", "name": "宁夏回族自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "qinghai", "name": "青海省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "shaanxi", "name": "陕西省", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "xinjiang", "name": "新疆维吾尔自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"},
-    {"code": "xizang", "name": "西藏自治区", "reason": "无独立数据开放平台，数据归集至省级政务服务平台"}
+    {
+      "code": "gansu",
+      "name": "甘肃省",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "hebei",
+      "name": "河北省",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "heilongjiang",
+      "name": "黑龙江省",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "ningxia",
+      "name": "宁夏回族自治区",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "qinghai",
+      "name": "青海省",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "shaanxi",
+      "name": "陕西省",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "xinjiang",
+      "name": "新疆维吾尔自治区",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    },
+    {
+      "code": "xizang",
+      "name": "西藏自治区",
+      "reason": "无独立数据开放平台，数据归集至省级政务服务平台"
+    }
   ],
   "platforms": [
     {
@@ -84,14 +116,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 3344,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://tjdsj.tjcac.gov.cn/",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "首页未找到明确的数据集数量，需深入数据目录页"
+        "collected_at": "2026-04-26",
+        "verification": "天津数港2023年4月报告：3,344个数据集"
       },
       "platform_features": {
         "has_api": true,
@@ -304,14 +336,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 10753,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "数据集",
+        "confidence": "high",
+        "source_url": "https://data.sh.gov.cn/old/",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮未找到明确的数据集数量，需深入分析"
+        "collected_at": "2026-04-26",
+        "verification": "上海市公共数据开放平台官方统计：10,753个数据集"
       },
       "platform_features": {
         "has_api": true,
@@ -348,14 +380,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 644,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "数据目录",
+        "confidence": "high",
+        "source_url": "https://data.jszwfw.gov.cn:8118/extranet/openportal/pages/default/index.html",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮未找到明确的数据集数量，需深入分析"
+        "collected_at": "2026-04-26",
+        "verification": "通过新URL成功访问，数据目录总量644个，省级数据总量16975.2万条"
       },
       "platform_features": {
         "has_api": true,
@@ -392,14 +424,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 38000,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "公共数据集",
+        "confidence": "high",
+        "source_url": "https://www.cls.cn/detail/2149055",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮抓到259314，但上下文为'数据项'而非'数据集'，需重新采集"
+        "collected_at": "2026-04-26",
+        "verification": "浙江省数据局副局长吴旭升，2025年9月18日新闻发布会"
       },
       "platform_features": {
         "has_api": true,
@@ -612,14 +644,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 931,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "数据产品",
+        "confidence": "medium",
+        "source_url": "https://hndataops.com/portal/product",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮未找到，需深入分析"
+        "collected_at": "2026-04-26",
+        "verification": "平台转型为运营服务平台，统计的是数据产品数量（约931个），由公司承接运营"
       },
       "platform_features": {
         "has_api": true,
@@ -1008,14 +1040,14 @@
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 428,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
+        "type": "数据登记",
+        "confidence": "medium",
+        "source_url": "https://data.yn.gov.cn/sjdj/#/registrationCenter",
         "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮未找到，需深入分析"
+        "collected_at": "2026-04-26",
+        "verification": "平台转型为登记平台"
       },
       "platform_features": {
         "has_api": true,

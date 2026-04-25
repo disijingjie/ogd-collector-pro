@@ -9,8 +9,7 @@ import sqlite3
 import json
 import numpy as np
 import pandas as pd
-from scipy import stats
-from scipy.optimize import linprog
+import pulp
 from pathlib import Path
 from datetime import datetime
 
@@ -40,11 +39,11 @@ def load_data():
         JOIN (
             SELECT platform_code, MAX(id) as max_id 
             FROM collection_records 
-            WHERE status='available'
+            WHERE status IN ('available', 'success')
             GROUP BY platform_code
         ) latest ON p.code = latest.platform_code
         JOIN collection_records cr ON latest.max_id = cr.id
-        WHERE p.tier = '省级'
+        WHERE p.tier = '省级' AND cr.dataset_count IS NOT NULL
         ORDER BY p.code
     """)
     
@@ -97,13 +96,7 @@ def topsis_binary_only(data):
     return df, w
 
 def dea_bcc(data, topsis_df):
-    """DEA-BCC模型计算效率值"""
-    # 投入指标
-    # I1: 平台运营年限（2026 - launch_year + 1）
-    # I2: 功能完善度（11个二值指标之和）
-    # I3: 数据集数量（有值就用，0值保留）
-    # 产出指标: TOPSIS综合得分
-    
+    """DEA-BCC模型计算效率值（使用pulp）"""
     df = topsis_df.copy()
     df['operating_years'] = 2026 - df['launch_year'] + 1
     df['function_score'] = df[BINARY_INDICATORS].sum(axis=1)
@@ -112,68 +105,45 @@ def dea_bcc(data, topsis_df):
     efficiencies = []
     
     for i in range(n):
-        # 当前DMU的投入和产出
-        x1 = df.iloc[i]['operating_years']
-        x2 = df.iloc[i]['function_score']
-        x3 = max(df.iloc[i]['dataset_count'], 1)  # 避免0
-        y1 = df.iloc[i]['topsis_score']
+        x1 = float(df.iloc[i]['operating_years'])
+        x2 = float(df.iloc[i]['function_score'])
+        x3 = float(max(df.iloc[i]['dataset_count'], 1))
+        y1 = float(df.iloc[i]['topsis_score'])
         
-        # BCC模型（投入导向）
-        # min θ
-        # s.t. Σλ_j * x_jk ≤ θ * x_k0  (k=1,2,3)
-        #      Σλ_j * y_jr ≥ y_r0      (r=1)
-        #      Σλ_j = 1
-        #      λ_j ≥ 0
+        # 使用pulp求解BCC模型
+        prob = pulp.LpProblem(f"DEA_{i}", pulp.LpMinimize)
         
-        c = [1.0] + [0.0] * n  # 目标函数系数: [θ, λ1, λ2, ..., λn]
+        # 变量
+        theta = pulp.LpVariable('theta', lowBound=0)
+        lambdas = [pulp.LpVariable(f'lambda_{j}', lowBound=0) for j in range(n)]
         
-        # 不等式约束: A_ub @ x ≤ b_ub
-        A_ub = []
-        b_ub = []
+        # 目标函数: min theta
+        prob += theta
         
-        # 投入约束1: Σλ_j * x1_j ≤ θ * x1_0  =>  -x1_0 * θ + Σλ_j * x1_j ≤ 0
-        row1 = [-x1] + df['operating_years'].tolist()
-        A_ub.append(row1)
-        b_ub.append(0)
+        # 投入约束
+        prob += pulp.lpSum([lambdas[j] * float(df.iloc[j]['operating_years']) for j in range(n)]) <= theta * x1
+        prob += pulp.lpSum([lambdas[j] * float(df.iloc[j]['function_score']) for j in range(n)]) <= theta * x2
+        prob += pulp.lpSum([lambdas[j] * float(max(df.iloc[j]['dataset_count'], 1)) for j in range(n)]) <= theta * x3
         
-        # 投入约束2: Σλ_j * x2_j ≤ θ * x2_0
-        row2 = [-x2] + df['function_score'].tolist()
-        A_ub.append(row2)
-        b_ub.append(0)
+        # 产出约束
+        prob += pulp.lpSum([lambdas[j] * float(df.iloc[j]['topsis_score']) for j in range(n)]) >= y1
         
-        # 投入约束3: Σλ_j * x3_j ≤ θ * x3_0
-        row3 = [-x3] + [max(v, 1) for v in df['dataset_count'].tolist()]
-        A_ub.append(row3)
-        b_ub.append(0)
+        # 凸性约束
+        prob += pulp.lpSum(lambdas) == 1
         
-        # 产出约束: -Σλ_j * y_j ≤ -y_0  =>  Σλ_j * y_j ≥ y_0
-        row4 = [0] + [-v for v in df['topsis_score'].tolist()]
-        A_ub.append(row4)
-        b_ub.append(-y1)
-        
-        # 等式约束: Σλ_j = 1
-        A_eq = [[0] + [1.0] * n]
-        b_eq = [1.0]
-        
-        # 边界条件
-        bounds = [(0, None)] + [(0, None)] * n
-        
+        # 求解
         try:
-            result = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq, 
-                           bounds=bounds, method='highs')
-            theta = result.x[0] if result.success else 1.0
+            prob.solve(pulp.PULP_CBC_CMD(msg=False))
+            theta_val = pulp.value(theta) if prob.status == pulp.LpStatusOptimal else 1.0
+            theta_val = max(0.0, min(1.0, theta_val))  # 限制在[0,1]
         except Exception:
-            theta = 1.0
+            theta_val = 1.0
         
-        efficiencies.append(theta)
+        efficiencies.append(theta_val)
     
     df['dea_efficiency'] = efficiencies
-    
-    # 计算纯技术效率（PTE）和规模效率（SE）
-    # 简化处理：假设规模报酬可变（BCC）的效率即为综合效率
-    # 纯技术效率通过CCR模型计算
-    df['pte'] = df['dea_efficiency']  # 简化：BCC效率作为综合效率
-    df['se'] = 1.0  # 简化处理
+    df['pte'] = df['dea_efficiency']
+    df['se'] = 1.0
     
     return df
 
