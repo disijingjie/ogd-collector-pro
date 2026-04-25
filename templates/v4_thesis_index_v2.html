@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博士论文全场景展示系统 V5.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Microsoft YaHei', 'SimHei', sans-serif; background: #f8f9fa; }
+        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 0; }
+        .stat-card { background: white; border-radius: 10px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #2a5298; }
+        .chapter-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .chapter-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .badge-v5 { background: #dc3545; color: white; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark" style="background: #1e3c72;">
+        <div class="container">
+            <a class="navbar-brand" href="/">OGD-Collector Pro V5.0</a>
+            <div>
+                <a href="/v3/" class="btn btn-outline-light btn-sm me-2">V3采集系统</a>
+                <a href="/v2/" class="btn btn-outline-light btn-sm">V2旧版</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container text-center">
+            <span class="badge-v5">V5.0 完整版</span>
+            <h1 class="display-4 mt-3">中国省级政府数据开放平台绩效评估研究</h1>
+            <p class="lead">——基于4E框架的实证分析</p>
+            <p class="mt-3">
+                <span class="badge bg-light text-dark me-2">武汉大学</span>
+                <span class="badge bg-light text-dark me-2">信息管理学院</span>
+                <span class="badge bg-light text-dark">2026年4月</span>
+            </p>
+            <div class="mt-4">
+                <a href="/api/v4/stats" class="btn btn-light me-2">数据API</a>
+                <a href="https://github.com/disijingjie/ogd-collector-pro" target="_blank" class="btn btn-outline-light">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">15万+</div><div class="text-muted">论文字数</div></div></div>
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">8</div><div class="text-muted">核心章节</div></div></div>
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">200</div><div class="text-muted">参考文献</div></div></div>
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">22</div><div class="text-muted">样本省份</div></div></div>
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">28</div><div class="text-muted">评估平台</div></div></div>
+            <div class="col-md-2 col-6"><div class="stat-card"><div class="stat-number">24</div><div class="text-muted">评估指标</div></div></div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="alert alert-info">
+            <strong>V5.0更新内容：</strong>论文已扩充至15万字完整版，新增参考文献200条、附录（数据采集说明+指标详细说明+补充数据表格+专家问卷+核心代码）、致谢与声明。
+        </div>
+
+        <h3 class="mb-4">论文章节导航</h3>
+        <div class="row">
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch1/">第一章 绪论</a></h5><p class="text-muted mb-0">研究背景、问题提出、研究意义与方法</p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch2/">第二章 理论基础与文献综述</a></h5><p class="text-muted mb-0">OGD概念界定、评估研究综述、4E理论、影响因素研究 <span class="badge bg-success">扩充至3万字</span></p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch3/">第三章 4E评估框架构建</a></h5><p class="text-muted mb-0">公共价值理论、数据要素价值化、4E框架适配、TOE框架整合 <span class="badge bg-success">扩充至2万字</span></p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch4/">第四章 研究设计</a></h5><p class="text-muted mb-0">研究思路、样本选取、指标体系、评估方法、信度效度 <span class="badge bg-success">扩充至1.2万字</span></p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch5/">第五章 绩效评估</a></h5><p class="text-muted mb-0">TOPSIS评估、DEA效率评价、区域差异、类型学分析 <span class="badge bg-success">扩充版</span></p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch6/">第六章 影响因素分析</a></h5><p class="text-muted mb-0">DEMATEL因果分析、fsQCA组态分析、交叉验证 <span class="badge bg-success">扩充版</span></p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch7/">第七章 对策建议</a></h5><p class="text-muted mb-0">绩效差异原因、转型趋势、差异化策略、政策建议</p></div></div>
+            <div class="col-md-6"><div class="chapter-card"><h5><a href="/v4/ch8/">第八章 结论与展望</a></h5><p class="text-muted mb-0">研究结论、理论贡献、实践启示、局限与展望</p></div></div>
+        </div>
+
+        <h3 class="mb-4 mt-5">核心数据与图表</h3>
+        <div class="row g-3">
+            <div class="col-md-3 col-6"><div class="card"><img src="/static/thesis_01_types.png" class="card-img-top" alt="平台类型"><div class="card-body text-center"><small>31省平台类型分布</small></div></div></div>
+            <div class="col-md-3 col-6"><div class="card"><img src="/static/thesis_03_topsis.png" class="card-img-top" alt="TOPSIS排名"><div class="card-body text-center"><small>TOPSIS绩效排名</small></div></div></div>
+            <div class="col-md-3 col-6"><div class="card"><img src="/static/thesis_05_dematel.png" class="card-img-top" alt="DEMATEL"><div class="card-body text-center"><small>DEMATEL因素因果</small></div></div></div>
+            <div class="col-md-3 col-6"><div class="card"><img src="/static/thesis_06_fsqca.png" class="card-img-top" alt="fsQCA"><div class="card-body text-center"><small>fsQCA组态热力图</small></div></div></div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 text-muted">
+        <div class="container">
+            <p>OGD-Collector Pro V5.0 | 武汉大学博士论文全场景展示系统</p>
+            <p><small>GitHub: <a href="https://github.com/disijingjie/ogd-collector-pro">github.com/disijingjie/ogd-collector-pro</a></small></p>
+        </div>
+    </footer>
+</body>
+</html>
