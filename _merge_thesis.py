@@ -4,11 +4,11 @@ import os
 # 定义章节顺序和文件路径
 chapters = [
     ('第一章 绪论', 'docs/新论文_第一章_绪论.md'),
-    ('第二章 理论基础与文献综述', 'docs/新论文_第二章_扩充版.md'),
-    ('第三章 4E评估框架构建', 'docs/新论文_第三章_扩充版.md'),
-    ('第四章 研究设计', 'docs/chapter4_full_v2.md'),
-    ('第五章 绩效评估', 'docs/chapter5_final_v2.md'),
-    ('第六章 影响因素分析', 'docs/chapter6_full.md'),
+    ('第二章 理论基础与文献综述', 'docs/chapter2_expanded_v2.md'),
+    ('第三章 4E评估框架构建', 'docs/chapter3_expanded_v2.md'),
+    ('第四章 研究设计', 'docs/chapter4_expanded_v2.md'),
+    ('第五章 绩效评估', 'docs/chapter5_expanded_v2.md'),
+    ('第六章 影响因素分析', 'docs/chapter6_expanded_v2.md'),
     ('第七章 对策建议', 'docs/chapter7_full.md'),
     ('第八章 结论与展望', 'docs/chapter8_full.md'),
 ]
@@ -88,10 +88,53 @@ for ch_num, (ch_title, filepath) in enumerate(chapters, 1):
 output_lines.append('')
 output_lines.append('---')
 output_lines.append('')
-output_lines.append('# 参考文献')
-output_lines.append('')
-output_lines.append('（详见参考文献管理文件）')
-output_lines.append('')
+ref_path = 'docs/参考文献_完整版.md'
+if os.path.exists(ref_path):
+    with open(ref_path, 'r', encoding='utf-8') as f:
+        ref_content = f.read()
+    ref_chars = len(ref_content)
+    total_chars += ref_chars
+    print(f'参考文献: {ref_chars} 字符')
+    for line in ref_content.split('\n'):
+        if line.startswith('# '):
+            continue
+        output_lines.append(line)
+else:
+    output_lines.append('# 参考文献')
+    output_lines.append('')
+    output_lines.append('（详见参考文献管理文件）')
+    output_lines.append('')
+
+# 添加附录部分
+appendix_path = 'docs/附录_完整版.md'
+if os.path.exists(appendix_path):
+    with open(appendix_path, 'r', encoding='utf-8') as f:
+        app_content = f.read()
+    app_chars = len(app_content)
+    total_chars += app_chars
+    print(f'附录: {app_chars} 字符')
+    for line in app_content.split('\n'):
+        if line.startswith('# '):
+            continue
+        output_lines.append(line)
+else:
+    output_lines.append('# 附录')
+    output_lines.append('')
+    output_lines.append('（详见附录文件）')
+    output_lines.append('')
+
+# 添加致谢与声明
+ack_path = 'docs/致谢与声明.md'
+if os.path.exists(ack_path):
+    with open(ack_path, 'r', encoding='utf-8') as f:
+        ack_content = f.read()
+    ack_chars = len(ack_content)
+    total_chars += ack_chars
+    print(f'致谢与声明: {ack_chars} 字符')
+    for line in ack_content.split('\n'):
+        if line.startswith('# '):
+            continue
+        output_lines.append(line)
 
 # 写入完整论文
 output_path = 'docs/博士论文_完整版_v4.md'
