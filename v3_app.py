@@ -52,7 +52,7 @@ def index():
             'type': platform['dataset_count']['type'],
             'status': result['status'] if result else 'pending',
             'source_url': result['source_url'] if result else platform['dataset_count']['source_url'],
-            'collected_at': result['collected_at'] if result else platform['dataset_count']['collected_at'],
+            'collected_at': result.get('collected_at', '') if result else platform.get('dataset_count', {}).get('collected_at', ''),
         }
         platform_status.append(status_entry)
 
@@ -173,7 +173,7 @@ def api_stats():
         'total_datasets': sum(dataset_counts) if dataset_counts else 0,
         'avg_datasets': round(sum(dataset_counts)/len(dataset_counts), 0) if dataset_counts else 0,
         'max_platform': max(collection_results, key=lambda x: x['dataset_count'] or 0)['name'] if collection_results else None,
-        'last_collection': max(r['collected_at'] for r in collection_results) if collection_results else None
+        'last_collection': max((r.get('collected_at', '') for r in collection_results), default=None) if collection_results else None
     })
 
 if __name__ == '__main__':
