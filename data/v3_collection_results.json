@@ -167,12 +167,13 @@
   {
     "code": "tianjin",
     "name": "天津市",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "not_found",
-    "method": null,
-    "source_url": null
+    "dataset_count": 3344,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "third_party:官方报告",
+    "source_url": "https://tjdsj.tjcac.gov.cn/",
+    "note": "天津数港2023年4月报告：3,344个数据集"
   },
   {
     "code": "shanxi",
@@ -188,12 +189,13 @@
   {
     "code": "shanghai",
     "name": "上海市",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "not_found",
-    "method": null,
-    "source_url": null
+    "dataset_count": 10753,
+    "type": "数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "third_party:官方统计",
+    "source_url": "https://data.sh.gov.cn/old/",
+    "note": "上海市公共数据开放平台官方统计：10,753个数据集"
   },
   {
     "code": "jiangsu",
@@ -208,12 +210,13 @@
   {
     "code": "zhejiang",
     "name": "浙江省",
-    "dataset_count": null,
-    "type": null,
-    "confidence": "low",
-    "status": "not_found",
-    "method": null,
-    "source_url": null
+    "dataset_count": 38000,
+    "type": "公共数据集",
+    "confidence": "high",
+    "status": "success",
+    "method": "third_party:政府发布会",
+    "source_url": "https://www.cls.cn/detail/2149055",
+    "note": "浙江省数据局副局长吴旭升，2025年9月18日新闻发布会"
   },
   {
     "code": "anhui",
