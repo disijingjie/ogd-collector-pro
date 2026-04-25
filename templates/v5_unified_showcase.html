@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGD-Collector Pro | 论文数据一体化展示平台</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #e8f6f3;
+            --dark: #002b5b;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f6f3 100%);
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.3;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .section-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .pipeline-step {
+            position: relative;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .pipeline-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .data-quality-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-good { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-bad { background: #f8d7da; color: #721c24; }
+        .thesis-toc a {
+            color: var(--primary);
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .thesis-toc a:hover {
+            background: var(--light);
+        }
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        .nav-pills .nav-link {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .platform-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 3px solid var(--accent);
+        }
+        .progress-thin {
+            height: 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--dark);">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#"><i class="fas fa-database me-2"></i>OGD-Collector Pro</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="#overview">研究概览</a>
+            <a class="nav-link" href="#collection">采集系统</a>
+            <a class="nav-link" href="#data">数据成果</a>
+            <a class="nav-link" href="#thesis">论文核心</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">中国省级政府数据开放平台<br>绩效评估研究</h1>
+                <p class="lead mb-4">基于4E框架与混合方法的全景式实证分析 | 自主采集系统支撑</p>
+                <div class="d-flex gap-3">
+                    <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-university me-1"></i> 武汉大学</span>
+                    <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-graduation-cap me-1"></i> 博士学位论文</span>
+                    <span class="badge bg-light text-dark px-3 py-2"><i class="fas fa-chart-line me-1"></i> 4E评估框架</span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="stat-card text-center">
+                            <h3 class="text-primary fw-bold">15.6万</h3>
+                            <small class="text-muted">论文字数</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card text-center">
+                            <h3 class="text-primary fw-bold">28</h3>
+                            <small class="text-muted">采集平台</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card text-center">
+                            <h3 class="text-primary fw-bold">42,156</h3>
+                            <small class="text-muted">有效数据集</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card text-center">
+                            <h3 class="text-primary fw-bold">24</h3>
+                            <small class="text-muted">评估指标</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 核心标签页 -->
+<div class="container my-5">
+    <ul class="nav nav-pills justify-content-center mb-5" id="mainTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active px-4 py-2" id="overview-tab" data-bs-toggle="pill" data-bs-target="#overview" type="button">
+                <i class="fas fa-eye me-2"></i>研究概览
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link px-4 py-2" id="collection-tab" data-bs-toggle="pill" data-bs-target="#collection" type="button">
+                <i class="fas fa-server me-2"></i>采集系统
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link px-4 py-2" id="data-tab" data-bs-toggle="pill" data-bs-target="#data" type="button">
+                <i class="fas fa-table me-2"></i>数据成果
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link px-4 py-2" id="thesis-tab" data-bs-toggle="pill" data-bs-target="#thesis" type="button">
+                <i class="fas fa-book me-2"></i>论文核心
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="mainTabContent">
+        
+        <!-- 研究概览 -->
+        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="section-header mb-4">研究框架与核心发现</h2>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-primary mb-3">4E评估框架</h5>
+                            <div class="row text-center">
+                                <div class="col-3">
+                                    <div class="p-3 rounded" style="background: var(--light);">
+                                        <i class="fas fa-coins fa-2x text-primary mb-2"></i>
+                                        <h6 class="fw-bold">经济性</h6>
+                                        <small class="text-muted">Economy</small>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-3 rounded" style="background: var(--light);">
+                                        <i class="fas fa-tachometer-alt fa-2x text-success mb-2"></i>
+                                        <h6 class="fw-bold">效率性</h6>
+                                        <small class="text-muted">Efficiency</small>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-3 rounded" style="background: var(--light);">
+                                        <i class="fas fa-bullseye fa-2x text-info mb-2"></i>
+                                        <h6 class="fw-bold">效果性</h6>
+                                        <small class="text-muted">Effectiveness</small>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-3 rounded" style="background: var(--light);">
+                                        <i class="fas fa-balance-scale fa-2x text-warning mb-2"></i>
+                                        <h6 class="fw-bold">公平性</h6>
+                                        <small class="text-muted">Equity</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-primary mb-3">混合研究方法</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="text-center flex-fill">
+                                    <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:var(--primary);color:white;">
+                                        <span class="fw-bold">TOPSIS</span>
+                                    </div>
+                                    <small>绩效排序</small>
+                                </div>
+                                <i class="fas fa-arrow-right text-muted"></i>
+                                <div class="text-center flex-fill">
+                                    <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:var(--secondary);color:white;">
+                                        <span class="fw-bold">DEA</span>
+                                    </div>
+                                    <small>效率评价</small>
+                                </div>
+                                <i class="fas fa-arrow-right text-muted"></i>
+                                <div class="text-center flex-fill">
+                                    <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:var(--accent);color:white;">
+                                        <span class="fw-bold">DEMATEL</span>
+                                    </div>
+                                    <small>因素识别</small>
+                                </div>
+                                <i class="fas fa-arrow-right text-muted"></i>
+                                <div class="text-center flex-fill">
+                                    <div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:var(--dark);color:white;">
+                                        <span class="fw-bold">fsQCA</span>
+                                    </div>
+                                    <small>组态路径</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h2 class="section-header mb-4">核心发现</h2>
+                    <div class="stat-card mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                            <span class="fw-bold">数据口径幻觉</span>
+                        </div>
+                        <p class="small text-muted mb-0">平台标称数据集与实际有效数据集差异巨大，平均口径一致性系数仅0.118</p>
+                    </div>
+                    <div class="stat-card mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-map-marked-alt text-primary me-2"></i>
+                            <span class="fw-bold">区域差异显著</span>
+                        </div>
+                        <p class="small text-muted mb-0">东部沿海省份绩效显著领先，中西部省份存在明显数字鸿沟</p>
+                    </div>
+                    <div class="stat-card mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-project-diagram text-success me-2"></i>
+                            <span class="fw-bold">三条组态路径</span>
+                        </div>
+                        <p class="small text-muted mb-0">资源驱动型、政策倒逼型、需求牵引型三条高绩效路径并存</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 采集系统 -->
+        <div class="tab-pane fade" id="collection" role="tabpanel">
+            <h2 class="section-header mb-4">OGD-Collector Pro 数据采集系统</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h5 class="fw-bold mb-3">系统架构</h5>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center p-3 mb-2 rounded" style="background: var(--light);">
+                                <i class="fas fa-layer-group fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">应用层</h6>
+                                    <small class="text-muted">数据看板、统计分析、报告生成、API接口</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center p-3 mb-2 rounded" style="background: var(--light);">
+                                <i class="fas fa-cogs fa-2x text-success me-3"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">采集层</h6>
+                                    <small class="text-muted">爬虫引擎、解析器、调度器、监控器</small>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center p-3 rounded" style="background: var(--light);">
+                                <i class="fas fa-database fa-2x text-info me-3"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">数据层</h6>
+                                    <small class="text-muted">平台规则库、原始数据库、清洗数据库、元数据库</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h5 class="fw-bold mb-3">采集流程（六阶段）</h5>
+                    <div class="pipeline-step" data-step="1">
+                        <h6 class="fw-bold">准备阶段</h6>
+                        <p class="small text-muted mb-0">加载平台规则库，检查网络连接与代理IP池可用性</p>
+                    </div>
+                    <div class="pipeline-step" data-step="2">
+                        <h6 class="fw-bold">采集阶段</h6>
+                        <p class="small text-muted mb-0">多平台并发爬取，支持静态页面、动态渲染、API接口三种模式</p>
+                    </div>
+                    <div class="pipeline-step" data-step="3">
+                        <h6 class="fw-bold">解析阶段</h6>
+                        <p class="small text-muted mb-0">XPath/CSS选择器提取数据，支持属性、文本、正则三种方式</p>
+                    </div>
+                    <div class="pipeline-step" data-step="4">
+                        <h6 class="fw-bold">清洗阶段</h6>
+                        <p class="small text-muted mb-0">编码转换、格式统一、缺失值处理、异常值检测</p>
+                    </div>
+                    <div class="pipeline-step" data-step="5">
+                        <h6 class="fw-bold">校验阶段</h6>
+                        <p class="small text-muted mb-0">完整性、一致性、逻辑性、重复性四维质量检查</p>
+                    </div>
+                    <div class="pipeline-step" data-step="6">
+                        <h6 class="fw-bold">入库阶段</h6>
+                        <p class="small text-muted mb-0">有效数据写入清洗库，异常数据标记归档，更新元数据</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h5 class="fw-bold mb-3">采集性能指标</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-card text-center">
+                                <h4 class="text-primary fw-bold">5</h4>
+                                <small class="text-muted">并发平台数</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card text-center">
+                                <h4 class="text-primary fw-bold">45分钟</h4>
+                                <small class="text-muted">单平台平均采集</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card text-center">
+                                <h4 class="text-primary fw-bold">94.7%</h4>
+                                <small class="text-muted">解析成功率</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card text-center">
+                                <h4 class="text-primary fw-bold">99.2%</h4>
+                                <small class="text-muted">月度稳定运行</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据成果 -->
+        <div class="tab-pane fade" id="data" role="tabpanel">
+            <h2 class="section-header mb-4">数据采集成果展示</h2>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="chart-container mb-4">
+                        <h5 class="fw-bold mb-3">28个省级平台口径一致性系数分布</h5>
+                        <canvas id="consistencyChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h5 class="fw-bold mb-3">TOPSIS综合绩效排名（Top 10）</h5>
+                        <canvas id="topsisChart" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3">数据质量总览</h5>
+                    <div class="platform-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">浙江</span>
+                            <span class="data-quality-badge badge-good">优秀</span>
+                        </div>
+                        <div class="progress progress-thin mb-1">
+                            <div class="progress-bar bg-success" style="width: 93.9%"></div>
+                        </div>
+                        <small class="text-muted">综合质量评分: 93.9 | 口径系数: 0.298</small>
+                    </div>
+                    <div class="platform-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">广东</span>
+                            <span class="data-quality-badge badge-good">优秀</span>
+                        </div>
+                        <div class="progress progress-thin mb-1">
+                            <div class="progress-bar bg-success" style="width: 92.1%"></div>
+                        </div>
+                        <small class="text-muted">综合质量评分: 92.1 | 口径系数: 0.275</small>
+                    </div>
+                    <div class="platform-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">上海</span>
+                            <span class="data-quality-badge badge-good">优秀</span>
+                        </div>
+                        <div class="progress progress-thin mb-1">
+                            <div class="progress-bar bg-success" style="width: 93.1%"></div>
+                        </div>
+                        <small class="text-muted">综合质量评分: 93.1 | 口径系数: 0.300</small>
+                    </div>
+                    <div class="platform-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">山东</span>
+                            <span class="data-quality-badge badge-bad">异常</span>
+                        </div>
+                        <div class="progress progress-thin mb-1">
+                            <div class="progress-bar bg-danger" style="width: 73.0%"></div>
+                        </div>
+                        <small class="text-muted">综合质量评分: 73.0 | 口径系数: 0.016</small>
+                    </div>
+                    <div class="platform-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">贵州</span>
+                            <span class="data-quality-badge badge-warning">偏低</span>
+                        </div>
+                        <div class="progress progress-thin mb-1">
+                            <div class="progress-bar bg-warning" style="width: 81.1%"></div>
+                        </div>
+                        <small class="text-muted">综合质量评分: 81.1 | 口径系数: 0.053</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-primary mb-3">采集数据统计</h5>
+                            <div class="row text-center">
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-primary">358,742</h4>
+                                    <small class="text-muted">采集目录总数</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-success">42,156</h4>
+                                    <small class="text-muted">有效数据集</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-info">11.8%</h4>
+                                    <small class="text-muted">平均口径系数</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-warning">89.1%</h4>
+                                    <small class="text-muted">平均数据完整率</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-secondary">28</h4>
+                                    <small class="text-muted">覆盖省份</small>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4 class="fw-bold text-dark">24</h4>
+                                    <small class="text-muted">评估指标</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 论文核心 -->
+        <div class="tab-pane fade" id="thesis" role="tabpanel">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-primary mb-3">论文目录</h6>
+                            <div class="thesis-toc">
+                                <a href="#ch1">第1章 绪论</a>
+                                <a href="#ch2">第2章 理论基础与文献综述</a>
+                                <a href="#ch3">第3章 4E评估框架构建</a>
+                                <a href="#ch4">第4章 研究设计</a>
+                                <a href="#ch5">第5章 绩效评估</a>
+                                <a href="#ch6">第6章 影响因素分析</a>
+                                <a href="#ch7">第7章 对策建议</a>
+                                <a href="#ch8">第8章 结论与展望</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div id="ch1" class="mb-5">
+                        <h4 class="fw-bold text-primary">第1章 绪论</h4>
+                        <p class="text-muted">研究背景、问题提出、研究意义、内容与方法。核心发现：我国政府数据开放存在"量增质未增"困境，提出"数据口径幻觉"概念。</p>
+                    </div>
+                    <div id="ch2" class="mb-5">
+                        <h4 class="fw-bold text-primary">第2章 理论基础与文献综述</h4>
+                        <p class="text-muted">政府数据开放概念界定、评估研究现状、数据利用绩效研究、影响因素研究。批判性评述指出现有研究"重建设轻运营、重指标轻逻辑、重表象轻归因"的局限。</p>
+                    </div>
+                    <div id="ch3" class="mb-5">
+                        <h4 class="fw-bold text-primary">第3章 4E评估框架构建</h4>
+                        <p class="text-muted">基于公共价值理论和数据要素价值化理论，构建经济性、效率性、效果性、公平性四维评估框架，包含24个具体指标。</p>
+                    </div>
+                    <div id="ch4" class="mb-5">
+                        <h4 class="fw-bold text-primary">第4章 研究设计</h4>
+                        <p class="text-muted">混合方法设计（TOPSIS+DEA+DEMATEL+fsQCA）、样本选取（28个省级平台）、OGD-Collector Pro采集系统、信度效度检验。</p>
+                    </div>
+                    <div id="ch5" class="mb-5">
+                        <h4 class="fw-bold text-primary">第5章 绩效评估</h4>
+                        <p class="text-muted">TOPSIS综合绩效排名、DEA效率评价、与开放数林指数的外部效度检验、"浙江模式"与"山东模式"类型学分析。发现数据口径幻觉的三维归因：技术缺陷、制度注水、标准割裂。</p>
+                    </div>
+                    <div id="ch6" class="mb-5">
+                        <h4 class="fw-bold text-primary">第6章 影响因素分析</h4>
+                        <p class="text-muted">DEMATEL因素关联分析识别核心条件变量，fsQCA组态分析探索复杂互动路径。实现"因素识别→路径组合"的方法论闭环。发现三条高绩效组态路径。</p>
+                    </div>
+                    <div id="ch7" class="mb-5">
+                        <h4 class="fw-bold text-primary">第7章 对策建议</h4>
+                        <p class="text-muted">基于fsQCA三条路径提出差异化策略：资源驱动-技术赋能型（东部）、政策倒逼-管理主导型（中西部）、需求牵引-服务导向型（市场活跃型）。</p>
+                    </div>
+                    <div id="ch8" class="mb-5">
+                        <h4 class="fw-bold text-primary">第8章 结论与展望</h4>
+                        <p class="text-muted">主要研究结论、理论贡献（4E框架在数据治理领域的适用性反思）、实践启示、研究局限与未来展望。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="py-4 mt-5" style="background: var(--dark); color: white;">
+    <div class="container text-center">
+        <p class="mb-1">OGD-Collector Pro | 中国省级政府数据开放平台绩效评估研究</p>
+        <small class="text-muted">武汉大学博士学位论文支撑平台 | 自主开发数据采集系统</small>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// 口径一致性系数分布图
+const ctx1 = document.getElementById('consistencyChart').getContext('2d');
+new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: ['浙江', '广东', '上海', '北京', '江苏', '福建', '四川', '湖北', '其他20省'],
+        datasets: [{
+            label: '口径一致性系数',
+            data: [0.298, 0.275, 0.300, 0.300, 0.300, 0.300, 0.300, 0.300, 0.102],
+            backgroundColor: ['#1a5f7a', '#159895', '#57c5b6', '#1a5f7a', '#159895', '#57c5b6', '#1a5f7a', '#159895', '#e0e0e0'],
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, max: 0.35 } }
+    }
+});
+
+// TOPSIS排名图
+const ctx2 = document.getElementById('topsisChart').getContext('2d');
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['浙江', '上海', '广东', '北京', '江苏', '福建', '四川', '山东', '湖北', '贵州'],
+        datasets: [{
+            label: 'TOPSIS综合得分',
+            data: [0.89, 0.85, 0.82, 0.80, 0.75, 0.72, 0.68, 0.45, 0.62, 0.38],
+            backgroundColor: '#1a5f7a',
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        indexAxis: 'y',
+        plugins: { legend: { display: false } }
+    }
+});
+</script>
+</body>
+</html>
