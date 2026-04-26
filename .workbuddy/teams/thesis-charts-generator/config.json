@@ -1,0 +1,23 @@
+{
+  "name": "thesis-charts-generator",
+  "leadAgentId": "ad7b121118034aa3992016ca35fab7e8",
+  "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+  "createdAt": "2026-04-26T20:16:30.013Z",
+  "options": {
+    "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+    "isAutoTeam": false
+  },
+  "members": [
+    {
+      "memberId": "team-lead@thesis-charts-generator",
+      "name": "team-lead",
+      "role": "Team Lead - coordinates the team and interacts with the user"
+    },
+    {
+      "memberId": "charts-ch1-ch2@thesis-charts-generator",
+      "name": "charts-ch1-ch2",
+      "role": "生成第一章+第二章图表"
+    }
+  ],
+  "isAutoTeam": false
+}
