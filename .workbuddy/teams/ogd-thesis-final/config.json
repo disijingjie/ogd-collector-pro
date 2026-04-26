@@ -1,0 +1,43 @@
+{
+  "name": "ogd-thesis-final",
+  "leadAgentId": "ad7b121118034aa3992016ca35fab7e8",
+  "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+  "createdAt": "2026-04-26T02:36:17.366Z",
+  "options": {
+    "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+    "isAutoTeam": false
+  },
+  "members": [
+    {
+      "memberId": "team-lead@ogd-thesis-final",
+      "name": "team-lead",
+      "role": "Team Lead - coordinates the team and interacts with the user"
+    },
+    {
+      "memberId": "chart-fix@ogd-thesis-final",
+      "name": "chart-fix",
+      "role": "修复25张图表数据"
+    },
+    {
+      "memberId": "thesis-edit@ogd-thesis-final",
+      "name": "thesis-edit",
+      "role": "论文紧急修改"
+    },
+    {
+      "memberId": "server-sync@ogd-thesis-final",
+      "name": "server-sync",
+      "role": "服务器同步部署"
+    },
+    {
+      "memberId": "prof-review@ogd-thesis-final",
+      "name": "prof-review",
+      "role": "五位博导审阅"
+    },
+    {
+      "memberId": "table-redesign@ogd-thesis-final",
+      "name": "table-redesign",
+      "role": "重设计论文表格"
+    }
+  ],
+  "isAutoTeam": false
+}

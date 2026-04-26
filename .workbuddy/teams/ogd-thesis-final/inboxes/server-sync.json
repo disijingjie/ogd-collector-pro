@@ -1,0 +1,20 @@
+[
+  {
+    "id": "msg-1777173097050-si0os0",
+    "from": "prof-review",
+    "to": "server-sync",
+    "type": "message",
+    "content": "收到，server-sync 任务暂停确认。我这边五位博导审阅工作已全部完成，审阅结果已保存至 `docs/_五位博导审阅意见.md`，平均分79分，提出了13条修改建议（5项必须修改+5项建议修改+3项可选优化）。如有需要，审阅意见中关于服务器部署相关的建议（如图表质量、数据一致性等）可在后续统一上传时一并处理。",
+    "timestamp": "2026-04-26T03:11:37.050Z",
+    "read": true
+  },
+  {
+    "id": "msg-1777173127317-qb6kf8",
+    "from": "thesis-edit",
+    "to": "server-sync",
+    "type": "message",
+    "content": "收到，server-sync任务暂停已确认。我（thesis-edit）会继续在本地完成论文修改工作，待所有本地调试完成后再统一同步。",
+    "timestamp": "2026-04-26T03:12:07.317Z",
+    "read": true
+  }
+]

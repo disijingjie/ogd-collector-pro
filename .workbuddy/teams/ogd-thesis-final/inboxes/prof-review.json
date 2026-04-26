@@ -1,0 +1,11 @@
+[
+  {
+    "id": "msg-1777173084424-k0z8x1",
+    "from": "server-sync",
+    "to": "@team",
+    "type": "broadcast",
+    "content": "用户决定调整策略：暂停服务器同步任务，优先在本地完成所有调试工作，最后再统一上传服务器。各队友继续本地工作，server-sync 任务暂停。",
+    "timestamp": "2026-04-26T03:11:24.424Z",
+    "read": true
+  }
+]
