@@ -1,0 +1,23 @@
+{
+  "name": "ogd-data-fix",
+  "leadAgentId": "ad7b121118034aa3992016ca35fab7e8",
+  "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+  "createdAt": "2026-04-26T13:36:46.742Z",
+  "options": {
+    "workspacePath": "c:/Users/MI/WorkBuddy/newbbbb/ogd_collector_system",
+    "isAutoTeam": false
+  },
+  "members": [
+    {
+      "memberId": "team-lead@ogd-data-fix",
+      "name": "team-lead",
+      "role": "Team Lead - coordinates the team and interacts with the user"
+    },
+    {
+      "memberId": "data-fix@ogd-data-fix",
+      "name": "data-fix",
+      "role": "修复22平台E3质量数据"
+    }
+  ],
+  "isAutoTeam": false
+}

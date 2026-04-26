@@ -1,0 +1,11 @@
+[
+  {
+    "id": "shutdown-1777214718431",
+    "from": "team-lead",
+    "to": "update-thesis",
+    "type": "shutdown_request",
+    "content": "{\"type\":\"shutdown_request\",\"request_id\":\"shutdown-1777214718431\",\"reason\":\"工作已完成，请关闭。\",\"from\":\"team-lead\",\"timestamp\":\"2026-04-26T14:45:18.431Z\"}",
+    "timestamp": "2026-04-26T14:45:18.431Z",
+    "read": false
+  }
+]

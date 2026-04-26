@@ -1,0 +1,397 @@
+=== collection_records 字段 ===
+  id (INTEGER)
+  task_id (INTEGER)
+  platform_id (INTEGER)
+  platform_code (TEXT)
+  platform_name (TEXT)
+  tier (TEXT)
+  region (TEXT)
+  status (TEXT)
+  status_detail (TEXT)
+  dataset_count (INTEGER)
+  format_types (TEXT)
+  has_api (INTEGER)
+  has_bulk_download (INTEGER)
+  response_time (REAL)
+  has_https (INTEGER)
+  has_search (INTEGER)
+  has_download (INTEGER)
+  has_visualization (INTEGER)
+  has_update_info (INTEGER)
+  has_metadata (INTEGER)
+  has_feedback (INTEGER)
+  has_register (INTEGER)
+  has_preview (INTEGER)
+  app_count (INTEGER)
+  score_c1 (REAL)
+  score_c2 (REAL)
+  score_c3 (REAL)
+  score_c4 (REAL)
+  overall_score (REAL)
+  raw_html_snippet (TEXT)
+  http_status (INTEGER)
+  error_message (TEXT)
+  collected_at (TEXT)
+
+=== guangdong ===
+  id: 282
+  task_id: 6
+  platform_id: 17
+  platform_code: guangdong
+  platform_name: 广东省
+  tier: 省级
+  region: 华南
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: ["api"]
+  has_api: 1
+  has_bulk_download: 0
+  response_time: 0.26
+  has_https: 1
+  has_search: 1
+  has_download: 0
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 1
+  app_count: 0
+  score_c1: 0.24
+  score_c2: 0.6
+  score_c3: 0.0
+  score_c4: 0.3
+  overall_score: 0.285
+  raw_html_snippet: <!DOCTYPE html><html id="html_box" lang="en"><head><meta http-equiv="pragma" content="no-cache"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><link href="/static/css/chunk-01cda064.c1b9be72.css" rel="prefetch"><link href="/static/css/chunk-02d67567.01604a47.css" rel="prefetch"><link href="/static/css/chunk-04d04045.08cf97fd.css" rel="prefetch"><link href="/static/css/chunk-0603e2aa.ad8aad85.css" rel="prefetch"><link href="/static/css/chunk-06f6f777.24bf4277.css" rel="prefetch"><link href="/static/css/chunk-079c38f8.bb958609.css" rel="prefetch"><link href="/static/css/chunk-07ef266b.4c03cf2a.css" rel="prefetch"><link href="/static/css/chunk-09fc5818.ba6c5c69.css" rel="prefetch"><link href="/static/css/chunk-0a030b72.3c7dec81.css" rel="prefetch"><link href="/static/css/chunk-0ba08157.7639e90a.css" rel="prefetch"><link href="/static/css/chunk-0bc34985.f2122c7b.css" rel="prefetch"><link href="/static/css/chunk-0c3ded30.72664815.css" rel="prefetch"><link href="/static/css/chunk-0d7c0350.87d407b3.css" rel="prefetch"><link href="/static/css/chunk-0d8f5d0e.75d49107.css" rel="prefetch"><link href="/static/css/chunk-1171d6d4.a69d4beb.css" rel="prefetch"><link href="/static/css/chunk-128105c4.cf273817.css" rel="prefetch"><link href="/static/css/chunk-14e4bdb5.920e5f7e.css" rel="prefetch"><link href="/static/css/chunk-192f1767.504f818c.css" rel="prefetch"><link href="/static/css/chunk-19bff2a5.f87ca0a4.css" rel="prefetch"><link href="/static/css/chunk-1b13e37c.d3977661.css" rel="prefetch"><link href="/static/css/chunk-1baa08a2.13d02b36.css" rel="prefetch"><link href="/static/css/chunk-1bc761e7.ef6d222b.css" rel="prefetch"><link href="/static/css/chunk-1e897c96.3cd4d165.css" rel="prefetch"><link href="/static/css/chunk-1f1d1fa6.687d3b28.css" rel="prefetch"><link href="/static/css/chunk-2559d1d8.b4dd3772.css" rel="prefetch"><link href="/static/css/chunk-2a652b22.1e201e3f.css" rel="prefetch"><link href="/static/css/chunk-2b9f5ce5.fc4a6401.css" rel="prefetch"><link href="/static/css/chunk-2cc65f34.920e5f7e.css" rel="prefetch"><link href="/static/css/chunk-2ef52059.355db61a.css" rel="prefetch"><link href="/static/css/chunk-2fa5d838.71e9018c.css" rel="prefetch"><link href="/static/css/chunk-30dcaf84.c2205255.css" rel="prefetch"><link href="/static/css/chunk-31129c50.973675a7.css" rel="prefetch"><link href="/static/css/chunk-3132b0cf.177904d4.css" rel="prefetch"><link href="/static/css/chunk-32537a7f.789d1d47.css" rel="prefetch"><link href="/static/css/chunk-348bb362.fd8447f9.css" rel="prefetch"><link href="/static/css/chunk-349e62ee.1d0ac05b.css" rel="prefetch"><link href="/static/css/chunk-35fe41d2.2ad8811a.css" rel="prefetch"><link href="/static/css/chunk-36e13020.7c28532d.css" rel="prefetch"><link href="/static/css/chunk-37b83d79.cce8699d.css" rel="prefetch"><link href="/static/css/chunk-39c43930.d73fb669.css" rel="prefetch"><link href="/static/css/chunk-3b2ff45f.7a2b63dc.css" rel="prefetch"><link href="/static/css/chunk-3bb4aa0a.afda278a.css" rel="prefetch"><link href="/static/css/chunk-3d16174c.8ccc2dc4.css" rel="prefetch"><link href="/static/css/chunk-4030bb32.1f83fce4.css" rel="prefetch"><link href="/static/css/chunk-46d2042e.14dfe87f.css" rel="prefetch"><link href="/static/css/chunk-46d88126.4c91c94e.css" rel="prefetch"><link href="/static/css/chunk-48249001.65bb0b97.css" rel="prefetch"><link href="/static/css/chunk-4ca52e94.449aa7b8.css" rel="prefetch"><link href="/static/css/chunk-4d3305f1.2b9ff28a.css" rel="prefetch"><link href="/static/css/chunk-4da1634b.8879ded5.css" rel="prefetch"><link href="/static/css/chunk-4f23339c.c7cf29c4.css" rel="prefetch"><link href="/static/css/chunk-4f52f22a.e1732bc4.css" rel="prefetch"><link href="/static/css/chunk-505c52d8.c80e1b8f.css" rel="prefetch"><link href="/static/css/chunk-51625a77.209b7ea7.css" rel="prefetch"><link href="/static/css/chunk-519d927c.e8a7cc5b.css" rel="prefetch"><link href="/static/css/chunk-53e7c25c.603ca1a7.css" rel="prefetch"><link href="/static/css/chunk-574f5e6e.a8267a95.css" rel="prefetch"><link href="/static/css/chunk-58e84e58.cce965ba.css" rel="prefetch"><link href="/static/css/chunk-5ac120b3.0f452dbf.css" rel="prefetch"><link href="/static/css/chunk-5ad6b2f6.381f53f0.css" rel="prefetch"><link href="/static/css/chunk-5be52d02.a37440ab.css" rel="prefetch"><link href="/static/css/chunk-5cfa6852.bc73e779.css" rel="prefetch"><link href="/static/css/chunk-5da38581.27a90b54.css" rel="prefetch"><link href="/static/css/chunk-5e19e380.3c146c4d.css" rel="prefetch"><link href="/static/css/chunk-60d9716c.ad840b1b.css" rel="prefetch"><link href="/static/css/chunk-64a6415b.b84eabe0.css" rel="prefetch"><link href="/static/css/chunk-64e1c324.812fa6c1.css" rel="prefetch"><link href="/static/css/chunk-65e229dd.58eedb79.css" rel="prefetch"><link href="/static/css/chunk-6708bbf4.4a336e08.css" rel="prefetch"><link href="/static/css/chunk-67d
+  http_status: 200
+  collected_at: 2026-04-26T02:02:02.023381
+
+=== jiangsu ===
+  id: 270
+  task_id: 6
+  platform_id: 5
+  platform_code: jiangsu
+  platform_name: 江苏省
+  tier: 省级
+  region: 华东
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: ["json", "api"]
+  has_api: 1
+  has_bulk_download: 0
+  response_time: 0.29
+  has_https: 1
+  has_search: 1
+  has_download: 1
+  has_visualization: 1
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 1
+  has_preview: 0
+  app_count: 0
+  score_c1: 0.28
+  score_c2: 1.0
+  score_c3: 0.0
+  score_c4: 0.3
+  overall_score: 0.395
+  raw_html_snippet: <!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="renderer" content="webkit">
+	<meta name="referrer" content="no-referrer" />
+	<title>江苏省公共数据开放网站</title>
+	<script>
+		document.write('<script src="../../js/boot/boot.min.js?' + Math.random() + '"></scr' + 'ipt>');
+	</script>
+	<script>
+		ResBoot.output(['js/widgets/swiper/swiper.min.css', './css/index_new.css']);
+	</script>
+	
+	<script src="../../js/widgets/jquery/jquery-3.5.0.min.js"></script>
+
+
+</head>
+
+<body>
+	<script src="https://www.jszwfw.gov.cn/script/14/2110281542104950.js"></script>
+
+
+	<div class="main-content home-content">
+		<div class="content">
+
+			<div id="header-index" class="header index"></div>
+	
+			<div class="main" id="main">
+				<div class="banner">
+					<div class="banner-swiper swiper-container" id="banner-swiper">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<img class="banner-img" src="./css/images/banner-img1.jpg" />
+							</div>
+							<!-- <div class="swiper-slide">
+								<img class="banner-img" src="./css/images/banner-img2.jpg" />
+								<div class="ewb-nav banner-ewb-nav">
+									<ul class="ewb-nav-items clearfix" id="nav">
+										<li class="nav-item"><a class="ewb-nav-item" href="#city1">苏州</a></li>
+										<li class="nav-item"><a class="ewb-nav-item" href="#city2">无锡</a></li>
+										<li class="nav-item"><a class="ewb-nav-item" href="#city3">常州</a></li>
+										<li class="nav-item"><a class="ewb-nav-item" href="#city4">扬州</a></li>
+										<li class="nav-item"><a class="ewb-nav-item" href="#city5">泰州</a></li>
+										<li class="nav-item"><a class="ewb-nav-item" href="#city6">徐州</a></li>
+									</ul>
+								</div>
+							</div> -->
+							<div class="swiper-slide">
+								<img class="banner-img" src="./css/images/banner-img3.jpg" />
+							</div>
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>
+					<div class="search-box container clearfix">
+						<div class="banner-search clearfix">
+							<input class="banner-input " placeholder="请输入关键词搜索" autocomplete="false" id="banner-input" />
+							<a class="search-btn r" href="javascript:;" id="banner-search">搜索</a>
+						</div>
+					</div>
+					<div class="banner-footer">
+						<div class="container clearfix foot-box">
+							<span class="city-text l">省级</span>
+							<div class="city-items l clearfix" id="banner-city">
+								<!-- <li class="city-item" data-type="南京市" url="http://opendata.mynj.cn/#/main/home">南京市(605+)</li>
+								<li class="city-item" data-type="无锡市" url="http://data.wuxi.gov.cn">无锡市(2150+)</li>
+								<li class="city-item" data-type="徐州市" url="http://data.gxj.xz.gov.cn/#/Home">徐州市(1412+)</li>
+								<li class="city-item" data-type="常州市" url="http://opendata.changzhou.gov.cn">常州市(553+)</li>
+								<li class="city-item" data-type="苏州市" url="http://www.suzhou.gov.cn/OpenResourceWeb/home">苏州市(316+)</li>
+								<li class="city-item" data-type="南通市" url="http://data.nantong.gov.cn/home/index.html#/home">南通市(312+)</li>
+								<li class="city-item" data-type="连云港市" url="http://www.lyg.gov.cn/data/">连云港市(213+)</li>
+								<li class="city-item" data-type="淮安市" url="http://opendata.huaian.gov.cn/dataopen/">淮安市(294+)</li>
+								<li class="city-item" data-type="盐城市" url="https://www.yancheng.gov.cn/opendata">盐城市(1391+)</li>
+								<li class="city-item" data-type="扬州市" url="http://data.yangzhou.gov.cn/">扬州市(1161+)</li>
+								<li class="city-item" data-type="镇江市" url="http://data.zhenjiang.gov.cn/portal/index">镇江市(261+)</li>
+								<li class="city-item" data-type="泰州市" url="http://www.taizhou.gov.cn/opendata/">泰州市(2090+)</li>
+								<li class="city-item" data-type="宿迁市" url="http://data.suqian.gov.cn/sjkfpt.shtml">宿迁市(1284+)</li> -->
+								</div>							
+						</div>
+					</div>
+				</div>
+				<!-- 数据统计 -->
+				<div class="data-statistics container clearfix">
+					<div class="total l">
+						<div class="realdata">
+							<p class="realdata-name">省级数据总量</p>
+							<p>
+								<span class="realdata-num" id="statistics-openDataCount">0</span><span
+									class="realdata-unit">万条</span>
+							</p>
+						</div>
+					</div>
+					<ul class="detail clearfix">
+						<li class="detail-item catalogue">
+							<p class="detail-name">数据目录总量</p>
+							<p>
+								<span class="detail-num" id="statistics-openCatalogCount">0</span><span
+									class="detail-unit">个</span>
+							</p>
+						</li>
+						<li class="detail-item api" hidden>
+							<p class="detail-name">数据集总量</p>
+							<p>
+								<span class="detail-num" id="statistics-openCollectCount">0</span><span
+									class="detail-unit">个</span>
+							</p>
+						</li>
+						<li class="detail-item download">
+							<p class="detail-name">下载次数</p>
+							<p>
+								<span class="detail-num" id="statistics-openDownloadCount">0</span><span
+									class="
+  http_status: 200
+  collected_at: 2026-04-26T02:00:56.536611
+
+=== guizhou ===
+  id: 286
+  task_id: 6
+  platform_id: 21
+  platform_code: guizhou
+  platform_name: 贵州省
+  tier: 省级
+  region: 西南
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: ["json", "pdf"]
+  has_api: 0
+  has_bulk_download: 0
+  response_time: 0.21
+  has_https: 1
+  has_search: 0
+  has_download: 0
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 1
+  app_count: 0
+  score_c1: 0.08
+  score_c2: 0.3
+  score_c3: 0.0
+  score_c4: 0.3
+  overall_score: 0.17
+  raw_html_snippet: <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="never"><!--[if IE]><link rel="icon" href="favicon.ico" type="image/x-icon" /><![endif]--><link rel="shortcut icon" href="favicon.ico" type="image/x-icon"><title>贵州省政府数据开放平台</title><style></style><link href="/css/chunk-027163b2.d1ab1e27.css" rel="prefetch"><link href="/css/chunk-0620eb60.4bb0e78a.css" rel="prefetch"><link href="/css/chunk-07ad77b4.bd902d03.css" rel="prefetch"><link href="/css/chunk-0d1c6dd3.e8bb9b3e.css" rel="prefetch"><link href="/css/chunk-0fd568da.c0b70865.css" rel="prefetch"><link href="/css/chunk-11a0bf78.dddda4f7.css" rel="prefetch"><link href="/css/chunk-18501851.77186162.css" rel="prefetch"><link href="/css/chunk-1cc6f08f.f2813732.css" rel="prefetch"><link href="/css/chunk-229f0ed9.23aa9ef2.css" rel="prefetch"><link href="/css/chunk-275554fe.8ed07254.css" rel="prefetch"><link href="/css/chunk-3092f7f1.cca55c1f.css" rel="prefetch"><link href="/css/chunk-35c38c18.c170dffc.css" rel="prefetch"><link href="/css/chunk-39e38b12.e8f1c963.css" rel="prefetch"><link href="/css/chunk-3ee52575.fd301c66.css" rel="prefetch"><link href="/css/chunk-3f2bb6b0.9a54cb3f.css" rel="prefetch"><link href="/css/chunk-41aee746.3cd39a5f.css" rel="prefetch"><link href="/css/chunk-4236facc.7d038a90.css" rel="prefetch"><link href="/css/chunk-4b961fce.3e44b9ff.css" rel="prefetch"><link href="/css/chunk-509b0301.5f9bf051.css" rel="prefetch"><link href="/css/chunk-56795078.f6e63807.css" rel="prefetch"><link href="/css/chunk-5c65da9a.5ed4bd53.css" rel="prefetch"><link href="/css/chunk-6adecc6a.6646ca3d.css" rel="prefetch"><link href="/css/chunk-6c0e8ea0.39734d9a.css" rel="prefetch"><link href="/css/chunk-6d85bb92.f87d659d.css" rel="prefetch"><link href="/css/chunk-774eec71.5bfe5770.css" rel="prefetch"><link href="/css/chunk-78caf791.b9626844.css" rel="prefetch"><link href="/css/chunk-7b3432e6.5d1f9503.css" rel="prefetch"><link href="/css/chunk-7c9c5dc3.2b006c60.css" rel="prefetch"><link href="/css/chunk-ae1cd844.8d8a6f91.css" rel="prefetch"><link href="/css/chunk-ae4a085a.08a39d46.css" rel="prefetch"><link href="/css/chunk-b08d4244.b153a6fa.css" rel="prefetch"><link href="/css/chunk-c437b946.b3dfc951.css" rel="prefetch"><link href="/css/chunk-e3df7542.d0f7cdc6.css" rel="prefetch"><link href="/css/chunk-e5f620ea.0fe44ef6.css" rel="prefetch"><link href="/css/chunk-e664d4c8.3399779f.css" rel="prefetch"><link href="/css/chunk-eebecadc.4adb67c0.css" rel="prefetch"><link href="/js/chunk-027163b2.46bbcd59.js" rel="prefetch"><link href="/js/chunk-0620eb60.18b593da.js" rel="prefetch"><link href="/js/chunk-07ad77b4.ef3a4516.js" rel="prefetch"><link href="/js/chunk-0d1c6dd3.b30909b4.js" rel="prefetch"><link href="/js/chunk-0fd568da.1608a500.js" rel="prefetch"><link href="/js/chunk-11a0bf78.15cd83b9.js" rel="prefetch"><link href="/js/chunk-18501851.4543e489.js" rel="prefetch"><link href="/js/chunk-1cc6f08f.864468d3.js" rel="prefetch"><link href="/js/chunk-229f0ed9.a9467d5e.js" rel="prefetch"><link href="/js/chunk-275554fe.f8f70f39.js" rel="prefetch"><link href="/js/chunk-2d0b2b28.3583b2d5.js" rel="prefetch"><link href="/js/chunk-3092f7f1.798959e0.js" rel="prefetch"><link href="/js/chunk-35c38c18.baf35693.js" rel="prefetch"><link href="/js/chunk-39e38b12.9ba61512.js" rel="prefetch"><link href="/js/chunk-3ee52575.55d3e81e.js" rel="prefetch"><link href="/js/chunk-3f2bb6b0.7fc1768c.js" rel="prefetch"><link href="/js/chunk-41aee746.a175e154.js" rel="prefetch"><link href="/js/chunk-4236facc.6db55ab4.js" rel="prefetch"><link href="/js/chunk-44fcc282.8651ff62.js" rel="prefetch"><link href="/js/chunk-4b961fce.a3e93889.js" rel="prefetch"><link href="/js/chunk-509b0301.9c26361d.js" rel="prefetch"><link href="/js/chunk-56795078.52a32534.js" rel="prefetch"><link href="/js/chunk-5c65da9a.74e74192.js" rel="prefetch"><link href="/js/chunk-5d18cef0.574bd746.js" rel="prefetch"><link href="/js/chunk-6adecc6a.7e1ff517.js" rel="prefetch"><link href="/js/chunk-6b294a7e.18a802d0.js" rel="prefetch"><link href="/js/chunk-6c0e8ea0.0ae8f849.js" rel="prefetch"><link href="/js/chunk-6d85bb92.4fa0659e.js" rel="prefetch"><link href="/js/chunk-6f689758.83033adc.js" rel="prefetch"><link href="/js/chunk-774eec71.8ad3f969.js" rel="prefetch"><link href="/js/chunk-78caf791.31bfe14c.js" rel="prefetch"><link href="/js/chunk-7b3432e6.8ffc68de.js" rel="prefetch"><link href="/js/chunk-7c9c5dc3.030c928c.js" rel="prefetch"><link href="/js/chunk-ae1cd844.6f448972.js" rel="prefetch"><link href="/js/chunk-ae4a085a.beafcb86.js" rel="prefetch"><link href="/js/chunk-b08d4244.19e4914d.js" rel="prefetch"><link href="/js/chunk-c437b946.b20e0d6c.js" rel="prefetch"><link href="/js/chunk-e3df7542.3b66e660.js" rel="prefetch"><link href="/js/chunk-e5f620ea.5172d743.js" rel="prefetch"><link href="/js/chunk-e664d4c8.e301810a.js" rel="prefetch"><link href="/js/chunk-eebecadc.974eacc6
+  http_status: 200
+  collected_at: 2026-04-26T02:02:42.501937
+
+=== jiangxi ===
+  id: 274
+  task_id: 6
+  platform_id: 9
+  platform_code: jiangxi
+  platform_name: 江西省
+  tier: 省级
+  region: 华东
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: ["json"]
+  has_api: 0
+  has_bulk_download: 0
+  response_time: 0.27
+  has_https: 1
+  has_search: 0
+  has_download: 1
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 1
+  app_count: 0
+  score_c1: 0.04
+  score_c2: 0.5
+  score_c3: 0.0
+  score_c4: 0.3
+  overall_score: 0.21
+  raw_html_snippet: <!DOCTYPE html><html><head><meta charset=utf-8><meta id=special http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=renderer content=webkit><meta name=viewport content="width=1400"><link rel=icon id=icoTheme href=/themePic/jiangxi/favicon.ico><title id=titles>æ±è¥¿çå¬å±æ°æ®å¼æ¾å¹³å°</title><script src=/settings.js></script><script src=/aes.js></script><script></script><link href=/static/css/chunk-libs.d777b589.css rel=stylesheet><link href=/static/css/app.a926c52d.css rel=stylesheet></head><body><div id=app></div><script src=/static/js/chunk-elementUI.39026767.js></script><script src=/static/js/chunk-libs.3e3cd97e.js></script><script>(function(c){function e(e){for(var u,h,d=e[0],f=e[1],b=e[2],t=0,r=[];t<d.length;t++)h=d[t],a[h]&&r.push(a[h][0]),a[h]=0;for(u in f)Object.prototype.hasOwnProperty.call(f,u)&&(c[u]=f[u]);o&&o(e);while(r.length)r.shift()();return k.push.apply(k,b||[]),n()}function n(){for(var c,e=0;e<k.length;e++){for(var n=k[e],u=!0,h=1;h<n.length;h++){var d=n[h];0!==a[d]&&(u=!1)}u&&(k.splice(e--,1),c=f(f.s=n[0]))}return c}var u={},h={runtime:0},a={runtime:0},k=[];function d(c){return f.p+"static/js/"+({"chunk-commons":"chunk-commons"}[c]||c)+"."+{"chunk-00d94f77":"97dfb905","chunk-0192a1da":"e852628e","chunk-0342636e":"84d6fea7","chunk-049f2930":"a174a6dd","chunk-080a4d03":"d7049b86","chunk-0d369d33":"2b2f9bce","chunk-1308a7f3":"732e2180","chunk-14618568":"a2f34109","chunk-15fce064":"4b2caa35","chunk-17dc1805":"bbc08345","chunk-1aa8219b":"dc9b2050","chunk-2104d807":"5d800745","chunk-2451223b":"ac673fa6","chunk-2540b0ba":"23a53b51","chunk-282db0fc":"e73a3163","chunk-2c505b0b":"0963bcfa","chunk-2d213661":"bc1e0762","chunk-2d21d4fc":"76fb7671","chunk-2d238477":"00f011d4","chunk-2f52c8e6":"0db35353","chunk-2f9ad500":"3e417c62","chunk-323e390e":"1b58fddb","chunk-35c3ce18":"0d375400","chunk-39e41fea":"3dff582f","chunk-3b9af07a":"582bf29e","chunk-4116618a":"7747a0b0","chunk-4186a634":"8dffa4fc","chunk-437a0109":"0ecc260b","chunk-4b9bcbcf":"762d6c57","chunk-4c62476e":"37fa161b","chunk-4e29ae38":"d379b0a7","chunk-4f08f782":"c78bd21c","chunk-0d93217f":"1c809623","chunk-1da4edb3":"9ac93c40","chunk-50900a17":"7df0960a","chunk-c0f28a7e":"c7f32508","chunk-e9af1076":"88285849","chunk-e0445304":"2eaed3bf","chunk-545e63e8":"133377ef","chunk-55c0722b":"5050232b","chunk-56bdb08b":"0ce244b9","chunk-577e2700":"3ff877b2","chunk-5f5cbae6":"2081a09d","chunk-6252256a":"0c61073e","chunk-662bd6ac":"7ef271c0","chunk-6743cd3f":"881b548c","chunk-6c3051b6":"e094f02a","chunk-6ce88583":"77927031","chunk-6e0d5357":"a3b687fc","chunk-7162c731":"9f209087","chunk-72259d26":"e4491951","chunk-74e44e8e":"1c747de5","chunk-7665b587":"f2763f58","chunk-790a28d4":"edeb6d1a","chunk-916f6eac":"19e5e749","chunk-93b3ec9a":"5e646a5e","chunk-9520ab30":"d91bdbe6","chunk-a220ab72":"46ad9674","chunk-bf7020f2":"0758fc22","chunk-c51f3726":"f503be4c","chunk-commons":"d06e034f","chunk-3b2a50a1":"64dcc7bf","chunk-3f1b7cc0":"4c7cb5ef","chunk-001864b2":"2cf1ab18","chunk-7d7e5974":"1bd42e14","chunk-50a9d387":"d43b325c","chunk-5697e988":"1fd901e1","chunk-595e747d":"051f2888","chunk-6518faee":"de1534dc","chunk-6ac2dd84":"b5228394","chunk-91b5a464":"c652c9f2","chunk-9df23454":"987aaf30","chunk-bcd37c3c":"d23b8e51","chunk-d96c239a":"0402257e","chunk-f9448fa0":"d68250b0","chunk-d2cf297c":"8d06cc0c","chunk-dc60e0c6":"24dc1a8c","chunk-e4491d0e":"76e198cf","chunk-e81a9464":"e63321d3","chunk-504f8202":"247cb54a","chunk-ecb75a56":"d29c9437","chunk-f9903eae":"5cde4b5b"}[c]+".js"}function f(e){if(u[e])return u[e].exports;var n=u[e]={i:e,l:!1,exports:{}};return c[e].call(n.exports,n,n.exports,f),n.l=!0,n.exports}f.e=function(c){var e=[],n={"chunk-00d94f77":1,"chunk-049f2930":1,"chunk-080a4d03":1,"chunk-0d369d33":1,"chunk-14618568":1,"chunk-17dc1805":1,"chunk-1aa8219b":1,"chunk-2104d807":1,"chunk-2451223b":1,"chunk-2540b0ba":1,"chunk-282db0fc":1,"chunk-2c505b0b":1,"chunk-2f52c8e6":1,"chunk-35c3ce18":1,"chunk-39e41fea":1,"chunk-3b9af07a":1,"chunk-4116618a":1,"chunk-437a0109":1,"chunk-4b9bcbcf":1,"chunk-4c62476e":1,"chunk-4e29ae38":1,"chunk-0d93217f":1,"chunk-1da4edb3":1,"chunk-50900a17":1,"chunk-545e63e8":1,"chunk-55c0722b":1,"chunk-56bdb08b":1,"chunk-577e2700":1,"chunk-5f5cbae6":1,"chunk-6252256a":1,"chunk-662bd6ac":1,"chunk-6743cd3f":1,"chunk-6c3051b6":1,"chunk-6e0d5357":1,"chunk-7162c731":1,"chunk-72259d26":1,"chunk-74e44e8e":1,"chunk-7665b587":1,"chunk-790a28d4":1,"chunk-916f6eac":1,"chunk-93b3ec9a":1,"chunk-9520ab30":1,"chunk-a220ab72":1,"chunk-bf7020f2":1,"chunk-c51f3726":1,"chunk-commons":1,"chunk-3b2a50a1":1,"chunk-3f1b7cc0":1,"chunk-001864b2":1,"chunk-7d7e5974":1,"chunk-50a9d387":1,"chunk-5697e988":1,"chunk-595e747d":1,"chunk-6518faee":1,"chunk-6ac2dd84":1,"chunk-91b5a464":1,"chunk-9df23454":1,"chunk-bcd37c3c":1,"chunk-d96c239a":1,"chunk-f9448fa0":1,"chunk-d2cf297c":1,"chunk-dc60e0c6":1,"chunk-e4491d0e":1,"chunk-e81a9464":1,"chunk-504f8202":1,"chunk-ecb75a56":1};h[c]?e.push(h[c]):0!==h[c]&&n[c]&&e.push(h[c]=new Promise((function(e,n){for(v
+  http_status: 200
+  collected_at: 2026-04-26T02:01:20.979776
+
+=== fujian ===
+  id: 273
+  task_id: 6
+  platform_id: 8
+  platform_code: fujian
+  platform_name: 福建省
+  tier: 省级
+  region: 华东
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: []
+  has_api: 0
+  has_bulk_download: 0
+  response_time: 15.23
+  has_https: 1
+  has_search: 0
+  has_download: 0
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 1
+  app_count: 0
+  score_c1: 0.0
+  score_c2: 0.1
+  score_c3: 0.0
+  score_c4: 0.3
+  overall_score: 0.1
+  raw_html_snippet: <!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="favicon.ico"><title>ç¦å»ºçå¬å±æ°æ®èµæºç»ä¸å¼æ¾å¹³å°</title><meta name="others" content="2025/10/22 19:07:06---govcloud---version"><script id="nlapm_inject_script" data-collector="/nlapm-data" data-license_key="KsaBxVVZjohUvqpM" src="./js/nlapm-webjs.js"></script><link href="res/css/chunk-0711c55c.6309490b.css" rel="prefetch"><link href="res/css/chunk-1bfe1a02.ca80f38e.css" rel="prefetch"><link href="res/css/chunk-1d63e33c.bdd61150.css" rel="prefetch"><link href="res/css/chunk-1dfc1fbf.2767fc0b.css" rel="prefetch"><link href="res/css/chunk-222b943c.0149a015.css" rel="prefetch"><link href="res/css/chunk-2492e7ae.a75a98a3.css" rel="prefetch"><link href="res/css/chunk-2b0e43e8.684da293.css" rel="prefetch"><link href="res/css/chunk-2da7d103.5b57f810.css" rel="prefetch"><link href="res/css/chunk-300c7c86.d156e883.css" rel="prefetch"><link href="res/css/chunk-4199214c.3837a237.css" rel="prefetch"><link href="res/css/chunk-4b7175de.f8a4ed77.css" rel="prefetch"><link href="res/css/chunk-4daae5ed.e19f7d2a.css" rel="prefetch"><link href="res/css/chunk-5e29171a.5fe3bace.css" rel="prefetch"><link href="res/css/chunk-659ecef4.57846631.css" rel="prefetch"><link href="res/css/chunk-6ffeb987.e42d98e8.css" rel="prefetch"><link href="res/css/chunk-7212de52.b281abb9.css" rel="prefetch"><link href="res/css/chunk-84d9ef96.bf44c210.css" rel="prefetch"><link href="res/css/chunk-9ea395e6.d48db7c5.css" rel="prefetch"><link href="res/css/chunk-9f5dbeac.9de69dce.css" rel="prefetch"><link href="res/css/chunk-b227e50c.af4486b5.css" rel="prefetch"><link href="res/css/chunk-b66d8de2.b9b3c1d7.css" rel="prefetch"><link href="res/css/chunk-befafc14.11329ae8.css" rel="prefetch"><link href="res/css/chunk-c705e426.132d2aaa.css" rel="prefetch"><link href="res/css/chunk-d1cb241a.48f0038e.css" rel="prefetch"><link href="res/css/chunk-f2e767dc.e156cbb4.css" rel="prefetch"><link href="res/css/chunk-fcbcab44.c18d37fe.css" rel="prefetch"><link href="res/js/chunk-0244075e.bcd37581.js" rel="prefetch"><link href="res/js/chunk-0711c55c.3f3a2f15.js" rel="prefetch"><link href="res/js/chunk-1bfe1a02.87dc5dcb.js" rel="prefetch"><link href="res/js/chunk-1d63e33c.da552d44.js" rel="prefetch"><link href="res/js/chunk-1dfc1fbf.23c6b788.js" rel="prefetch"><link href="res/js/chunk-222b943c.9daac6e8.js" rel="prefetch"><link href="res/js/chunk-2492e7ae.90d8e3ef.js" rel="prefetch"><link href="res/js/chunk-2b0e43e8.2d62c151.js" rel="prefetch"><link href="res/js/chunk-2da7d103.3fa5de17.js" rel="prefetch"><link href="res/js/chunk-300c7c86.170d7bd1.js" rel="prefetch"><link href="res/js/chunk-4199214c.a136f962.js" rel="prefetch"><link href="res/js/chunk-4b7175de.d2ed986e.js" rel="prefetch"><link href="res/js/chunk-4daae5ed.96b05ea2.js" rel="prefetch"><link href="res/js/chunk-5e29171a.831dcb54.js" rel="prefetch"><link href="res/js/chunk-659ecef4.89c2a024.js" rel="prefetch"><link href="res/js/chunk-6ffeb987.1ba87497.js" rel="prefetch"><link href="res/js/chunk-7212de52.29fc99c1.js" rel="prefetch"><link href="res/js/chunk-75cefc98.91283135.js" rel="prefetch"><link href="res/js/chunk-84d9ef96.aa3af366.js" rel="prefetch"><link href="res/js/chunk-9ea395e6.f9a0d752.js" rel="prefetch"><link href="res/js/chunk-9f5dbeac.1e2e66e9.js" rel="prefetch"><link href="res/js/chunk-b227e50c.9627d820.js" rel="prefetch"><link href="res/js/chunk-b66d8de2.06090d2a.js" rel="prefetch"><link href="res/js/chunk-befafc14.65506b81.js" rel="prefetch"><link href="res/js/chunk-c705e426.969c3109.js" rel="prefetch"><link href="res/js/chunk-d1cb241a.2c792801.js" rel="prefetch"><link href="res/js/chunk-f2e767dc.9c541b42.js" rel="prefetch"><link href="res/js/chunk-fcbcab44.dcb2ce43.js" rel="prefetch"><link href="res/css/chunk-vendors.859f4391.css" rel="preload" as="style"><link href="res/css/index.04ba5af0.css" rel="preload" as="style"><link href="res/js/chunk-vendors.58793ab1.js" rel="preload" as="script"><link href="res/js/index.0b4cef21.js" rel="preload" as="script"><link href="res/css/chunk-vendors.859f4391.css" rel="stylesheet"><link href="res/css/index.04ba5af0.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but ç¦å»ºçå¬å±æ°æ®èµæºç»ä¸å¼æ¾å¹³å° doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><script src="./aria_assist_main/assist-entry.js"></script><div id="app"></div><script src="res/js/chunk-vendors.58793ab1.js"></script><script src="res/js/index.0b4cef21.js"></script></body></html>
+  http_status: 200
+  collected_at: 2026-04-26T02:01:18.688110
+
+=== shanghai ===
+  id: 268
+  task_id: 6
+  platform_id: 3
+  platform_code: shanghai
+  platform_name: 上海市
+  tier: 省级
+  region: 华东
+  status: unavailable
+  status_detail: HTTP状态码: 412
+  dataset_count: 0
+  format_types: []
+  has_api: 0
+  has_bulk_download: 0
+  response_time: 0.24
+  has_https: 1
+  has_search: 0
+  has_download: 0
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 0
+  app_count: 0
+  score_c1: 0.0
+  score_c2: 0.0
+  score_c3: 0.0
+  score_c4: 0.0
+  overall_score: 0.0
+  http_status: 412
+  collected_at: 2026-04-26T02:00:51.770060
+
+=== anhui ===
+  id: 272
+  task_id: 6
+  platform_id: 7
+  platform_code: anhui
+  platform_name: 安徽省
+  tier: 省级
+  region: 华东
+  status: available
+  status_detail: 平台可访问
+  dataset_count: 0
+  format_types: ["csv", "xml", "excel", "pdf"]
+  has_api: 0
+  has_bulk_download: 0
+  response_time: 0.18
+  has_https: 0
+  has_search: 0
+  has_download: 0
+  has_visualization: 0
+  has_update_info: 0
+  has_metadata: 0
+  has_feedback: 0
+  has_register: 0
+  has_preview: 0
+  app_count: 0
+  score_c1: 0.16
+  score_c2: 0.2
+  score_c3: 0.0
+  score_c4: 0.0
+  overall_score: 0.09
+  raw_html_snippet: <!DOCTYPE html>
+<html xmlns:fly>
+
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="gb2312" /> 
+    <title>ç³»ç»ç»´æ¤ä¸­...</title>
+    <style> 
+      body{text-align:center} 
+    </style> 
+</head>
+<body>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+kAAAI1CAIAAAAl1CzIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MTVjYTkyNC1hZmNmLWVlNDEtOGJlNC01NTRkZTcyMGY2NWQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTU5Q0JBMzRGQTlGMTFFN0JDRkE5NzVGOUI3OTU1RTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTU5Q0JBMzNGQTlGMTFFN0JDRkE5NzVGOUI3OTU1RTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MTk5MmMxNTMtNzczZi0xODRmLWExNzAtNjlmZjBjYWU3ZWYwIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MGY2OTY3MTYtZmE5MC0xMWU3LWIwNWYt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
+  http_status: 200
+  collected_at: 2026-04-26T02:01:01.438019

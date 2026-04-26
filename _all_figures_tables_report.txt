@@ -1,0 +1,38 @@
+=== 论文中的图表清单 ===
+共发现 17 张图
+
+  图1-1     | 存在   | static/v3_chart_31_international.png                         (55.8KB)
+  图5-4     | 存在   | static/thesis_04_region_comparison.png                       (42.3KB)
+  图7-1     | 存在   | static/v3_chart_45_maturity_model.png                        (153.5KB)
+  图1-2     | 存在   | static/thesis_01_platform_types.png                          (74.4KB)
+  图1-3     | 存在   | static/thesis_07_histogram.png                               (46.4KB)
+  图3-2     | 存在   | static/thesis_03_topsis.png                                  (74.9KB)
+  图7-2     | 存在   | static/v3_chart_48_swot.png                                  (75.4KB)
+  图6-3     | 存在   | static/thesis_06_fsqca.png                                   (74.9KB)
+  图6-1     | 存在   | static/thesis_05_dematel.png                                 (79.1KB)
+  图3-1     | 存在   | static/v3_chart_46_architecture.png                          (73.2KB)
+  图4-1     | 存在   | static/v3_chart_24_workflow.png                              (82.4KB)
+  图6-2     | 存在   | static/thesis_05_dematel_causal.png                          (106.5KB)
+  图5-3     | 存在   | static/thesis_08_dea_topsis_scatter.png                      (67.8KB)
+  图4-2     | 存在   | static/thesis_02_datasets.png                                (75.5KB)
+  图6-4     | 存在   | static/v3_chart_51_dematel_sensitivity.png                   (53.8KB)
+  图6-5     | 存在   | static/v3_chart_52_fsqca_robustness.png                      (107.8KB)
+  图7-3     | 存在   | static/v3_chart_53_strategy_roadmap.png                      (85.8KB)
+
+=== 论文中的表格清单 ===
+共发现 14 个表
+
+    661 | 表1-4 全球主要政府数据开放评估体系比较
+    681 | 表1-5 中外代表性数据开放平台功能对比
+   1012 | 表2-5 政府数据开放评估方法比较
+   1068 | 表6-1 DEMATEL因素中心度与因果分类结果
+   1604 | 表5-1 23个样本平台TOPSIS绩效评估结果
+   1682 | 表5-2 23个省级平台DEA-BCC效率评价结果（基于真实采集数据）
+   1832 | 表6-1 DEMATEL分析结果（基于4E维度）
+   1878 | 表6-2 高绩效平台组态分析结果
+   1903 | 表6-3 低绩效平台组态分析结果
+   1932 | 表6-4 必要条件分析结果
+   1954 | 表6-5 DEMATEL敏感性分析结果
+   1987 | 表6-6 fsQCA稳健性检验结果
+   2133 | 表7-1 平台绩效的区域差异（基于服务器实际运行结果）
+   2399 | 表7-2 差异化策略优先级矩阵
