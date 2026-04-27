@@ -3,6 +3,15 @@
   "sessions": {
     "ad7b121118034aa3992016ca35fab7e8": [
       {
+        "expertId": "BookCoCreator",
+        "name": "著书书",
+        "profession": "图书联合创作者",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/03-Marketing/BookCoCreator/BookCoCreator.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/03-Marketing/BookCoCreator/BookCoCreator_zh.md",
+        "usedAt": 1777252976386,
+        "industryId": "all"
+      },
+      {
         "expertId": "VisualStorytellingExpert",
         "name": "图说说",
         "profession": "视觉叙事专家",
@@ -13,5 +22,5 @@
       }
     ]
   },
-  "lastUpdated": 1777234497334
+  "lastUpdated": 1777260918658
 }
