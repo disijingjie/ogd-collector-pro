@@ -1,0 +1,143 @@
+{% extends "base_v3.html" %}
+
+{% block title %}采集机制 | OGD-Collector Pro v3{% endblock %}
+{% block page_title %}采集机制详解{% endblock %}
+{% set active_page = 'mechanism' %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- 七步流水线 -->
+    <div class="col-lg-8">
+        <div class="v3-card">
+            <div class="v3-card-header"><i class="fas fa-stream text-primary"></i>七步采集流水线</div>
+            <div class="v3-card-body">
+                <div class="roadmap-step" data-step="1">
+                    <h6>平台探测与可达性检测</h6>
+                    <p>通过 DNS 解析 + HTTP HEAD 请求检测平台可访问性。记录响应时间、HTTP 状态码、HTTPS 支持情况。不可达平台标记异常并记录日志。</p>
+                    <div class="mt-2">
+                        <span class="badge bg-light text-dark">requests.head()</span>
+                        <span class="badge bg-light text-dark">socket.gethostbyname()</span>
+                        <span class="badge bg-light text-dark">timeout=10s</span>
+                    </div>
+                </div>
+                <div class="roadmap-step completed" data-step="2">
+                    <h6>页面结构识别与解析策略选择</h6>
+                    <p>根据平台技术架构自动选择解析策略：静态 HTML（BeautifulSoup）/ 动态渲染（Selenium）/ API 接口（requests+json）。每个平台配置独立的 CSS Selector 或 XPath 规则。</p>
+                    <div class="mt-2">
+                        <span class="badge bg-primary">BeautifulSoup4</span>
+                        <span class="badge bg-success">Selenium WebDriver</span>
+                        <span class="badge bg-info">requests + json</span>
+                    </div>
+                </div>
+                <div class="roadmap-step completed" data-step="3">
+                    <h6>数据集元数据提取</h6>
+                    <p>提取数据集标题、描述、发布部门、数据类别、数据格式、更新日期、下载量、浏览量等 15+ 字段。对分页列表进行递归遍历，确保全部数据集被抓取。</p>
+                    <div class="mt-2">
+                        <span class="badge bg-light text-dark">标题/描述/部门</span>
+                        <span class="badge bg-light text-dark">格式/日期/下载量</span>
+                        <span class="badge bg-light text-dark">分页递归</span>
+                    </div>
+                </div>
+                <div class="roadmap-step completed" data-step="4">
+                    <h6>六步数据清洗与质量控制</h6>
+                    <p><strong>Step 1 缺失值补全：</strong>对空字段进行默认值填充或标记；<strong>Step 2 异常值检测：</strong>基于箱线图法识别离群值；<strong>Step 3 格式标准化：</strong>统一日期格式、编码格式（UTF-8）；<strong>Step 4 重复去重：</strong>基于 URL+标题的 MD5 去重；<strong>Step 5 字段对齐：</strong>不同平台的字段映射到统一 schema；<strong>Step 6 编码统一：</strong>全量转 UTF-8，处理 BOM 头。</p>
+                </div>
+                <div class="roadmap-step completed" data-step="5">
+                    <h6>4E 维度自动评分</h6>
+                    <p>基于预定义的评分规则，对每个平台在 C1(供给保障)、C2(平台服务)、C3(数据质量)、C4(利用效果) 四个维度进行自动打分。C1-C3 基于客观指标计算，C4 基于下载量等代理指标。</p>
+                    <div class="mt-2">
+                        <span class="badge" style="background:#3182ce">C1 供给</span>
+                        <span class="badge" style="background:#38a169">C2 服务</span>
+                        <span class="badge" style="background:#d69e2e">C3 质量</span>
+                        <span class="badge" style="background:#e53e3e">C4 效果</span>
+                    </div>
+                </div>
+                <div class="roadmap-step completed" data-step="6">
+                    <h6>结构化存储与索引</h6>
+                    <p>平台元数据存入 SQLite（platforms 表），采集记录存入 collection_records 表，运行日志存入 collection_logs 表。同时生成 CSV/JSON 备份文件。</p>
+                    <div class="mt-2">
+                        <span class="badge bg-secondary">SQLite</span>
+                        <span class="badge bg-secondary">CSV</span>
+                        <span class="badge bg-secondary">JSON</span>
+                    </div>
+                </div>
+                <div class="roadmap-step completed" data-step="7">
+                    <h6>版本快照与血缘追踪</h6>
+                    <p>每次采集生成时间戳快照（collection_snapshots 表），记录数据来源、采集时间、解析规则版本号、采集脚本 Git commit hash，确保研究可复现。</p>
+                    <div class="mt-2">
+                        <span class="badge bg-dark">Git 版本控制</span>
+                        <span class="badge bg-dark">时间戳快照</span>
+                        <span class="badge bg-dark">血缘追踪</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧信息 -->
+    <div class="col-lg-4">
+        <div class="v3-card mb-4">
+            <div class="v3-card-header"><i class="fas fa-code text-success"></i>采集引擎核心类</div>
+            <div class="v3-card-body">
+                <div style="background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;font-family:monospace;font-size:0.8rem;overflow-x:auto;">
+<span style="color:#68d391"># 采集引擎核心架构</span><br>
+<span style="color:#63b3ed">class</span> CollectorEngine:<br>
+&nbsp;&nbsp;<span style="color:#63b3ed">def</span> <span style="color:#f6ad55">__init__</span>(self, config):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.platforms = config.platforms<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.session = requests.Session()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.ua_pool = load_ua_pool()<br>
+<br>
+&nbsp;&nbsp;<span style="color:#63b3ed">def</span> <span style="color:#f6ad55">detect_platform_type</span>(self, url):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#68d391"># 检测平台技术架构</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;resp = self.session.get(url)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">if</span> <span style="color:#f6ad55">"vue"</span> <span style="color:#63b3ed">in</span> resp.text:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">return</span> <span style="color:#f6ad55">"dynamic"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">return</span> <span style="color:#f6ad55">"static"</span><br>
+<br>
+&nbsp;&nbsp;<span style="color:#63b3ed">def</span> <span style="color:#f6ad55">collect</span>(self, platform):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;p_type = self.detect_platform_type(platform.url)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">if</span> p_type == <span style="color:#f6ad55">"static"</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">return</span> self.parse_static(platform)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">else</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#63b3ed">return</span> self.parse_dynamic(platform)
+                </div>
+            </div>
+        </div>
+
+        <div class="v3-card mb-4">
+            <div class="v3-card-header"><i class="fas fa-shield-alt text-warning"></i>反爬对抗策略</div>
+            <div class="v3-card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>请求频率：1-5s 随机延迟</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>UA 轮换：20+ 真实浏览器 UA</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>代理池：触发限制自动切换 IP</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Cookie 保持：维护 Session 状态</li>
+                    <li class="mb-0"><i class="fas fa-check-circle text-success me-2"></i>验证码：OCR 自动识别</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="v3-card">
+            <div class="v3-card-header"><i class="fas fa-clock text-info"></i>自动化调度</div>
+            <div class="v3-card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small">全量采集</span>
+                    <span class="badge bg-primary">每月 1 日 02:00</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small">增量更新</span>
+                    <span class="badge bg-success">周一/周四 03:00</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small">健康检查</span>
+                    <span class="badge bg-info">每日 3 次</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="small">异常告警</span>
+                    <span class="badge bg-warning text-dark">自动触发</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
