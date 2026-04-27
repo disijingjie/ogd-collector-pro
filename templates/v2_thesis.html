@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博士论文展示 v25 | OGD-Collector Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #e8f6f3;
+            --dark: #002b5b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f8fafc;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 40px;
+        }
+        
+        .thesis-nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .thesis-nav a {
+            display: block;
+            padding: 10px 16px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+        
+        .thesis-nav a:hover, .thesis-nav a.active {
+            background: var(--light);
+            color: var(--primary);
+        }
+        
+        .thesis-nav a i {
+            width: 24px;
+            text-align: center;
+            margin-right: 8px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        
+        .content-section h3 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, var(--light), #fff);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        
+        .method-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            transition: all 0.3s;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        .method-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .result-card.green {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .result-card.orange {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .result-card.blue {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin: 20px 0;
+        }
+        
+        .thesis-image {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="fas fa-book-open me-3"></i>博士论文 v25 展示</h1>
+                <p class="mb-0 opacity-75">中国省级政府数据开放平台数据利用绩效评估与优化路径研究</p>
+            </div>
+            <a href="/v2/" class="btn btn-outline-light"><i class="fas fa-arrow-left me-2"></i>返回首页</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- Sidebar Navigation -->
+        <div class="col-lg-3">
+            <div class="thesis-nav">
+                <h6 class="text-muted text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 0.1em;">论文导航</h6>
+                <a href="#abstract" class="active"><i class="fas fa-file-alt"></i>摘要</a>
+                <a href="#background"><i class="fas fa-bullseye"></i>研究背景</a>
+                <a href="#framework"><i class="fas fa-sitemap"></i>4E评估框架</a>
+                <a href="#methods"><i class="fas fa-flask"></i>研究方法</a>
+                <a href="#results"><i class="fas fa-chart-line"></i>核心发现</a>
+                <a href="#paths"><i class="fas fa-route"></i>优化路径</a>
+                <a href="#contribution"><i class="fas fa-lightbulb"></i>理论贡献</a>
+                <a href="#charts"><i class="fas fa-images"></i>关键图表</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <!-- Abstract -->
+            <div class="content-section" id="abstract">
+                <h3><i class="fas fa-file-alt me-2"></i>摘要</h3>
+                <div class="highlight-box">
+                    <p class="mb-0"><strong>核心痛点：</strong>现有评估体系存在"重供给轻效果"的系统性偏差，形成了"数据口径幻觉"现象——平台对外宣传的数据集数量与实际有效数据集数量之间存在巨大差异。</p>
+                </div>
+                <p>本研究基于4E评估框架（供给保障-平台服务-数据质量-利用效果-公平性），构建了涵盖5个一级维度、9个二级维度和24个具体指标的评估体系。采用多方法融合技术路线：TOPSIS综合评估、DEA-BCC效率分析、DEMATEL因果识别、fsQCA组态分析、多期DID政策评估。</p>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="result-card">
+                            <h5><i class="fas fa-trophy me-2"></i>TOPSIS绩效排名</h5>
+                            <p class="mb-0">山东 0.955 | 四川 | 辽宁 位列前三</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-card green">
+                            <h5><i class="fas fa-bolt me-2"></i>政策效应（DID）</h5>
+                            <p class="mb-0">"数据二十条" +0.043 (p&lt;0.01)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Background -->
+            <div class="content-section" id="background">
+                <h3><i class="fas fa-bullseye me-2"></i>研究背景与问题</h3>
+                <p>政府数据开放是数字政府建设的重要组成部分，也是数据要素价值释放的关键路径。然而，现有评估体系存在"重供给轻效果"的结构性偏差——过度关注"开放了多少数据集"而忽视"数据产生了多少价值"。</p>
+                <div class="highlight-box">
+                    <h6><i class="fas fa-exclamation-triangle me-2"></i>"数据口径幻觉"现象</h6>
+                    <p class="mb-0">山东平台对外宣称"6万余数据集"，实际有效仅约944个，口径一致性系数仅0.016。23个平台中位数仅0.122，意味着平均8个数据集只有1个真正有效。</p>
+                </div>
+            </div>
+            
+            <!-- Framework -->
+            <div class="content-section" id="framework">
+                <h3><i class="fas fa-sitemap me-2"></i>4E评估框架</h3>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="method-card">
+                            <div class="method-icon" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h5>E1 供给保障</h5>
+                            <p class="text-muted small">数据集数量、主题覆盖、更新频率、开放许可</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="method-card">
+                            <div class="method-icon" style="background: linear-gradient(135deg, #11998e, #38ef7d); color: white;">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <h5>E2 平台服务</h5>
+                            <p class="text-muted small">检索功能、API开放、用户反馈、界面友好度</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="method-card">
+                            <div class="method-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white;">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5>E3 数据质量</h5>
+                            <p class="text-muted small">准确性、完整性、及时性、机器可读性</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="method-card">
+                            <div class="method-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>E4 利用效果</h5>
+                            <p class="text-muted small">下载量、应用数量、创新成果、社会价值</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Methods -->
+            <div class="content-section" id="methods">
+                <h3><i class="fas fa-flask me-2"></i>多方法融合技术路线</h3>
+                <p class="mb-4">五种方法形成从"静态描述"到"动态验证"的完整证据链条：</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="method-card text-center">
+                            <div class="method-icon mx-auto" style="background: var(--primary); color: white;">
+                                <i class="fas fa-sort-amount-down"></i>
+                            </div>
+                            <h6>TOPSIS</h6>
+                            <p class="small text-muted mb-0">回答"谁排名高"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="method-card text-center">
+                            <div class="method-icon mx-auto" style="background: var(--secondary); color: white;">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h6>DEA-BCC</h6>
+                            <p class="small text-muted mb-0">回答"效率如何"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="method-card text-center">
+                            <div class="method-icon mx-auto" style="background: var(--accent); color: white;">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <h6>DEMATEL</h6>
+                            <p class="small text-muted mb-0">回答"因果方向"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="method-card text-center">
+                            <div class="method-icon mx-auto" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white;">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <h6>fsQCA</h6>
+                            <p class="small text-muted mb-0">回答"哪些路径能成功"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="method-card text-center">
+                            <div class="method-icon mx-auto" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <h6>多期DID</h6>
+                            <p class="small text-muted mb-0">回答"政策真的有效吗"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results -->
+            <div class="content-section" id="results">
+                <h3><i class="fas fa-chart-line me-2"></i>核心发现</h3>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="result-card">
+                            <h5><i class="fas fa-crown me-2"></i>发现一</h5>
+                            <p class="mb-0">绩效呈现"头部集中"特征，山东0.955领跑，区域差异显著</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-card green">
+                            <h5><i class="fas fa-bolt me-2"></i>发现二</h5>
+                            <p class="mb-0">仅1个平台DEA有效，高绩效≠高效率</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-card orange">
+                            <h5><i class="fas fa-network-wired me-2"></i>发现三</h5>
+                            <p class="mb-0">四维度呈网络化因果结构，互为因果</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-card blue">
+                            <h5><i class="fas fa-route me-2"></i>发现四</h5>
+                            <p class="mb-0">2条组态路径：全要素驱动(81%) + 服务-质量-效果(19%)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="content-section" id="charts">
+                <h3><i class="fas fa-images me-2"></i>关键图表</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container text-center">
+                            <h6 class="mb-3">TOPSIS综合绩效排名</h6>
+                            <img src="/static/thesis_charts_v6/图5-1.png" alt="TOPSIS排名" class="thesis-image" onerror="this.src='/static/fig5_2_topsis_ranking.png'">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container text-center">
+                            <h6 class="mb-3">DEA-BCC效率分析</h6>
+                            <img src="/static/thesis_charts_v6/图5-2.png" alt="DEA分析" class="thesis-image" onerror="this.src='/static/fig5_3_dea_ranking.png'">
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container text-center">
+                    <h6 class="mb-3">制度同形理论三机制</h6>
+                    <img src="/static/thesis_charts_v6/图2-8.png" alt="制度同形" class="thesis-image" style="max-height: 400px;">
+                </div>
+            </div>
+            
+            <!-- Contribution -->
+            <div class="content-section" id="contribution">
+                <h3><i class="fas fa-lightbulb me-2"></i>理论贡献</h3>
+                <div class="highlight-box">
+                    <h6><i class="fas fa-star me-2"></i>贡献一：制度同形理论拓展</h6>
+                    <p class="mb-0">将制度同形理论引入中国数据要素市场化语境，揭示了强制性同形（政策驱动）、模仿性同形（标杆学习）和规范性同形（专业标准）三种机制对平台趋同化的塑造作用。</p>
+                </div>
+                <div class="highlight-box">
+                    <h6><i class="fas fa-eye me-2"></i>贡献二："数据口径幻觉"概念</h6>
+                    <p class="mb-0">提出"数据口径幻觉"概念，揭示了现有评估体系的根本性盲区，为平台运营者提供了从"追求目录数量"到"追求有效供给"的纠偏方向。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p class="mb-0"><i class="fas fa-graduation-cap me-2"></i>博士论文 v25 | 武汉大学信息管理学院 | 文明</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Smooth scroll for navigation
+document.querySelectorAll('.thesis-nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.thesis-nav a').forEach(a => a.classList.remove('active'));
+            this.classList.add('active');
+        }
+    });
+});
+</script>
+</body>
+</html>

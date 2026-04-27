@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>采集流程可视化 | OGD-Collector Pro v2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #e8f6f3;
+            --dark: #002b5b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #f8fafc;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-content {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        
+        .timeline-content h4 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--light);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 4px;
+        }
+        
+        .data-flow-diagram {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin: 40px 0;
+        }
+        
+        .flow-node {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        .flow-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+        
+        .code-block {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        .code-block .comment { color: #68d391; }
+        .code-block .keyword { color: #63b3ed; }
+        .code-block .string { color: #fbd38d; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="fas fa-project-diagram me-3"></i>数据采集全流程可视化</h1>
+                <p class="mb-0 opacity-75">OGD-Collector Pro 三层架构采集系统的技术实现</p>
+            </div>
+            <a href="/v2/" class="btn btn-outline-light"><i class="fas fa-arrow-left me-2"></i>返回首页</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 架构概览 -->
+    <div class="data-flow-diagram">
+        <h3 class="text-center mb-4"><i class="fas fa-sitemap me-2"></i>三层架构概览</h3>
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="flow-node">
+                    <i class="fas fa-globe mb-2" style="font-size: 2rem;"></i>
+                    <h5>采集层</h5>
+                    <small>Playwright + XPath</small>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="col-md-3">
+                <div class="flow-node">
+                    <i class="fas fa-cogs mb-2" style="font-size: 2rem;"></i>
+                    <h5>处理层</h5>
+                    <small>清洗 + 标准化</small>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="col-md-3">
+                <div class="flow-node">
+                    <i class="fas fa-database mb-2" style="font-size: 2rem;"></i>
+                    <h5>存储层</h5>
+                    <small>SQLite + 可视化</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细流程 -->
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-search"></i></div>
+            <div class="timeline-content">
+                <h4>第一阶段：平台发现与规则配置</h4>
+                <p>系统自动识别全国31个省级政府数据开放平台，为每个平台建立独立的采集规则配置文件。</p>
+                <div class="mb-3">
+                    <span class="tech-badge">URL解析</span>
+                    <span class="tech-badge">反爬检测</span>
+                    <span class="tech-badge">动态渲染</span>
+                </div>
+                <div class="code-block">
+<span class="comment"># 平台规则配置示例（山东省）</span>
+<span class="keyword">platform</span>: <span class="string">"shandong"</span>
+<span class="keyword">url</span>: <span class="string">"https://data.sd.gov.cn"</span>
+<span class="keyword">selectors</span>:
+  dataset_list: <span class="string">"//div[@class='dataset-item']"</span>
+  title: <span class="string">".//h3/text()"</span>
+  download_url: <span class="string">".//a[@class='download']/@href"</span>
+<span class="keyword">pagination</span>: <span class="string">"//a[@class='next']"</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-robot"></i></div>
+            <div class="timeline-content">
+                <h4>第二阶段：自动化数据采集</h4>
+                <p>使用Playwright模拟真实浏览器行为，绕过反爬机制，获取数据集列表、详情和下载链接。</p>
+                <div class="mb-3">
+                    <span class="tech-badge">Playwright</span>
+                    <span class="tech-badge">Headless Chrome</span>
+                    <span class="tech-badge">代理池</span>
+                    <span class="tech-badge">请求限流</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">采集统计</h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="fas fa-check text-success me-2"></i>成功平台：23个</li>
+                                    <li><i class="fas fa-times text-danger me-2"></i>失败平台：8个</li>
+                                    <li><i class="fas fa-database text-primary me-2"></i>数据集总量：30万+</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">技术特点</h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="fas fa-bolt text-warning me-2"></i>并发采集：5个平台</li>
+                                    <li><i class="fas fa-clock text-info me-2"></i>单次耗时：2-4小时</li>
+                                    <li><i class="fas fa-shield-alt text-success me-2"></i>反爬绕过：95%+</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-broom"></i></div>
+            <div class="timeline-content">
+                <h4>第三阶段：数据清洗与标准化</h4>
+                <p>建立统一的数据质量标准，对采集的原始数据进行清洗、去重、补全和标准化处理。</p>
+                <div class="mb-3">
+                    <span class="tech-badge">去重算法</span>
+                    <span class="tech-badge">缺失值补全</span>
+                    <span class="tech-badge">格式统一</span>
+                    <span class="tech-badge">口径标准化</span>
+                </div>
+                <div class="code-block">
+<span class="comment"># 口径一致性系数计算</span>
+<span class="keyword">def</span> <span class="string">calculate_consistency_ratio</span>(platform_data):
+    valid_datasets = <span class="string">filter_valid</span>(platform_data)  <span class="comment"># 过滤有效数据集</span>
+    total_catalogs = <span class="string">len</span>(platform_data)  <span class="comment"># 目录总数</span>
+    cr = valid_datasets / total_catalogs  <span class="comment"># 口径一致性系数</span>
+    <span class="keyword">return</span> cr  <span class="comment"># 山东: 0.016, 浙江: 0.298</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="timeline-content">
+                <h4>第四阶段：4E评估与可视化</h4>
+                <p>基于4E框架（供给保障-平台服务-数据质量-利用效果-公平性）进行综合评估，生成可视化报告。</p>
+                <div class="mb-3">
+                    <span class="tech-badge">TOPSIS</span>
+                    <span class="tech-badge">DEA-BCC</span>
+                    <span class="tech-badge">DEMATEL</span>
+                    <span class="tech-badge">fsQCA</span>
+                    <span class="tech-badge">DID</span>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="p-3 bg-light rounded">
+                            <div class="h4 text-primary mb-1">23</div>
+                            <small class="text-muted">评估平台</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 bg-light rounded">
+                            <div class="h4 text-success mb-1">24</div>
+                            <small class="text-muted">评估指标</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 bg-light rounded">
+                            <div class="h4 text-info mb-1">5</div>
+                            <small class="text-muted">分析方法</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 bg-light rounded">
+                            <div class="h4 text-warning mb-1">36</div>
+                            <small class="text-muted">可视化图表</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据来源说明 -->
+    <div class="card mb-5">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-database me-2"></i>数据来源说明</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>数据类型</th>
+                        <th>来源</th>
+                        <th>采集方式</th>
+                        <th>更新时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>数据集元数据</td>
+                        <td>各省级平台官网</td>
+                        <td>Playwright自动化采集</td>
+                        <td>2026年4月</td>
+                    </tr>
+                    <tr>
+                        <td>平台功能数据</td>
+                        <td>平台页面解析</td>
+                        <td>XPath/CSS选择器</td>
+                        <td>2026年4月</td>
+                    </tr>
+                    <tr>
+                        <td>下载量/浏览量</td>
+                        <td>平台统计接口</td>
+                        <td>API调用+页面解析</td>
+                        <td>2026年4月</td>
+                    </tr>
+                    <tr>
+                        <td>应用案例数据</td>
+                        <td>平台应用展示页</td>
+                        <td>人工核验+自动采集</td>
+                        <td>2026年4月</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p class="mb-0"><i class="fas fa-code me-2"></i>OGD-Collector Pro v2 | 数据来源全流程可视化</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

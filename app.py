@@ -1589,6 +1589,33 @@ def scheduler_worker():
         time.sleep(60)
 
 
+# ===== v2 新版路由（融合采集系统+论文展示）=====
+
+@app.route('/v2/')
+def v2_index():
+    """新版首页"""
+    stats = get_stats()
+    return render_template('v2_index.html', stats=stats)
+
+
+@app.route('/v2/collection-flow')
+def v2_collection_flow():
+    """采集流程可视化"""
+    return render_template('v2_collection_flow.html')
+
+
+@app.route('/v2/thesis')
+def v2_thesis():
+    """博士论文展示"""
+    return render_template('v2_thesis.html')
+
+
+@app.route('/v2/api/stats')
+def v2_api_stats():
+    """API: 获取统计数据"""
+    return jsonify(get_stats())
+
+
 # 启动后台调度器
 scheduler_thread = threading.Thread(target=scheduler_worker, daemon=True)
 scheduler_thread.start()

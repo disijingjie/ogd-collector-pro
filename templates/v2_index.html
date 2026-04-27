@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGD-Collector Pro v2 | 政府数据开放平台采集与评估系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #159895;
+            --accent: #57c5b6;
+            --light: #e8f6f3;
+            --dark: #002b5b;
+            --gradient-1: linear-gradient(135deg, #1a5f7a 0%, #159895 100%);
+            --gradient-2: linear-gradient(135deg, #002b5b 0%, #1a5f7a 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        /* ===== Hero Section ===== */
+        .hero {
+            background: var(--gradient-2);
+            color: white;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+        
+        .hero-content { position: relative; z-index: 1; }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #fff, #a8e6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .hero .badge-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .hero .badge-custom {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Stats Cards ===== */
+        .stats-section {
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .stat-card-v2 {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        
+        .stat-card-v2:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .stat-icon.blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .stat-icon.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .stat-icon.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .stat-icon.purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+        
+        .stat-value-v2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        
+        .stat-label-v2 {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+        
+        /* ===== Feature Cards ===== */
+        .feature-section { padding: 80px 0; }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        
+        .section-title p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.04);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 50px rgba(0,0,0,0.1);
+            color: inherit;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: #718096;
+            line-height: 1.7;
+        }
+        
+        /* ===== Pipeline Preview ===== */
+        .pipeline-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e8f6f3 100%);
+            padding: 80px 0;
+        }
+        
+        .pipeline-step-v2 {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+        
+        .pipeline-step-v2:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h5 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .step-content p {
+            color: #718096;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        /* ===== Thesis Preview ===== */
+        .thesis-section { padding: 80px 0; }
+        
+        .thesis-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        
+        .thesis-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        
+        .thesis-header {
+            background: var(--gradient-2);
+            color: white;
+            padding: 32px;
+        }
+        
+        .thesis-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .thesis-body {
+            padding: 32px;
+        }
+        
+        .thesis-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        .thesis-stat:last-child { border-bottom: none; }
+        
+        /* ===== Footer ===== */
+        .footer-v2 {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-v2 p {
+            opacity: 0.7;
+            margin: 0;
+        }
+        
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+
+<!-- ===== Hero Section ===== -->
+<section class="hero">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1>OGD-Collector Pro v2</h1>
+                <p class="subtitle">政府数据开放平台三层架构采集与博士论文数据一体化展示系统</p>
+                <div class="badge-group">
+                    <span class="badge-custom"><i class="fas fa-database me-2"></i>23个省级平台</span>
+                    <span class="badge-custom"><i class="fas fa-chart-line me-2"></i>4E评估框架</span>
+                    <span class="badge-custom"><i class="fas fa-robot me-2"></i>自动化采集</span>
+                    <span class="badge-custom"><i class="fas fa-graduation-cap me-2"></i>博士论文v25</span>
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="/v2/collection-flow" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-project-diagram me-2"></i>采集流程
+                    </a>
+                    <a href="/v2/thesis" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-book me-2"></i>论文展示
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div style="font-size: 8rem; opacity: 0.2;">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Stats Section ===== -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card-v2 animate-in delay-1">
+                    <div class="stat-icon blue"><i class="fas fa-server"></i></div>
+                    <div class="stat-value-v2">{{ stats.total_platforms }}</div>
+                    <div class="stat-label-v2">平台总数</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-v2 animate-in delay-2">
+                    <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-value-v2">{{ stats.available_count }}</div>
+                    <div class="stat-label-v2">可用平台</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-v2 animate-in delay-3">
+                    <div class="stat-icon orange"><i class="fas fa-tasks"></i></div>
+                    <div class="stat-value-v2">{{ stats.total_tasks }}</div>
+                    <div class="stat-label-v2">采集任务</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-v2 animate-in delay-4">
+                    <div class="stat-icon purple"><i class="fas fa-star"></i></div>
+                    <div class="stat-value-v2">{{ stats.avg_score }}</div>
+                    <div class="stat-label-v2">平均4E得分</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Feature Cards ===== -->
+<section class="feature-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>系统功能模块</h2>
+            <p>从数据采集到论文展示的全流程覆盖</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="/v2/collection-flow" class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h4>采集流程可视化</h4>
+                    <p>展示OGD-Collector Pro的完整数据采集流程，从平台发现、规则解析到数据清洗的全链路可视化</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/v2/thesis" class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h4>博士论文展示</h4>
+                    <p>基于4E框架的政府数据开放平台绩效评估研究，v25版本的完整可视化展示</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/dashboard" class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h4>数据大屏</h4>
+                    <p>实时统计、平台排名、区域对比、趋势分析等多维度数据可视化</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Pipeline Preview ===== -->
+<section class="pipeline-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>数据采集流程</h2>
+            <p>三层架构采集系统的核心流程</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="pipeline-step-v2">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h5>平台发现与规则解析</h5>
+                        <p>自动识别31个省级平台，为每个平台定制采集规则（XPath/CSS选择器）</p>
+                    </div>
+                </div>
+                <div class="pipeline-step-v2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h5>自动化数据采集</h5>
+                        <p>Playwright模拟浏览器行为，绕过反爬机制，获取数据集列表、详情和下载链接</p>
+                    </div>
+                </div>
+                <div class="pipeline-step-v2">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h5>数据清洗与标准化</h5>
+                        <p>统一数据格式、去重、补全缺失值，建立口径一致性系数体系</p>
+                    </div>
+                </div>
+                <div class="pipeline-step-v2">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h5>质量评估与存储</h5>
+                        <p>4E框架评估、数据库存储、生成可视化报告</p>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/v2/collection-flow" class="btn btn-primary btn-lg px-5">
+                        <i class="fas fa-arrow-right me-2"></i>查看完整流程
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Thesis Preview ===== -->
+<section class="thesis-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>博士论文 v25</h2>
+            <p>政府数据开放平台数据利用绩效评估与优化路径研究</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="thesis-card">
+                    <div class="thesis-header">
+                        <h3><i class="fas fa-graduation-cap me-2"></i>研究核心发现</h3>
+                        <p class="mb-0 opacity-75">基于4E框架的多方法融合实证分析</p>
+                    </div>
+                    <div class="thesis-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thesis-stat">
+                                    <span class="text-muted">TOPSIS综合绩效</span>
+                                    <span class="fw-bold text-primary">山东 0.955 领跑</span>
+                                </div>
+                                <div class="thesis-stat">
+                                    <span class="text-muted">DEA有效平台</span>
+                                    <span class="fw-bold text-success">仅1个（山东）</span>
+                                </div>
+                                <div class="thesis-stat">
+                                    <span class="text-muted">fsQCA核心路径</span>
+                                    <span class="fw-bold text-info">2条组态路径</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thesis-stat">
+                                    <span class="text-muted">政策效应（DID）</span>
+                                    <span class="fw-bold text-warning">+0.043 (p&lt;0.01)</span>
+                                </div>
+                                <div class="thesis-stat">
+                                    <span class="text-muted">数据口径幻觉</span>
+                                    <span class="fw-bold text-danger">中位数仅0.122</span>
+                                </div>
+                                <div class="thesis-stat">
+                                    <span class="text-muted">理论贡献</span>
+                                    <span class="fw-bold text-primary">制度同形拓展</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/v2/thesis" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-book-open me-2"></i>查看论文展示
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer-v2">
+    <div class="container">
+        <p><i class="fas fa-code me-2"></i>OGD-Collector Pro v2 | 武汉大学信息管理学院 | 文明</p>
+        <p class="small mt-2">政府数据开放平台三层架构采集与评估系统</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
