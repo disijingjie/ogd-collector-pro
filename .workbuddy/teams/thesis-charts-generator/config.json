@@ -17,6 +17,21 @@
       "memberId": "charts-ch1-ch2@thesis-charts-generator",
       "name": "charts-ch1-ch2",
       "role": "生成第一章+第二章图表"
+    },
+    {
+      "memberId": "charts-ch3-ch4@thesis-charts-generator",
+      "name": "charts-ch3-ch4",
+      "role": "生成第三章+第四章图表"
+    },
+    {
+      "memberId": "charts-ch5-ch6@thesis-charts-generator",
+      "name": "charts-ch5-ch6",
+      "role": "生成第五章+第六章图表"
+    },
+    {
+      "memberId": "charts-ch7-ch8@thesis-charts-generator",
+      "name": "charts-ch7-ch8",
+      "role": "生成第七章+第八章图表"
     }
   ],
   "isAutoTeam": false
