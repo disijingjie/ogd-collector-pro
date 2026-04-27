@@ -3,6 +3,15 @@
   "sessions": {
     "ad7b121118034aa3992016ca35fab7e8": [
       {
+        "expertId": "DocumentGenerationExpert",
+        "name": "文档达",
+        "profession": "文档生成专家",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert_zh.md",
+        "usedAt": 1777285150804,
+        "industryId": "all"
+      },
+      {
         "expertId": "BookCoCreator",
         "name": "著书书",
         "profession": "图书联合创作者",
@@ -22,5 +31,5 @@
       }
     ]
   },
-  "lastUpdated": 1777273315722
+  "lastUpdated": 1777285457246
 }
