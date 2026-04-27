@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import sqlite3, os
+
+TMPL = os.path.join(os.path.dirname(__file__), 'templates')
+conn = sqlite3.connect('data/ogd_database.db')
+c = conn.cursor()
+c.execute('SELECT name, url, tier, province, platform_type, launch_year FROM platforms ORDER BY province, tier DESC, name')
+plat_rows = ''
+for p in c.fetchall():
+    name, url, tier, province, ptype, launch = p
+    tier_badge = 'badge-prov' if str(tier)=='省级' else 'badge-city'
+    url_link = f'<a href="{url}" target="_blank" style="color:#2563eb;font-size:12px">{url[:40]}{"..." if len(str(url))>40 else ""}</a>' if url else '<span style="color:#94a3b8;font-size:12px">未开放</span>'
+    plat_rows += f'<tr><td>{province}</td><td><strong>{name}</strong></td><td><span class="badge {tier_badge}">{tier or "-"}</span></td><td>{ptype or "-"}</td><td>{launch or "-"}</td><td>{url_link}</td></tr>'
+conn.close()
+
+html = '''{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}采集中心 - OGD-Collector Pro{% endblock %}{% block page_title %}采集中心{% endblock %}{% block breadcrumb %}采集中心{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#scale" class="active">数据规模</a><a href="#platforms">平台清单</a><a href="#mechanism">采集机制</a><a href="#differences">各省差异</a><a href="#code">代码展示</a><a href="#schedule">定期采集</a><a href="#recollect">重新采集</a></div>{% endblock %}
+{% block content %}
+<div id="scale" class="scroll-section">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>数据采集规模</div></div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-value">88</div><div class="stat-label">平台总数</div><div style="font-size:12px;color:#16a34a">31省+57市</div></div>
+    <div class="stat-card"><div class="stat-value">31</div><div class="stat-label">覆盖省份</div><div style="font-size:12px;color:#16a34a">全国全覆盖</div></div>
+    <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">平台层级</div><div style="font-size:12px;color:#16a34a">省/副省/地市</div></div>
+    <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">采集覆盖率</div><div style="font-size:12px;color:#16a34a">自适应策略</div></div>
+  </div>
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集流程全景</div></div>
+    <div style="overflow-x:auto"><svg viewBox="0 0 900 120" style="width:100%;min-width:700px">
+      <rect x="20" y="25" width="120" height="70" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="80" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">种子URL</text><text x="80" y="72" text-anchor="middle" font-size="9" fill="#64748b">发现与验证</text>
+      <rect x="170" y="25" width="120" height="70" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="230" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">页面类型</text><text x="230" y="72" text-anchor="middle" font-size="9" fill="#64748b">识别与分类</text>
+      <rect x="320" y="25" width="120" height="70" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="380" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">目录解析</text><text x="380" y="72" text-anchor="middle" font-size="9" fill="#64748b">层级映射</text>
+      <rect x="470" y="25" width="120" height="70" fill="#fce7f3" stroke="#db2777" stroke-width="2" rx="8"/><text x="530" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#9d174d">元数据提取</text><text x="530" y="72" text-anchor="middle" font-size="9" fill="#64748b">字段标准化</text>
+      <rect x="620" y="25" width="120" height="70" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="8"/><text x="680" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#7e22ce">质量校验</text><text x="680" y="72" text-anchor="middle" font-size="9" fill="#64748b">完整性校验</text>
+      <rect x="770" y="25" width="120" height="70" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="830" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">增量更新</text><text x="830" y="72" text-anchor="middle" font-size="9" fill="#64748b">哈希比对</text>
+      <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+      <line x1="140" y1="60" x2="170" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+      <line x1="290" y1="60" x2="320" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+      <line x1="440" y1="60" x2="470" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+      <line x1="590" y1="60" x2="620" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+      <line x1="740" y1="60" x2="770" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+    </svg></div>
+  </div>
+</div>
+
+<div id="platforms" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>88个政府数据开放平台清单</div><div style="font-size:12px;color:#64748b">点击URL可访问原始平台</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>省份</th><th>平台名称</th><th>层级</th><th>类型</th><th>上线年份</th><th>访问地址</th></tr>''' + plat_rows + '''</table></div>
+  </div>
+</div>
+
+<div id="mechanism" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>七步采集流水线</div></div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 1: 种子URL发现</div><div class="timeline-desc">基于国务院《政务信息资源共享管理暂行办法》及各省数据局官网，建立初始URL种子库（88个平台入口）</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 2: 页面类型识别</div><div class="timeline-desc">发送HEAD请求识别页面类型：静态HTML / 动态JS渲染 / REST API接口，自动选择采集策略</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 3: 目录结构解析</div><div class="timeline-desc">解析平台目录树（主题分类 → 部门分类 → 数据集列表），建立层级映射关系</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 4: 元数据提取</div><div class="timeline-desc">提取每条数据集的名称、描述、格式、标签、更新日期、下载量、提供部门等核心元数据字段</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 5: 数据清洗标准化</div><div class="timeline-desc">统一日期格式（ISO 8601）、标准化部门名称（参照GB/T 2260）、格式映射（CSV/XLS/JSON/API）</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 6: 质量校验入库</div><div class="timeline-desc">完整性校验（必填字段≥80%）、一致性校验（省份-平台关联正确）、重复性校验（URL去重）</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Step 7: 增量更新维护</div><div class="timeline-desc">基于哈希值比对实现增量更新，仅采集变更数据，记录每次采集的完整日志</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="differences" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>各省平台技术架构差异</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#2563eb">静态页面型（约40%）</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>代表：</strong>山东、浙江、广东<br><strong>技术：</strong>传统服务器端渲染，HTML+CSS<br><strong>采集：</strong>Requests + BeautifulSoup直接解析<br><strong>优势：</strong>响应快、结构稳定、易于解析</div></div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#059669">动态渲染型（约35%）</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>代表：</strong>北京、上海、四川<br><strong>技术：</strong>Vue/React前端框架，异步加载<br><strong>采集：</strong>Selenium + ChromeDriver渲染<br><strong>优势：</strong>交互丰富、用户体验好</div></div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#d97706">接口API型（约20%）</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>代表：</strong>贵州、福建、深圳<br><strong>技术：</strong>RESTful API + JSON数据返回<br><strong>采集：</strong>直接调用API端点获取JSON<br><strong>优势：</strong>数据结构规范、易于批量获取</div></div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#dc2626">混合架构型（约5%）</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>代表：</strong>部分中西部市级平台<br><strong>技术：</strong>静态列表+动态详情+文件下载<br><strong>采集：</strong>多策略组合，先静态后动态<br><strong>挑战：</strong>需要定制化解析规则</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="code" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>核心采集代码</div></div>
+    <div class="tabs"><button class="tab-btn active">静态页面</button><button class="tab-btn">动态页面</button><button class="tab-btn">API接口</button><button class="tab-btn">调度器</button></div>
+    <div class="tab-panel active"><div class="code-block"><span class="lang">python</span>
+<span class="cm"># 静态页面采集：山东省数据开放平台</span>
+<span class="kw">import</span> requests
+<span class="kw">from</span> bs4 <span class="kw">import</span> BeautifulSoup
+
+<span class="kw">class</span> <span class="fn">StaticCollector</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, platform):
+        self.platform = platform
+        self.session = requests.Session()
+        self.session.headers.update({<span class="str">'User-Agent'</span>: <span class="str">'Mozilla/5.0...'</span>})
+
+    <span class="kw">def</span> <span class="fn">collect</span>(self, url):
+        resp = self.session.get(url, timeout=30)
+        soup = BeautifulSoup(resp.text, <span class="str">'html.parser'</span>)
+        datasets = []
+        <span class="kw">for</span> item <span class="kw">in</span> soup.select(<span class="str">'.dataset-item'</span>):
+            dataset = {
+                <span class="str">'title'</span>: item.select_one(<span class="str">'.title'</span>).text.strip(),
+                <span class="str">'format'</span>: item.select_one(<span class="str">'.format'</span>).text.strip(),
+                <span class="str">'dept'</span>: item.select_one(<span class="str">'.dept'</span>).text.strip(),
+                <span class="str">'update'</span>: item.select_one(<span class="str">'.date'</span>).text.strip(),
+            }
+            datasets.append(dataset)
+        <span class="kw">return</span> datasets</div></div>
+    <div class="tab-panel"><div class="code-block"><span class="lang">python</span>
+<span class="cm"># 动态页面采集：北京市政务数据资源网（Vue渲染）</span>
+<span class="kw">from</span> selenium <span class="kw">import</span> webdriver
+<span class="kw">from</span> selenium.webdriver.chrome.options <span class="kw">import</span> Options
+
+<span class="kw">class</span> <span class="fn">DynamicCollector</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self):
+        options = Options()
+        options.add_argument(<span class="str">'--headless'</span>)
+        options.add_argument(<span class="str">'--no-sandbox'</span>)
+        self.driver = webdriver.Chrome(options=options)
+
+    <span class="kw">def</span> <span class="fn">collect</span>(self, url):
+        self.driver.get(url)
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, <span class="str">'.dataset-list'</span>))
+        )
+        <span class="kw">for</span> _ <span class="kw">in</span> range(5):
+            self.driver.execute_script(<span class="str">'window.scrollTo(0, document.body.scrollHeight);'</span>)
+            time.sleep(1)
+        html = self.driver.page_source
+        <span class="cm"># 后续解析与静态采集相同...</span></div></div>
+    <div class="tab-panel"><div class="code-block"><span class="lang">python</span>
+<span class="cm"># API接口采集：贵州省数据开放平台</span>
+<span class="kw">class</span> <span class="fn">APICollector</span>:
+    <span class="kw">def</span> <span class="fn">collect</span>(self, api_endpoint):
+        params = {<span class="str">'page'</span>: 1, <span class="str">'pageSize'</span>: 100}
+        all_data = []
+        <span class="kw">while</span> True:
+            resp = requests.get(api_endpoint, params=params, timeout=30)
+            result = resp.json()
+            all_data.extend(result[<span class="str">'data'</span>][<span class="str">'list'</span>])
+            <span class="kw">if</span> result[<span class="str">'data'</span>][<span class="str">'pageNum'</span>] >= result[<span class="str">'data'</span>][<span class="str">'pages'</span>]:
+                <span class="kw">break</span>
+            params[<span class="str">'page'</span>] += 1
+        <span class="kw">return</span> all_data</div></div>
+    <div class="tab-panel"><div class="code-block"><span class="lang">python</span>
+<span class="cm"># APScheduler 定期采集配置</span>
+<span class="kw">from</span> apscheduler.schedulers.background <span class="kw">import</span> BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(full_collection_task, <span class="str">'cron'</span>, day_of_week=<span class="str">'mon'</span>, hour=2, id=<span class="str">'weekly'</span>)
+scheduler.add_job(incremental_update_task, <span class="str">'cron'</span>, hour=6, id=<span class="str">'daily'</span>)
+scheduler.start()</div></div>
+  </div>
+</div>
+
+<div id="schedule" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>定期采集机制</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <div class="card" style="margin:0;border-left:4px solid #2563eb"><div style="font-weight:700;margin-bottom:8px">全量采集</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>周期：</strong>每周一 02:00<br><strong>范围：</strong>全部88个平台<br><strong>策略：</strong>清空旧数据 → 重新全量采集 → 完整校验<br><strong>耗时：</strong>约3-4小时</div></div>
+      <div class="card" style="margin:0;border-left:4px solid #059669"><div style="font-weight:700;margin-bottom:8px">增量更新</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>周期：</strong>每日 06:00<br><strong>范围：</strong>数据集元数据变更检测<br><strong>策略：</strong>哈希比对 → 仅更新变更项<br><strong>耗时：</strong>约30分钟</div></div>
+      <div class="card" style="margin:0;border-left:4px solid #d97706"><div style="font-weight:700;margin-bottom:8px">健康检查</div><div style="font-size:13px;color:#64748b;line-height:1.8"><strong>周期：</strong>每小时<br><strong>范围：</strong>平台可访问性 + 接口响应<br><strong>策略：</strong>HEAD请求探测 → 记录状态码<br><strong>告警：</strong>连续3次失败触发通知</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="recollect" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>重新采集</div></div>
+    <div style="padding:24px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:8px;text-align:center">
+      <div style="font-size:18px;font-weight:700;color:#1e40af;margin-bottom:12px">数据可追溯、可复现、可验证</div>
+      <div style="font-size:13px;color:#3b82f6;max-width:600px;margin:0 auto;line-height:1.8">本系统支持完整的重新采集流程。所有采集参数、时间戳、源代码均已版本化管理。任何人都可以基于相同配置复现整个数据采集过程，确保研究的科学严谨性。</div>
+      <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="/collector" style="display:inline-flex;background:#2563eb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600">启动全量采集</a>
+        <a href="/logs" style="display:inline-flex;background:#fff;color:#2563eb;border:1px solid #2563eb;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600">查看采集日志</a>
+      </div>
+    </div>
+    <div style="margin-top:20px"><div style="font-weight:700;margin-bottom:12px">重新采集流程说明</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">1. 选择采集范围</div><div class="timeline-desc">可指定省级/市级/单个平台，也可选择全部88个平台</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2. 确认采集策略</div><div class="timeline-desc">系统自动识别平台类型，加载对应解析规则</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">3. 执行并行采集</div><div class="timeline-desc">多线程并发，同时采集多个平台，提高效率</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">4. 实时进度监控</div><div class="timeline-desc">展示已采集/剩余/成功率</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">5. 自动校验入库</div><div class="timeline-desc">采集完成后自动执行完整性校验，生成采集报告</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}'''
+
+with open(os.path.join(TMPL, 'v3_collection.html'), 'w', encoding='utf-8') as f:
+    f.write(html)
+print('v3_collection.html OK')

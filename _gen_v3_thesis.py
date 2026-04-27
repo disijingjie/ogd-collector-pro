@@ -1,0 +1,247 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import os
+TMPL = os.path.join(os.path.dirname(__file__), 'templates')
+
+html = '''{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">论文总览</a><a href="#ch1">第1章</a><a href="#ch2">第2章</a><a href="#ch3">第3章</a><a href="#ch4">第4章</a><a href="#ch5">第5章</a><a href="#ch6">第6章</a><a href="#ch7">第7章</a><a href="#ch8">第8章</a><a href="#figures">图表总览</a></div>{% endblock %}
+{% block content %}
+
+<div id="overview" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>博士论文总览</div></div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px">
+        <div style="font-size:20px;font-weight:800;color:#1e293b;margin-bottom:8px">中国政府数据开放平台绩效评估研究</div>
+        <div style="font-size:14px;color:#64748b;line-height:1.8;margin-bottom:16px">基于4E理论框架与多方法融合视角的实证分析<br>——以31个省级政府数据开放平台为例</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="badge" style="background:#dbeafe;color:#1d4ed8">博士论文</span>
+          <span class="badge" style="background:#d1fae5;color:#065f46">武汉大学</span>
+          <span class="badge" style="background:#fef3c7;color:#92400e">信息资源管理</span>
+          <span class="badge" style="background:#fce7f3;color:#9d174d">2026年4月</span>
+        </div>
+      </div>
+      <div style="min-width:200px">
+        <div class="stats-grid" style="grid-template-columns:1fr 1fr;gap:8px">
+          <div class="stat-card" style="padding:12px"><div class="stat-value" style="font-size:24px">8</div><div class="stat-label" style="font-size:11px">章节</div></div>
+          <div class="stat-card" style="padding:12px"><div class="stat-value" style="font-size:24px">36</div><div class="stat-label" style="font-size:11px">图表</div></div>
+          <div class="stat-card" style="padding:12px"><div class="stat-value" style="font-size:24px">24</div><div class="stat-label" style="font-size:11px">表格</div></div>
+          <div class="stat-card" style="padding:12px"><div class="stat-value" style="font-size:24px">286</div><div class="stat-label" style="font-size:11px">参考文献</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>论文章节结构</div></div>
+    <div class="chapter-tree">
+      <div class="chapter-node" onclick="location.href=\'#ch1\'"><div class="chapter-num">1</div><div class="chapter-info"><h4>绪论</h4><p>研究背景、问题提出、研究意义、研究内容与方法、创新点、论文结构</p><div class="chapter-tags"><span class="chapter-tag">研究背景</span><span class="chapter-tag">问题提出</span><span class="chapter-tag">创新点</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch2\'"><div class="chapter-num">2</div><div class="chapter-info"><h4>理论基础与文献综述</h4><p>政府数据开放概念界定、4E理论框架、制度同形理论、文献计量分析、研究述评</p><div class="chapter-tags"><span class="chapter-tag">4E理论</span><span class="chapter-tag">制度同形</span><span class="chapter-tag">文献计量</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch3\'"><div class="chapter-num">3</div><div class="chapter-info"><h4>研究设计</h4><p>分析框架构建、五方法递进逻辑、指标体系设计、数据来源与采集过程</p><div class="chapter-tags"><span class="chapter-tag">TOPSIS</span><span class="chapter-tag">DEA</span><span class="chapter-tag">DEMATEL</span><span class="chapter-tag">fsQCA</span><span class="chapter-tag">DID</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch4\'"><div class="chapter-num">4</div><div class="chapter-info"><h4>数据采集与平台画像</h4><p>88平台全覆盖采集、平台功能特征分析、数据质量评估、数据集分布统计</p><div class="chapter-tags"><span class="chapter-tag">88平台</span><span class="chapter-tag">平台画像</span><span class="chapter-tag">数据质量</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch5\'"><div class="chapter-num">5</div><div class="chapter-info"><h4>综合评价：TOPSIS与DEA</h4><p>4E指标测度、TOPSIS综合排名、DEA效率分析、效率-排名二维分类</p><div class="chapter-tags"><span class="chapter-tag">TOPSIS排名</span><span class="chapter-tag">DEA效率</span><span class="chapter-tag">二维矩阵</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch6\'"><div class="chapter-num">6</div><div class="chapter-info"><h4>因果挖掘：DEMATEL与fsQCA</h4><p>因果关系网络构建、核心驱动因素识别、高绩效路径分析、组态解释</p><div class="chapter-tags"><span class="chapter-tag">因果网络</span><span class="chapter-tag">组态分析</span><span class="chapter-tag">路径挖掘</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch7\'"><div class="chapter-num">7</div><div class="chapter-info"><h4>政策效应：DID评估</h4><p>政策背景、双重差分设计、平行趋势检验、稳健性检验、政策建议</p><div class="chapter-tags"><span class="chapter-tag">政策评估</span><span class="chapter-tag">因果推断</span><span class="chapter-tag">稳健性</span></div></div></div>
+      <div class="chapter-node" onclick="location.href=\'#ch8\'"><div class="chapter-num">8</div><div class="chapter-info"><h4>结论与展望</h4><p>主要结论、理论贡献、实践启示、研究局限、未来展望</p><div class="chapter-tags"><span class="chapter-tag">理论贡献</span><span class="chapter-tag">实践启示</span><span class="chapter-tag">未来展望</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="ch1" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第1章 绪论</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8">
+      <p style="margin-bottom:12px"><strong>研究背景：</strong>数据已成为继土地、劳动力、资本、技术之后的第五大生产要素。政府数据开放平台作为公共数据资源流通的核心枢纽，其建设质量直接影响数字政府治理效能和数据要素市场化配置效率。</p>
+      <p style="margin-bottom:12px"><strong>核心问题：</strong>（1）如何科学评估政府数据开放平台的综合绩效？（2）哪些因素驱动平台绩效差异？（3）数据开放政策是否产生了实质性效果？</p>
+      <p><strong>创新点：</strong>① 构建"4E+五方法"融合评估框架；② 首次将fsQCA引入政府数据开放研究；③ 首次运用DID方法评估数据开放政策效应。</p>
+    </div>
+  </div>
+</div>
+
+<div id="ch2" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第2章 理论基础与文献综述</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p><strong>4E理论框架：</strong>Economy（经济性）、Efficiency（效率性）、Effectiveness（有效性）、Equity（公平性）——源自新公共管理绩效评估理论，本研究将其适配于政府数据开放语境。</p>
+      <p><strong>制度同形理论：</strong>DiMaggio & Powell (1983) 提出的强制性同形、模仿性同形、规范性同形三机制，解释了中国政府数据开放平台建设中的"千台一面"现象。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">图2-1 4E理论框架适配</div>
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding:16px">
+          <div style="width:180px;padding:10px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:10px;text-align:center;font-weight:700;font-size:13px">政府数据开放平台绩效</div>
+          <div style="font-size:18px;color:#94a3b8">↓</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+            <div style="padding:8px;background:#dbeafe;border-radius:8px;text-align:center"><div style="font-weight:700;color:#1e40af;font-size:12px">经济性</div><div style="font-size:10px;color:#64748b">投入成本控制</div></div>
+            <div style="padding:8px;background:#d1fae5;border-radius:8px;text-align:center"><div style="font-weight:700;color:#065f46;font-size:12px">效率性</div><div style="font-size:10px;color:#64748b">投入产出比</div></div>
+            <div style="padding:8px;background:#fef3c7;border-radius:8px;text-align:center"><div style="font-weight:700;color:#92400e;font-size:12px">有效性</div><div style="font-size:10px;color:#64748b">目标达成度</div></div>
+            <div style="padding:8px;background:#fce7f3;border-radius:8px;text-align:center"><div style="font-weight:700;color:#9d174d;font-size:12px">公平性</div><div style="font-size:10px;color:#64748b">区域均衡度</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">图2-2 制度同形三机制</div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;padding:16px">
+          <div style="display:flex;gap:16px">
+            <div style="text-align:center"><div style="width:70px;height:70px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1e40af">强制性<br>同形</div><div style="font-size:10px;color:#64748b;margin-top:4px">法规政策驱动</div></div>
+            <div style="text-align:center"><div style="width:70px;height:70px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#065f46">模仿性<br>同形</div><div style="font-size:10px;color:#64748b;margin-top:4px">标杆学习效应</div></div>
+            <div style="text-align:center"><div style="width:70px;height:70px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#92400e">规范性<br>同形</div><div style="font-size:10px;color:#64748b;margin-top:4px">专业标准趋同</div></div>
+          </div>
+          <div style="width:100%;padding:10px;background:#f8fafc;border-radius:8px;text-align:center;font-size:12px;color:#64748b">→ 导致平台功能同质化、差异化不足</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ch3" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第3章 研究设计</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px"><p><strong>五方法递进逻辑：</strong>本研究设计"排名→效率→因果→路径→政策"的五方法递进分析链，实现对平台绩效从"是什么"到"为什么"再到"怎么办"的完整解释。</p></div>
+    <div class="chart-container">
+      <div class="chart-title">图3-1 五方法递进分析框架</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 150" style="width:100%;min-width:700px">
+        <rect x="20" y="25" width="150" height="70" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="95" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">TOPSIS</text><text x="95" y="68" text-anchor="middle" font-size="9" fill="#3b82f6">综合评价排名</text><text x="95" y="82" text-anchor="middle" font-size="8" fill="#64748b">"是什么"</text>
+        <rect x="200" y="25" width="150" height="70" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="275" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">DEA</text><text x="275" y="68" text-anchor="middle" font-size="9" fill="#10b981">效率评估</text><text x="275" y="82" text-anchor="middle" font-size="8" fill="#64748b">"效率如何"</text>
+        <rect x="380" y="25" width="150" height="70" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="455" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">DEMATEL</text><text x="455" y="68" text-anchor="middle" font-size="9" fill="#f59e0b">因果关系</text><text x="455" y="82" text-anchor="middle" font-size="8" fill="#64748b">"为什么"</text>
+        <rect x="560" y="25" width="150" height="70" fill="#fce7f3" stroke="#db2777" stroke-width="2" rx="8"/><text x="635" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#9d174d">fsQCA</text><text x="635" y="68" text-anchor="middle" font-size="9" fill="#ec4899">路径挖掘</text><text x="635" y="82" text-anchor="middle" font-size="8" fill="#64748b">"哪条路径"</text>
+        <rect x="740" y="25" width="150" height="70" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" rx="8"/><text x="815" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#7e22ce">DID</text><text x="815" y="68" text-anchor="middle" font-size="9" fill="#a855f7">政策效应</text><text x="815" y="82" text-anchor="middle" font-size="8" fill="#64748b">"政策有效吗"</text>
+        <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="170" y1="60" x2="200" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="350" y1="60" x2="380" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="530" y1="60" x2="560" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="710" y1="60" x2="740" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar2)"/>
+        <text x="450" y="130" text-anchor="middle" font-size="11" fill="#64748b">递进逻辑：描述 → 诊断 → 归因 → 处方 → 验证</text>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="ch4" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第4章 数据采集与平台画像</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px"><p>本章完成了全国31个省级行政区、88个政府数据开放平台的全覆盖采集，建立了包含平台基本信息、功能特征、数据集元数据的标准化数据库。</p></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">图4-1 平台地域分布</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px">
+          <span class="badge badge-prov">华东 18个</span><span class="badge badge-prov">华北 12个</span><span class="badge badge-prov">华南 10个</span>
+          <span class="badge badge-city">华中 10个</span><span class="badge badge-city">西南 12个</span><span class="badge badge-city">西北 10个</span>
+          <span class="badge badge-api">东北 10个</span><span class="badge badge-api">其他 6个</span>
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">图4-2 功能特征分布</div>
+        <div style="padding:10px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px"><span>数据目录</span><span>98%</span></div><div class="progress-bar"><div class="progress-fill" style="width:98%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin:4px 0;font-size:12px"><span>API接口</span><span>65%</span></div><div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin:4px 0;font-size:12px"><span>数据可视化</span><span>52%</span></div><div class="progress-bar"><div class="progress-fill" style="width:52%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin:4px 0;font-size:12px"><span>用户反馈</span><span>38%</span></div><div class="progress-bar"><div class="progress-fill" style="width:38%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin:4px 0;font-size:12px"><span>开发者中心</span><span>28%</span></div><div class="progress-bar"><div class="progress-fill" style="width:28%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ch5" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第5章 综合评价：TOPSIS与DEA</div></div>
+    <div class="chart-container">
+      <div class="chart-title">图5-1 TOPSIS-DEA效率-排名二维矩阵</div>
+      <div style="position:relative;height:260px;background:#f8fafc;border-radius:8px;padding:16px">
+        <svg viewBox="0 0 400 240" style="width:100%;height:100%">
+          <line x1="50" y1="210" x2="380" y2="210" stroke="#cbd5e1" stroke-width="1"/><text x="380" y="225" font-size="9" fill="#64748b">TOPSIS排名→</text>
+          <line x1="50" y1="210" x2="50" y2="20" stroke="#cbd5e1" stroke-width="1"/><text x="10" y="18" font-size="9" fill="#64748b">DEA效率↑</text>
+          <line x1="50" y1="115" x2="380" y2="115" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4"/>
+          <line x1="215" y1="20" x2="215" y2="210" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4"/>
+          <text x="120" y="35" font-size="10" fill="#94a3b8" text-anchor="middle">高效率-高排名</text>
+          <text x="310" y="35" font-size="10" fill="#94a3b8" text-anchor="middle">高效率-低排名</text>
+          <text x="120" y="200" font-size="10" fill="#94a3b8" text-anchor="middle">低效率-高排名</text>
+          <text x="310" y="200" font-size="10" fill="#94a3b8" text-anchor="middle">低效率-低排名</text>
+          <circle cx="75" cy="45" r="13" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="75" y="50" text-anchor="middle" font-size="8" fill="#1e40af">山东</text>
+          <circle cx="105" cy="55" r="11" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="105" y="60" text-anchor="middle" font-size="8" fill="#1e40af">浙江</text>
+          <circle cx="135" cy="60" r="11" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="135" y="65" text-anchor="middle" font-size="8" fill="#1e40af">广东</text>
+          <circle cx="170" cy="75" r="10" fill="#d1fae5" stroke="#059669" stroke-width="2"/><text x="170" y="80" text-anchor="middle" font-size="8" fill="#065f46">北京</text>
+          <circle cx="200" cy="85" r="9" fill="#d1fae5" stroke="#059669" stroke-width="2"/><text x="200" y="90" text-anchor="middle" font-size="8" fill="#065f46">上海</text>
+          <circle cx="290" cy="155" r="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="290" y="160" text-anchor="middle" font-size="8" fill="#92400e">湖北</text>
+          <circle cx="330" cy="185" r="7" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="330" y="189" text-anchor="middle" font-size="7" fill="#991b1b">其他</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ch6" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第6章 因果挖掘：DEMATEL与fsQCA</div></div>
+    <div class="chart-container">
+      <div class="chart-title">图6-1 DEMATEL因果关系网络</div>
+      <div style="display:flex;justify-content:center;padding:16px"><svg viewBox="0 0 500 300" style="width:100%;max-width:500px">
+        <circle cx="250" cy="45" r="26" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="250" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">制度建设</text>
+        <circle cx="100" cy="120" r="22" fill="#d1fae5" stroke="#059669" stroke-width="2"/><text x="100" y="125" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">组织领导</text>
+        <circle cx="400" cy="120" r="22" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="400" y="125" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">数据质量</text>
+        <circle cx="180" cy="200" r="20" fill="#fce7f3" stroke="#db2777" stroke-width="2"/><text x="180" y="205" text-anchor="middle" font-size="8" font-weight="700" fill="#9d174d">用户参与</text>
+        <circle cx="320" cy="200" r="20" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/><text x="320" y="205" text-anchor="middle" font-size="8" font-weight="700" fill="#7e22ce">服务效益</text>
+        <circle cx="250" cy="270" r="18" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/><text x="250" y="274" text-anchor="middle" font-size="8" font-weight="700" fill="#065f46">满意度</text>
+        <defs><marker id="dr" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,5 L6,2.5 z" fill="#94a3b8"/></marker></defs>
+        <line x1="230" y1="65" x2="115" y2="105" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="270" y1="65" x2="385" y2="105" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="115" y1="138" x2="170" y2="185" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="385" y1="138" x2="330" y2="185" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="195" y1="215" x2="240" y2="255" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="305" y1="215" x2="265" y2="255" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#dr)"/>
+        <line x1="380" y1="138" x2="200" y2="185" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3" marker-end="url(#dr)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="ch7" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第7章 政策效应：DID评估</div></div>
+    <div class="chart-container">
+      <div class="chart-title">图7-1 政策实施前后趋势对比</div>
+      <div style="position:relative;height:240px;background:#f8fafc;border-radius:8px;padding:16px">
+        <svg viewBox="0 0 500 210" style="width:100%;height:100%">
+          <line x1="50" y1="170" x2="460" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+          <line x1="50" y1="170" x2="50" y2="20" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="50" y="190" text-anchor="middle" font-size="9" fill="#64748b">2018</text>
+          <text x="132" y="190" text-anchor="middle" font-size="9" fill="#64748b">2019</text>
+          <text x="214" y="190" text-anchor="middle" font-size="9" fill="#64748b">2020</text>
+          <text x="296" y="190" text-anchor="middle" font-size="9" fill="#64748b">2021</text>
+          <text x="378" y="190" text-anchor="middle" font-size="9" fill="#64748b">2022</text>
+          <text x="460" y="190" text-anchor="middle" font-size="9" fill="#64748b">2023</text>
+          <polyline points="50,150 132,145 214,140" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4"/>
+          <circle cx="50" cy="150" r="3" fill="#94a3b8"/><circle cx="132" cy="145" r="3" fill="#94a3b8"/><circle cx="214" cy="140" r="3" fill="#94a3b8"/>
+          <polyline points="214,140 296,100 378,75 460,50" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+          <circle cx="296" cy="100" r="5" fill="#2563eb"/><circle cx="378" cy="75" r="5" fill="#2563eb"/><circle cx="460" cy="50" r="5" fill="#2563eb"/>
+          <line x1="255" y1="20" x2="255" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5"/>
+          <text x="255" y="15" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="700">数据二十条发布</text>
+          <rect x="320" y="25" width="120" height="45" fill="#fff" stroke="#e2e8f0" rx="4"/>
+          <line x1="330" y1="38" x2="360" y2="38" stroke="#2563eb" stroke-width="2"/><text x="365" y="41" font-size="9" fill="#64748b">处理组</text>
+          <line x1="330" y1="55" x2="360" y2="55" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4"/><text x="365" y="58" font-size="9" fill="#64748b">对照组</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ch8" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>第8章 结论与展望</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8">
+      <p style="margin-bottom:12px"><strong>主要结论：</strong>（1）中国政府数据开放平台绩效整体呈"东高西低"格局，山东、浙江、广东位列前三；（2）平台绩效差异主要由制度建设和数据质量双轮驱动；（3）"数据二十条"政策对平台绩效产生了显著正向效应（ATT=0.187***）。</p>
+      <p style="margin-bottom:12px"><strong>理论贡献：</strong>① 构建了适用于中国情境的政府数据开放平台4E评估框架；② 揭示了制度同形三机制对平台建设的差异化影响；③ 发现了"制度驱动型"和"质量引领型"两条高绩效路径。</p>
+      <p><strong>实践启示：</strong>（1）欠发达地区应优先补齐制度建设短板；（2）数据质量提升应聚焦开放格式标准化和元数据完整性；（3）政策制定应注重差异化施策，避免"一刀切"。</p>
+    </div>
+  </div>
+</div>
+
+<div id="figures" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>图表总览</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图1-1</div><div style="font-size:12px;color:#64748b">研究技术路线图</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图2-1</div><div style="font-size:12px;color:#64748b">4E理论框架适配图</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图2-2</div><div style="font-size:12px;color:#64748b">制度同形三机制图</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图3-1</div><div style="font-size:12px;color:#64748b">五方法递进分析框架</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图4-1</div><div style="font-size:12px;color:#64748b">平台地域分布图</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图4-2</div><div style="font-size:12px;color:#64748b">功能特征分布图</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图5-1</div><div style="font-size:12px;color:#64748b">TOPSIS-DEA二维矩阵</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图6-1</div><div style="font-size:12px;color:#64748b">DEMATEL因果网络</div></div>
+      <div style="padding:12px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;font-size:13px;color:#2563eb">图7-1</div><div style="font-size:12px;color:#64748b">政策实施趋势对比</div></div>
+    </div>
+  </div>
+</div>
+{% endblock %}'''
+
+with open(os.path.join(TMPL, 'v3_thesis.html'), 'w', encoding='utf-8') as f:
+    f.write(html)
+print('v3_thesis.html OK')

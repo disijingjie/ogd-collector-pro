@@ -1622,6 +1622,38 @@ def v2_api_stats():
     return jsonify(get_stats())
 
 
+# ===== v3 统一展示平台路由（5个一级页面） =====
+
+@app.route('/v3/')
+def v3_dashboard():
+    """v3 系统概览"""
+    return render_template('v3_dashboard.html')
+
+
+@app.route('/v3/collection')
+def v3_collection():
+    """v3 采集中心"""
+    return render_template('v3_collection.html')
+
+
+@app.route('/v3/analysis')
+def v3_analysis():
+    """v3 分析看板"""
+    return render_template('v3_analysis.html')
+
+
+@app.route('/v3/thesis')
+def v3_thesis():
+    """v3 论文成果"""
+    return render_template('v3_thesis.html')
+
+
+@app.route('/v3/research')
+def v3_research():
+    """v3 研究拓展"""
+    return render_template('v3_research.html')
+
+
 # 启动后台调度器
 scheduler_thread = threading.Thread(target=scheduler_worker, daemon=True)
 scheduler_thread.start()
