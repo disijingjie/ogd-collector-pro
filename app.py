@@ -1610,6 +1610,12 @@ def v2_thesis():
     return render_template('v2_thesis.html')
 
 
+@app.route('/v2/evaluation')
+def v2_evaluation():
+    """4E评估可视化"""
+    return render_template('v2_evaluation.html')
+
+
 @app.route('/v2/api/stats')
 def v2_api_stats():
     """API: 获取统计数据"""
