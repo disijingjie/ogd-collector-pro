@@ -1,4 +1,4 @@
-{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
+content = '''{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">论文概览</a><a href="#findings">核心发现</a><a href="#chapters">章节导航</a><a href="#figures">图表索引</a></div>{% endblock %}
 {% block content %}
 
@@ -461,3 +461,9 @@ function toggleSection(id, el) {
 </script>
 
 {% endblock %}
+'''
+
+with open('templates/v3_thesis.html', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("v3_thesis.html v2 生成完成")

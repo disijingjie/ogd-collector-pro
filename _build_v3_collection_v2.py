@@ -1,6 +1,68 @@
-{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}采集中心 - OGD-Collector Pro{% endblock %}{% block page_title %}采集中心{% endblock %}{% block breadcrumb %}采集中心{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#purpose" class="active">采集目的</a><a href="#strategy">采集策略</a><a href="#provenance">数据来源</a><a href="#standard">标准化</a><a href="#recollect">复现</a></div>{% endblock %}
-{% block content %}
+import sqlite3, html
+
+conn = sqlite3.connect('data/ogd_database.db')
+c = conn.cursor()
+
+# 1. 获取数据来源记录
+c.execute("""
+    SELECT source_name, source_type, access_method, data_start_date, data_end_date, data_format, record_count, cited_in_chapter
+    FROM data_provenance WHERE is_active=1 ORDER BY id
+""")
+provenance = c.fetchall()
+
+# 2. 获取最新采集任务
+c.execute("""
+    SELECT task_name, task_type, status, total_count, success_count, started_at
+    FROM collection_tasks ORDER BY id DESC LIMIT 1
+""")
+latest_task = c.fetchone()
+
+# 3. 获取最近5条日志
+c.execute("""
+    SELECT log_level, message, created_at FROM collection_logs ORDER BY id DESC LIMIT 5
+""")
+logs = c.fetchall()
+
+# 4. 获取平台统计
+c.execute("SELECT COUNT(*) FROM platforms")
+plat_count = c.fetchone()[0]
+c.execute("SELECT COUNT(*) FROM collection_records WHERE status='success'")
+success_count = c.fetchone()[0]
+
+conn.close()
+
+# 构建数据来源表格
+prov_rows = ""
+for p in provenance:
+    name, stype, method, start, end, fmt, count, chapter = p
+    safe_name = html.escape(str(name)) if name else ""
+    safe_method = html.escape(str(method)) if method else ""
+    safe_chapter = html.escape(str(chapter)) if chapter else "未引用"
+    count_str = f"{count}条" if count else "-"
+    date_range = f"{start}~{end}" if start and end else (start or end or "-")
+    prov_rows += f'<tr><td>{safe_name}</td><td>{stype or "-"}</td><td>{safe_method}</td><td>{date_range}</td><td>{fmt or "-"}</td><td>{count_str}</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">{safe_chapter}</span></td></tr>'
+
+# 构建日志行
+log_html = ""
+for log in logs:
+    level, msg, created = log
+    level_class = "badge-prov" if level == "INFO" else "badge-city"
+    safe_msg = html.escape(str(msg)[:60]) if msg else ""
+    safe_time = str(created)[:19] if created else ""
+    log_html += f'<tr><td><span class="badge {level_class}">{level}</span></td><td style="font-size:12px">{safe_msg}</td><td style="font-size:12px;color:#64748b">{safe_time}</td></tr>'
+
+# 最新任务信息
+task_info = ""
+if latest_task:
+    tname, ttype, status, total, success, started = latest_task
+    ttype_label = "全量" if ttype == "full" else "增量"
+    status_label = "完成" if status == "completed" else "进行中"
+    status_color = "#16a34a" if status == "completed" else "#d97706"
+    task_info = f'<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">最近任务</div><div style="font-weight:700">{tname}</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">类型</div><div style="font-weight:700">{ttype_label}</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">状态</div><div style="font-weight:700;color:{status_color}">{status_label}</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">成功/总数</div><div style="font-weight:700">{success}/{total}</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">启动时间</div><div style="font-weight:700">{str(started)[:16]}</div></div></div>'
+
+content = f'''{{% extends "base_v3.html" %}}{{% set active = "collection" %}}{{% block title %}}采集中心 - OGD-Collector Pro{{% endblock %}}{{% block page_title %}}采集中心{{% endblock %}}{{% block breadcrumb %}}采集中心{{% endblock %}}
+{{% block anchor_nav %}}<div class="anchor-nav"><a href="#purpose" class="active">采集目的</a><a href="#strategy">采集策略</a><a href="#provenance">数据来源</a><a href="#standard">标准化</a><a href="#recollect">复现</a></div>{{% endblock %}}
+{{% block content %}}
 
 <!-- 板块1: 采集目的与范围 -->
 <div id="purpose" class="scroll-section">
@@ -14,9 +76,9 @@
   </div>
 
   <div class="stats-grid" style="margin-bottom:20px">
-    <div class="stat-card"><div class="stat-value">88</div><div class="stat-label">采集平台</div><div style="font-size:12px;color:#16a34a">省/副省/地市三级</div></div>
+    <div class="stat-card"><div class="stat-value">{plat_count}</div><div class="stat-label">采集平台</div><div style="font-size:12px;color:#16a34a">省/副省/地市三级</div></div>
     <div class="stat-card"><div class="stat-value">31</div><div class="stat-label">覆盖省份</div><div style="font-size:12px;color:#16a34a">全国全覆盖</div></div>
-    <div class="stat-card"><div class="stat-value">117</div><div class="stat-label">成功采集</div><div style="font-size:12px;color:#16a34a">平台记录入库</div></div>
+    <div class="stat-card"><div class="stat-value">{success_count}</div><div class="stat-label">成功采集</div><div style="font-size:12px;color:#16a34a">平台记录入库</div></div>
     <div class="stat-card"><div class="stat-value">2023-2026</div><div class="stat-label">采集周期</div><div style="font-size:12px;color:#16a34a">持续更新维护</div></div>
   </div>
 
@@ -28,7 +90,7 @@
 
   <div class="card" style="margin-top:16px">
     <div class="card-header"><div class="card-title"><span class="icon"></span>最新采集状态</div></div>
-    <div style="display:flex;gap:16px;flex-wrap:wrap"><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">最近任务</div><div style="font-weight:700">自动采集_0428_0600</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">类型</div><div style="font-weight:700">增量</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">状态</div><div style="font-weight:700;color:#d97706">进行中</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">成功/总数</div><div style="font-weight:700">5/0</div></div><div style="padding:12px 20px;background:#f8fafc;border-radius:8px"><div style="font-size:12px;color:#64748b">启动时间</div><div style="font-weight:700">None</div></div></div>
+    {task_info}
   </div>
 </div>
 
@@ -104,7 +166,7 @@ def collect(platform):
     <div style="overflow-x:auto">
       <table class="data-table">
         <tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr>
-        <tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr>
+        {prov_rows}
       </table>
     </div>
     <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
@@ -203,11 +265,17 @@ def collect(platform):
       <div style="overflow-x:auto">
         <table class="data-table">
           <tr><th>级别</th><th>消息</th><th>时间</th></tr>
-          <tr><td><span class="badge badge-prov">INFO</span></td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td><span class="badge badge-city">WARNING</span></td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td><span class="badge badge-prov">INFO</span></td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td><span class="badge badge-prov">INFO</span></td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td><span class="badge badge-prov">INFO</span></td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr>
+          {log_html}
         </table>
       </div>
     </div>
   </div>
 </div>
 
-{% endblock %}
+{{% endblock %}}
+'''
+
+with open('templates/v3_collection.html', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("v3_collection.html v2 生成完成")
