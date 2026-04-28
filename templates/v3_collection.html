@@ -1,5 +1,621 @@
-{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}采集中心 - OGD-Collector Pro{% endblock %}{% block page_title %}采集中心{% endblock %}{% block breadcrumb %}采集中心{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#scale" class="active">数据规模</a><a href="#platforms">平台清单</a><a href="#mechanism">采集机制</a><a href="#differences">各省差异</a><a href="#code">代码展示</a><a href="#schedule">定期采集</a><a href="#recollect">重新采集</a></div>{% endblock %}
+{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}采集中心 - OGD-Collector Pro
+<div id="logs" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集日志（真实记录）</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>ID</th><th>级别</th><th>平台</th><th>消息</th><th>时间</th></tr><tr><td>1046</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1045</td><td><span class="badge badge-api">WARNING</span></td><td>-</td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1044</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1043</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td>1042</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1041</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 Playwright也失败: Playwright异常: Page.goto: Timeout 30000ms exceeded.
+Call log:
+</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1040</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 requests采集失败，尝试Playwright备用: 请求超时(&gt;15秒)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:04:59</td></tr><tr><td>1039</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">开始采集: 济南市 (https://data.jinan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:59</td></tr><tr><td>1038</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">采集完成: 西安市 - 状态:available, 综合得分:0.41</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1037</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">开始采集: 西安市 (https://data.xa.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1036</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">采集完成: 武汉市 - 状态:available, 综合得分:0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>1035</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">开始采集: 武汉市 (https://data.wuhan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:40</td></tr><tr><td>1034</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">采集完成: 南京市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1033</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1032</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.nanjing.go</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1031</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">开始采集: 南京市 (https://data.nanjing.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1030</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">采集完成: 厦门市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1029</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1028</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.xm.gov.cn&#x27;</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr><tr><td>1027</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">开始采集: 厦门市 (https://data.xm.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr></table></div>
+  </div>
+</div>
+
+<div id="tasks" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集任务历史</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>成功/总数</th><th>启动时间</th></tr><tr><td>11</td><td>自动采集_0428_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>10</td><td>自动采集_0428_0300</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">全量</span></td><td><span class="badge badge-city">进行中</span></td><td>-</td><td>-</td></tr><tr><td>9</td><td>自动采集_0428_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>8</td><td>自动采集_0427_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>7</td><td>自动采集_0427_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>6</td><td>自动采集_0426_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>5</td><td>自动采集_0425_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>4</td><td>自动采集_0425_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>3</td><td>省级平台补采_20260424_220216</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-prov">完成</span></td><td>20/31</td><td>-</td></tr><tr><td>2</td><td>省级平台补采-北京广东安徽</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>0/31</td><td>-</td></tr></table></div>
+  </div>
+</div>
+
+<div id="provenance" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文数据来源完整记录</div><div style="font-size:12px;color:#64748b">展示本研究使用的所有数据来源、采集方法与引用章节</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr><tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr></table></div>
+    <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:12px;color:#1e293b">数据采集时间线</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年3月 - 项目启动与框架设计</div><div class="timeline-desc">确定研究问题，构建4E理论框架，设计五方法递进分析链。确定采集目标：全国31个省级政府数据开放平台。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年6月 - 首轮省级平台采集</div><div class="timeline-desc">使用Requests+BeautifulSoup对31个省级平台进行静态页面采集。山东、浙江、广东等采用直接HTML解析；北京、上海等采用Selenium动态渲染。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年9月 - 市级平台拓展采集</div><div class="timeline-desc">补充57个副省级/地级市平台。深圳、杭州等采用API接口直接调用；部分中西部市级平台因技术架构差异采用混合策略。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年12月 - 数据清洗与标准化（第一阶段）</div><div class="timeline-desc">去重：基于URL哈希去重，消除跨平台重复数据集。格式统一：将CSV/XLS/JSON/XML等格式映射为标准枚举值。日期标准化：统一为ISO 8601格式。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年3月 - 数据清洗与标准化（第二阶段）</div><div class="timeline-desc">部门名称标准化：参照GB/T 2260行政区划代码和国务院机构简称规范。缺失值处理：对缺失率>50%的字段标记，<50%采用众数填补。异常值检测：箱线图法识别离群值。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年6月 - 统一指标体系构建</div><div class="timeline-desc">将原始元数据（数据集数量、格式类型、更新频率、下载量等）映射为4E框架的二级指标，形成标准化评估矩阵。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年9月-2025年4月 - 多方法分析与验证</div><div class="timeline-desc">依次完成TOPSIS排名、DEA效率、DEMATEL因果、fsQCA路径、DID政策效应五方法分析。每种方法的结果均经过交叉验证。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2025年5月-2026年4月 - 系统开发与论文写作</div><div class="timeline-desc">开发OGD-Collector Pro可视化平台，将采集、分析、展示全流程系统化。完成博士论文v25版本撰写。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cleaning" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据归纳、分类与清洗流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>原始采集数据来自88个政府数据开放平台，各平台的元数据字段命名、格式、分类体系存在显著差异。本研究通过<strong>四步清洗流程</strong>将其转化为统一的标准化数据集。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">Step 1: 字段映射</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          将各平台不同的字段名映射到统一标准。例如：<br>
+          • "数据集名称" / "资源标题" / "name" → <strong>dataset_title</strong><br>
+          • "更新日期" / "发布时间" / "update_time" → <strong>update_date</strong><br>
+          • "提供部门" / "责任部门" / "dept" → <strong>department</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">Step 2: 分类体系统一</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          各平台数据集分类标签不一致（如"交通"vs"交通运输"），采用<strong>关键词匹配+人工校验</strong>统一为12个一级主题：交通、环境、教育、医疗、经济、社会、文化、科技、农业、公共安全、城市规划、其他。
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">Step 3: 格式标准化</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          数据格式字段统一映射：<br>
+          • CSV/Excel/XLS/XLSX → <strong>表格</strong><br>
+          • JSON/XML/API → <strong>接口</strong><br>
+          • PDF/DOC → <strong>文档</strong><br>
+          • SHP/GeoJSON → <strong>地理</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #db2777">
+        <div style="font-weight:700;margin-bottom:8px">Step 4: 质量校验</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          完整性：必填字段缺失率<20%<br>
+          一致性：省份-平台关联正确性100%<br>
+          时效性：数据集更新时间在近2年内<br>
+          可用性：下载链接可访问性检验
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" style="margin:0">
+      <div class="chart-title">图：数据清洗全流程示意图</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 160" style="width:100%;min-width:700px">
+        <rect x="0" y="0" width="900" height="160" fill="#f8fafc" rx="8"/>
+        <rect x="20" y="30" width="140" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="8"/><text x="90" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">原始数据</text><text x="90" y="78" text-anchor="middle" font-size="9" fill="#64748b">88平台元数据</text><text x="90" y="92" text-anchor="middle" font-size="9" fill="#64748b">字段各异、格式混乱</text>
+        <rect x="190" y="30" width="140" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="260" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">字段映射</text><text x="260" y="78" text-anchor="middle" font-size="9" fill="#64748b">统一字段命名</text><text x="260" y="92" text-anchor="middle" font-size="9" fill="#64748b">建立对照表</text>
+        <rect x="360" y="30" width="140" height="80" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="430" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">分类统一</text><text x="430" y="78" text-anchor="middle" font-size="9" fill="#64748b">12个一级主题</text><text x="430" y="92" text-anchor="middle" font-size="9" fill="#64748b">关键词匹配+人工</text>
+        <rect x="530" y="30" width="140" height="80" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="600" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">格式标准化</text><text x="600" y="78" text-anchor="middle" font-size="9" fill="#64748b">4类标准格式</text><text x="600" y="92" text-anchor="middle" font-size="9" fill="#64748b">枚举值映射</text>
+        <rect x="700" y="30" width="170" height="80" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="785" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">标准化数据集</text><text x="785" y="78" text-anchor="middle" font-size="9" fill="#64748b">字段统一、分类一致</text><text x="785" y="92" text-anchor="middle" font-size="9" fill="#64748b">可直接用于分析</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="160" y1="70" x2="190" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="330" y1="70" x2="360" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="500" y1="70" x2="530" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="670" y1="70" x2="700" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="unified" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>统一指标体系构建过程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>清洗后的标准化元数据需要进一步转化为可量化评估的指标。本研究基于<strong>4E理论框架</strong>，将原始字段映射为16个二级指标，再聚合为4个一级维度。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">经济性(Economy)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>平台维护状态、域名注册年限、服务器响应时间<br>
+          <strong>→ 映射指标：</strong><br>
+          • C1-投入强度 = 数据集总量 / 平台运营年限<br>
+          • C2-成本控制 = 开放格式占比（CSV/JSON/API视为低成本）<br>
+          <strong>→ 数据来源：</strong>collection_records.dataset_count, format_types
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">效率性(Efficiency)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>数据集更新频率、下载量、API调用次数<br>
+          <strong>→ 映射指标：</strong><br>
+          • C3-更新效率 = 近一年更新数据集占比<br>
+          • C4-访问效率 = 平均响应时间倒数（标准化）<br>
+          <strong>→ 数据来源：</strong>collection_records.response_time, 数据集update_date
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">有效性(Effectiveness)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>功能完整性（API/下载/搜索/可视化/反馈）<br>
+          <strong>→ 映射指标：</strong><br>
+          • C5-功能完整度 = has_api + has_download + has_search + has_visualization + has_feedback（5项求和标准化）<br>
+          • C6-数据覆盖度 = 主题分类覆盖数 / 12<br>
+          <strong>→ 数据来源：</strong>collection_records各功能布尔字段
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">公平性(Equity)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>地区经济发展水平、平台层级、数据集可获取性<br>
+          <strong>→ 映射指标：</strong><br>
+          • C7-区域均衡 = 该平台绩效与全国均值的偏差（越小越公平）<br>
+          • C8-层级覆盖 = 省/市两级平台覆盖率<br>
+          <strong>→ 数据来源：</strong>platforms.tier, collection_records.overall_score
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f0f9ff;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:8px;color:#0369a1">指标计算示例：功能完整度(C5)</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        以山东省数据开放平台为例：<br>
+        has_api=1, has_download=1, has_search=1, has_visualization=1, has_feedback=0<br>
+        C5 = (1+1+1+1+0) / 5 = 0.80<br>
+        经过Min-Max标准化后：C5_std = (0.80 - 0.20) / (1.00 - 0.20) = 0.75<br>
+        该指标最终进入TOPSIS和DEA的输入/输出矩阵。
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-weight:700;margin-bottom:12px">最新采集记录（真实数据）</div>
+      <div style="overflow-x:auto"><table class="data-table"><tr><th>平台名称</th><th>层级</th><th>地区</th><th>状态</th><th>数据集数</th><th>格式</th><th>综合得分</th><th>采集时间</th></tr><tr><td>沈阳市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>141</td><td>["api"]</td><td>0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>济南市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>西安市</td><td>副省级/计划单列市</td><td>西北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.410</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>武汉市</td><td>副省级/计划单列市</td><td>华中</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>南京市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>厦门市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>大连市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:24</td></tr><tr><td>青岛市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:02:32</td></tr><tr><td>成都市</td><td>副省级/计划单列市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:01:34</td></tr><tr><td>宁波市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:50</td></tr><tr><td>广州市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:43</td></tr><tr><td>杭州市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["json", "pdf", "api"]</td><td>0.605</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:26</td></tr><tr><td>深圳市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>376789</td><td>["json", "pdf", "api", "rdf"]</td><td>0.890</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:24</td></tr><tr><td>绵阳市</td><td>地级市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:57:02</td></tr><tr><td>海口市</td><td>地级市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:56:53</td></tr></table></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}{% block page_title %}采集中心
+<div id="logs" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集日志（真实记录）</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>ID</th><th>级别</th><th>平台</th><th>消息</th><th>时间</th></tr><tr><td>1046</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1045</td><td><span class="badge badge-api">WARNING</span></td><td>-</td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1044</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1043</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td>1042</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1041</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 Playwright也失败: Playwright异常: Page.goto: Timeout 30000ms exceeded.
+Call log:
+</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1040</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 requests采集失败，尝试Playwright备用: 请求超时(&gt;15秒)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:04:59</td></tr><tr><td>1039</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">开始采集: 济南市 (https://data.jinan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:59</td></tr><tr><td>1038</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">采集完成: 西安市 - 状态:available, 综合得分:0.41</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1037</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">开始采集: 西安市 (https://data.xa.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1036</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">采集完成: 武汉市 - 状态:available, 综合得分:0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>1035</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">开始采集: 武汉市 (https://data.wuhan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:40</td></tr><tr><td>1034</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">采集完成: 南京市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1033</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1032</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.nanjing.go</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1031</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">开始采集: 南京市 (https://data.nanjing.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1030</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">采集完成: 厦门市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1029</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1028</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.xm.gov.cn&#x27;</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr><tr><td>1027</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">开始采集: 厦门市 (https://data.xm.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr></table></div>
+  </div>
+</div>
+
+<div id="tasks" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集任务历史</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>成功/总数</th><th>启动时间</th></tr><tr><td>11</td><td>自动采集_0428_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>10</td><td>自动采集_0428_0300</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">全量</span></td><td><span class="badge badge-city">进行中</span></td><td>-</td><td>-</td></tr><tr><td>9</td><td>自动采集_0428_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>8</td><td>自动采集_0427_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>7</td><td>自动采集_0427_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>6</td><td>自动采集_0426_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>5</td><td>自动采集_0425_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>4</td><td>自动采集_0425_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>3</td><td>省级平台补采_20260424_220216</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-prov">完成</span></td><td>20/31</td><td>-</td></tr><tr><td>2</td><td>省级平台补采-北京广东安徽</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>0/31</td><td>-</td></tr></table></div>
+  </div>
+</div>
+
+<div id="provenance" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文数据来源完整记录</div><div style="font-size:12px;color:#64748b">展示本研究使用的所有数据来源、采集方法与引用章节</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr><tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr></table></div>
+    <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:12px;color:#1e293b">数据采集时间线</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年3月 - 项目启动与框架设计</div><div class="timeline-desc">确定研究问题，构建4E理论框架，设计五方法递进分析链。确定采集目标：全国31个省级政府数据开放平台。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年6月 - 首轮省级平台采集</div><div class="timeline-desc">使用Requests+BeautifulSoup对31个省级平台进行静态页面采集。山东、浙江、广东等采用直接HTML解析；北京、上海等采用Selenium动态渲染。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年9月 - 市级平台拓展采集</div><div class="timeline-desc">补充57个副省级/地级市平台。深圳、杭州等采用API接口直接调用；部分中西部市级平台因技术架构差异采用混合策略。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年12月 - 数据清洗与标准化（第一阶段）</div><div class="timeline-desc">去重：基于URL哈希去重，消除跨平台重复数据集。格式统一：将CSV/XLS/JSON/XML等格式映射为标准枚举值。日期标准化：统一为ISO 8601格式。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年3月 - 数据清洗与标准化（第二阶段）</div><div class="timeline-desc">部门名称标准化：参照GB/T 2260行政区划代码和国务院机构简称规范。缺失值处理：对缺失率>50%的字段标记，<50%采用众数填补。异常值检测：箱线图法识别离群值。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年6月 - 统一指标体系构建</div><div class="timeline-desc">将原始元数据（数据集数量、格式类型、更新频率、下载量等）映射为4E框架的二级指标，形成标准化评估矩阵。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年9月-2025年4月 - 多方法分析与验证</div><div class="timeline-desc">依次完成TOPSIS排名、DEA效率、DEMATEL因果、fsQCA路径、DID政策效应五方法分析。每种方法的结果均经过交叉验证。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2025年5月-2026年4月 - 系统开发与论文写作</div><div class="timeline-desc">开发OGD-Collector Pro可视化平台，将采集、分析、展示全流程系统化。完成博士论文v25版本撰写。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cleaning" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据归纳、分类与清洗流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>原始采集数据来自88个政府数据开放平台，各平台的元数据字段命名、格式、分类体系存在显著差异。本研究通过<strong>四步清洗流程</strong>将其转化为统一的标准化数据集。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">Step 1: 字段映射</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          将各平台不同的字段名映射到统一标准。例如：<br>
+          • "数据集名称" / "资源标题" / "name" → <strong>dataset_title</strong><br>
+          • "更新日期" / "发布时间" / "update_time" → <strong>update_date</strong><br>
+          • "提供部门" / "责任部门" / "dept" → <strong>department</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">Step 2: 分类体系统一</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          各平台数据集分类标签不一致（如"交通"vs"交通运输"），采用<strong>关键词匹配+人工校验</strong>统一为12个一级主题：交通、环境、教育、医疗、经济、社会、文化、科技、农业、公共安全、城市规划、其他。
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">Step 3: 格式标准化</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          数据格式字段统一映射：<br>
+          • CSV/Excel/XLS/XLSX → <strong>表格</strong><br>
+          • JSON/XML/API → <strong>接口</strong><br>
+          • PDF/DOC → <strong>文档</strong><br>
+          • SHP/GeoJSON → <strong>地理</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #db2777">
+        <div style="font-weight:700;margin-bottom:8px">Step 4: 质量校验</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          完整性：必填字段缺失率<20%<br>
+          一致性：省份-平台关联正确性100%<br>
+          时效性：数据集更新时间在近2年内<br>
+          可用性：下载链接可访问性检验
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" style="margin:0">
+      <div class="chart-title">图：数据清洗全流程示意图</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 160" style="width:100%;min-width:700px">
+        <rect x="0" y="0" width="900" height="160" fill="#f8fafc" rx="8"/>
+        <rect x="20" y="30" width="140" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="8"/><text x="90" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">原始数据</text><text x="90" y="78" text-anchor="middle" font-size="9" fill="#64748b">88平台元数据</text><text x="90" y="92" text-anchor="middle" font-size="9" fill="#64748b">字段各异、格式混乱</text>
+        <rect x="190" y="30" width="140" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="260" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">字段映射</text><text x="260" y="78" text-anchor="middle" font-size="9" fill="#64748b">统一字段命名</text><text x="260" y="92" text-anchor="middle" font-size="9" fill="#64748b">建立对照表</text>
+        <rect x="360" y="30" width="140" height="80" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="430" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">分类统一</text><text x="430" y="78" text-anchor="middle" font-size="9" fill="#64748b">12个一级主题</text><text x="430" y="92" text-anchor="middle" font-size="9" fill="#64748b">关键词匹配+人工</text>
+        <rect x="530" y="30" width="140" height="80" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="600" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">格式标准化</text><text x="600" y="78" text-anchor="middle" font-size="9" fill="#64748b">4类标准格式</text><text x="600" y="92" text-anchor="middle" font-size="9" fill="#64748b">枚举值映射</text>
+        <rect x="700" y="30" width="170" height="80" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="785" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">标准化数据集</text><text x="785" y="78" text-anchor="middle" font-size="9" fill="#64748b">字段统一、分类一致</text><text x="785" y="92" text-anchor="middle" font-size="9" fill="#64748b">可直接用于分析</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="160" y1="70" x2="190" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="330" y1="70" x2="360" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="500" y1="70" x2="530" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="670" y1="70" x2="700" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="unified" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>统一指标体系构建过程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>清洗后的标准化元数据需要进一步转化为可量化评估的指标。本研究基于<strong>4E理论框架</strong>，将原始字段映射为16个二级指标，再聚合为4个一级维度。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">经济性(Economy)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>平台维护状态、域名注册年限、服务器响应时间<br>
+          <strong>→ 映射指标：</strong><br>
+          • C1-投入强度 = 数据集总量 / 平台运营年限<br>
+          • C2-成本控制 = 开放格式占比（CSV/JSON/API视为低成本）<br>
+          <strong>→ 数据来源：</strong>collection_records.dataset_count, format_types
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">效率性(Efficiency)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>数据集更新频率、下载量、API调用次数<br>
+          <strong>→ 映射指标：</strong><br>
+          • C3-更新效率 = 近一年更新数据集占比<br>
+          • C4-访问效率 = 平均响应时间倒数（标准化）<br>
+          <strong>→ 数据来源：</strong>collection_records.response_time, 数据集update_date
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">有效性(Effectiveness)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>功能完整性（API/下载/搜索/可视化/反馈）<br>
+          <strong>→ 映射指标：</strong><br>
+          • C5-功能完整度 = has_api + has_download + has_search + has_visualization + has_feedback（5项求和标准化）<br>
+          • C6-数据覆盖度 = 主题分类覆盖数 / 12<br>
+          <strong>→ 数据来源：</strong>collection_records各功能布尔字段
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">公平性(Equity)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>地区经济发展水平、平台层级、数据集可获取性<br>
+          <strong>→ 映射指标：</strong><br>
+          • C7-区域均衡 = 该平台绩效与全国均值的偏差（越小越公平）<br>
+          • C8-层级覆盖 = 省/市两级平台覆盖率<br>
+          <strong>→ 数据来源：</strong>platforms.tier, collection_records.overall_score
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f0f9ff;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:8px;color:#0369a1">指标计算示例：功能完整度(C5)</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        以山东省数据开放平台为例：<br>
+        has_api=1, has_download=1, has_search=1, has_visualization=1, has_feedback=0<br>
+        C5 = (1+1+1+1+0) / 5 = 0.80<br>
+        经过Min-Max标准化后：C5_std = (0.80 - 0.20) / (1.00 - 0.20) = 0.75<br>
+        该指标最终进入TOPSIS和DEA的输入/输出矩阵。
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-weight:700;margin-bottom:12px">最新采集记录（真实数据）</div>
+      <div style="overflow-x:auto"><table class="data-table"><tr><th>平台名称</th><th>层级</th><th>地区</th><th>状态</th><th>数据集数</th><th>格式</th><th>综合得分</th><th>采集时间</th></tr><tr><td>沈阳市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>141</td><td>["api"]</td><td>0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>济南市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>西安市</td><td>副省级/计划单列市</td><td>西北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.410</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>武汉市</td><td>副省级/计划单列市</td><td>华中</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>南京市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>厦门市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>大连市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:24</td></tr><tr><td>青岛市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:02:32</td></tr><tr><td>成都市</td><td>副省级/计划单列市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:01:34</td></tr><tr><td>宁波市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:50</td></tr><tr><td>广州市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:43</td></tr><tr><td>杭州市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["json", "pdf", "api"]</td><td>0.605</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:26</td></tr><tr><td>深圳市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>376789</td><td>["json", "pdf", "api", "rdf"]</td><td>0.890</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:24</td></tr><tr><td>绵阳市</td><td>地级市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:57:02</td></tr><tr><td>海口市</td><td>地级市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:56:53</td></tr></table></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}{% block breadcrumb %}采集中心
+<div id="logs" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集日志（真实记录）</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>ID</th><th>级别</th><th>平台</th><th>消息</th><th>时间</th></tr><tr><td>1046</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1045</td><td><span class="badge badge-api">WARNING</span></td><td>-</td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1044</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1043</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td>1042</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1041</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 Playwright也失败: Playwright异常: Page.goto: Timeout 30000ms exceeded.
+Call log:
+</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1040</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 requests采集失败，尝试Playwright备用: 请求超时(&gt;15秒)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:04:59</td></tr><tr><td>1039</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">开始采集: 济南市 (https://data.jinan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:59</td></tr><tr><td>1038</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">采集完成: 西安市 - 状态:available, 综合得分:0.41</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1037</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">开始采集: 西安市 (https://data.xa.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1036</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">采集完成: 武汉市 - 状态:available, 综合得分:0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>1035</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">开始采集: 武汉市 (https://data.wuhan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:40</td></tr><tr><td>1034</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">采集完成: 南京市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1033</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1032</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.nanjing.go</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1031</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">开始采集: 南京市 (https://data.nanjing.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1030</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">采集完成: 厦门市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1029</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1028</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.xm.gov.cn&#x27;</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr><tr><td>1027</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">开始采集: 厦门市 (https://data.xm.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr></table></div>
+  </div>
+</div>
+
+<div id="tasks" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集任务历史</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>成功/总数</th><th>启动时间</th></tr><tr><td>11</td><td>自动采集_0428_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>10</td><td>自动采集_0428_0300</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">全量</span></td><td><span class="badge badge-city">进行中</span></td><td>-</td><td>-</td></tr><tr><td>9</td><td>自动采集_0428_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>8</td><td>自动采集_0427_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>7</td><td>自动采集_0427_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>6</td><td>自动采集_0426_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>5</td><td>自动采集_0425_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>4</td><td>自动采集_0425_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>3</td><td>省级平台补采_20260424_220216</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-prov">完成</span></td><td>20/31</td><td>-</td></tr><tr><td>2</td><td>省级平台补采-北京广东安徽</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>0/31</td><td>-</td></tr></table></div>
+  </div>
+</div>
+
+<div id="provenance" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文数据来源完整记录</div><div style="font-size:12px;color:#64748b">展示本研究使用的所有数据来源、采集方法与引用章节</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr><tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr></table></div>
+    <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:12px;color:#1e293b">数据采集时间线</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年3月 - 项目启动与框架设计</div><div class="timeline-desc">确定研究问题，构建4E理论框架，设计五方法递进分析链。确定采集目标：全国31个省级政府数据开放平台。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年6月 - 首轮省级平台采集</div><div class="timeline-desc">使用Requests+BeautifulSoup对31个省级平台进行静态页面采集。山东、浙江、广东等采用直接HTML解析；北京、上海等采用Selenium动态渲染。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年9月 - 市级平台拓展采集</div><div class="timeline-desc">补充57个副省级/地级市平台。深圳、杭州等采用API接口直接调用；部分中西部市级平台因技术架构差异采用混合策略。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年12月 - 数据清洗与标准化（第一阶段）</div><div class="timeline-desc">去重：基于URL哈希去重，消除跨平台重复数据集。格式统一：将CSV/XLS/JSON/XML等格式映射为标准枚举值。日期标准化：统一为ISO 8601格式。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年3月 - 数据清洗与标准化（第二阶段）</div><div class="timeline-desc">部门名称标准化：参照GB/T 2260行政区划代码和国务院机构简称规范。缺失值处理：对缺失率>50%的字段标记，<50%采用众数填补。异常值检测：箱线图法识别离群值。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年6月 - 统一指标体系构建</div><div class="timeline-desc">将原始元数据（数据集数量、格式类型、更新频率、下载量等）映射为4E框架的二级指标，形成标准化评估矩阵。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年9月-2025年4月 - 多方法分析与验证</div><div class="timeline-desc">依次完成TOPSIS排名、DEA效率、DEMATEL因果、fsQCA路径、DID政策效应五方法分析。每种方法的结果均经过交叉验证。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2025年5月-2026年4月 - 系统开发与论文写作</div><div class="timeline-desc">开发OGD-Collector Pro可视化平台，将采集、分析、展示全流程系统化。完成博士论文v25版本撰写。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cleaning" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据归纳、分类与清洗流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>原始采集数据来自88个政府数据开放平台，各平台的元数据字段命名、格式、分类体系存在显著差异。本研究通过<strong>四步清洗流程</strong>将其转化为统一的标准化数据集。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">Step 1: 字段映射</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          将各平台不同的字段名映射到统一标准。例如：<br>
+          • "数据集名称" / "资源标题" / "name" → <strong>dataset_title</strong><br>
+          • "更新日期" / "发布时间" / "update_time" → <strong>update_date</strong><br>
+          • "提供部门" / "责任部门" / "dept" → <strong>department</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">Step 2: 分类体系统一</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          各平台数据集分类标签不一致（如"交通"vs"交通运输"），采用<strong>关键词匹配+人工校验</strong>统一为12个一级主题：交通、环境、教育、医疗、经济、社会、文化、科技、农业、公共安全、城市规划、其他。
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">Step 3: 格式标准化</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          数据格式字段统一映射：<br>
+          • CSV/Excel/XLS/XLSX → <strong>表格</strong><br>
+          • JSON/XML/API → <strong>接口</strong><br>
+          • PDF/DOC → <strong>文档</strong><br>
+          • SHP/GeoJSON → <strong>地理</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #db2777">
+        <div style="font-weight:700;margin-bottom:8px">Step 4: 质量校验</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          完整性：必填字段缺失率<20%<br>
+          一致性：省份-平台关联正确性100%<br>
+          时效性：数据集更新时间在近2年内<br>
+          可用性：下载链接可访问性检验
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" style="margin:0">
+      <div class="chart-title">图：数据清洗全流程示意图</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 160" style="width:100%;min-width:700px">
+        <rect x="0" y="0" width="900" height="160" fill="#f8fafc" rx="8"/>
+        <rect x="20" y="30" width="140" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="8"/><text x="90" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">原始数据</text><text x="90" y="78" text-anchor="middle" font-size="9" fill="#64748b">88平台元数据</text><text x="90" y="92" text-anchor="middle" font-size="9" fill="#64748b">字段各异、格式混乱</text>
+        <rect x="190" y="30" width="140" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="260" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">字段映射</text><text x="260" y="78" text-anchor="middle" font-size="9" fill="#64748b">统一字段命名</text><text x="260" y="92" text-anchor="middle" font-size="9" fill="#64748b">建立对照表</text>
+        <rect x="360" y="30" width="140" height="80" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="430" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">分类统一</text><text x="430" y="78" text-anchor="middle" font-size="9" fill="#64748b">12个一级主题</text><text x="430" y="92" text-anchor="middle" font-size="9" fill="#64748b">关键词匹配+人工</text>
+        <rect x="530" y="30" width="140" height="80" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="600" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">格式标准化</text><text x="600" y="78" text-anchor="middle" font-size="9" fill="#64748b">4类标准格式</text><text x="600" y="92" text-anchor="middle" font-size="9" fill="#64748b">枚举值映射</text>
+        <rect x="700" y="30" width="170" height="80" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="785" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">标准化数据集</text><text x="785" y="78" text-anchor="middle" font-size="9" fill="#64748b">字段统一、分类一致</text><text x="785" y="92" text-anchor="middle" font-size="9" fill="#64748b">可直接用于分析</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="160" y1="70" x2="190" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="330" y1="70" x2="360" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="500" y1="70" x2="530" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="670" y1="70" x2="700" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="unified" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>统一指标体系构建过程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>清洗后的标准化元数据需要进一步转化为可量化评估的指标。本研究基于<strong>4E理论框架</strong>，将原始字段映射为16个二级指标，再聚合为4个一级维度。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">经济性(Economy)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>平台维护状态、域名注册年限、服务器响应时间<br>
+          <strong>→ 映射指标：</strong><br>
+          • C1-投入强度 = 数据集总量 / 平台运营年限<br>
+          • C2-成本控制 = 开放格式占比（CSV/JSON/API视为低成本）<br>
+          <strong>→ 数据来源：</strong>collection_records.dataset_count, format_types
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">效率性(Efficiency)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>数据集更新频率、下载量、API调用次数<br>
+          <strong>→ 映射指标：</strong><br>
+          • C3-更新效率 = 近一年更新数据集占比<br>
+          • C4-访问效率 = 平均响应时间倒数（标准化）<br>
+          <strong>→ 数据来源：</strong>collection_records.response_time, 数据集update_date
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">有效性(Effectiveness)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>功能完整性（API/下载/搜索/可视化/反馈）<br>
+          <strong>→ 映射指标：</strong><br>
+          • C5-功能完整度 = has_api + has_download + has_search + has_visualization + has_feedback（5项求和标准化）<br>
+          • C6-数据覆盖度 = 主题分类覆盖数 / 12<br>
+          <strong>→ 数据来源：</strong>collection_records各功能布尔字段
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">公平性(Equity)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>地区经济发展水平、平台层级、数据集可获取性<br>
+          <strong>→ 映射指标：</strong><br>
+          • C7-区域均衡 = 该平台绩效与全国均值的偏差（越小越公平）<br>
+          • C8-层级覆盖 = 省/市两级平台覆盖率<br>
+          <strong>→ 数据来源：</strong>platforms.tier, collection_records.overall_score
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f0f9ff;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:8px;color:#0369a1">指标计算示例：功能完整度(C5)</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        以山东省数据开放平台为例：<br>
+        has_api=1, has_download=1, has_search=1, has_visualization=1, has_feedback=0<br>
+        C5 = (1+1+1+1+0) / 5 = 0.80<br>
+        经过Min-Max标准化后：C5_std = (0.80 - 0.20) / (1.00 - 0.20) = 0.75<br>
+        该指标最终进入TOPSIS和DEA的输入/输出矩阵。
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-weight:700;margin-bottom:12px">最新采集记录（真实数据）</div>
+      <div style="overflow-x:auto"><table class="data-table"><tr><th>平台名称</th><th>层级</th><th>地区</th><th>状态</th><th>数据集数</th><th>格式</th><th>综合得分</th><th>采集时间</th></tr><tr><td>沈阳市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>141</td><td>["api"]</td><td>0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>济南市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>西安市</td><td>副省级/计划单列市</td><td>西北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.410</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>武汉市</td><td>副省级/计划单列市</td><td>华中</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>南京市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>厦门市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>大连市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:24</td></tr><tr><td>青岛市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:02:32</td></tr><tr><td>成都市</td><td>副省级/计划单列市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:01:34</td></tr><tr><td>宁波市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:50</td></tr><tr><td>广州市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:43</td></tr><tr><td>杭州市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["json", "pdf", "api"]</td><td>0.605</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:26</td></tr><tr><td>深圳市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>376789</td><td>["json", "pdf", "api", "rdf"]</td><td>0.890</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:24</td></tr><tr><td>绵阳市</td><td>地级市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:57:02</td></tr><tr><td>海口市</td><td>地级市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:56:53</td></tr></table></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#scale" class="active">数据规模</a><a href="#platforms">平台清单</a><a href="#mechanism">采集机制</a><a href="#differences">各省差异</a><a href="#code">代码展示</a><a href="#schedule">定期采集</a><a href="#recollect">重新采集</a></div>
+<div id="logs" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集日志（真实记录）</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>ID</th><th>级别</th><th>平台</th><th>消息</th><th>时间</th></tr><tr><td>1046</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1045</td><td><span class="badge badge-api">WARNING</span></td><td>-</td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1044</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1043</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td>1042</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1041</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 Playwright也失败: Playwright异常: Page.goto: Timeout 30000ms exceeded.
+Call log:
+</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1040</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 requests采集失败，尝试Playwright备用: 请求超时(&gt;15秒)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:04:59</td></tr><tr><td>1039</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">开始采集: 济南市 (https://data.jinan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:59</td></tr><tr><td>1038</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">采集完成: 西安市 - 状态:available, 综合得分:0.41</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1037</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">开始采集: 西安市 (https://data.xa.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1036</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">采集完成: 武汉市 - 状态:available, 综合得分:0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>1035</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">开始采集: 武汉市 (https://data.wuhan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:40</td></tr><tr><td>1034</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">采集完成: 南京市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1033</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1032</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.nanjing.go</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1031</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">开始采集: 南京市 (https://data.nanjing.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1030</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">采集完成: 厦门市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1029</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1028</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.xm.gov.cn&#x27;</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr><tr><td>1027</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">开始采集: 厦门市 (https://data.xm.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr></table></div>
+  </div>
+</div>
+
+<div id="tasks" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集任务历史</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>成功/总数</th><th>启动时间</th></tr><tr><td>11</td><td>自动采集_0428_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>10</td><td>自动采集_0428_0300</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">全量</span></td><td><span class="badge badge-city">进行中</span></td><td>-</td><td>-</td></tr><tr><td>9</td><td>自动采集_0428_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>8</td><td>自动采集_0427_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>7</td><td>自动采集_0427_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>6</td><td>自动采集_0426_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>5</td><td>自动采集_0425_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>4</td><td>自动采集_0425_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>3</td><td>省级平台补采_20260424_220216</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-prov">完成</span></td><td>20/31</td><td>-</td></tr><tr><td>2</td><td>省级平台补采-北京广东安徽</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>0/31</td><td>-</td></tr></table></div>
+  </div>
+</div>
+
+<div id="provenance" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文数据来源完整记录</div><div style="font-size:12px;color:#64748b">展示本研究使用的所有数据来源、采集方法与引用章节</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr><tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr></table></div>
+    <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:12px;color:#1e293b">数据采集时间线</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年3月 - 项目启动与框架设计</div><div class="timeline-desc">确定研究问题，构建4E理论框架，设计五方法递进分析链。确定采集目标：全国31个省级政府数据开放平台。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年6月 - 首轮省级平台采集</div><div class="timeline-desc">使用Requests+BeautifulSoup对31个省级平台进行静态页面采集。山东、浙江、广东等采用直接HTML解析；北京、上海等采用Selenium动态渲染。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年9月 - 市级平台拓展采集</div><div class="timeline-desc">补充57个副省级/地级市平台。深圳、杭州等采用API接口直接调用；部分中西部市级平台因技术架构差异采用混合策略。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年12月 - 数据清洗与标准化（第一阶段）</div><div class="timeline-desc">去重：基于URL哈希去重，消除跨平台重复数据集。格式统一：将CSV/XLS/JSON/XML等格式映射为标准枚举值。日期标准化：统一为ISO 8601格式。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年3月 - 数据清洗与标准化（第二阶段）</div><div class="timeline-desc">部门名称标准化：参照GB/T 2260行政区划代码和国务院机构简称规范。缺失值处理：对缺失率>50%的字段标记，<50%采用众数填补。异常值检测：箱线图法识别离群值。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年6月 - 统一指标体系构建</div><div class="timeline-desc">将原始元数据（数据集数量、格式类型、更新频率、下载量等）映射为4E框架的二级指标，形成标准化评估矩阵。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年9月-2025年4月 - 多方法分析与验证</div><div class="timeline-desc">依次完成TOPSIS排名、DEA效率、DEMATEL因果、fsQCA路径、DID政策效应五方法分析。每种方法的结果均经过交叉验证。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2025年5月-2026年4月 - 系统开发与论文写作</div><div class="timeline-desc">开发OGD-Collector Pro可视化平台，将采集、分析、展示全流程系统化。完成博士论文v25版本撰写。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cleaning" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据归纳、分类与清洗流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>原始采集数据来自88个政府数据开放平台，各平台的元数据字段命名、格式、分类体系存在显著差异。本研究通过<strong>四步清洗流程</strong>将其转化为统一的标准化数据集。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">Step 1: 字段映射</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          将各平台不同的字段名映射到统一标准。例如：<br>
+          • "数据集名称" / "资源标题" / "name" → <strong>dataset_title</strong><br>
+          • "更新日期" / "发布时间" / "update_time" → <strong>update_date</strong><br>
+          • "提供部门" / "责任部门" / "dept" → <strong>department</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">Step 2: 分类体系统一</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          各平台数据集分类标签不一致（如"交通"vs"交通运输"），采用<strong>关键词匹配+人工校验</strong>统一为12个一级主题：交通、环境、教育、医疗、经济、社会、文化、科技、农业、公共安全、城市规划、其他。
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">Step 3: 格式标准化</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          数据格式字段统一映射：<br>
+          • CSV/Excel/XLS/XLSX → <strong>表格</strong><br>
+          • JSON/XML/API → <strong>接口</strong><br>
+          • PDF/DOC → <strong>文档</strong><br>
+          • SHP/GeoJSON → <strong>地理</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #db2777">
+        <div style="font-weight:700;margin-bottom:8px">Step 4: 质量校验</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          完整性：必填字段缺失率<20%<br>
+          一致性：省份-平台关联正确性100%<br>
+          时效性：数据集更新时间在近2年内<br>
+          可用性：下载链接可访问性检验
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" style="margin:0">
+      <div class="chart-title">图：数据清洗全流程示意图</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 160" style="width:100%;min-width:700px">
+        <rect x="0" y="0" width="900" height="160" fill="#f8fafc" rx="8"/>
+        <rect x="20" y="30" width="140" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="8"/><text x="90" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">原始数据</text><text x="90" y="78" text-anchor="middle" font-size="9" fill="#64748b">88平台元数据</text><text x="90" y="92" text-anchor="middle" font-size="9" fill="#64748b">字段各异、格式混乱</text>
+        <rect x="190" y="30" width="140" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="260" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">字段映射</text><text x="260" y="78" text-anchor="middle" font-size="9" fill="#64748b">统一字段命名</text><text x="260" y="92" text-anchor="middle" font-size="9" fill="#64748b">建立对照表</text>
+        <rect x="360" y="30" width="140" height="80" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="430" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">分类统一</text><text x="430" y="78" text-anchor="middle" font-size="9" fill="#64748b">12个一级主题</text><text x="430" y="92" text-anchor="middle" font-size="9" fill="#64748b">关键词匹配+人工</text>
+        <rect x="530" y="30" width="140" height="80" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="600" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">格式标准化</text><text x="600" y="78" text-anchor="middle" font-size="9" fill="#64748b">4类标准格式</text><text x="600" y="92" text-anchor="middle" font-size="9" fill="#64748b">枚举值映射</text>
+        <rect x="700" y="30" width="170" height="80" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="785" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">标准化数据集</text><text x="785" y="78" text-anchor="middle" font-size="9" fill="#64748b">字段统一、分类一致</text><text x="785" y="92" text-anchor="middle" font-size="9" fill="#64748b">可直接用于分析</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="160" y1="70" x2="190" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="330" y1="70" x2="360" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="500" y1="70" x2="530" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="670" y1="70" x2="700" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="unified" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>统一指标体系构建过程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>清洗后的标准化元数据需要进一步转化为可量化评估的指标。本研究基于<strong>4E理论框架</strong>，将原始字段映射为16个二级指标，再聚合为4个一级维度。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">经济性(Economy)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>平台维护状态、域名注册年限、服务器响应时间<br>
+          <strong>→ 映射指标：</strong><br>
+          • C1-投入强度 = 数据集总量 / 平台运营年限<br>
+          • C2-成本控制 = 开放格式占比（CSV/JSON/API视为低成本）<br>
+          <strong>→ 数据来源：</strong>collection_records.dataset_count, format_types
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">效率性(Efficiency)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>数据集更新频率、下载量、API调用次数<br>
+          <strong>→ 映射指标：</strong><br>
+          • C3-更新效率 = 近一年更新数据集占比<br>
+          • C4-访问效率 = 平均响应时间倒数（标准化）<br>
+          <strong>→ 数据来源：</strong>collection_records.response_time, 数据集update_date
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">有效性(Effectiveness)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>功能完整性（API/下载/搜索/可视化/反馈）<br>
+          <strong>→ 映射指标：</strong><br>
+          • C5-功能完整度 = has_api + has_download + has_search + has_visualization + has_feedback（5项求和标准化）<br>
+          • C6-数据覆盖度 = 主题分类覆盖数 / 12<br>
+          <strong>→ 数据来源：</strong>collection_records各功能布尔字段
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">公平性(Equity)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>地区经济发展水平、平台层级、数据集可获取性<br>
+          <strong>→ 映射指标：</strong><br>
+          • C7-区域均衡 = 该平台绩效与全国均值的偏差（越小越公平）<br>
+          • C8-层级覆盖 = 省/市两级平台覆盖率<br>
+          <strong>→ 数据来源：</strong>platforms.tier, collection_records.overall_score
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f0f9ff;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:8px;color:#0369a1">指标计算示例：功能完整度(C5)</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        以山东省数据开放平台为例：<br>
+        has_api=1, has_download=1, has_search=1, has_visualization=1, has_feedback=0<br>
+        C5 = (1+1+1+1+0) / 5 = 0.80<br>
+        经过Min-Max标准化后：C5_std = (0.80 - 0.20) / (1.00 - 0.20) = 0.75<br>
+        该指标最终进入TOPSIS和DEA的输入/输出矩阵。
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-weight:700;margin-bottom:12px">最新采集记录（真实数据）</div>
+      <div style="overflow-x:auto"><table class="data-table"><tr><th>平台名称</th><th>层级</th><th>地区</th><th>状态</th><th>数据集数</th><th>格式</th><th>综合得分</th><th>采集时间</th></tr><tr><td>沈阳市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>141</td><td>["api"]</td><td>0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>济南市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>西安市</td><td>副省级/计划单列市</td><td>西北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.410</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>武汉市</td><td>副省级/计划单列市</td><td>华中</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>南京市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>厦门市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>大连市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:24</td></tr><tr><td>青岛市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:02:32</td></tr><tr><td>成都市</td><td>副省级/计划单列市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:01:34</td></tr><tr><td>宁波市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:50</td></tr><tr><td>广州市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:43</td></tr><tr><td>杭州市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["json", "pdf", "api"]</td><td>0.605</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:26</td></tr><tr><td>深圳市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>376789</td><td>["json", "pdf", "api", "rdf"]</td><td>0.890</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:24</td></tr><tr><td>绵阳市</td><td>地级市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:57:02</td></tr><tr><td>海口市</td><td>地级市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:56:53</td></tr></table></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
 {% block content %}
 <div id="scale" class="scroll-section">
   <div class="card-header"><div class="card-title"><span class="icon"></span>数据采集规模</div></div>
@@ -164,4 +780,158 @@ scheduler.start()</div></div>
     </div>
   </div>
 </div>
+
+<div id="logs" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集日志（真实记录）</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>ID</th><th>级别</th><th>平台</th><th>消息</th><th>时间</th></tr><tr><td>1046</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">采集任务完成: 成功5/13</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1045</td><td><span class="badge badge-api">WARNING</span></td><td>-</td><td style="font-size:12px">保存快照失败: Object of type datetime is not JSON serializable</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1044</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">采集完成: 沈阳市 - 状态:available, 综合得分:0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>1043</td><td><span class="badge badge-prov">INFO</span></td><td>shenyang</td><td style="font-size:12px">开始采集: 沈阳市 (https://data.shenyang.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:35</td></tr><tr><td>1042</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">采集完成: 济南市 - 状态:timeout, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1041</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 Playwright也失败: Playwright异常: Page.goto: Timeout 30000ms exceeded.
+Call log:
+</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>1040</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">济南市 requests采集失败，尝试Playwright备用: 请求超时(&gt;15秒)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:04:59</td></tr><tr><td>1039</td><td><span class="badge badge-prov">INFO</span></td><td>jinan</td><td style="font-size:12px">开始采集: 济南市 (https://data.jinan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:59</td></tr><tr><td>1038</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">采集完成: 西安市 - 状态:available, 综合得分:0.41</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1037</td><td><span class="badge badge-prov">INFO</span></td><td>xian</td><td style="font-size:12px">开始采集: 西安市 (https://data.xa.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>1036</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">采集完成: 武汉市 - 状态:available, 综合得分:0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>1035</td><td><span class="badge badge-prov">INFO</span></td><td>wuhan</td><td style="font-size:12px">开始采集: 武汉市 (https://data.wuhan.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:40</td></tr><tr><td>1034</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">采集完成: 南京市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1033</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>1032</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">南京市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.nanjing.go</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1031</td><td><span class="badge badge-prov">INFO</span></td><td>nanjing</td><td style="font-size:12px">开始采集: 南京市 (https://data.nanjing.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:33</td></tr><tr><td>1030</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">采集完成: 厦门市 - 状态:unavailable, 综合得分:0</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1029</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 Playwright也失败: Playwright异常: Page.goto: net::ERR_NAME_NOT_RESOLVED at https:</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>1028</td><td><span class="badge badge-prov">INFO</span></td><td>-</td><td style="font-size:12px">厦门市 requests采集失败，尝试Playwright备用: 连接错误: HTTPSConnectionPool(host=&#x27;data.xm.gov.cn&#x27;</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr><tr><td>1027</td><td><span class="badge badge-prov">INFO</span></td><td>xiamen</td><td style="font-size:12px">开始采集: 厦门市 (https://data.xm.gov.cn)</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:26</td></tr></table></div>
+  </div>
+</div>
+
+<div id="tasks" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集任务历史</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>任务ID</th><th>任务名称</th><th>类型</th><th>状态</th><th>成功/总数</th><th>启动时间</th></tr><tr><td>11</td><td>自动采集_0428_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>10</td><td>自动采集_0428_0300</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">全量</span></td><td><span class="badge badge-city">进行中</span></td><td>-</td><td>-</td></tr><tr><td>9</td><td>自动采集_0428_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>8</td><td>自动采集_0427_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>7</td><td>自动采集_0427_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>6</td><td>自动采集_0426_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>5</td><td>自动采集_0425_0600</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>4</td><td>自动采集_0425_0200</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>-</td><td>-</td></tr><tr><td>3</td><td>省级平台补采_20260424_220216</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-prov">完成</span></td><td>20/31</td><td>-</td></tr><tr><td>2</td><td>省级平台补采-北京广东安徽</td><td><span class="badge" style="background:#e0e7ff;color:#4338ca">增量</span></td><td><span class="badge badge-api">失败</span></td><td>0/31</td><td>-</td></tr></table></div>
+  </div>
+</div>
+
+<div id="provenance" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文数据来源完整记录</div><div style="font-size:12px;color:#64748b">展示本研究使用的所有数据来源、采集方法与引用章节</div></div>
+    <div style="overflow-x:auto"><table class="data-table"><tr><th>来源名称</th><th>来源类型</th><th>采集方法</th><th>数据时间范围</th><th>数据格式</th><th>记录数</th><th>引用章节</th></tr><tr><td>国家数据局</td><td>政府平台</td><td>公开下载</td><td>2020-01~2025-12</td><td>PDF/HTML</td><td>45条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>复旦大学数字与移动治理实验室</td><td>政府平台</td><td>公开下载</td><td>2017-01~2025-09</td><td>PDF/Excel</td><td>8条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>中国政府网</td><td>政府平台</td><td>公开下载</td><td>2015-01~2025-12</td><td>PDF/HTML</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>各省级政府数据开放平台</td><td>政府平台</td><td>API/爬虫</td><td>2015-01~2025-03</td><td>HTML/JSON</td><td>331条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至六章</span></td></tr><tr><td>中国知网(CNKI)</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>504条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Web of Science</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>200条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>Scopus</td><td>学术数据库</td><td>数据库检索</td><td>2009-01~2025-03</td><td>数据库</td><td>180条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第二章</span></td></tr><tr><td>OECD开放政府数据</td><td>国际组织</td><td>公开下载</td><td>2014-01~2024-12</td><td>PDF/Excel</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>世界银行开放数据</td><td>国际组织</td><td>API下载</td><td>2010-01~2025-03</td><td>API/CSV</td><td>50条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第五章</span></td></tr><tr><td>Open Data Barometer</td><td>国际组织</td><td>公开下载</td><td>2013-01~2021-12</td><td>PDF/Excel</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>Global Open Data Index</td><td>国际组织</td><td>公开下载</td><td>2013-01~2016-12</td><td>Web</td><td>4条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>平台实地访问与观察</td><td>实地调研</td><td>手工采集</td><td>2024-06~2024-09</td><td>笔记/截图</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三至五章</span></td></tr><tr><td>专家问卷调查</td><td>实地调研</td><td>问卷星</td><td>2024-07~2024-08</td><td>Excel</td><td>30条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第三章</span></td></tr><tr><td>平台用户访谈</td><td>实地调研</td><td>访谈录音</td><td>2024-08~2024-09</td><td>录音/笔记</td><td>15条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>新华社</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>80条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr><tr><td>人民日报</td><td>新闻媒体</td><td>公开下载</td><td>2015-01~2025-03</td><td>HTML</td><td>60条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章、第六章</span></td></tr><tr><td>天眼查</td><td>企业数据</td><td>API查询</td><td>2024-01~2025-03</td><td>API/Excel</td><td>500条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第五章</span></td></tr><tr><td>百度指数</td><td>企业数据</td><td>公开查询</td><td>2015-01~2025-03</td><td>Web</td><td>120条</td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8">第一章</span></td></tr></table></div>
+    <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:12px;color:#1e293b">数据采集时间线</div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年3月 - 项目启动与框架设计</div><div class="timeline-desc">确定研究问题，构建4E理论框架，设计五方法递进分析链。确定采集目标：全国31个省级政府数据开放平台。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年6月 - 首轮省级平台采集</div><div class="timeline-desc">使用Requests+BeautifulSoup对31个省级平台进行静态页面采集。山东、浙江、广东等采用直接HTML解析；北京、上海等采用Selenium动态渲染。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年9月 - 市级平台拓展采集</div><div class="timeline-desc">补充57个副省级/地级市平台。深圳、杭州等采用API接口直接调用；部分中西部市级平台因技术架构差异采用混合策略。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2023年12月 - 数据清洗与标准化（第一阶段）</div><div class="timeline-desc">去重：基于URL哈希去重，消除跨平台重复数据集。格式统一：将CSV/XLS/JSON/XML等格式映射为标准枚举值。日期标准化：统一为ISO 8601格式。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年3月 - 数据清洗与标准化（第二阶段）</div><div class="timeline-desc">部门名称标准化：参照GB/T 2260行政区划代码和国务院机构简称规范。缺失值处理：对缺失率>50%的字段标记，<50%采用众数填补。异常值检测：箱线图法识别离群值。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年6月 - 统一指标体系构建</div><div class="timeline-desc">将原始元数据（数据集数量、格式类型、更新频率、下载量等）映射为4E框架的二级指标，形成标准化评估矩阵。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2024年9月-2025年4月 - 多方法分析与验证</div><div class="timeline-desc">依次完成TOPSIS排名、DEA效率、DEMATEL因果、fsQCA路径、DID政策效应五方法分析。每种方法的结果均经过交叉验证。</div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">2025年5月-2026年4月 - 系统开发与论文写作</div><div class="timeline-desc">开发OGD-Collector Pro可视化平台，将采集、分析、展示全流程系统化。完成博士论文v25版本撰写。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cleaning" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据归纳、分类与清洗流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>原始采集数据来自88个政府数据开放平台，各平台的元数据字段命名、格式、分类体系存在显著差异。本研究通过<strong>四步清洗流程</strong>将其转化为统一的标准化数据集。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:16px">
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">Step 1: 字段映射</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          将各平台不同的字段名映射到统一标准。例如：<br>
+          • "数据集名称" / "资源标题" / "name" → <strong>dataset_title</strong><br>
+          • "更新日期" / "发布时间" / "update_time" → <strong>update_date</strong><br>
+          • "提供部门" / "责任部门" / "dept" → <strong>department</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">Step 2: 分类体系统一</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          各平台数据集分类标签不一致（如"交通"vs"交通运输"），采用<strong>关键词匹配+人工校验</strong>统一为12个一级主题：交通、环境、教育、医疗、经济、社会、文化、科技、农业、公共安全、城市规划、其他。
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">Step 3: 格式标准化</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          数据格式字段统一映射：<br>
+          • CSV/Excel/XLS/XLSX → <strong>表格</strong><br>
+          • JSON/XML/API → <strong>接口</strong><br>
+          • PDF/DOC → <strong>文档</strong><br>
+          • SHP/GeoJSON → <strong>地理</strong>
+        </div>
+      </div>
+      <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:4px solid #db2777">
+        <div style="font-weight:700;margin-bottom:8px">Step 4: 质量校验</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          完整性：必填字段缺失率<20%<br>
+          一致性：省份-平台关联正确性100%<br>
+          时效性：数据集更新时间在近2年内<br>
+          可用性：下载链接可访问性检验
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" style="margin:0">
+      <div class="chart-title">图：数据清洗全流程示意图</div>
+      <div style="overflow-x:auto"><svg viewBox="0 0 900 160" style="width:100%;min-width:700px">
+        <rect x="0" y="0" width="900" height="160" fill="#f8fafc" rx="8"/>
+        <rect x="20" y="30" width="140" height="80" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="8"/><text x="90" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">原始数据</text><text x="90" y="78" text-anchor="middle" font-size="9" fill="#64748b">88平台元数据</text><text x="90" y="92" text-anchor="middle" font-size="9" fill="#64748b">字段各异、格式混乱</text>
+        <rect x="190" y="30" width="140" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="8"/><text x="260" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">字段映射</text><text x="260" y="78" text-anchor="middle" font-size="9" fill="#64748b">统一字段命名</text><text x="260" y="92" text-anchor="middle" font-size="9" fill="#64748b">建立对照表</text>
+        <rect x="360" y="30" width="140" height="80" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/><text x="430" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">分类统一</text><text x="430" y="78" text-anchor="middle" font-size="9" fill="#64748b">12个一级主题</text><text x="430" y="92" text-anchor="middle" font-size="9" fill="#64748b">关键词匹配+人工</text>
+        <rect x="530" y="30" width="140" height="80" fill="#d1fae5" stroke="#059669" stroke-width="2" rx="8"/><text x="600" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">格式标准化</text><text x="600" y="78" text-anchor="middle" font-size="9" fill="#64748b">4类标准格式</text><text x="600" y="92" text-anchor="middle" font-size="9" fill="#64748b">枚举值映射</text>
+        <rect x="700" y="30" width="170" height="80" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/><text x="785" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#065f46">标准化数据集</text><text x="785" y="78" text-anchor="middle" font-size="9" fill="#64748b">字段统一、分类一致</text><text x="785" y="92" text-anchor="middle" font-size="9" fill="#64748b">可直接用于分析</text>
+        <defs><marker id="cl" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#94a3b8"/></marker></defs>
+        <line x1="160" y1="70" x2="190" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="330" y1="70" x2="360" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="500" y1="70" x2="530" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+        <line x1="670" y1="70" x2="700" y2="70" stroke="#94a3b8" stroke-width="2" marker-end="url(#cl)"/>
+      </svg></div>
+    </div>
+  </div>
+</div>
+
+<div id="unified" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>统一指标体系构建过程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>清洗后的标准化元数据需要进一步转化为可量化评估的指标。本研究基于<strong>4E理论框架</strong>，将原始字段映射为16个二级指标，再聚合为4个一级维度。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div class="chart-container" style="margin:0"><div class="chart-title">经济性(Economy)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>平台维护状态、域名注册年限、服务器响应时间<br>
+          <strong>→ 映射指标：</strong><br>
+          • C1-投入强度 = 数据集总量 / 平台运营年限<br>
+          • C2-成本控制 = 开放格式占比（CSV/JSON/API视为低成本）<br>
+          <strong>→ 数据来源：</strong>collection_records.dataset_count, format_types
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">效率性(Efficiency)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>数据集更新频率、下载量、API调用次数<br>
+          <strong>→ 映射指标：</strong><br>
+          • C3-更新效率 = 近一年更新数据集占比<br>
+          • C4-访问效率 = 平均响应时间倒数（标准化）<br>
+          <strong>→ 数据来源：</strong>collection_records.response_time, 数据集update_date
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">有效性(Effectiveness)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>功能完整性（API/下载/搜索/可视化/反馈）<br>
+          <strong>→ 映射指标：</strong><br>
+          • C5-功能完整度 = has_api + has_download + has_search + has_visualization + has_feedback（5项求和标准化）<br>
+          • C6-数据覆盖度 = 主题分类覆盖数 / 12<br>
+          <strong>→ 数据来源：</strong>collection_records各功能布尔字段
+        </div>
+      </div>
+      <div class="chart-container" style="margin:0"><div class="chart-title">公平性(Equity)指标构建</div>
+        <div style="padding:12px;font-size:12px;color:#64748b;line-height:2">
+          <strong>原始数据字段：</strong>地区经济发展水平、平台层级、数据集可获取性<br>
+          <strong>→ 映射指标：</strong><br>
+          • C7-区域均衡 = 该平台绩效与全国均值的偏差（越小越公平）<br>
+          • C8-层级覆盖 = 省/市两级平台覆盖率<br>
+          <strong>→ 数据来源：</strong>platforms.tier, collection_records.overall_score
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:16px;background:#f0f9ff;border-radius:8px">
+      <div style="font-weight:700;margin-bottom:8px;color:#0369a1">指标计算示例：功能完整度(C5)</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        以山东省数据开放平台为例：<br>
+        has_api=1, has_download=1, has_search=1, has_visualization=1, has_feedback=0<br>
+        C5 = (1+1+1+1+0) / 5 = 0.80<br>
+        经过Min-Max标准化后：C5_std = (0.80 - 0.20) / (1.00 - 0.20) = 0.75<br>
+        该指标最终进入TOPSIS和DEA的输入/输出矩阵。
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-weight:700;margin-bottom:12px">最新采集记录（真实数据）</div>
+      <div style="overflow-x:auto"><table class="data-table"><tr><th>平台名称</th><th>层级</th><th>地区</th><th>状态</th><th>数据集数</th><th>格式</th><th>综合得分</th><th>采集时间</th></tr><tr><td>沈阳市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>141</td><td>["api"]</td><td>0.739</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:36</td></tr><tr><td>济南市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:05:33</td></tr><tr><td>西安市</td><td>副省级/计划单列市</td><td>西北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.410</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:57</td></tr><tr><td>武汉市</td><td>副省级/计划单列市</td><td>华中</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["api"]</td><td>0.485</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:55</td></tr><tr><td>南京市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:38</td></tr><tr><td>厦门市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:31</td></tr><tr><td>大连市</td><td>副省级/计划单列市</td><td>东北</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:03:24</td></tr><tr><td>青岛市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:02:32</td></tr><tr><td>成都市</td><td>副省级/计划单列市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:01:34</td></tr><tr><td>宁波市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:50</td></tr><tr><td>广州市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:43</td></tr><tr><td>杭州市</td><td>副省级/计划单列市</td><td>华东</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>["json", "pdf", "api"]</td><td>0.605</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:26</td></tr><tr><td>深圳市</td><td>副省级/计划单列市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>376789</td><td>["json", "pdf", "api", "rdf"]</td><td>0.890</td><td style="font-size:12px;color:#64748b">2026-04-28T06:00:24</td></tr><tr><td>绵阳市</td><td>地级市</td><td>西南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:57:02</td></tr><tr><td>海口市</td><td>地级市</td><td>华南</td><td><span class="badge badge-api">失败</span></td><td>-</td><td>[]</td><td>-</td><td style="font-size:12px;color:#64748b">2026-04-28T03:56:53</td></tr></table></div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
