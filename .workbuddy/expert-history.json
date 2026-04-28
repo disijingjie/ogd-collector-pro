@@ -3,6 +3,15 @@
   "sessions": {
     "ad7b121118034aa3992016ca35fab7e8": [
       {
+        "expertId": "InfrastructureOperationsExpert",
+        "name": "运维通",
+        "profession": "基础设施运维专家",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/09-Operations/InfrastructureOperationsExpert/InfrastructureOperationsExpert.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/09-Operations/InfrastructureOperationsExpert/InfrastructureOperationsExpert_zh.md",
+        "usedAt": 1777369287509,
+        "industryId": "09-Operations"
+      },
+      {
         "expertId": "AndonQExpert",
         "name": "AndonQ",
         "profession": "腾讯云技术支持专家",
@@ -19,15 +28,6 @@
         "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert_zh.md",
         "usedAt": 1777285150804,
         "industryId": "all"
-      },
-      {
-        "expertId": "BookCoCreator",
-        "name": "著书书",
-        "profession": "图书联合创作者",
-        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/03-Marketing/BookCoCreator/BookCoCreator.png",
-        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/03-Marketing/BookCoCreator/BookCoCreator_zh.md",
-        "usedAt": 1777252976386,
-        "industryId": "all"
       }
     ],
     "5acdaeab74734c43adecc6459e6bc1e9": [
@@ -42,5 +42,5 @@
       }
     ]
   },
-  "lastUpdated": 1777344360799
+  "lastUpdated": 1777371577295
 }

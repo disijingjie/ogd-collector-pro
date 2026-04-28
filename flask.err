@@ -4,3 +4,13 @@ WARNING: This is a development server. Do not use it in a production deployment.
  * Running on http://192.168.31.145:5000
 Press CTRL+C to quit
 127.0.0.1 - - [28/Apr/2026 16:30:28] "GET /v3/collection HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 17:13:29] "GET /v3/collection HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 17:13:30] "GET /static/charts/fig4_5_strategy_matrix.png HTTP/1.1" 304 -
+127.0.0.1 - - [28/Apr/2026 17:13:30] "GET /static/charts/fig4_3_consistency_coeff.png HTTP/1.1" 304 -
+127.0.0.1 - - [28/Apr/2026 17:14:32] "GET /v3/analysis HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 17:14:55] "GET /v3/reproduce HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 18:08:19] "GET /v3/collection HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 18:08:19] "GET /static/charts/fig4_3_consistency_coeff.png HTTP/1.1" 304 -
+127.0.0.1 - - [28/Apr/2026 18:08:19] "GET /static/charts/fig4_5_strategy_matrix.png HTTP/1.1" 304 -
+127.0.0.1 - - [28/Apr/2026 18:08:19] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 18:08:42] "GET /v3/ HTTP/1.1" 200 -

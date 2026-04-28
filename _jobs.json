@@ -1,0 +1,57 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 73355724837,
+      "run_id": 25044443199,
+      "workflow_name": "Auto Deploy to Server",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/disijingjie/ogd-collector-pro/actions/runs/25044443199",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOSJxTbM8AAAARFFeIJQ",
+      "head_sha": "f26beaa6b3e0c7a4b713b9c5b701fb918b2bc479",
+      "url": "https://api.github.com/repos/disijingjie/ogd-collector-pro/actions/jobs/73355724837",
+      "html_url": "https://github.com/disijingjie/ogd-collector-pro/actions/runs/25044443199/job/73355724837",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-04-28T09:15:19Z",
+      "started_at": "2026-04-28T09:15:22Z",
+      "completed_at": "2026-04-28T09:15:26Z",
+      "name": "deploy",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-04-28T09:15:22Z",
+          "completed_at": "2026-04-28T09:15:24Z"
+        },
+        {
+          "name": "Deploy to Tencent Cloud",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-04-28T09:15:24Z",
+          "completed_at": "2026-04-28T09:15:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-04-28T09:15:24Z",
+          "completed_at": "2026-04-28T09:15:24Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/disijingjie/ogd-collector-pro/check-runs/73355724837",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000000,
+      "runner_name": "GitHub Actions 1000000000",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}
