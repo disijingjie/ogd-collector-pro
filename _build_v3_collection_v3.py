@@ -1,4 +1,50 @@
-{% extends "base_v3.html" %}{% set active = "collection" %}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+生成v3采集中心页面（完整版）
+含：数据来源完整追溯 + 重新采集控制面板
+"""
+
+# ========== 22省采集详细数据（基于真实历史记录）==========
+PROVINCE_DATA = [
+    # 省名, 代码, 采集方法, 数据量, 置信度, 来源类型, 采集日期, 挑战说明, 状态
+    ("广东","guangdong","静态+人工核验",97528,0.95,"自主采集","2024-06-15","数据量大，分页加载", "success"),
+    ("山东","shandong","静态+人工核验",63656,0.95,"自主采集","2024-06-15","目录结构复杂", "success"),
+    ("浙江","zhejiang","第三方+人工",38000,0.88,"第三方数据","2024-07-20","省数据局新闻发布会", "success"),
+    ("海南","hainan","静态+Playwright",35835,0.90,"自主采集","2024-06-18","JS动态渲染", "success"),
+    ("湖北","hubei","静态+Playwright",24119,0.88,"自主采集","2024-06-20","部分数据需登录", "success"),
+    ("重庆","chongqing","动态渲染",22550,0.85,"自主采集","2024-06-22","Vue异步加载", "success"),
+    ("广西","guangxi","静态+Playwright",10162,0.85,"自主采集","2024-06-25","URL重定向", "success"),
+    ("四川","sichuan","动态渲染",9115,0.82,"自主采集","2024-06-25","React组件渲染", "success"),
+    ("贵州","guizhou","API接口",9042,0.90,"自主采集","2024-06-18","JSON数据结构规范", "success"),
+    ("福建","fujian","API接口",6722,0.88,"自主采集","2024-06-18","RESTful接口直接调用", "success"),
+    ("北京","beijing","静态+动态",4454,0.85,"自主采集","2024-06-15","多域名跳转", "success"),
+    ("辽宁","liaoning","静态+Playwright",4120,0.82,"自主采集","2024-06-28","验证码拦截", "success"),
+    ("天津","tianjin","第三方数据",3344,0.80,"第三方数据","2024-07-22","天津数港官方报告", "success"),
+    ("上海","shanghai","第三方+人工",10753,0.88,"第三方数据","2024-07-20","平台官方统计", "success"),
+    ("湖南","hunan","静态+Playwright",634,0.78,"自主采集","2024-06-30","数据量小但完整", "success"),
+    ("江西","jiangxi","静态+Playwright",534,0.75,"自主采集","2024-06-30","部分字段缺失", "success"),
+    ("吉林","jilin","静态解析",303,0.72,"自主采集","2024-07-01","平台更新缓慢", "success"),
+    ("江苏","jiangsu","动态渲染+Playwright",644,0.70,"自主采集","2024-08-05","新URL发现，数据目录形式", "success"),
+    ("河南","henan","动态渲染+Playwright",931,0.68,"自主采集","2024-08-08","平台转型为产品中心", "success"),
+    ("云南","yunnan","动态渲染+Playwright",428,0.65,"自主采集","2024-08-10","转型为登记中心", "success"),
+    ("内蒙古","neimenggu","静态解析",219,0.70,"自主采集","2024-07-01","数据量小", "success"),
+    ("安徽","anhui","—",0,0.0,"替代形式","2024-08-15","平台维护中，使用政务网替代", "maintenance"),
+]
+
+# 8省无平台替代形式
+NO_PLATFORM_PROVINCES = [
+    ("甘肃","政务服务网","https://zwfw.gansu.gov.cn","数据目录链接","低"),
+    ("河北","数据登记平台","https://hebei.gov.cn","7033条登记","中"),
+    ("黑龙江","政务服务网","https://hljzwfw.gov.cn","政策文件","低"),
+    ("宁夏","数据条例","—","法规政策文本","低"),
+    ("青海","政务服务网","https://qhzwfw.gov.cn","少量数据目录","低"),
+    ("陕西","政务服务网","https://snzwfw.gov.cn","省级数据局筹建中","低"),
+    ("新疆","政务服务网","https://xjzwfw.gov.cn","政策导向","低"),
+    ("西藏","政务服务网","https://xizang.gov.cn","数字化基础薄弱","低"),
+]
+
+HTML = '''{% extends "base_v3.html" %}{% set active = "collection" %}
 {% block title %}采集中心 - OGD-Collector Pro{% endblock %}
 {% block page_title %}采集中心{% endblock %}
 {% block breadcrumb %}采集中心{% endblock %}
@@ -153,381 +199,35 @@
         <tr>
           <th>省份</th><th>采集方法</th><th>数据集数量</th><th>置信度</th><th>数据来源</th><th>采集日期</th><th>状态</th>
         </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-guangdong')">
-          <td style="font-weight:700">广东</td>
-          <td>静态+人工核验</td>
-          <td style="text-align:right;font-weight:700">97,528</td>
-          <td style="color:#059669;font-weight:700">95%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-15</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
+'''
+
+# 生成表格行
+for prov, code, method, count, conf, source, date, challenge, status in PROVINCE_DATA:
+    status_badge = '<span class="badge" style="background:#d1fae5;color:#065f46">成功</span>' if status == 'success' else '<span class="badge" style="background:#fef2f2;color:#dc2626">维护中</span>'
+    conf_color = '#059669' if conf >= 0.8 else '#d97706' if conf >= 0.6 else '#dc2626'
+    source_badge = '<span class="badge badge-prov">自主采集</span>' if source == '自主采集' else '<span class="badge" style="background:#fce7f3;color:#9d174d">第三方</span>' if '第三方' in source else '<span class="badge" style="background:#f3e8ff;color:#7c22ce">替代</span>'
+    count_str = f'{count:,}' if count > 0 else '—'
+    
+    HTML += f'''        <tr style="cursor:pointer" onclick="toggleRow('row-{code}')">
+          <td style="font-weight:700">{prov}</td>
+          <td>{method}</td>
+          <td style="text-align:right;font-weight:700">{count_str}</td>
+          <td style="color:{conf_color};font-weight:700">{conf:.0%}</td>
+          <td>{source_badge}</td>
+          <td style="font-size:12px;color:#64748b">{date}</td>
+          <td>{status_badge}</td>
         </tr>
-        <tr id="row-guangdong" style="display:none;background:#f8fafc">
+        <tr id="row-{code}" style="display:none;background:#f8fafc">
           <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>数据量大，分页加载<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
+            <strong>采集挑战：</strong>{challenge}<br>
+            <strong>数据口径：</strong>{'标准化数据集' if count > 5000 else '数据目录' if count > 500 else '数据产品/登记' if count > 0 else '平台维护中，使用替代数据'}<br>
+            <strong>转换系数：</strong>{'1.0' if count > 5000 else '0.8' if count > 500 else '0.5' if count > 0 else 'N/A'}<br>
+            <strong>质量备注：</strong>{'数据完整，经人工核验' if conf >= 0.85 else '数据可能不完整，已在分析中标注' if conf >= 0.6 else '数据可靠性较低，仅作参考'}
           </td>
         </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-shandong')">
-          <td style="font-weight:700">山东</td>
-          <td>静态+人工核验</td>
-          <td style="text-align:right;font-weight:700">63,656</td>
-          <td style="color:#059669;font-weight:700">95%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-15</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-shandong" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>目录结构复杂<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-zhejiang')">
-          <td style="font-weight:700">浙江</td>
-          <td>第三方+人工</td>
-          <td style="text-align:right;font-weight:700">38,000</td>
-          <td style="color:#059669;font-weight:700">88%</td>
-          <td><span class="badge" style="background:#fce7f3;color:#9d174d">第三方</span></td>
-          <td style="font-size:12px;color:#64748b">2024-07-20</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-zhejiang" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>省数据局新闻发布会<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-hainan')">
-          <td style="font-weight:700">海南</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">35,835</td>
-          <td style="color:#059669;font-weight:700">90%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-18</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-hainan" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>JS动态渲染<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-hubei')">
-          <td style="font-weight:700">湖北</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">24,119</td>
-          <td style="color:#059669;font-weight:700">88%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-20</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-hubei" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>部分数据需登录<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-chongqing')">
-          <td style="font-weight:700">重庆</td>
-          <td>动态渲染</td>
-          <td style="text-align:right;font-weight:700">22,550</td>
-          <td style="color:#059669;font-weight:700">85%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-22</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-chongqing" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>Vue异步加载<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-guangxi')">
-          <td style="font-weight:700">广西</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">10,162</td>
-          <td style="color:#059669;font-weight:700">85%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-25</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-guangxi" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>URL重定向<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-sichuan')">
-          <td style="font-weight:700">四川</td>
-          <td>动态渲染</td>
-          <td style="text-align:right;font-weight:700">9,115</td>
-          <td style="color:#059669;font-weight:700">82%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-25</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-sichuan" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>React组件渲染<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-guizhou')">
-          <td style="font-weight:700">贵州</td>
-          <td>API接口</td>
-          <td style="text-align:right;font-weight:700">9,042</td>
-          <td style="color:#059669;font-weight:700">90%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-18</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-guizhou" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>JSON数据结构规范<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-fujian')">
-          <td style="font-weight:700">福建</td>
-          <td>API接口</td>
-          <td style="text-align:right;font-weight:700">6,722</td>
-          <td style="color:#059669;font-weight:700">88%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-18</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-fujian" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>RESTful接口直接调用<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-beijing')">
-          <td style="font-weight:700">北京</td>
-          <td>静态+动态</td>
-          <td style="text-align:right;font-weight:700">4,454</td>
-          <td style="color:#059669;font-weight:700">85%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-15</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-beijing" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>多域名跳转<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-liaoning')">
-          <td style="font-weight:700">辽宁</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">4,120</td>
-          <td style="color:#059669;font-weight:700">82%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-28</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-liaoning" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>验证码拦截<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-tianjin')">
-          <td style="font-weight:700">天津</td>
-          <td>第三方数据</td>
-          <td style="text-align:right;font-weight:700">3,344</td>
-          <td style="color:#059669;font-weight:700">80%</td>
-          <td><span class="badge" style="background:#fce7f3;color:#9d174d">第三方</span></td>
-          <td style="font-size:12px;color:#64748b">2024-07-22</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-tianjin" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>天津数港官方报告<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-shanghai')">
-          <td style="font-weight:700">上海</td>
-          <td>第三方+人工</td>
-          <td style="text-align:right;font-weight:700">10,753</td>
-          <td style="color:#059669;font-weight:700">88%</td>
-          <td><span class="badge" style="background:#fce7f3;color:#9d174d">第三方</span></td>
-          <td style="font-size:12px;color:#64748b">2024-07-20</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-shanghai" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>平台官方统计<br>
-            <strong>数据口径：</strong>标准化数据集<br>
-            <strong>转换系数：</strong>1.0<br>
-            <strong>质量备注：</strong>数据完整，经人工核验
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-hunan')">
-          <td style="font-weight:700">湖南</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">634</td>
-          <td style="color:#d97706;font-weight:700">78%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-30</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-hunan" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>数据量小但完整<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-jiangxi')">
-          <td style="font-weight:700">江西</td>
-          <td>静态+Playwright</td>
-          <td style="text-align:right;font-weight:700">534</td>
-          <td style="color:#d97706;font-weight:700">75%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-06-30</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-jiangxi" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>部分字段缺失<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-jilin')">
-          <td style="font-weight:700">吉林</td>
-          <td>静态解析</td>
-          <td style="text-align:right;font-weight:700">303</td>
-          <td style="color:#d97706;font-weight:700">72%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-07-01</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-jilin" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>平台更新缓慢<br>
-            <strong>数据口径：</strong>数据产品/登记<br>
-            <strong>转换系数：</strong>0.5<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-jiangsu')">
-          <td style="font-weight:700">江苏</td>
-          <td>动态渲染+Playwright</td>
-          <td style="text-align:right;font-weight:700">644</td>
-          <td style="color:#d97706;font-weight:700">70%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-08-05</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-jiangsu" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>新URL发现，数据目录形式<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-henan')">
-          <td style="font-weight:700">河南</td>
-          <td>动态渲染+Playwright</td>
-          <td style="text-align:right;font-weight:700">931</td>
-          <td style="color:#d97706;font-weight:700">68%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-08-08</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-henan" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>平台转型为产品中心<br>
-            <strong>数据口径：</strong>数据目录<br>
-            <strong>转换系数：</strong>0.8<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-yunnan')">
-          <td style="font-weight:700">云南</td>
-          <td>动态渲染+Playwright</td>
-          <td style="text-align:right;font-weight:700">428</td>
-          <td style="color:#d97706;font-weight:700">65%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-08-10</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-yunnan" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>转型为登记中心<br>
-            <strong>数据口径：</strong>数据产品/登记<br>
-            <strong>转换系数：</strong>0.5<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-neimenggu')">
-          <td style="font-weight:700">内蒙古</td>
-          <td>静态解析</td>
-          <td style="text-align:right;font-weight:700">219</td>
-          <td style="color:#d97706;font-weight:700">70%</td>
-          <td><span class="badge badge-prov">自主采集</span></td>
-          <td style="font-size:12px;color:#64748b">2024-07-01</td>
-          <td><span class="badge" style="background:#d1fae5;color:#065f46">成功</span></td>
-        </tr>
-        <tr id="row-neimenggu" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>数据量小<br>
-            <strong>数据口径：</strong>数据产品/登记<br>
-            <strong>转换系数：</strong>0.5<br>
-            <strong>质量备注：</strong>数据可能不完整，已在分析中标注
-          </td>
-        </tr>
-        <tr style="cursor:pointer" onclick="toggleRow('row-anhui')">
-          <td style="font-weight:700">安徽</td>
-          <td>—</td>
-          <td style="text-align:right;font-weight:700">—</td>
-          <td style="color:#dc2626;font-weight:700">0%</td>
-          <td><span class="badge" style="background:#f3e8ff;color:#7c22ce">替代</span></td>
-          <td style="font-size:12px;color:#64748b">2024-08-15</td>
-          <td><span class="badge" style="background:#fef2f2;color:#dc2626">维护中</span></td>
-        </tr>
-        <tr id="row-anhui" style="display:none;background:#f8fafc">
-          <td colspan="7" style="padding:16px;font-size:12px;color:#64748b;line-height:1.8">
-            <strong>采集挑战：</strong>平台维护中，使用政务网替代<br>
-            <strong>数据口径：</strong>平台维护中，使用替代数据<br>
-            <strong>转换系数：</strong>N/A<br>
-            <strong>质量备注：</strong>数据可靠性较低，仅作参考
-          </td>
-        </tr>
-      </table>
+'''
+
+HTML += '''      </table>
     </div>
     <div style="margin-top:12px;font-size:12px;color:#64748b">
       <strong>数据来源类型说明：</strong>
@@ -597,63 +297,20 @@
     <div style="overflow-x:auto">
       <table class="data-table">
         <tr><th>省份</th><th>替代形式</th><th>URL/来源</th><th>数据量/内容</th><th>开放能力评估</th></tr>
-        <tr>
-          <td style="font-weight:700">甘肃</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://zwfw.gansu.gov.cn</td>
-          <td style="font-size:12px">数据目录链接</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
+'''
+
+for prov, form, url, content, level in NO_PLATFORM_PROVINCES:
+    level_color = '#059669' if level == '高' else '#d97706' if level == '中' else '#dc2626'
+    HTML += f'''        <tr>
+          <td style="font-weight:700">{prov}</td>
+          <td>{form}</td>
+          <td style="font-size:12px">{url}</td>
+          <td style="font-size:12px">{content}</td>
+          <td style="color:{level_color};font-weight:700">{level}</td>
         </tr>
-        <tr>
-          <td style="font-weight:700">河北</td>
-          <td>数据登记平台</td>
-          <td style="font-size:12px">https://hebei.gov.cn</td>
-          <td style="font-size:12px">7033条登记</td>
-          <td style="color:#d97706;font-weight:700">中</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">黑龙江</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://hljzwfw.gov.cn</td>
-          <td style="font-size:12px">政策文件</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">宁夏</td>
-          <td>数据条例</td>
-          <td style="font-size:12px">—</td>
-          <td style="font-size:12px">法规政策文本</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">青海</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://qhzwfw.gov.cn</td>
-          <td style="font-size:12px">少量数据目录</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">陕西</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://snzwfw.gov.cn</td>
-          <td style="font-size:12px">省级数据局筹建中</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">新疆</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://xjzwfw.gov.cn</td>
-          <td style="font-size:12px">政策导向</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700">西藏</td>
-          <td>政务服务网</td>
-          <td style="font-size:12px">https://xizang.gov.cn</td>
-          <td style="font-size:12px">数字化基础薄弱</td>
-          <td style="color:#dc2626;font-weight:700">低</td>
-        </tr>
-      </table>
+'''
+
+HTML += '''      </table>
     </div>
   </div>
 
@@ -900,3 +557,9 @@ function showCompareResults(provs, success, failed) {
 </script>
 
 {% endblock %}
+'''
+
+with open('templates/v3_collection.html', 'w', encoding='utf-8') as f:
+    f.write(HTML)
+
+print('[OK] templates/v3_collection.html generated (complete version)')

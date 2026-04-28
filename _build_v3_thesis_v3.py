@@ -1,4 +1,11 @@
-{% extends "base_v3.html" %}{% set active = "thesis" %}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+生成v3论文成果页面（完整版）
+含：全部36图24表逐章完整展示 + 数据来源标注
+"""
+
+HTML = '''{% extends "base_v3.html" %}{% set active = "thesis" %}
 {% block title %}论文成果 - OGD-Collector Pro{% endblock %}
 {% block page_title %}论文成果{% endblock %}
 {% block breadcrumb %}论文成果{% endblock %}
@@ -676,3 +683,9 @@ function toggleChapter(id) {
 </script>
 
 {% endblock %}
+'''
+
+with open('templates/v3_thesis.html', 'w', encoding='utf-8') as f:
+    f.write(HTML)
+
+print('[OK] templates/v3_thesis.html generated (complete version with all chapters)')
