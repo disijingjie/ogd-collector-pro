@@ -1,4 +1,13 @@
-{% extends "base_v3.html" %}{% set active = "analysis" %}{% block title %}分析验证 - OGD-Collector Pro{% endblock %}{% block page_title %}分析验证{% endblock %}{% block breadcrumb %}分析验证{% endblock %}
+# -*- coding: utf-8 -*-
+import os
+BASE = r"c:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\templates"
+def w(name, content):
+    with open(os.path.join(BASE, name), "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[OK] {name} ({len(content)} chars)")
+
+# ========== v3_analysis.html ==========
+w("v3_analysis.html", '''{% extends "base_v3.html" %}{% set active = "analysis" %}{% block title %}分析验证 - OGD-Collector Pro{% endblock %}{% block page_title %}分析验证{% endblock %}{% block breadcrumb %}分析验证{% endblock %}
 {% block extra_css %}<style>
 .rank-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .rank-name{width:60px;font-weight:600;font-size:13px;text-align:right}
@@ -271,3 +280,6 @@
   <a href="/v3/thesis" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>论文成果 →</strong></div></a>
 </div>
 {% endblock %}
+''')
+
+print("Analysis done.")

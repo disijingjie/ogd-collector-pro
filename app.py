@@ -1654,6 +1654,12 @@ def v3_research():
     return render_template('v3_research.html')
 
 
+@app.route('/v3/reproduce')
+def v3_reproduce():
+    """v3 数据复现实验室"""
+    return render_template('v3_reproduce.html')
+
+
 # 启动后台调度器
 scheduler_thread = threading.Thread(target=scheduler_worker, daemon=True)
 scheduler_thread.start()

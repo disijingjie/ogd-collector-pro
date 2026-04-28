@@ -1,0 +1,399 @@
+# -*- coding: utf-8 -*-
+import os
+BASE = r"c:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\templates"
+def w(name, content):
+    with open(os.path.join(BASE, name), "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[OK] {name} ({len(content)} chars)")
+
+# ========== v3_research.html (updated with nav) ==========
+w("v3_research.html", '''{% extends "base_v3.html" %}{% set active = "research" %}{% block title %}研究拓展 - OGD-Collector Pro{% endblock %}{% block page_title %}研究拓展{% endblock %}{% block breadcrumb %}研究拓展{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#central" class="active">中央级网站</a><a href="#plans">拓展计划</a><a href="#other">其他成果</a><a href="#cooperation">合作交流</a></div>{% endblock %}
+{% block content %}
+
+<div class="position-hint">
+  <strong>您正在浏览：研究拓展（第5/5步）</strong> — 本页展示研究的前瞻性方向、国际合作计划、以及开源合作信息。这是本研究旅程的最后一站。
+</div>
+
+<div id="central" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>中央级政府网站数据分析</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>在省级平台研究基础上，本研究方向正逐步向中央级政府网站拓展。中央级平台具有更高的政策权威性和数据汇聚能力，是理解国家数据治理战略的重要窗口。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="margin:0;border-left:4px solid #2563eb">
+        <div style="font-weight:700;margin-bottom:8px">国家数据局</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">
+          <strong>网址：</strong>https://www.nda.gov.cn<br>
+          <strong>定位：</strong>全国数据要素市场化配置的核心统筹机构<br>
+          <strong>研究价值：</strong>政策发布源头、标准制定主体、跨区域协调中枢
+        </div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #059669">
+        <div style="font-weight:700;margin-bottom:8px">国家政务服务平台</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">
+          <strong>网址：</strong>https://www.gov.cn<br>
+          <strong>定位：</strong>国务院统一政务服务平台<br>
+          <strong>研究价值：</strong>跨部门数据共享进展、政务服务一体化程度
+        </div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #d97706">
+        <div style="font-weight:700;margin-bottom:8px">全国一体化政务大数据体系</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">
+          <strong>定位：</strong>《全国一体化政务大数据体系建设指南》落地载体<br>
+          <strong>研究价值：</strong>国家-省-市三级数据共享交换机制
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="plans" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>未来拓展计划</div></div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Phase 1: 中央级平台纳入（2025 Q3）</div><div class="timeline-desc">将国家数据局、国家政务服务平台等中央级网站纳入采集范围，建立国家-省两级分析框架</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Phase 2: 国际比较研究（2025 Q4）</div><div class="timeline-desc">采集美国 data.gov、英国 data.gov.uk、欧盟 data.europa.eu 等国际平台数据，开展跨国比较分析</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Phase 3: 实时监测体系（2026 Q1）</div><div class="timeline-desc">建立平台健康度实时监测系统，自动追踪平台更新频率、数据集增长、接口可用性等指标</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-title">Phase 4: 大模型应用（2026 Q2）</div><div class="timeline-desc">探索将LLM技术应用于政策文本分析、用户评论情感分析、数据需求智能识别等场景</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="other" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>其他研究成果</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="margin:0">
+        <div style="font-weight:700;margin-bottom:8px;color:#2563eb">数据集质量评估模型</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">构建了包含完整性、准确性、时效性、可用性、规范性五个维度的数据集质量评估指标体系。</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div style="font-weight:700;margin-bottom:8px;color:#059669">平台成熟度评估工具</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">开发了基于五阶段成熟度模型的在线评估工具，可为各平台提供诊断报告和改进建议。</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div style="font-weight:700;margin-bottom:8px;color:#d97706">开放数据利用案例库</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">收集整理了国内外100+个政府开放数据创新应用案例，涵盖交通、环境、医疗、金融等领域。</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div style="font-weight:700;margin-bottom:8px;color:#db2777">数据采集规范指南</div>
+        <div style="font-size:13px;color:#64748b;line-height:1.8">编写了《政府数据开放平台数据采集技术规范》，涵盖采集伦理、技术方案、质量控制、数据安全等方面。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cooperation" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>合作交流与开源</div></div>
+    <div style="padding:24px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:8px;text-align:center">
+      <div style="font-size:18px;font-weight:700;color:#1e40af;margin-bottom:12px">开放合作，共建共享</div>
+      <div style="font-size:13px;color:#3b82f6;max-width:600px;margin:0 auto;line-height:1.8">
+        本研究所有数据、代码、文档均已开源。欢迎学术界、业界同仁参与合作，共同推进中国政府数据开放研究。
+      </div>
+      <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="https://github.com/disijingjie/ogd-collector-pro" target="_blank" style="display:inline-flex;background:#2563eb;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600">GitHub 仓库</a>
+        <a href="/v3/reproduce" style="display:inline-flex;background:#fff;color:#2563eb;border:1px solid #2563eb;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600">数据复现实验室</a>
+        <a href="/v3/" style="display:inline-flex;background:#f1f5f9;color:#64748b;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600">返回系统概览</a>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div style="font-weight:700;margin-bottom:12px">联系方式</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.8">
+        <p>• 项目地址：https://github.com/disijingjie/ogd-collector-pro</p>
+        <p>• 数据集下载：可通过GitHub Releases获取完整数据集</p>
+        <p>• 问题反馈：请在GitHub Issues中提交</p>
+        <p>• 学术引用：请引用博士论文正式发表版本</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-nav">
+  <a href="/v3/thesis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>论文成果</strong></div></a>
+  <a href="/v3/" class="next"><div><div style="font-size:11px;color:#64748b">返回起点</div><strong>系统概览 →</strong></div></a>
+</div>
+{% endblock %}
+''')
+
+# ========== v3_reproduce.html (brand new) ==========
+w("v3_reproduce.html", '''{% extends "base_v3.html" %}{% set active = "reproduce" %}{% block title %}数据复现 - OGD-Collector Pro{% endblock %}{% block page_title %}数据复现实验室{% endblock %}{% block breadcrumb %}数据复现{% endblock %}
+{% block extra_css %}<style>
+.repro-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;margin-bottom:16px;transition:all .2s}
+.repro-card:hover{border-color:#2563eb;box-shadow:0 4px 6px -1px rgba(0,0,0,.07)}
+.repro-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.repro-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.code-box{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;line-height:1.8;overflow-x:auto}
+.step-list{display:flex;flex-direction:column;gap:12px}
+.step-item{display:flex;gap:12px;align-items:flex-start;padding:12px;background:#f8fafc;border-radius:8px}
+.step-num{width:28px;height:28px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.data-source-table th,.data-source-table td{padding:10px 12px;font-size:12px}
+.data-source-table th{background:#f1f5f9;font-weight:600}
+.data-source-table td{border-bottom:1px solid #e2e8f0}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">复现概览</a><a href="#sources">数据来源总览</a><a href="#topsis-repro">TOPSIS复现</a><a href="#dea-repro">DEA复现</a><a href="#dematel-repro">DEMATEL复现</a><a href="#fsqca-repro">fsQCA复现</a><a href="#did-repro">DID复现</a><a href="#recollect">重新采集</a></div>{% endblock %}
+{% block content %}
+
+<div class="position-hint">
+  <strong>您正在浏览：数据复现实验室</strong> — 本页提供论文全部分析方法的可复现步骤、数据来源清单、以及重新采集功能。这是验证本研究可信度的核心区域。
+</div>
+
+<div id="overview" class="scroll-section">
+  <div class="card" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:none">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="flex:1">
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:#92400e">数据复现实验室</div>
+        <div style="font-size:13px;color:#92400e;line-height:1.8">本研究所有数据和分析均可复现。下方提供每种方法的复现步骤、代码片段、数据来源说明，以及一键重新采集功能。</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">可复现分析方法</div><div style="font-size:12px;color:#16a34a;margin-top:4px">TOPSIS/DEA/DEMATEL/fsQCA/DID</div></div>
+    <div class="stat-card"><div class="stat-value">88</div><div class="stat-label">原始采集平台</div><div style="font-size:12px;color:#16a34a;margin-top:4px">全部数据开源</div></div>
+    <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">可复现承诺</div><div style="font-size:12px;color:#16a34a;margin-top:4px">代码+数据+文档</div></div>
+    <div class="stat-card"><div class="stat-value">GitHub</div><div class="stat-label">开源仓库</div><div style="font-size:12px;color:#16a34a;margin-top:4px">disijingjie/ogd-collector-pro</div></div>
+  </div>
+</div>
+
+<div id="sources" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>全数据来源总览</div><div style="font-size:12px;color:#64748b">本研究使用的所有数据及其来源</div></div>
+    <table class="data-table data-source-table">
+      <tr><th>数据名称</th><th>来源</th><th>样本量</th><th>采集日期</th><th>置信度</th><th>下载</th></tr>
+      <tr><td>88平台基础信息</td><td>手工核实+官网抓取</td><td>88条</td><td>2024-06</td><td><span class="badge" style="background:#dcfce7;color:#166534">A+</span></td><td><a href="#" style="color:#2563eb">CSV</a></td></tr>
+      <tr><td>22省数据集元数据</td><td>API+静态+动态采集</td><td>~98,000条</td><td>2024-06~10</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="#" style="color:#2563eb">CSV</a></td></tr>
+      <tr><td>4E指标评分</td><td>基于采集数据计算</td><td>88条</td><td>2024-09</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="#" style="color:#2563eb">CSV</a></td></tr>
+      <tr><td>DEA投入产出</td><td>平台年报+采集数据</td><td>23条</td><td>2024-09</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="#" style="color:#2563eb">CSV</a></td></tr>
+      <tr><td>专家问卷</td><td>德尔菲法两轮咨询</td><td>15位专家</td><td>2024-08</td><td><span class="badge" style="background:#fef9c3;color:#854d0e">B+</span></td><td><a href="#" style="color:#2563eb">XLSX</a></td></tr>
+      <tr><td>31省面板数据</td><td>统计年鉴+平台数据</td><td>217观测</td><td>2024-10</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="#" style="color:#2563eb">CSV</a></td></tr>
+    </table>
+    <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
+      <strong>数据获取方式：</strong>所有原始数据可通过GitHub仓库的 <code>data/</code> 目录获取。运行 <code>python analysis_pipeline.py</code> 即可复现全部分析流程。如需最新数据，可使用下方的"重新采集"功能。
+    </div>
+  </div>
+</div>
+
+<div id="topsis-repro" class="scroll-section">
+  <div class="repro-card">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#fef3c7;color:#92400e">TOPSIS 复现</div>
+      <div style="font-weight:700">逼近理想解排序法</div>
+    </div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">数据准备</div><div style="font-size:12px;color:#64748b">加载88平台4E指标标准化矩阵 (88×16)</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">熵权法赋权</div><div style="font-size:12px;color:#64748b">计算16项指标的信息熵权重</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">确定理想解</div><div style="font-size:12px;color:#64748b">正理想解=各指标最大值，负理想解=各指标最小值</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">计算贴近度</div><div style="font-size:12px;color:#64748b">C* = D⁻ / (D⁺ + D⁻)，取值[0,1]</div></div></div>
+    </div>
+    <div class="code-box" style="margin-top:12px"># TOPSIS 核心代码
+import numpy as np
+from scipy.spatial.distance import euclidean
+
+# 1. 加载标准化矩阵
+X = load_standardized_matrix()  # shape: (88, 16)
+
+# 2. 熵权法赋权
+w = entropy_weight(X)  # shape: (16,)
+
+# 3. 加权标准化
+Xw = X * w
+
+# 4. 确定理想解
+A_pos = Xw.max(axis=0)  # 正理想解
+A_neg = Xw.min(axis=0)  # 负理想解
+
+# 5. 计算距离
+D_pos = np.array([euclidean(x, A_pos) for x in Xw])
+D_neg = np.array([euclidean(x, A_neg) for x in Xw])
+
+# 6. 计算贴近度
+C_star = D_neg / (D_pos + D_neg)
+</div>
+    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#topsis" class="quick-link">查看分析结果 →</a></div>
+  </div>
+</div>
+
+<div id="dea-repro" class="scroll-section">
+  <div class="repro-card">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#d1fae5;color:#065f46">DEA 复现</div>
+      <div style="font-weight:700">数据包络分析 (BCC模型)</div>
+    </div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">确定投入产出</div><div style="font-size:12px;color:#64748b">投入：人员/资金/基础设施；产出：数据集数/下载量/API调用</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">构建LP模型</div><div style="font-size:12px;color:#64748b">对每个DMU求解线性规划，计算综合效率θ</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">分解效率</div><div style="font-size:12px;color:#64748b">综合效率 = 技术效率 × 规模效率</div></div></div>
+    </div>
+    <div class="code-box" style="margin-top:12px"># DEA 核心代码 (BCC模型)
+from scipy.optimize import linprog
+
+def dea_bcc(X, Y, i):
+    """计算第i个DMU的BCC效率"""
+    n, m = X.shape  # n个DMU, m个投入
+    n, s = Y.shape  # s个产出
+    
+    # 目标函数: min θ
+    c = [0]*n + [1] + [0]*s
+    
+    # 约束条件
+    A_ub = []
+    b_ub = []
+    
+    # 投入约束: ΣλX ≤ θX_i
+    for j in range(m):
+        row = list(X[:,j]) + [-X[i,j]] + [0]*s
+        A_ub.append(row)
+        b_ub.append(0)
+    
+    # 产出约束: ΣλY ≥ Y_i
+    for r in range(s):
+        row = list(-Y[:,r]) + [0] + [0]*s
+        row[n+1+r] = 1
+        A_ub.append(row)
+        b_ub.append(-Y[i,r])
+    
+    # Σλ = 1 (BCC凸性约束)
+    A_eq = [[1]*n + [0] + [0]*s]
+    b_eq = [1]
+    
+    result = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq,
+                     bounds=[(0,None)]*(n+1+s), method='highs')
+    return result.x[n]  # θ = 综合效率
+</div>
+    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#dea" class="quick-link">查看分析结果 →</a></div>
+  </div>
+</div>
+
+<div id="dematel-repro" class="scroll-section">
+  <div class="repro-card">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#dbeafe;color:#1e40af">DEMATEL 复现</div>
+      <div style="font-weight:700">决策试验与评价实验室法</div>
+    </div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">构建直接影响矩阵</div><div style="font-size:12px;color:#64748b">基于专家问卷，0-4标度评分</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">标准化矩阵</div><div style="font-size:12px;color:#64748b">Z = X / max(行和, 列和)</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">计算综合影响矩阵</div><div style="font-size:12px;color:#64748b">T = Z(I-Z)⁻¹</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">计算中心度和原因度</div><div style="font-size:12px;color:#64748b">R = 行和，D = 列和；中心度=R+D，原因度=R-D</div></div></div>
+    </div>
+    <div class="code-box" style="margin-top:12px"># DEMATEL 核心代码
+import numpy as np
+
+# 1. 直接影响矩阵 (16×16)
+X = load_expert_matrix()  # 专家问卷均值
+
+# 2. 标准化
+Z = X / max(X.sum(axis=1).max(), X.sum(axis=0).max())
+
+# 3. 综合影响矩阵
+I = np.eye(16)
+T = Z @ np.linalg.inv(I - Z)
+
+# 4. 中心度和原因度
+R = T.sum(axis=1)  # 行和 = 影响度
+D = T.sum(axis=0)  # 列和 = 被影响度
+
+prominence = R + D  # 中心度 = 重要性
+causality = R - D   # 原因度 >0为原因因素，<0为结果因素
+</div>
+    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#dematel" class="quick-link">查看分析结果 →</a></div>
+  </div>
+</div>
+
+<div id="fsqca-repro" class="scroll-section">
+  <div class="repro-card">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#fce7f3;color:#9d174d">fsQCA 复现</div>
+      <div style="font-weight:700">模糊集定性比较分析</div>
+    </div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">变量校准</div><div style="font-size:12px;color:#64748b">将原始数据校准为模糊集隶属度(0-1)</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">真值表构建</div><div style="font-size:12px;color:#64748b">设置一致性阈值≥0.80，频数阈值≥1</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">布尔最小化</div><div style="font-size:12px;color:#64748b">使用Quine-McCluskey算法简化组态</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">结果解释</div><div style="font-size:12px;color:#64748b">识别核心条件和边缘条件，计算覆盖度</div></div></div>
+    </div>
+    <div class="code-box" style="margin-top:12px"># fsQCA 校准代码
+import numpy as np
+
+def calibrate(x, threshold, crossover, ceiling):
+    """直接法校准为模糊集隶属度"""
+    # 使用logistic函数
+    if x <= threshold:
+        return 0.0
+    elif x >= ceiling:
+        return 1.0
+    else:
+        return 1 / (1 + np.exp(-((x - crossover) * 6) / (ceiling - threshold)))
+
+# 对TOPSIS得分进行校准
+scores = load_topsis_scores()  # 31个案例
+fuzzy_membership = [calibrate(s, 0.4, 0.6, 0.8) for s in scores]
+
+# 注: 完整的fsQCA分析需要使用fsQCA 3.0软件
+# 或 Python 的 skfuzzy 库进行布尔最小化
+</div>
+    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#fsqca" class="quick-link">查看分析结果 →</a></div>
+  </div>
+</div>
+
+<div id="did-repro" class="scroll-section">
+  <div class="repro-card">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#f3e8ff;color:#7e22ce">DID 复现</div>
+      <div style="font-weight:700">双重差分法</div>
+    </div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">数据准备</div><div style="font-size:12px;color:#64748b">31省×7年面板数据(2018-2024)，处理组=政策实施省</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">平行趋势检验</div><div style="font-size:12px;color:#64748b">政策前处理组与对照组趋势一致</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">基准回归</div><div style="font-size:12px;color:#64748b">Y_it = α + β·Treat_i·Post_t + γ·X_it + μ_i + λ_t + ε_it</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">稳健性检验</div><div style="font-size:12px;color:#64748b">安慰剂检验、PSM-DID、变换窗口、排除其他政策</div></div></div>
+    </div>
+    <div class="code-box" style="margin-top:12px"># DID 核心代码
+from linearmodels.panel import PanelOLS
+import pandas as pd
+
+# 1. 加载面板数据
+df = pd.read_csv('panel_data_31provinces.csv')
+df = df.set_index(['province', 'year'])
+
+# 2. 构建交互项
+df['treat'] = df['policy_province']  # 处理组=1
+df['post'] = (df['year'] >= 2023).astype(int)  # 政策后=1
+df['did'] = df['treat'] * df['post']  # 交互项
+
+# 3. 双向固定效应回归
+model = PanelOLS.from_formula(
+    'performance ~ did + control_vars + EntityEffects + TimeEffects',
+    data=df
+)
+result = model.fit(cov_type='clustered', cluster_entity=True)
+print(result.summary)
+# ATT = β = +0.187*** (p<0.01)
+</div>
+    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#did" class="quick-link">查看分析结果 →</a></div>
+  </div>
+</div>
+
+<div id="recollect" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>重新采集与数据更新</div><div style="font-size:12px;color:#64748b">执行新一轮数据采集，获取最新数据并对比变化</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:20px">
+      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集范围</label><select style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option>全部88个平台</option><option>样本测试（5个平台）</option><option>指定区域</option></select></div>
+      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集策略</label><select style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option>自适应（推荐）</option><option>仅静态解析</option><option>仅动态渲染</option><option>仅API接口</option></select></div>
+      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集深度</label><select style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option>仅元数据</option><option>元数据+样本数据</option><option>深度全量</option></select></div>
+    </div>
+    <button style="background:#2563eb;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer" onclick="alert('重新采集功能需要在服务器端执行，请联系管理员或查看GitHub仓库中的collector_engine.py')">开始重新采集</button>
+    <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
+      <strong>说明：</strong>重新采集功能通过服务器端采集引擎执行。本地预览模式下仅展示界面。完整功能请部署到服务器后使用，或克隆 <a href="https://github.com/disijingjie/ogd-collector-pro" target="_blank" style="color:#2563eb">GitHub仓库</a> 在本地运行采集脚本。
+    </div>
+  </div>
+</div>
+
+<div class="page-nav">
+  <a href="/v3/thesis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>论文成果</strong></div></a>
+  <a href="/v3/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
+</div>
+{% endblock %}
+''')
+
+print("Research & Reproduce done. ALL TEMPLATES COMPLETE.")

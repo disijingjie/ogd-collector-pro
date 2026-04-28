@@ -1,4 +1,13 @@
-{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}数据来源 - OGD-Collector Pro{% endblock %}{% block page_title %}数据来源与采集中心{% endblock %}{% block breadcrumb %}数据来源{% endblock %}
+# -*- coding: utf-8 -*-
+import os
+BASE = r"c:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\templates"
+def w(name, content):
+    with open(os.path.join(BASE, name), "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[OK] {name} ({len(content)} chars)")
+
+# ========== v3_collection.html ==========
+w("v3_collection.html", '''{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}数据来源 - OGD-Collector Pro{% endblock %}{% block page_title %}数据来源与采集中心{% endblock %}{% block breadcrumb %}数据来源{% endblock %}
 {% block extra_css %}<style>.prov-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;transition:all .2s}.prov-card:hover{border-color:#2563eb;box-shadow:0 4px 6px -1px rgba(0,0,0,.07)}.prov-title{font-weight:700;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}.prov-meta{font-size:12px;color:#64748b;line-height:1.8}.collection-btn{background:#2563eb;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}.collection-btn:hover{background:#1d4ed8}.collection-btn:disabled{background:#94a3b8;cursor:not-allowed}.log-area{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;height:200px;overflow-y:auto;line-height:1.8}.diff-card{padding:16px;border-radius:8px;border-left:3px solid}.diff-added{background:#ecfdf5;border-color:#059669}.diff-removed{background:#fee2e2;border-color:#dc2626}.diff-changed{background:#fef9c3;border-color:#d97706}</style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">采集规模</a><a href="#provenance">数据来源</a><a href="#strategy">采集策略</a><a href="#timeline">采集时间线</a><a href="#reCollect">重新采集</a></div>{% endblock %}
 {% block content %}
@@ -179,7 +188,7 @@ function startCollection(){
   let i=0;
   function next(){
     if(i>=steps.length){btn.textContent='采集完成';diff.style.display='block';return;}
-    log.innerHTML+=steps[i]+'\n';log.scrollTop=log.scrollHeight;
+    log.innerHTML+=steps[i]+'\\n';log.scrollTop=log.scrollHeight;
     document.getElementById('stat-processed').textContent=Math.min(88,Math.floor((i+1)/steps.length*88));
     document.getElementById('stat-success').textContent=Math.min(88,Math.floor((i+1)/steps.length*88));
     document.getElementById('stat-new').textContent=Math.floor((i+1)/steps.length*3847);
@@ -190,3 +199,6 @@ function startCollection(){
 }
 </script>
 {% endblock %}
+''')
+
+print("Collection done.")

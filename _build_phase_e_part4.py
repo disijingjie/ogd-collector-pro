@@ -1,4 +1,13 @@
-{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
+# -*- coding: utf-8 -*-
+import os
+BASE = r"c:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\templates"
+def w(name, content):
+    with open(os.path.join(BASE, name), "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[OK] {name} ({len(content)} chars)")
+
+# ========== v3_thesis.html (simplified with nav) ==========
+w("v3_thesis.html", '''{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
 {% block extra_css %}<style>
 .chapter-section{padding:24px;background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.07);margin-bottom:20px}
 .chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #e2e8f0}
@@ -253,3 +262,6 @@
   <a href="/v3/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
 </div>
 {% endblock %}
+''')
+
+print("Thesis done.")

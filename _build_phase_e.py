@@ -1,4 +1,16 @@
-{% extends "base_v3.html" %}{% set active = "dashboard" %}{% block title %}系统概览 - OGD-Collector Pro{% endblock %}{% block page_title %}系统概览{% endblock %}{% block breadcrumb %}系统概览{% endblock %}
+# -*- coding: utf-8 -*-
+"""Phase E: 全站导航与整合构建脚本"""
+import os
+
+BASE = r"c:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\templates"
+
+def w(name, content):
+    with open(os.path.join(BASE, name), "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[OK] {name} ({len(content)} chars)")
+
+# ========== v3_dashboard.html ==========
+w("v3_dashboard.html", '''{% extends "base_v3.html" %}{% set active = "dashboard" %}{% block title %}系统概览 - OGD-Collector Pro{% endblock %}{% block page_title %}系统概览{% endblock %}{% block breadcrumb %}系统概览{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#roadmap">技术路线</a><a href="#architecture">系统架构</a><a href="#highlights">核心亮点</a></div>{% endblock %}
 {% block content %}
 
@@ -197,3 +209,6 @@
 
 <div class="page-nav"><div></div><a href="/v3/collection" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>数据来源 →</strong></div></a></div>
 {% endblock %}
+''')
+
+print("Dashboard done.")
