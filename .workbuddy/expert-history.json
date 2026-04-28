@@ -3,6 +3,15 @@
   "sessions": {
     "ad7b121118034aa3992016ca35fab7e8": [
       {
+        "expertId": "AndonQExpert",
+        "name": "AndonQ",
+        "profession": "腾讯云技术支持专家",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/02-Engineering/AndonQExpert/AndonQExpert.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/02-Engineering/AndonQExpert/AndonQExpert_zh.md",
+        "usedAt": 1777383816985,
+        "industryId": "all"
+      },
+      {
         "expertId": "InfrastructureOperationsExpert",
         "name": "运维通",
         "profession": "基础设施运维专家",
@@ -10,15 +19,6 @@
         "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/09-Operations/InfrastructureOperationsExpert/InfrastructureOperationsExpert_zh.md",
         "usedAt": 1777369287509,
         "industryId": "09-Operations"
-      },
-      {
-        "expertId": "AndonQExpert",
-        "name": "AndonQ",
-        "profession": "腾讯云技术支持专家",
-        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/02-Engineering/AndonQExpert/AndonQExpert.png",
-        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/02-Engineering/AndonQExpert/AndonQExpert_zh.md",
-        "usedAt": 1777339834707,
-        "industryId": "all"
       },
       {
         "expertId": "DocumentGenerationExpert",
@@ -42,5 +42,5 @@
       }
     ]
   },
-  "lastUpdated": 1777380786197
+  "lastUpdated": 1777384638897
 }
