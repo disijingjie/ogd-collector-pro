@@ -176,5 +176,69 @@ def api_stats():
         'last_collection': max((r.get('collected_at', '') for r in collection_results), default=None) if collection_results else None
     })
 
+# ========== 新增可视化页面路由 ==========
+
+@app.route('/charts/topsis')
+def charts_topsis():
+    """TOPSIS绩效评估可视化页面"""
+    return render_template('v3_topsis_chart.html')
+
+@app.route('/charts/dematel')
+def charts_dematel():
+    """DEMATEL影响因素分析可视化页面"""
+    return render_template('v3_dematel_chart.html')
+
+@app.route('/charts/fsqa')
+def charts_fsqa():
+    """fsQCA组态路径分析可视化页面"""
+    return render_template('v3_fsqa_chart.html')
+
+@app.route('/provenance')
+def provenance():
+    """数据溯源中心页面"""
+    return render_template('v3_provenance.html')
+
+@app.route('/dashboard')
+def dashboard():
+    """采集中心数据看板"""
+    return render_template('v3_collection_dashboard.html')
+
+@app.route('/api/csv')
+def api_csv():
+    """API：下载CSV格式的平台数据"""
+    import csv
+    import io
+    
+    try:
+        with open('data/v3_collection_results.json', 'r', encoding='utf-8') as f:
+            collection_results = json.load(f)
+    except FileNotFoundError:
+        collection_results = []
+    
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['省份', '平台名称', '数据集数量', '数据口径', '采集方法', '置信度', '状态', '采集时间', '来源URL'])
+    
+    for r in collection_results:
+        writer.writerow([
+            r.get('province', ''),
+            r.get('name', ''),
+            r.get('dataset_count', ''),
+            r.get('type', ''),
+            r.get('method', ''),
+            r.get('confidence', ''),
+            r.get('status', ''),
+            r.get('collected_at', ''),
+            r.get('source_url', '')
+        ])
+    
+    output.seek(0)
+    from flask import Response
+    return Response(
+        output.getvalue(),
+        mimetype='text/csv',
+        headers={'Content-Disposition': 'attachment; filename=platforms_data.csv'}
+    )
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

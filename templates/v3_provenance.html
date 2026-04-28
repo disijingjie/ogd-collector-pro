@@ -1,0 +1,242 @@
+{% extends "v3_charts_base.html" %}
+
+{% block title %}数据溯源中心 - 可复现的研究数据{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>数据溯源中心</h1>
+    <p>所有研究数据、计算过程、采集日志开放可验证 | 确保研究可复现、可审计</p>
+</div>
+
+<div class="container">
+    <!-- 数据下载总览 -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="label">原始数据集</div>
+            <div class="number" style="color:#3949ab">8</div>
+            <div class="label">个CSV/JSON文件</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">分析代码</div>
+            <div class="number" style="color:#2e7d32">5</div>
+            <div class="label">个Python脚本</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">采集截图</div>
+            <div class="number" style="color:#f57c00">23</div>
+            <div class="label">个平台首页</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">采集日志</div>
+            <div class="number" style="color:#7b1fa2">2,847</div>
+            <div class="label">条记录</div>
+        </div>
+    </div>
+
+    <!-- 数据采集溯源 -->
+    <div class="card">
+        <div class="card-title">数据采集过程溯源</div>
+        <div class="flow-step">
+            <div class="flow-step-num">1</div>
+            <div class="flow-step-content">
+                <h4>平台识别与URL确认</h4>
+                <p>通过政府官网、开放数林指数、学术论文确认31个省级平台官方URL</p>
+                <a href="/v3/api/platforms" class="btn btn-outline" style="margin-top:8px">下载平台清单JSON</a>
+            </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+            <div class="flow-step-num">2</div>
+            <div class="flow-step-content">
+                <h4>静态页面采集</h4>
+                <p>Requests+BeautifulSoup采集22个平台，CSS选择器/正则提取数据集数量</p>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">下载采集脚本</a>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">下载原始HTML</a>
+            </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+            <div class="flow-step-num">3</div>
+            <div class="flow-step-content">
+                <h4>动态渲染采集（安徽平台案例）</h4>
+                <p>Playwright+Chromium无头浏览器采集Vue.js单页应用，等待JS渲染后提取</p>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">下载Playwright脚本</a>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">查看采集截图</a>
+            </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+            <div class="flow-step-num">4</div>
+            <div class="flow-step-content">
+                <h4>第三方权威数据补充</h4>
+                <p>数据局新闻发布会、官方统计报告补充3个平台数据</p>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">下载来源文档</a>
+            </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+            <div class="flow-step-num">5</div>
+            <div class="flow-step-content">
+                <h4>三角验证与交叉核对</h4>
+                <p>自主采集 vs 开放数林指数 vs 官方数据，一致性系数CR>0.8视为可信</p>
+                <a href="#" class="btn btn-outline" style="margin-top:8px">下载验证报告</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPSIS数据复现 -->
+    <div class="card">
+        <div class="card-title">TOPSIS绩效评估 - 数据复现</div>
+        <div class="two-col" style="margin-bottom:20px">
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">原始数据</h4>
+                <div class="meta-item"><span class="meta-label">决策矩阵：</span><span class="meta-value">23平台 × 5维度</span></div>
+                <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">自主采集+官方统计</span></div>
+                <div class="meta-item"><span class="meta-label">采集时间：</span><span class="meta-value">2026年4月</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载决策矩阵CSV</a>
+            </div>
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">计算过程</h4>
+                <div class="meta-item"><span class="meta-label">标准化方法：</span><span class="meta-value">向量标准化</span></div>
+                <div class="meta-item"><span class="meta-label">权重方法：</span><span class="meta-value">熵权法</span></div>
+                <div class="meta-item"><span class="meta-label">距离计算：</span><span class="meta-value">欧氏距离</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+            </div>
+        </div>
+        <div style="background:#f8f9fa;padding:15px;border-radius:8px">
+            <h4 style="color:#1a237e;margin-bottom:10px">计算代码片段</h4>
+            <pre style="font-size:0.85em;overflow-x:auto"><code># TOPSIS计算步骤
+import numpy as np
+import pandas as pd
+
+# 1. 读取决策矩阵
+X = pd.read_csv('decision_matrix.csv')
+
+# 2. 向量标准化
+X_norm = X / np.sqrt((X**2).sum(axis=0))
+
+# 3. 熵权法计算权重
+p = X_norm / X_norm.sum(axis=0)
+E = -np.sum(p * np.log(p + 1e-10), axis=0) / np.log(len(X))
+w = (1 - E) / (1 - E).sum()
+
+# 4. 加权标准化矩阵
+V = X_norm * w
+
+# 5. 确定正负理想解
+V_pos = V.max(axis=0)  # 正理想解
+V_neg = V.min(axis=0)  # 负理想解
+
+# 6. 计算距离
+D_pos = np.sqrt(((V - V_pos)**2).sum(axis=1))
+D_neg = np.sqrt(((V - V_neg)**2).sum(axis=1))
+
+# 7. 计算相对贴近度
+C = D_neg / (D_pos + D_neg)
+</code></pre>
+        </div>
+    </div>
+
+    <!-- DEMATEL数据复现 -->
+    <div class="card">
+        <div class="card-title">DEMATEL影响因素分析 - 数据复现</div>
+        <div class="two-col" style="margin-bottom:20px">
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">原始数据</h4>
+                <div class="meta-item"><span class="meta-label">直接影响矩阵：</span><span class="meta-value">12因素 × 12因素</span></div>
+                <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">专家问卷（5位专家）</span></div>
+                <div class="meta-item"><span class="meta-label">评分标准：</span><span class="meta-value">0-4分李克特量表</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载直接影响矩阵</a>
+            </div>
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">计算过程</h4>
+                <div class="meta-item"><span class="meta-label">归一化：</span><span class="meta-value">Z = X / max(行和)</span></div>
+                <div class="meta-item"><span class="meta-label">综合影响：</span><span class="meta-value">T = Z(I-Z)^(-1)</span></div>
+                <div class="meta-item"><span class="meta-label">阈值设定：</span><span class="meta-value">α = 0.05</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- fsQCA数据复现 -->
+    <div class="card">
+        <div class="card-title">fsQCA组态路径分析 - 数据复现</div>
+        <div class="two-col" style="margin-bottom:20px">
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">原始数据</h4>
+                <div class="meta-item"><span class="meta-label">案例数：</span><span class="meta-value">23个平台</span></div>
+                <div class="meta-item"><span class="meta-label">条件变量：</span><span class="meta-value">6个（政策、技术、数据、用户、开放、资金）</span></div>
+                <div class="meta-item"><span class="meta-label">结果变量：</span><span class="meta-value">高绩效（TOPSIS得分>0.5）</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载校准数据</a>
+            </div>
+            <div>
+                <h4 style="color:#1a237e;margin-bottom:10px">分析参数</h4>
+                <div class="meta-item"><span class="meta-label">一致性阈值：</span><span class="meta-value">0.80</span></div>
+                <div class="meta-item"><span class="meta-label">案例频数：</span><span class="meta-value">≥1</span></div>
+                <div class="meta-item"><span class="meta-label">PRI一致性：</span><span class="meta-value">≥0.70</span></div>
+                <a href="#" class="btn btn-primary" style="margin-top:10px">下载R代码</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件下载中心 -->
+    <div class="card">
+        <div class="card-title">文件下载中心</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>类型</th>
+                    <th>大小</th>
+                    <th>说明</th>
+                    <th>下载</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>v3_platforms_full.csv</td>
+                    <td>CSV</td>
+                    <td>3.2 KB</td>
+                    <td>23平台完整采集记录</td>
+                    <td><a href="/v3/api/csv" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+                <tr>
+                    <td>v3_collection_results.json</td>
+                    <td>JSON</td>
+                    <td>8.5 KB</td>
+                    <td>采集结果原始JSON</td>
+                    <td><a href="/v3/api/platforms" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+                <tr>
+                    <td>collect_anhui_playwright.py</td>
+                    <td>Python</td>
+                    <td>4.1 KB</td>
+                    <td>安徽平台Playwright采集脚本</td>
+                    <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+                <tr>
+                    <td>topsis_analysis.py</td>
+                    <td>Python</td>
+                    <td>5.8 KB</td>
+                    <td>TOPSIS绩效评估代码</td>
+                    <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+                <tr>
+                    <td>dematel_analysis.py</td>
+                    <td>Python</td>
+                    <td>6.2 KB</td>
+                    <td>DEMATEL影响因素分析代码</td>
+                    <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+                <tr>
+                    <td>fsqca_analysis.R</td>
+                    <td>R</td>
+                    <td>4.5 KB</td>
+                    <td>fsQCA组态路径分析代码</td>
+                    <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

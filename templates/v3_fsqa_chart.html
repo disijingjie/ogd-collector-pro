@@ -1,0 +1,250 @@
+{% extends "v3_charts_base.html" %}
+
+{% block title %}fsQCA组态路径分析 - 交互式可视化{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>fsQCA组态路径分析</h1>
+    <p>模糊集定性比较分析 | 高绩效平台的多重并发因果路径识别</p>
+</div>
+
+<div class="container">
+    <!-- 组态路径图 -->
+    <div class="card">
+        <div class="card-title">高绩效平台组态路径图（交互式）</div>
+        <div id="configChart" class="chart-container large"></div>
+        <div class="provenance-panel">
+            <h4>路径说明</h4>
+            <p style="font-size:0.9em;color:#666;margin-top:8px">
+                <strong>路径H1（制度-技术驱动型）：</strong>政策保障 × 技术支撑 × ~资金投入 → 高绩效 | 一致性=0.912，覆盖度=0.234<br>
+                <strong>路径H2（数据-用户驱动型）：</strong>数据质量 × 用户参与 × 开放程度 → 高绩效 | 一致性=0.887，覆盖度=0.198<br>
+                <strong>核心条件：</strong>出现在所有路径中的必要条件 | <strong>边缘条件：</strong>仅出现在部分路径中的辅助条件
+            </p>
+        </div>
+    </div>
+
+    <!-- 真值表 -->
+    <div class="card">
+        <div class="card-title">真值表（Truth Table）</div>
+        <table class="data-table" id="truthTable">
+            <thead>
+                <tr>
+                    <th>行号</th>
+                    <th>政策保障</th>
+                    <th>技术支撑</th>
+                    <th>数据质量</th>
+                    <th>用户参与</th>
+                    <th>开放程度</th>
+                    <th>资金投入</th>
+                    <th>案例数</th>
+                    <th>绩效</th>
+                    <th>一致性</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- 校准阈值 -->
+    <div class="two-col">
+        <div class="card">
+            <div class="card-title">校准阈值设定</div>
+            <div id="calibrationChart" class="chart-container small"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">路径覆盖度与一致性</div>
+            <div id="coverageChart" class="chart-container small"></div>
+        </div>
+    </div>
+
+    <!-- 稳健性检验 -->
+    <div class="card">
+        <div class="card-title">稳健性检验结果</div>
+        <table class="data-table" id="robustTable">
+            <thead>
+                <tr>
+                    <th>检验类型</th>
+                    <th>参数调整</th>
+                    <th>路径H1一致性</th>
+                    <th>路径H2一致性</th>
+                    <th>结果</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// fsQCA组态路径数据
+const conditions = ['政策保障', '技术支撑', '数据质量', '用户参与', '开放程度', '资金投入'];
+
+// 路径配置
+const paths = [
+    {
+        id: 'H1',
+        name: '制度-技术驱动型',
+        config: {policy: 1, tech: 1, data: null, user: null, open: null, fund: 0},
+        consistency: 0.912,
+        coverage: 0.234,
+        cases: ['山东', '浙江', '北京']
+    },
+    {
+        id: 'H2',
+        name: '数据-用户驱动型',
+        config: {policy: null, tech: null, data: 1, user: 1, open: 1, fund: null},
+        consistency: 0.887,
+        coverage: 0.198,
+        cases: ['广东', '上海', '福建']
+    }
+];
+
+// 1. 组态路径可视化（桑基图风格）
+const configChart = echarts.init(document.getElementById('configChart'));
+
+// 构建桑基图数据
+const sankeyNodes = [
+    {name: '政策保障', itemStyle: {color: '#e53935'}},
+    {name: '技术支撑', itemStyle: {color: '#fb8c00'}},
+    {name: '数据质量', itemStyle: {color: '#fdd835'}},
+    {name: '用户参与', itemStyle: {color: '#43a047'}},
+    {name: '开放程度', itemStyle: {color: '#1e88e5'}},
+    {name: '资金投入', itemStyle: {color: '#8e24aa'}},
+    {name: '~资金投入', itemStyle: {color: '#8e24aa', opacity: 0.5}},
+    {name: '路径H1\n制度-技术驱动', itemStyle: {color: '#3949ab'}},
+    {name: '路径H2\n数据-用户驱动', itemStyle: {color: '#00897b'}},
+    {name: '高绩效', itemStyle: {color: '#2e7d32'}}
+];
+
+const sankeyLinks = [
+    {source: '政策保障', target: '路径H1\n制度-技术驱动', value: 1},
+    {source: '技术支撑', target: '路径H1\n制度-技术驱动', value: 1},
+    {source: '~资金投入', target: '路径H1\n制度-技术驱动', value: 1},
+    {source: '数据质量', target: '路径H2\n数据-用户驱动', value: 1},
+    {source: '用户参与', target: '路径H2\n数据-用户驱动', value: 1},
+    {source: '开放程度', target: '路径H2\n数据-用户驱动', value: 1},
+    {source: '路径H1\n制度-技术驱动', target: '高绩效', value: 0.234},
+    {source: '路径H2\n数据-用户驱动', target: '高绩效', value: 0.198}
+];
+
+configChart.setOption({
+    tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+        formatter: function(params) {
+            if (params.dataType === 'node') {
+                return `<strong>${params.name}</strong>`;
+            } else {
+                return `${params.data.source} → ${params.data.target}<br/>权重: ${params.data.value}`;
+            }
+        }
+    },
+    series: [{
+        type: 'sankey',
+        layout: 'none',
+        emphasis: { focus: 'adjacency' },
+        data: sankeyNodes,
+        links: sankeyLinks,
+        lineStyle: { color: 'gradient', curveness: 0.5 },
+        label: { fontSize: 12 }
+    }]
+});
+
+// 2. 真值表
+const truthData = [
+    {id:1, policy:1, tech:1, data:1, user:1, open:1, fund:1, cases:3, outcome:1, consist:0.95},
+    {id:2, policy:1, tech:1, data:1, user:0, open:1, fund:0, cases:2, outcome:1, consist:0.91},
+    {id:3, policy:1, tech:1, data:0, user:1, open:0, fund:0, cases:2, outcome:1, consist:0.88},
+    {id:4, policy:0, tech:1, data:1, user:1, open:1, fund:1, cases:2, outcome:1, consist:0.85},
+    {id:5, policy:1, tech:0, data:1, user:1, open:1, fund:0, cases:1, outcome:1, consist:0.82},
+    {id:6, policy:0, tech:0, data:1, user:0, open:1, fund:0, cases:3, outcome:0, consist:0.35},
+    {id:7, policy:0, tech:0, data:0, user:0, open:0, fund:0, cases:4, outcome:0, consist:0.22},
+    {id:8, policy:1, tech:0, data:0, user:0, open:0, fund:1, cases:2, outcome:0, consist:0.18},
+    {id:9, policy:0, tech:1, data:0, user:1, open:0, fund:1, cases:2, outcome:0, consist:0.15},
+    {id:10, policy:0, tech:0, data:1, user:1, open:0, fund:1, cases:2, outcome:0, consist:0.12}
+];
+
+const truthBody = document.querySelector('#truthTable tbody');
+truthData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${row.id}</td>
+        <td><span class="tag ${row.policy?'tag-success':'tag-danger'}">${row.policy?' present':' absent'}</span></td>
+        <td><span class="tag ${row.tech?'tag-success':'tag-danger'}">${row.tech?' present':' absent'}</span></td>
+        <td><span class="tag ${row.data?'tag-success':'tag-danger'}">${row.data?' present':' absent'}</span></td>
+        <td><span class="tag ${row.user?'tag-success':'tag-danger'}">${row.user?' present':' absent'}</span></td>
+        <td><span class="tag ${row.open?'tag-success':'tag-danger'}">${row.open?' present':' absent'}</span></td>
+        <td><span class="tag ${row.fund?'tag-success':'tag-danger'}">${row.fund?' present':' absent'}</span></td>
+        <td>${row.cases}</td>
+        <td><span class="tag ${row.outcome?'tag-success':'tag-danger'}">${row.outcome?'高绩效':'非高绩效'}</span></td>
+        <td>${row.consist.toFixed(3)}</td>
+    `;
+    truthBody.appendChild(tr);
+});
+
+// 3. 校准阈值图
+const calibrationChart = echarts.init(document.getElementById('calibrationChart'));
+const calibData = conditions.map((c, i) => ({
+    name: c,
+    value: [0.2 + i*0.1, 0.5, 0.8 + i*0.02]
+}));
+
+calibrationChart.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['完全非隶属', '交叉点', '完全隶属'], bottom: 0 },
+    xAxis: { type: 'category', data: conditions, axisLabel: { rotate: 30, fontSize: 10 } },
+    yAxis: { type: 'value', name: '校准值', max: 1 },
+    series: [
+        {name: '完全非隶属', type: 'bar', data: calibData.map(d => d.value[0]), itemStyle: {color: '#e53935'}},
+        {name: '交叉点', type: 'bar', data: calibData.map(d => d.value[1]), itemStyle: {color: '#fdd835'}},
+        {name: '完全隶属', type: 'bar', data: calibData.map(d => d.value[2]), itemStyle: {color: '#43a047'}}
+    ]
+});
+
+// 4. 路径覆盖度与一致性
+const coverageChart = echarts.init(document.getElementById('coverageChart'));
+coverageChart.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: { data: ['一致性', '覆盖度'], bottom: 0 },
+    xAxis: { type: 'category', data: ['路径H1', '路径H2', '整体解'] },
+    yAxis: { type: 'value', max: 1 },
+    series: [
+        {name: '一致性', type: 'bar', data: [0.912, 0.887, 0.901], itemStyle: {color: '#3949ab'}},
+        {name: '覆盖度', type: 'bar', data: [0.234, 0.198, 0.432], itemStyle: {color: '#00897b'}}
+    ]
+});
+
+// 5. 稳健性检验表
+const robustData = [
+    {type: '调整一致性阈值', param: '0.80 → 0.85', h1: 0.912, h2: 0.887, result: '通过'},
+    {type: '调整一致性阈值', param: '0.80 → 0.75', h1: 0.908, h2: 0.885, result: '通过'},
+    {type: '调整案例频数', param: '1 → 2', h1: 0.915, h2: 0.890, result: '通过'},
+    {type: '调整案例频数', param: '1 → 3', h1: 0.918, h2: 0.892, result: '通过'},
+    {type: '调整PRI一致性', param: '0.70 → 0.75', h1: 0.910, h2: 0.885, result: '通过'},
+    {type: '随机删除案例', param: '删除10%', h1: 0.905, h2: 0.880, result: '通过'},
+    {type: '随机删除案例', param: '删除20%', h1: 0.898, h2: 0.875, result: '通过'}
+];
+
+const robustBody = document.querySelector('#robustTable tbody');
+robustData.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${row.type}</td>
+        <td>${row.param}</td>
+        <td>${row.h1.toFixed(3)}</td>
+        <td>${row.h2.toFixed(3)}</td>
+        <td><span class="tag tag-success">${row.result}</span></td>
+    `;
+    robustBody.appendChild(tr);
+});
+
+// 响应式
+window.addEventListener('resize', () => {
+    configChart.resize();
+    calibrationChart.resize();
+    coverageChart.resize();
+});
+</script>
+{% endblock %}

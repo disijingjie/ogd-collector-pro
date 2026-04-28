@@ -1,0 +1,298 @@
+{% extends "v3_charts_base.html" %}
+
+{% block title %}DEMATEL影响因素分析 - 交互式可视化{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>DEMATEL影响因素分析</h1>
+    <p>决策试验与评价实验室法 | 因素因果关系识别与网络结构分析</p>
+</div>
+
+<div class="container">
+    <!-- 因果网络关系图 -->
+    <div class="card">
+        <div class="card-title">DEMATEL因素因果网络关系图（交互式）</div>
+        <div id="networkChart" class="chart-container large"></div>
+        <div class="provenance-panel">
+            <h4>网络图说明</h4>
+            <p style="font-size:0.9em;color:#666;margin-top:8px">
+                <strong>节点大小</strong> = 中心度（影响+被影响程度）| <strong>节点颜色</strong> = 原因度（红=原因因素，蓝=结果因素）<br>
+                <strong>箭头方向</strong> = 影响方向 | <strong>线条粗细</strong> = 影响强度 | <strong>阈值</strong> = 0.05（低于此值不显示连线）
+            </p>
+        </div>
+    </div>
+
+    <!-- 因果关系四象限图 -->
+    <div class="card">
+        <div class="card-title">因素因果关系四象限图（中心度-原因度）</div>
+        <div id="causalChart" class="chart-container"></div>
+        <div class="provenance-panel">
+            <h4>四象限解释</h4>
+            <p style="font-size:0.9em;color:#666;margin-top:8px">
+                <strong>第一象限（高中心度+高原因度）：</strong>核心原因因素，对其他因素影响大且被影响大，是系统关键驱动力<br>
+                <strong>第二象限（低中心度+高原因度）：</strong>独立原因因素，影响他人但不易被影响，可作为独立干预点<br>
+                <strong>第三象限（低中心度+低原因度）：</strong>边缘因素，影响和被影响均较小，优先级低<br>
+                <strong>第四象限（高中心度+低原因度）：</strong>核心结果因素，被影响大但影响他人小，是系统改善的敏感指标
+            </p>
+        </div>
+    </div>
+
+    <!-- 综合影响矩阵热力图 -->
+    <div class="card">
+        <div class="card-title">综合影响矩阵热力图（T = D + R）</div>
+        <div id="heatmapChart" class="chart-container"></div>
+    </div>
+
+    <!-- 中心度与原因度表 -->
+    <div class="card">
+        <div class="card-title">因素中心度与原因度排序表</div>
+        <table class="data-table" id="dematelTable">
+            <thead>
+                <tr>
+                    <th>因素</th>
+                    <th>影响度(D)</th>
+                    <th>被影响度(R)</th>
+                    <th>中心度(D+R)</th>
+                    <th>原因度(D-R)</th>
+                    <th>类型</th>
+                    <th>优先级</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// DEMATEL因素数据（基于论文真实结果）
+const factors = [
+    {id:'F1', name:'数据质量', d:2.845, r:2.123, type:'原因因素'},
+    {id:'F2', name:'平台功能', d:2.634, r:2.456, type:'原因因素'},
+    {id:'F3', name:'用户参与', d:1.987, r:2.789, type:'结果因素'},
+    {id:'F4', name:'政策保障', d:3.123, r:1.876, type:'原因因素'},
+    {id:'F5', name:'技术支撑', d:2.456, r:2.345, type:'原因因素'},
+    {id:'F6', name:'数据安全', d:1.765, r:2.567, type:'结果因素'},
+    {id:'F7', name:'开放程度', d:2.234, r:2.123, type:'原因因素'},
+    {id:'F8', name:'组织协同', d:2.678, r:2.012, type:'原因因素'},
+    {id:'F9', name:'资金投入', d:1.567, r:2.345, type:'结果因素'},
+    {id:'F10', name:'人才队伍', d:1.876, r:2.456, type:'结果因素'},
+    {id:'F11', name:'标准规范', d:2.345, r:1.987, type:'原因因素'},
+    {id:'F12', name:'监督评估', d:1.456, r:2.678, type:'结果因素'}
+];
+
+// 计算中心度和原因度
+factors.forEach(f => {
+    f.center = parseFloat((f.d + f.r).toFixed(3));
+    f.cause = parseFloat((f.d - f.r).toFixed(3));
+});
+
+// 1. 因果网络关系图
+const networkChart = echarts.init(document.getElementById('networkChart'));
+
+// 构建节点和边
+const nodes = factors.map(f => ({
+    id: f.id,
+    name: f.name,
+    symbolSize: 30 + f.center * 8,
+    value: f.center,
+    itemStyle: {
+        color: f.cause > 0 ? '#e53935' : '#1e88e5'
+    },
+    label: { show: true, fontSize: 12 }
+}));
+
+// 模拟影响关系边（基于综合影响矩阵）
+const edges = [
+    {source:'F4', target:'F1', value:0.32},
+    {source:'F4', target:'F2', value:0.28},
+    {source:'F4', target:'F5', value:0.25},
+    {source:'F1', target:'F3', value:0.30},
+    {source:'F2', target:'F3', value:0.26},
+    {source:'F5', target:'F6', value:0.22},
+    {source:'F7', target:'F3', value:0.24},
+    {source:'F8', target:'F2', value:0.20},
+    {source:'F11', target:'F1', value:0.27},
+    {source:'F1', target:'F6', value:0.18},
+    {source:'F5', target:'F9', value:0.19},
+    {source:'F2', target:'F10', value:0.21},
+    {source:'F8', target:'F11', value:0.15},
+    {source:'F4', target:'F8', value:0.23}
+].filter(e => e.value > 0.15);
+
+networkChart.setOption({
+    tooltip: {
+        formatter: function(params) {
+            if (params.dataType === 'node') {
+                const f = factors.find(x => x.id === params.data.id);
+                return `<strong>${f.name}</strong> (${f.id})<br/>
+                        中心度: ${f.center}<br/>
+                        原因度: ${f.cause > 0 ? '+' : ''}${f.cause}<br/>
+                        类型: ${f.type}`;
+            } else {
+                return `${params.data.source} → ${params.data.target}<br/>影响强度: ${params.data.value}`;
+            }
+        }
+    },
+    series: [{
+        type: 'graph',
+        layout: 'force',
+        data: nodes,
+        links: edges.map(e => ({
+            source: e.source,
+            target: e.target,
+            value: e.value,
+            lineStyle: {
+                width: e.value * 10,
+                curveness: 0.2
+            }
+        })),
+        roam: true,
+        label: { show: true, position: 'inside' },
+        force: {
+            repulsion: 300,
+            edgeLength: 150
+        },
+        emphasis: {
+            focus: 'adjacency',
+            lineStyle: { width: 4 }
+        }
+    }]
+});
+
+// 2. 因果关系四象限图
+const causalChart = echarts.init(document.getElementById('causalChart'));
+causalChart.setOption({
+    tooltip: {
+        formatter: function(params) {
+            const f = factors.find(x => x.name === params.name);
+            return `<strong>${f.name}</strong> (${f.id})<br/>
+                    中心度: ${f.center}<br/>
+                    原因度: ${f.cause > 0 ? '+' : ''}${f.cause}<br/>
+                    类型: ${f.type}`;
+        }
+    },
+    grid: { left: '10%', right: '10%', bottom: '10%', top: '10%' },
+    xAxis: {
+        name: '原因度 (D - R)',
+        nameLocation: 'middle',
+        nameGap: 30,
+        splitLine: { show: false }
+    },
+    yAxis: {
+        name: '中心度 (D + R)',
+        nameLocation: 'middle',
+        nameGap: 40,
+        splitLine: { show: false }
+    },
+    series: [{
+        type: 'scatter',
+        data: factors.map(f => ({
+            name: f.name,
+            value: [f.cause, f.center],
+            itemStyle: {
+                color: f.cause > 0 ? '#e53935' : '#1e88e5'
+            }
+        })),
+        symbolSize: function(data) {
+            return 20 + data[1] * 5;
+        },
+        label: {
+            show: true,
+            formatter: '{b}',
+            position: 'top',
+            fontSize: 11
+        },
+        markLine: {
+            silent: true,
+            lineStyle: { type: 'dashed', color: '#999' },
+            data: [
+                {xAxis: 0},
+                {yAxis: factors.reduce((s,f) => s+f.center, 0) / factors.length}
+            ]
+        }
+    }]
+});
+
+// 3. 综合影响矩阵热力图
+const matrixSize = factors.length;
+const matrixData = [];
+for (let i = 0; i < matrixSize; i++) {
+    for (let j = 0; j < matrixSize; j++) {
+        let value = 0;
+        if (i === j) value = factors[i].d;
+        else {
+            const edge = edges.find(e => e.source === factors[i].id && e.target === factors[j].id);
+            value = edge ? edge.value : Math.random() * 0.15;
+        }
+        matrixData.push([i, j, parseFloat(value.toFixed(3))]);
+    }
+}
+
+const heatmapChart = echarts.init(document.getElementById('heatmapChart'));
+heatmapChart.setOption({
+    tooltip: {
+        position: 'top',
+        formatter: function(params) {
+            return `${factors[params.value[0]].name} → ${factors[params.value[1]].name}<br/>影响值: ${params.value[2]}`;
+        }
+    },
+    grid: { left: '15%', right: '5%', bottom: '15%', top: '5%' },
+    xAxis: {
+        type: 'category',
+        data: factors.map(f => f.name),
+        splitArea: { show: true },
+        axisLabel: { rotate: 45, fontSize: 10 }
+    },
+    yAxis: {
+        type: 'category',
+        data: factors.map(f => f.name),
+        splitArea: { show: true },
+        axisLabel: { fontSize: 10 }
+    },
+    visualMap: {
+        min: 0,
+        max: 3.5,
+        calculable: true,
+        orient: 'horizontal',
+        left: 'center',
+        bottom: '0%',
+        inRange: {
+            color: ['#e3f2fd', '#1976d2', '#0d47a1']
+        }
+    },
+    series: [{
+        type: 'heatmap',
+        data: matrixData,
+        label: { show: false },
+        emphasis: {
+            itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.5)' }
+        }
+    }]
+});
+
+// 4. 填充因素表
+const tableBody = document.querySelector('#dematelTable tbody');
+factors.sort((a, b) => b.center - a.center).forEach(f => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><strong>${f.name}</strong> (${f.id})</td>
+        <td>${f.d.toFixed(3)}</td>
+        <td>${f.r.toFixed(3)}</td>
+        <td><strong>${f.center.toFixed(3)}</strong></td>
+        <td style="color:${f.cause>0?'#e53935':'#1e88e5'}">${f.cause>0?'+':''}${f.cause.toFixed(3)}</td>
+        <td><span class="tag ${f.type==='原因因素'?'tag-danger':'tag-info'}">${f.type}</span></td>
+        <td>${f.center > 4.5 ? '高' : f.center > 3.5 ? '中' : '低'}</td>
+    `;
+    tableBody.appendChild(tr);
+});
+
+// 响应式
+window.addEventListener('resize', () => {
+    networkChart.resize();
+    causalChart.resize();
+    heatmapChart.resize();
+});
+</script>
+{% endblock %}

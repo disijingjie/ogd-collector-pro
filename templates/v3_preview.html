@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGD-Collector Pro V3 - 网站重设计预览</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        .navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+        .nav-logo {
+            color: white;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 5px;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        .page-header p {
+            opacity: 0.85;
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #3949ab;
+            margin: 10px 0;
+        }
+        .stat-card .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a237e;
+            border-left: 4px solid #3949ab;
+            padding-left: 12px;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 450px;
+            margin: 20px 0;
+        }
+        
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3949ab 0%, #1a237e 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3949ab 0%, #1a237e 100%);
+            color: white;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 50px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .highlight-box h4 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header h1 { font-size: 1.8em; }
+            .section-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">OGD-Collector Pro</a>
+            <div class="nav-links">
+                <a href="#collection" class="active">采集中心</a>
+                <a href="#topsis">绩效评估</a>
+                <a href="#dematel">影响因素</a>
+                <a href="#fsqa">组态路径</a>
+                <a href="#provenance">数据溯源</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="page-header">
+        <h1>OGD-Collector Pro V3</h1>
+        <p>博士论文数据采集与可视化系统 | 基于 ECharts + CSS3 构建的交互式数据可视化平台<br>23个省级政府数据开放平台 | TOPSIS/DEA/DEMATEL/fsQCA 多方法评估</p>
+    </div>
+    
+    <div class="container">
+        <!-- 核心统计 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">采集平台</div>
+                <div class="number">23</div>
+                <div class="label">个省级行政区</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">开放目录</div>
+                <div class="number" style="color:#2e7d32">36万+</div>
+                <div class="label">条数据集</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">评估方法</div>
+                <div class="number" style="color:#f57c00">4</div>
+                <div class="label">种定量分析</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">交互图表</div>
+                <div class="number" style="color:#7b1fa2">12+</div>
+                <div class="label">个可视化</div>
+            </div>
+        </div>
+        
+        <!-- 功能模块入口 -->
+        <h2 style="text-align:center;color:#1a237e;margin:40px 0 20px">核心功能模块</h2>
+        <div class="section-grid">
+            <a href="v3_collection_dashboard.html" class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>采集中心看板</h3>
+                <p>23平台数据采集状态总览，包含排名条形图、区域分布、采集方法分布、口径一致性系数等交互式可视化。</p>
+            </a>
+            <a href="v3_topsis_chart.html" class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>TOPSIS绩效评估</h3>
+                <p>基于4E框架的五维度综合评价，包含排名条形图、绩效-效率四象限散点图、雷达图对比等。</p>
+            </a>
+            <a href="v3_dematel_chart.html" class="feature-card">
+                <div class="feature-icon">🕸️</div>
+                <h3>DEMATEL影响因素</h3>
+                <p>因素因果关系识别与网络结构分析，包含因果网络关系图、四象限图、综合影响矩阵热力图。</p>
+            </a>
+            <a href="v3_fsqa_chart.html" class="feature-card">
+                <div class="feature-icon">🔀</div>
+                <h3>fsQCA组态路径</h3>
+                <p>模糊集定性比较分析，包含组态路径桑基图、真值表、校准阈值、稳健性检验结果。</p>
+            </a>
+            <a href="v3_provenance.html" class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>数据溯源中心</h3>
+                <p>所有研究数据、计算过程、采集日志开放可验证，确保研究可复现、可审计。</p>
+            </a>
+            <div class="feature-card" style="background:linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%)">
+                <div class="feature-icon" style="background:linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%)">✅</div>
+                <h3>技术亮点</h3>
+                <p>Playwright动态渲染采集Vue.js单页应用 | ECharts交互式可视化 | 响应式设计 | 数据可溯源</p>
+            </div>
+        </div>
+        
+        <!-- 技术突破展示 -->
+        <div class="card" style="margin-top:40px">
+            <div class="card-title">技术突破：安徽平台Playwright动态渲染采集</div>
+            <div class="highlight-box">
+                <h4>🎯 问题</h4>
+                <p>安徽省公共数据开放平台采用Vue.js框架构建，数据通过JavaScript动态加载，常规Requests+BeautifulSoup静态爬取返回HTML中所有统计字段均为0。</p>
+            </div>
+            <div class="highlight-box">
+                <h4>🔧 解决方案</h4>
+                <p>采用Playwright浏览器自动化工具，启动Chromium无头浏览器，设置User-Agent伪装，等待networkidle后额外等待3秒确保SPA数据渲染完成，通过CSS选择器提取动态加载后的统计数字。</p>
+            </div>
+            <div class="highlight-box">
+                <h4>📊 采集结果</h4>
+                <p><strong>开放目录：36,300个</strong> | 数据总量：4,289.50万条 | 累计下载：80.53万次 | 累计调用：222.59万次 | 采集时间：2026-04-28 23:25:11</p>
+            </div>
+            <div id="techChart" class="chart-container" style="height:300px"></div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>OGD-Collector Pro V3</strong> | 博士论文数据采集与可视化系统</p>
+        <p style="margin-top:8px;opacity:0.7">基于 ECharts + CSS3 + Playwright 构建 | 2026年4月重设计版</p>
+    </div>
+    
+    <script>
+        // 技术突破对比图
+        const techChart = echarts.init(document.getElementById('techChart'));
+        techChart.setOption({
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['静态爬取', 'Playwright动态渲染'], bottom: 0 },
+            xAxis: {
+                type: 'category',
+                data: ['开放目录', '数据总量(万条)', '下载次数(万)', '调用次数(万)']
+            },
+            yAxis: { type: 'value' },
+            series: [
+                {
+                    name: '静态爬取',
+                    type: 'bar',
+                    data: [0, 0, 0, 0],
+                    itemStyle: { color: '#9e9e9e' }
+                },
+                {
+                    name: 'Playwright动态渲染',
+                    type: 'bar',
+                    data: [36300, 4289.5, 80.53, 222.59],
+                    itemStyle: { color: '#3949ab' }
+                }
+            ]
+        });
+        
+        window.addEventListener('resize', () => techChart.resize());
+    </script>
+</body>
+</html>

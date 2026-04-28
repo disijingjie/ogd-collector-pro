@@ -3,6 +3,15 @@
   "sessions": {
     "ad7b121118034aa3992016ca35fab7e8": [
       {
+        "expertId": "DocumentGenerationExpert",
+        "name": "文档达",
+        "profession": "文档生成专家",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert_zh.md",
+        "usedAt": 1777393116734,
+        "industryId": "all"
+      },
+      {
         "expertId": "AndonQExpert",
         "name": "AndonQ",
         "profession": "腾讯云技术支持专家",
@@ -19,15 +28,6 @@
         "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/09-Operations/InfrastructureOperationsExpert/InfrastructureOperationsExpert_zh.md",
         "usedAt": 1777369287509,
         "industryId": "09-Operations"
-      },
-      {
-        "expertId": "DocumentGenerationExpert",
-        "name": "文档达",
-        "profession": "文档生成专家",
-        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert.png",
-        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/11-ProfessionalServices/DocumentGenerationExpert/DocumentGenerationExpert_zh.md",
-        "usedAt": 1777285150804,
-        "industryId": "all"
       }
     ],
     "5acdaeab74734c43adecc6459e6bc1e9": [
@@ -42,5 +42,5 @@
       }
     ]
   },
-  "lastUpdated": 1777384638897
+  "lastUpdated": 1777393239851
 }

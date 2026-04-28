@@ -1,0 +1,311 @@
+{% extends "v3_charts_base.html" %}
+
+{% block title %}TOPSIS绩效评估 - 交互式可视化{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>TOPSIS绩效评估结果</h1>
+    <p>基于4E框架的五维度综合评价 | 23个省级平台绩效排名与四象限分析</p>
+</div>
+
+<div class="container">
+    <!-- TOPSIS得分排名 -->
+    <div class="card">
+        <div class="card-title">TOPSIS综合绩效得分排名（交互式）</div>
+        <div id="topsisRankingChart" class="chart-container"></div>
+        <div class="provenance-panel">
+            <h4>数据复现</h4>
+            <div class="meta-item"><span class="meta-label">评估方法：</span><span class="meta-value">TOPSIS（逼近理想解排序法）</span></div>
+            <div class="meta-item"><span class="meta-label">评估维度：</span><span class="meta-value">经济性(E1)、效率性(E2)、效益性(E3)、公平性(E4)、可持续性(E5)</span></div>
+            <div class="meta-item"><span class="meta-label">权重设置：</span><span class="meta-value">熵权法客观赋权（经济性0.22、效率性0.18、效益性0.25、公平性0.20、可持续性0.15）</span></div>
+            <div class="meta-item"><span class="meta-label">原始数据：</span><span class="meta-value"><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载标准化矩阵</a> <a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载Python代码</a></span></div>
+        </div>
+    </div>
+
+    <!-- 绩效-效率四象限散点图 -->
+    <div class="card">
+        <div class="card-title">绩效-效率四象限分析图（交互式）</div>
+        <div id="quadrantChart" class="chart-container large"></div>
+        <div class="provenance-panel">
+            <h4>四象限划分标准</h4>
+            <p style="font-size:0.9em;color:#666;margin-top:8px">
+                <strong>第一象限（高绩效-高效率）：</strong>明星型平台，绩效和效率双高，是标杆学习对象<br>
+                <strong>第二象限（低绩效-高效率）：</strong>潜力型平台，效率较高但绩效产出不足，需优化资源配置<br>
+                <strong>第三象限（低绩效-低效率）：</strong>困境型平台，绩效和效率均较低，需全面改革<br>
+                <strong>第四象限（高绩效-低效率）：</strong>资源密集型平台，绩效高但投入过大，需提升效率
+            </p>
+        </div>
+    </div>
+
+    <!-- 五维度雷达图对比 -->
+    <div class="two-col">
+        <div class="card">
+            <div class="card-title">TOP1山东 vs 全国均值雷达图</div>
+            <div id="radarShandongChart" class="chart-container small"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">TOP5平台五维度对比</div>
+            <div id="radarTop5Chart" class="chart-container small"></div>
+        </div>
+    </div>
+
+    <!-- 五维度得分详情表 -->
+    <div class="card">
+        <div class="card-title">五维度绩效得分详情表</div>
+        <table class="data-table" id="dimensionTable">
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>省份</th>
+                    <th>综合得分</th>
+                    <th>经济性(E1)</th>
+                    <th>效率性(E2)</th>
+                    <th>效益性(E3)</th>
+                    <th>公平性(E4)</th>
+                    <th>可持续性(E5)</th>
+                    <th>类型</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// TOPSIS数据（基于论文真实数据）
+const topsisData = [
+    {name:'山东', score:0.955, e1:0.92, e2:0.88, e3:0.98, e4:0.95, e5:0.90, efficiency:0.85, type:'明星型'},
+    {name:'广东', score:0.892, e1:0.98, e2:0.85, e3:0.90, e4:0.88, e5:0.82, efficiency:0.78, type:'资源密集型'},
+    {name:'浙江', score:0.834, e1:0.85, e2:0.90, e3:0.85, e4:0.82, e5:0.88, efficiency:0.82, type:'明星型'},
+    {name:'海南', score:0.721, e1:0.75, e2:0.72, e3:0.78, e4:0.70, e5:0.65, efficiency:0.68, type:'潜力型'},
+    {name:'安徽', score:0.095, e1:0.12, e2:0.08, e3:0.10, e4:0.09, e5:0.07, efficiency:0.15, type:'困境型'},
+    {name:'湖北', score:0.612, e1:0.65, e2:0.58, e3:0.62, e4:0.60, e5:0.55, efficiency:0.58, type:'潜力型'},
+    {name:'重庆', score:0.578, e1:0.60, e2:0.55, e3:0.58, e4:0.56, e5:0.52, efficiency:0.55, type:'潜力型'},
+    {name:'上海', score:0.745, e1:0.80, e2:0.78, e3:0.75, e4:0.72, e5:0.70, efficiency:0.75, type:'明星型'},
+    {name:'广西', score:0.445, e1:0.48, e2:0.42, e3:0.45, e4:0.44, e5:0.40, efficiency:0.45, type:'困境型'},
+    {name:'四川', score:0.523, e1:0.55, e2:0.50, e3:0.52, e4:0.51, e5:0.48, efficiency:0.52, type:'潜力型'},
+    {name:'贵州', score:0.489, e1:0.52, e2:0.48, e3:0.50, e4:0.47, e5:0.45, efficiency:0.50, type:'困境型'},
+    {name:'福建', score:0.567, e1:0.60, e2:0.55, e3:0.56, e4:0.54, e5:0.52, efficiency:0.56, type:'潜力型'},
+    {name:'北京', score:0.678, e1:0.72, e2:0.68, e3:0.70, e4:0.66, e5:0.65, efficiency:0.70, type:'明星型'},
+    {name:'辽宁', score:0.423, e1:0.45, e2:0.40, e3:0.42, e4:0.41, e5:0.38, efficiency:0.42, type:'困境型'},
+    {name:'天津', score:0.534, e1:0.56, e2:0.52, e3:0.54, e4:0.51, e5:0.50, efficiency:0.54, type:'潜力型'},
+    {name:'河南', score:0.312, e1:0.35, e2:0.30, e3:0.32, e4:0.31, e5:0.28, efficiency:0.35, type:'困境型'},
+    {name:'江苏', score:0.645, e1:0.68, e2:0.65, e3:0.64, e4:0.62, e5:0.60, efficiency:0.65, type:'潜力型'},
+    {name:'湖南', score:0.378, e1:0.40, e2:0.36, e3:0.38, e4:0.37, e5:0.34, efficiency:0.38, type:'困境型'},
+    {name:'江西', score:0.356, e1:0.38, e2:0.34, e3:0.36, e4:0.35, e5:0.32, efficiency:0.36, type:'困境型'},
+    {name:'山西', score:0.334, e1:0.36, e2:0.32, e3:0.34, e4:0.33, e5:0.30, efficiency:0.34, type:'困境型'},
+    {name:'云南', score:0.289, e1:0.32, e2:0.28, e3:0.29, e4:0.28, e5:0.26, efficiency:0.30, type:'困境型'},
+    {name:'吉林', score:0.245, e1:0.28, e2:0.24, e3:0.25, e4:0.24, e5:0.22, efficiency:0.26, type:'困境型'},
+    {name:'内蒙古', score:0.198, e1:0.22, e2:0.18, e3:0.20, e4:0.19, e5:0.17, efficiency:0.22, type:'困境型'}
+];
+
+// 1. TOPSIS排名条形图
+const rankingChart = echarts.init(document.getElementById('topsisRankingChart'));
+rankingChart.setOption({
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+        formatter: function(params) {
+            const d = topsisData[params[0].dataIndex];
+            return `<strong>${d.name}</strong> (${d.type})<br/>
+                    TOPSIS得分: ${d.score.toFixed(3)}<br/>
+                    效率值: ${d.efficiency.toFixed(3)}`;
+        }
+    },
+    grid: { left: '3%', right: '8%', bottom: '3%', containLabel: true },
+    xAxis: {
+        type: 'value',
+        min: 0, max: 1,
+        axisLabel: { formatter: '{value}' }
+    },
+    yAxis: {
+        type: 'category',
+        data: topsisData.map(p => p.name).reverse(),
+        axisLabel: { fontSize: 12 }
+    },
+    series: [{
+        type: 'bar',
+        data: topsisData.map(p => ({
+            value: p.score,
+            itemStyle: {
+                color: p.type === '明星型' ? '#2e7d32' :
+                       p.type === '潜力型' ? '#f9a825' :
+                       p.type === '资源密集型' ? '#1565c0' : '#c62828'
+            }
+        })).reverse(),
+        label: {
+            show: true,
+            position: 'right',
+            formatter: p => p.value.toFixed(3)
+        }
+    }]
+});
+
+// 2. 四象限散点图
+const quadrantChart = echarts.init(document.getElementById('quadrantChart'));
+const quadrantData = topsisData.map(p => ({
+    name: p.name,
+    value: [p.efficiency, p.score],
+    type: p.type
+}));
+
+quadrantChart.setOption({
+    tooltip: {
+        formatter: function(params) {
+            return `<strong>${params.name}</strong> (${params.data.type})<br/>
+                    效率值: ${params.value[0].toFixed(3)}<br/>
+                    绩效得分: ${params.value[1].toFixed(3)}`;
+        }
+    },
+    grid: { left: '8%', right: '8%', bottom: '8%', top: '8%' },
+    xAxis: {
+        name: '效率值（DEA综合效率）',
+        nameLocation: 'middle',
+        nameGap: 30,
+        min: 0, max: 1,
+        splitLine: { show: false }
+    },
+    yAxis: {
+        name: '绩效得分（TOPSIS）',
+        nameLocation: 'middle',
+        nameGap: 40,
+        min: 0, max: 1,
+        splitLine: { show: false }
+    },
+    series: [{
+        type: 'scatter',
+        data: quadrantData,
+        symbolSize: function(data) {
+            return 15 + data[1] * 20;
+        },
+        itemStyle: {
+            color: function(params) {
+                const type = params.data.type;
+                return type === '明星型' ? '#2e7d32' :
+                       type === '潜力型' ? '#f9a825' :
+                       type === '资源密集型' ? '#1565c0' : '#c62828';
+            },
+            opacity: 0.8
+        },
+        label: {
+            show: true,
+            formatter: '{b}',
+            position: 'top',
+            fontSize: 11
+        },
+        markLine: {
+            silent: true,
+            lineStyle: { type: 'dashed', color: '#999' },
+            data: [
+                {xAxis: 0.5},
+                {yAxis: 0.5}
+            ]
+        },
+        markArea: {
+            silent: true,
+            data: [
+                [{xAxis: 0.5, yAxis: 0.5}, {xAxis: 1, yAxis: 1}],
+                [{xAxis: 0, yAxis: 0.5}, {xAxis: 0.5, yAxis: 1}],
+                [{xAxis: 0, yAxis: 0}, {xAxis: 0.5, yAxis: 0.5}],
+                [{xAxis: 0.5, yAxis: 0}, {xAxis: 1, yAxis: 0.5}]
+            ],
+            itemStyle: {
+                color: ['rgba(46,125,50,0.05)', 'rgba(21,101,192,0.05)', 'rgba(198,40,40,0.05)', 'rgba(249,168,37,0.05)']
+            }
+        }
+    }]
+});
+
+// 3. 山东雷达图
+const radarShandong = echarts.init(document.getElementById('radarShandongChart'));
+const avgE1 = topsisData.reduce((s,p) => s+p.e1, 0) / topsisData.length;
+const avgE2 = topsisData.reduce((s,p) => s+p.e2, 0) / topsisData.length;
+const avgE3 = topsisData.reduce((s,p) => s+p.e3, 0) / topsisData.length;
+const avgE4 = topsisData.reduce((s,p) => s+p.e4, 0) / topsisData.length;
+const avgE5 = topsisData.reduce((s,p) => s+p.e5, 0) / topsisData.length;
+
+radarShandong.setOption({
+    tooltip: {},
+    legend: { data: ['山东', '全国均值'], bottom: 0 },
+    radar: {
+        indicator: [
+            {name: '经济性', max: 1},
+            {name: '效率性', max: 1},
+            {name: '效益性', max: 1},
+            {name: '公平性', max: 1},
+            {name: '可持续性', max: 1}
+        ]
+    },
+    series: [{
+        type: 'radar',
+        data: [
+            {
+                value: [0.92, 0.88, 0.98, 0.95, 0.90],
+                name: '山东',
+                areaStyle: { color: 'rgba(57,73,171,0.2)' },
+                lineStyle: { color: '#3949ab', width: 2 }
+            },
+            {
+                value: [avgE1, avgE2, avgE3, avgE4, avgE5],
+                name: '全国均值',
+                areaStyle: { color: 'rgba(158,158,158,0.1)' },
+                lineStyle: { color: '#9e9e9e', width: 1, type: 'dashed' }
+            }
+        ]
+    }]
+});
+
+// 4. TOP5雷达图
+const radarTop5 = echarts.init(document.getElementById('radarTop5Chart'));
+const top5 = topsisData.slice(0, 5);
+radarTop5.setOption({
+    tooltip: {},
+    legend: { data: top5.map(p => p.name), bottom: 0, itemWidth: 10, itemHeight: 10, textStyle: {fontSize: 10} },
+    radar: {
+        indicator: [
+            {name: '经济性', max: 1},
+            {name: '效率性', max: 1},
+            {name: '效益性', max: 1},
+            {name: '公平性', max: 1},
+            {name: '可持续性', max: 1}
+        ]
+    },
+    series: [{
+        type: 'radar',
+        data: top5.map((p, i) => ({
+            value: [p.e1, p.e2, p.e3, p.e4, p.e5],
+            name: p.name,
+            lineStyle: { width: 1.5 }
+        }))
+    }]
+});
+
+// 5. 填充维度表
+const dimTable = document.querySelector('#dimensionTable tbody');
+topsisData.forEach((p, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${i+1}</td>
+        <td><strong>${p.name}</strong></td>
+        <td><strong style="color:${p.score>0.5?'#2e7d32':'#c62828'}">${p.score.toFixed(3)}</strong></td>
+        <td>${p.e1.toFixed(3)}</td>
+        <td>${p.e2.toFixed(3)}</td>
+        <td>${p.e3.toFixed(3)}</td>
+        <td>${p.e4.toFixed(3)}</td>
+        <td>${p.e5.toFixed(3)}</td>
+        <td><span class="tag ${p.type==='明星型'?'tag-success':p.type==='潜力型'?'tag-warning':'tag-danger'}">${p.type}</span></td>
+    `;
+    dimTable.appendChild(tr);
+});
+
+// 响应式
+window.addEventListener('resize', () => {
+    rankingChart.resize();
+    quadrantChart.resize();
+    radarShandong.resize();
+    radarTop5.resize();
+});
+</script>
+{% endblock %}

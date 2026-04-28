@@ -1,5 +1,23 @@
 # OGD 自动更新执行记录
 
+## 2026-04-28 18:58
+- **状态**: GitHub推送失败（网络问题），本地已提交，服务器运行正常
+- **本地提交**: 成功（commit 77085b6，30个文件变更，+1981行/-246行）
+  - 新增：论文投稿包（CoverLetter×5 + 投稿版docx×6）、投稿指南、操作手册
+  - 新增：采集脚本（_check_actions.py, _generate_cover_letter.py, collect_anhui_playwright.py）
+  - 新增：数据文件（_actions.json, _jobs.json, _logs.zip等）
+  - 修改：6篇论文初稿（A-F）、md转docx脚本、内存文件
+- **GitHub推送**: 3次重试均失败
+  - 第1次：SSH权限拒绝（publickey），已切换为HTTPS
+  - 第2次：Recv failure: Connection was reset
+  - 第3次：Couldn't connect to server（连接超时21秒）
+- **服务器SSH**: 正常连接
+- **服务器git pull**: 失败，服务器端GitHub同样不可达（GnuTLS recv error -110）
+- **服务器当前版本**: 88bed356（2026-04-28 16:56），与本地最新（77085b6）存在差异
+- **服务状态**: 运行中（自2026-04-28 22:32:00 CST起，已运行约2小时，HTTP 302正常，内存121.1M）
+- **本次变更影响评估**: 主要为论文文档和投稿材料（docs目录），不涉及核心服务代码（app.py/models.py/collector_engine.py等未变更）
+- **结论**: GitHub网络问题持续，本地代码已提交（77085b6）但未同步到GitHub和服务器。由于本次变更主要是论文文档和投稿材料，不影响OGD采集服务运行。建议：1) 等待网络恢复后手动补推GitHub；2) 如需紧急同步论文文件到服务器，可使用SCP直接上传docs目录。
+
 ## 2026-04-28 16:56
 - **状态**: GitHub推送成功，服务器代码更新成功，服务已恢复
 - **本地提交**: 成功（commit 88bed35，6个文件变更，+71行/-84行）
