@@ -124,6 +124,40 @@ def thesis_ch8():
 def thesis_index():
     return render_template('v4_thesis_index_v3.html')
 
+# ========== V3兼容路由 (旧版URL重定向) ==========
+
+@app.route('/v3/')
+def v3_index():
+    return index()
+
+@app.route('/v3/analysis')
+def v3_analysis():
+    return analysis()
+
+@app.route('/v3/collection')
+def v3_collection():
+    return collection()
+
+@app.route('/v3/thesis')
+def v3_thesis():
+    return thesis()
+
+@app.route('/v3/reproduce')
+def v3_reproduce():
+    return reproduce()
+
+@app.route('/v3/research')
+def v3_research():
+    return research()
+
+@app.route('/v3/provenance')
+def v3_provenance():
+    return provenance()
+
+@app.route('/v3/dashboard')
+def v3_dashboard():
+    return collection_dashboard()
+
 # ========== API ==========
 
 @app.route('/api/stats')
