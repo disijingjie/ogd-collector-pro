@@ -39,16 +39,205 @@
 <div id="sources" class="scroll-section">
   <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>全数据来源总览</div><div style="font-size:12px;color:#64748b">本研究使用的所有数据及其来源</div></div>
     <table class="data-table data-source-table">
-      <tr><th>数据名称</th><th>来源</th><th>样本量</th><th>采集日期</th><th>置信度</th><th>下载</th></tr>
-      <tr><td>88平台基础信息</td><td>手工核实+官网抓取</td><td>88条</td><td>2024-06</td><td><span class="badge" style="background:#dcfce7;color:#166534">A+</span></td><td><a href="/static/data/platforms_88_basic.csv" style="color:#2563eb">CSV</a></td></tr>
-      <tr><td>23省数据集元数据</td><td>API+静态+动态采集</td><td>~98,000条</td><td>2024-06~10</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="/static/data/platforms_23_full.csv" style="color:#2563eb">CSV</a></td></tr>
-      <tr><td>4E指标评分</td><td>基于采集数据计算</td><td>88条</td><td>2024-09</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="/static/data/4e_scores.csv" style="color:#2563eb">CSV</a></td></tr>
-      <tr><td>DEA投入产出</td><td>平台年报+采集数据</td><td>23条</td><td>2024-09</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="/static/data/dea_input_output.csv" style="color:#2563eb">CSV</a></td></tr>
-      <tr><td>专家问卷</td><td>德尔菲法两轮咨询</td><td>15位专家</td><td>2024-08</td><td><span class="badge" style="background:#fef9c3;color:#854d0e">B+</span></td><td><a href="/static/data/expert_questionnaire.csv" style="color:#2563eb">CSV</a></td></tr>
-      <tr><td>31省面板数据</td><td>统计年鉴+平台数据</td><td>217观测</td><td>2024-10</td><td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td><td><a href="/static/data/panel_data_31provinces.csv" style="color:#2563eb">CSV</a></td></tr>
+      <tr><th>数据名称</th><th>来源</th><th>样本量</th><th>采集日期</th><th>置信度</th><th>下载</th><th>详情</th></tr>
+      <tr>
+        <td><a href="#source-88platforms" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">88平台基础信息</a></td>
+        <td>手工核实+官网抓取</td><td>88条</td><td>2024-06</td>
+        <td><span class="badge" style="background:#dcfce7;color:#166534">A+</span></td>
+        <td><a href="/static/data/platforms_88_basic.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="/v3/collection#provenance" style="color:#2563eb;font-size:12px">查看采集过程 →</a></td>
+      </tr>
+      <tr>
+        <td><a href="#source-23metadata" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">23省数据集元数据</a></td>
+        <td>API+静态+动态采集</td><td>~98,000条</td><td>2024-06~10</td>
+        <td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td>
+        <td><a href="/static/data/platforms_23_full.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="/v3/collection#strategy" style="color:#2563eb;font-size:12px">查看采集策略 →</a></td>
+      </tr>
+      <tr>
+        <td><a href="#source-4e" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">4E指标评分</a></td>
+        <td>基于采集数据计算</td><td>88条</td><td>2024-09</td>
+        <td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td>
+        <td><a href="/static/data/4e_scores.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="#topsis-repro" style="color:#2563eb;font-size:12px">查看计算步骤 →</a></td>
+      </tr>
+      <tr>
+        <td><a href="#source-dea" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">DEA投入产出</a></td>
+        <td>平台年报+采集数据</td><td>23条</td><td>2024-09</td>
+        <td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td>
+        <td><a href="/static/data/dea_input_output.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="#dea-repro" style="color:#2563eb;font-size:12px">查看计算步骤 →</a></td>
+      </tr>
+      <tr>
+        <td><a href="#source-expert" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">专家问卷</a></td>
+        <td>德尔菲法两轮咨询</td><td>15位专家</td><td>2024-08</td>
+        <td><span class="badge" style="background:#fef9c3;color:#854d0e">B+</span></td>
+        <td><a href="/static/data/expert_questionnaire.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="#dematel-repro" style="color:#2563eb;font-size:12px">查看问卷设计 →</a></td>
+      </tr>
+      <tr>
+        <td><a href="#source-panel" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">31省面板数据</a></td>
+        <td>统计年鉴+平台数据</td><td>217观测</td><td>2024-10</td>
+        <td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td>
+        <td><a href="/static/data/panel_data_31provinces.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
+        <td><a href="#did-repro" style="color:#2563eb;font-size:12px">查看变量说明 →</a></td>
+      </tr>
     </table>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>数据获取方式：</strong>所有原始数据可通过GitHub仓库的 <code>data/</code> 目录获取。运行 <code>python analysis_pipeline.py</code> 即可复现全部分析流程。如需最新数据，可使用下方的"重新采集"功能。
+    </div>
+  </div>
+</div>
+
+<!-- ====== 数据来源详细说明（下钻层） ====== -->
+
+<div id="source-88platforms" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #2563eb">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#dbeafe;color:#1e40af">数据来源详情</div>
+      <div style="font-weight:700">88平台基础信息</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>采集方法：</strong>通过政府官网、开放数林指数报告、学术论文交叉核实，手工确认全国31个省级行政区共88个政府数据开放平台的官方URL、行政级别、运营状态等基础信息。</p>
+      <p><strong>字段说明：</strong>平台代码、平台名称、行政级别（省级/副省级/地级市）、所在省份、平台URL、运营状态、备注</p>
+      <p><strong>质量控制：</strong>每个平台URL均通过人工访问验证，确保链接可访问、页面内容匹配平台描述。</p>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/platforms_88_basic.csv" class="quick-link">⬇ 下载CSV (8KB)</a>
+      <a href="/v3/collection#provenance" class="quick-link">查看88平台清单 →</a>
+    </div>
+  </div>
+</div>
+
+<div id="source-23metadata" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #059669">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#d1fae5;color:#065f46">数据来源详情</div>
+      <div style="font-weight:700">23省数据集元数据</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>采集方法：</strong>采用"一平台一议"自适应采集策略，针对不同技术架构选择最优方法：</p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>静态解析（15个平台）：</strong>Requests + BeautifulSoup，CSS选择器/正则提取首页统计数字</li>
+        <li><strong>数据目录页（4个平台）：</strong>访问数据目录列表页，通过分页信息计算总数</li>
+        <li><strong>动态渲染（1个平台）：</strong>Playwright + Chromium 无头浏览器，采集Vue.js单页应用（安徽）</li>
+        <li><strong>第三方权威（3个平台）：</strong>政府新闻发布会、官方统计报告</li>
+      </ul>
+      <p><strong>字段说明：</strong>序号、平台代码、平台名称、行政级别、所在省份、数据集数量、数据口径、采集方法、置信度、来源类型、平台URL、代运营情况、采集日期、状态、备注</p>
+      <p><strong>数据口径标准化：</strong>针对"数据口径幻觉"问题，建立转换系数：数据集=1.0、数据目录=0.8、数据产品=0.5、登记条目=0.3</p>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/platforms_23_full.csv" class="quick-link">⬇ 下载CSV (3KB)</a>
+      <a href="/static/data/collect_static.py" class="quick-link">⬇ 下载采集脚本</a>
+      <a href="/static/data/collect_anhui_playwright.py" class="quick-link">⬇ 下载Playwright脚本</a>
+      <a href="/v3/collection#strategy" class="quick-link">查看采集策略详情 →</a>
+    </div>
+  </div>
+</div>
+
+<div id="source-4e" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #d97706">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#fef3c7;color:#92400e">数据来源详情</div>
+      <div style="font-weight:700">4E指标评分</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>计算方法：</strong>基于88平台采集的原始数据，通过4E框架（经济性、效率性、有效性、公平性、环境性）构建16个二级指标，经标准化处理后计算各平台综合评分。</p>
+      <p><strong>指标构建逻辑：</strong></p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>经济性(E1)：</strong>数据集数量、数据更新频率、免费开放比例</li>
+        <li><strong>效率性(E2)：</strong>平台响应速度、API可用率、数据下载成功率</li>
+        <li><strong>有效性(E3)：</strong>数据利用率、用户满意度、应用案例数</li>
+        <li><strong>公平性(E4)：</strong>区域覆盖均衡度、主题分布多样性、无障碍访问</li>
+        <li><strong>环境性(E5)：</strong>政策支持度、组织保障度、标准规范度</li>
+      </ul>
+      <p><strong>标准化方法：</strong>Min-Max标准化，将各指标映射到[0,1]区间</p>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/4e_scores.csv" class="quick-link">⬇ 下载CSV (2KB)</a>
+      <a href="#topsis-repro" class="quick-link">查看TOPSIS计算步骤 →</a>
+    </div>
+  </div>
+</div>
+
+<div id="source-dea" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #db2777">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#fce7f3;color:#9d174d">数据来源详情</div>
+      <div style="font-weight:700">DEA投入产出数据</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>数据来源：</strong>投入指标来自平台年报、政府统计公报；产出指标来自采集数据。</p>
+      <p><strong>投入指标（2项）：</strong></p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>人员编制：</strong>平台运营团队人员数量（标准化值）</li>
+        <li><strong>资金投入：</strong>平台建设与运维财政投入（标准化值）</li>
+      </ul>
+      <p><strong>产出指标（2项）：</strong></p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>数据集数量：</strong>平台开放数据集/目录总数（标准化值）</li>
+        <li><strong>下载量：</strong>年度数据下载次数（标准化值）</li>
+      </ul>
+      <p><strong>模型选择：</strong>BCC模型（可变规模报酬），适用于DMU规模差异较大的场景</p>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/dea_input_output.csv" class="quick-link">⬇ 下载CSV (2KB)</a>
+      <a href="#dea-repro" class="quick-link">查看DEA计算步骤 →</a>
+    </div>
+  </div>
+</div>
+
+<div id="source-expert" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #7c3aed">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#f3e8ff;color:#7e22ce">数据来源详情</div>
+      <div style="font-weight:700">专家问卷数据</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>问卷设计：</strong>基于DEMATEL方法要求，设计12个影响因素（政策环境、组织保障、平台建设、数据质量、应用效果、用户参与、资金投入、技术标准、人才队伍、监督评估、开放生态、制度环境）的直接影响矩阵问卷。</p>
+      <p><strong>专家遴选：</strong>采用目的性抽样，选取15位专家，覆盖：</p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li>高校学者（信息资源管理、公共管理、数据科学领域）：10人</li>
+        <li>科研机构研究员（国家信息中心、中国信通院、赛迪研究院）：3人</li>
+        <li>政府数据管理部门实践者：2人</li>
+      </ul>
+      <p><strong>德尔菲流程：</strong>两轮咨询，第一轮开放评分+意见收集，第二轮反馈修正后确认，一致性系数>0.85视为通过</p>
+      <p><strong>评分标准：</strong>0=无影响，1=弱影响，2=中等影响，3=强影响，4=极强影响</p>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/expert_questionnaire.csv" class="quick-link">⬇ 下载CSV (2KB)</a>
+      <a href="#dematel-repro" class="quick-link">查看DEMATEL计算步骤 →</a>
+    </div>
+  </div>
+</div>
+
+<div id="source-panel" class="scroll-section">
+  <div class="repro-card" style="border-left:4px solid #0891b2">
+    <div class="repro-header">
+      <div class="repro-badge" style="background:#cffafe;color:#0e7490">数据来源详情</div>
+      <div style="font-weight:700">31省面板数据</div>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
+      <p><strong>数据来源：</strong></p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>人均GDP：</strong>国家统计局《中国统计年鉴》2018-2024</li>
+        <li><strong>互联网普及率：</strong>中国互联网络信息中心（CNNIC）《中国互联网络发展状况统计报告》</li>
+        <li><strong>数字基础设施指数：</strong>北京大学数字普惠金融指数</li>
+        <li><strong>数据集数量：</strong>OGD-Collector Pro 自主采集数据</li>
+        <li><strong>政策实施变量：</strong>根据各省数据开放平台上线时间手工编码</li>
+      </ul>
+      <p><strong>数据结构：</strong>31个省份 × 7年（2018-2024）= 217个观测值</p>
+      <p><strong>变量说明：</strong></p>
+      <ul style="margin-left:20px;margin-top:8px">
+        <li><strong>被解释变量：</strong>数据集数量（取对数）</li>
+        <li><strong>核心解释变量：</strong>DID交互项（处理组×政策后）</li>
+        <li><strong>控制变量：</strong>人均GDP、互联网普及率、数字基础设施指数</li>
+        <li><strong>固定效应：</strong>省份固定效应、年份固定效应</li>
+      </ul>
+    </div>
+    <div class="quick-links">
+      <a href="/static/data/panel_data_31provinces.csv" class="quick-link">⬇ 下载CSV (8KB)</a>
+      <a href="#did-repro" class="quick-link">查看DID计算步骤 →</a>
     </div>
   </div>
 </div>
