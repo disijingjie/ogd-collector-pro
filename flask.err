@@ -499,3 +499,13 @@ C:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\venv\Lib\site-packages\urllib
 127.0.0.1 - - [29/Apr/2026 10:26:17] "GET /static/charts/fig4_5_strategy_matrix.png HTTP/1.1" 304 -
 127.0.0.1 - - [29/Apr/2026 10:38:21] "GET /v3/ HTTP/1.1" 200 -
 127.0.0.1 - - [29/Apr/2026 10:38:24] "GET /v3/ HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:51:48] "GET /v3/ HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:51:50] "GET /v3/collection HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:51:50] "GET /static/charts/fig4_5_strategy_matrix.png HTTP/1.1" 304 -
+127.0.0.1 - - [29/Apr/2026 10:51:50] "GET /static/charts/fig4_3_consistency_coeff.png HTTP/1.1" 304 -
+127.0.0.1 - - [29/Apr/2026 10:51:56] "GET /v3/ HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:53:31] "GET /v3/ HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:53:33] "GET /v3/ HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:54:35] "GET /v3/collection HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2026 10:54:35] "GET /static/charts/fig4_5_strategy_matrix.png HTTP/1.1" 304 -
+127.0.0.1 - - [29/Apr/2026 10:54:35] "GET /static/charts/fig4_3_consistency_coeff.png HTTP/1.1" 304 -
