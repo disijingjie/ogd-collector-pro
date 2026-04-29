@@ -1,5 +1,5 @@
 {% extends "base_v3.html" %}{% set active = "dashboard" %}{% block title %}系统概览 - OGD-Collector Pro{% endblock %}{% block page_title %}系统概览{% endblock %}{% block breadcrumb %}系统概览{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#roadmap">技术路线</a><a href="#architecture">系统架构</a><a href="#highlights">核心亮点</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#roadmap">技术路线</a><a href="#thesis-preview">核心发现</a><a href="#analysis-nav">交互分析</a><a href="#architecture">系统架构</a><a href="#highlights">创新亮点</a></div>{% endblock %}
 {% block content %}
 
 <div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
@@ -20,7 +20,7 @@
   <div class="stats-grid">
     <a href="/v3/collection#provenance" class="stat-card"><div class="stat-value">88</div><div class="stat-label">政府数据开放平台</div><div class="stat-note">覆盖31个省级行政区 →</div></a>
     <a href="/v3/collection#strategy" class="stat-card"><div class="stat-value">23</div><div class="stat-label">省级数据采集覆盖</div><div class="stat-note">23省+8种采集策略 →</div></a>
-    <a href="/v3/thesis" class="stat-card"><div class="stat-value">36</div><div class="stat-label">论文图表</div><div class="stat-note">24张表+12张图 →</div></a>
+    <a href="/v3/thesis" class="stat-card"><div class="stat-value">36</div><div class="stat-label">论文图表</div><div class="stat-note">36张图+24张表 →</div></a>
     <a href="/v3/analysis" class="stat-card"><div class="stat-value">5</div><div class="stat-label">分析方法</div><div class="stat-note">TOPSIS→DEA→DEMATEL→fsQCA→DID →</div></a>
   </div>
 </div>
@@ -173,6 +173,33 @@
   </div>
 </div>
 
+<div id="analysis-nav" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>交互式分析工具</div><div style="font-size:12px;color:#64748b">四大分析模块的交互式图表，支持缩放、悬停、下钻</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <a href="/charts/topsis" style="padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">📊</div>
+        <div style="font-weight:700;font-size:14px">TOPSIS绩效评估</div>
+        <div style="font-size:12px;opacity:.9;margin-top:4px">4E框架五维度综合评价</div>
+      </a>
+      <a href="/charts/dematel" style="padding:20px;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">🕸️</div>
+        <div style="font-weight:700;font-size:14px">DEMATEL影响因素</div>
+        <div style="font-size:12px;opacity:.9;margin-top:4px">因果网络与四象限分析</div>
+      </a>
+      <a href="/charts/fsqa" style="padding:20px;background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">🔀</div>
+        <div style="font-weight:700;font-size:14px">fsQCA组态路径</div>
+        <div style="font-size:12px;opacity:.9;margin-top:4px">多重并发因果路径识别</div>
+      </a>
+      <a href="/provenance" style="padding:20px;background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">🔍</div>
+        <div style="font-weight:700;font-size:14px">数据溯源中心</div>
+        <div style="font-size:12px;opacity:.9;margin-top:4px">研究数据与代码开放验证</div>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div id="architecture" class="scroll-section">
   <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>系统技术架构</div></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
@@ -180,6 +207,37 @@
       <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#059669">数据治理</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 存储层：SQLite + JSON + CSV<br>• 清洗流程：去重 → 标准化 → 校验 → 关联<br>• 版本管理：Git + 数据库快照<br>• 增量更新：哈希比对 + 时间戳追踪</div></div>
       <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#d97706">分析引擎</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 排名分析：TOPSIS（逼近理想解）<br>• 效率评估：DEA（数据包络分析）<br>• 因果挖掘：DEMATEL（决策试验法）<br>• 路径分析：fsQCA（模糊集定性比较）<br>• 政策评估：DID（双重差分法）</div></div>
       <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#db2777">展示层</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 后端框架：Flask + Jinja2 模板<br>• 前端图表：ECharts 5.x + D3.js 7.x<br>• 响应式布局：CSS Grid + Flexbox<br>• 部署环境：腾讯云 + Nginx + Gunicorn</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="thesis-preview" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>核心研究发现</div><div style="font-size:12px;color:#64748b">博士论文四大核心发现，点击卡片进入论文成果页查看完整分析</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <a href="/v3/thesis#ch5" style="padding:16px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:10px;border:1px solid #bfdbfe;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-weight:700;margin-bottom:8px;color:#1e40af">TOPSIS综合排名</div>
+        <div style="font-size:28px;font-weight:800;color:#2563eb;margin-bottom:4px">山东 0.955</div>
+        <div style="font-size:12px;color:#64748b">TOP3: 山东 > 浙江 > 广东 | 东部整体领先</div>
+        <div style="margin-top:8px;font-size:11px;color:#3b82f6">点击查看完整排名 →</div>
+      </a>
+      <a href="/v3/thesis#ch5" style="padding:16px;background:linear-gradient(135deg,#f0fdf4,#d1fae5);border-radius:10px;border:1px solid #a7f3d0;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-weight:700;margin-bottom:8px;color:#065f46">DEA效率评估</div>
+        <div style="font-size:28px;font-weight:800;color:#059669;margin-bottom:4px">1个有效</div>
+        <div style="font-size:12px;color:#64748b">山东DEA有效 | 浙粤京沪规模效率递减</div>
+        <div style="margin-top:8px;font-size:11px;color:#10b981">点击查看效率分析 →</div>
+      </a>
+      <a href="/v3/thesis#ch6" style="padding:16px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:10px;border:1px solid #fcd34d;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-weight:700;margin-bottom:8px;color:#92400e">两条高绩效路径</div>
+        <div style="font-size:28px;font-weight:800;color:#d97706;margin-bottom:4px">覆盖80%</div>
+        <div style="font-size:12px;color:#64748b">制度驱动型 + 质量引领型 | fsQCA识别</div>
+        <div style="margin-top:8px;font-size:11px;color:#f59e0b">点击查看路径详情 →</div>
+      </a>
+      <a href="/v3/thesis#ch7" style="padding:16px;background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-radius:10px;border:1px solid #d8b4fe;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <div style="font-weight:700;margin-bottom:8px;color:#6b21a8">DID政策效应</div>
+        <div style="font-size:28px;font-weight:800;color:#7c3aed;margin-bottom:4px">ATT +0.187</div>
+        <div style="font-size:12px;color:#64748b">"数据二十条"显著正向效应 p&lt;0.01</div>
+        <div style="margin-top:8px;font-size:11px;color:#a855f7">点击查看政策评估 →</div>
+      </a>
     </div>
   </div>
 </div>
