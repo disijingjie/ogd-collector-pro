@@ -6,7 +6,7 @@ OGD-Collector Pro V3 - Flask应用
 import json
 import sqlite3
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
 
 app = Flask(__name__)
 
@@ -239,6 +239,12 @@ def api_csv():
         mimetype='text/csv',
         headers={'Content-Disposition': 'attachment; filename=platforms_data.csv'}
     )
+
+# 静态数据文件下载路由
+@app.route('/static/data/<path:filename>')
+def download_data_file(filename):
+    """下载static/data目录下的数据文件"""
+    return send_from_directory('static/data', filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

@@ -50,8 +50,8 @@
             <div class="flow-step-content">
                 <h4>静态页面采集</h4>
                 <p>Requests+BeautifulSoup采集22个平台，CSS选择器/正则提取数据集数量</p>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">下载采集脚本</a>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">下载原始HTML</a>
+                <a href="/static/data/collect_static.py" class="btn btn-outline" style="margin-top:8px">下载采集脚本</a>
+                <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载原始数据CSV</a>
             </div>
         </div>
         <div class="flow-arrow">↓</div>
@@ -60,8 +60,8 @@
             <div class="flow-step-content">
                 <h4>动态渲染采集（安徽平台案例）</h4>
                 <p>Playwright+Chromium无头浏览器采集Vue.js单页应用，等待JS渲染后提取</p>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">下载Playwright脚本</a>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">查看采集截图</a>
+                <a href="/static/data/collect_anhui_playwright.py" class="btn btn-outline" style="margin-top:8px">下载Playwright脚本</a>
+                <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载采集数据CSV</a>
             </div>
         </div>
         <div class="flow-arrow">↓</div>
@@ -70,7 +70,7 @@
             <div class="flow-step-content">
                 <h4>第三方权威数据补充</h4>
                 <p>数据局新闻发布会、官方统计报告补充3个平台数据</p>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">下载来源文档</a>
+                <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载来源数据CSV</a>
             </div>
         </div>
         <div class="flow-arrow">↓</div>
@@ -79,7 +79,7 @@
             <div class="flow-step-content">
                 <h4>三角验证与交叉核对</h4>
                 <p>自主采集 vs 开放数林指数 vs 官方数据，一致性系数CR>0.8视为可信</p>
-                <a href="#" class="btn btn-outline" style="margin-top:8px">下载验证报告</a>
+                <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载验证数据CSV</a>
             </div>
         </div>
     </div>
@@ -93,14 +93,14 @@
                 <div class="meta-item"><span class="meta-label">决策矩阵：</span><span class="meta-value">23平台 × 5维度</span></div>
                 <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">自主采集+官方统计</span></div>
                 <div class="meta-item"><span class="meta-label">采集时间：</span><span class="meta-value">2026年4月</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载决策矩阵CSV</a>
+                <a href="/static/data/4e_scores.csv" class="btn btn-primary" style="margin-top:10px">下载决策矩阵CSV</a>
             </div>
             <div>
                 <h4 style="color:#1a237e;margin-bottom:10px">计算过程</h4>
                 <div class="meta-item"><span class="meta-label">标准化方法：</span><span class="meta-value">向量标准化</span></div>
                 <div class="meta-item"><span class="meta-label">权重方法：</span><span class="meta-value">熵权法</span></div>
                 <div class="meta-item"><span class="meta-label">距离计算：</span><span class="meta-value">欧氏距离</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+                <a href="/static/data/topsis_analysis.py" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
             </div>
         </div>
         <div style="background:#f8f9fa;padding:15px;border-radius:8px">
@@ -146,14 +146,14 @@ C = D_neg / (D_pos + D_neg)
                 <div class="meta-item"><span class="meta-label">直接影响矩阵：</span><span class="meta-value">12因素 × 12因素</span></div>
                 <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">专家问卷（5位专家）</span></div>
                 <div class="meta-item"><span class="meta-label">评分标准：</span><span class="meta-value">0-4分李克特量表</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载直接影响矩阵</a>
+                <a href="/static/data/dematel_matrix.csv" class="btn btn-primary" style="margin-top:10px">下载直接影响矩阵</a>
             </div>
             <div>
                 <h4 style="color:#1a237e;margin-bottom:10px">计算过程</h4>
                 <div class="meta-item"><span class="meta-label">归一化：</span><span class="meta-value">Z = X / max(行和)</span></div>
                 <div class="meta-item"><span class="meta-label">综合影响：</span><span class="meta-value">T = Z(I-Z)^(-1)</span></div>
                 <div class="meta-item"><span class="meta-label">阈值设定：</span><span class="meta-value">α = 0.05</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+                <a href="/static/data/dematel_analysis.py" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
             </div>
         </div>
     </div>
@@ -167,14 +167,14 @@ C = D_neg / (D_pos + D_neg)
                 <div class="meta-item"><span class="meta-label">案例数：</span><span class="meta-value">23个平台</span></div>
                 <div class="meta-item"><span class="meta-label">条件变量：</span><span class="meta-value">6个（政策、技术、数据、用户、开放、资金）</span></div>
                 <div class="meta-item"><span class="meta-label">结果变量：</span><span class="meta-value">高绩效（TOPSIS得分>0.5）</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载校准数据</a>
+                <a href="/static/data/fsqca_truth_table.csv" class="btn btn-primary" style="margin-top:10px">下载校准数据</a>
             </div>
             <div>
                 <h4 style="color:#1a237e;margin-bottom:10px">分析参数</h4>
                 <div class="meta-item"><span class="meta-label">一致性阈值：</span><span class="meta-value">0.80</span></div>
                 <div class="meta-item"><span class="meta-label">案例频数：</span><span class="meta-value">≥1</span></div>
                 <div class="meta-item"><span class="meta-label">PRI一致性：</span><span class="meta-value">≥0.70</span></div>
-                <a href="#" class="btn btn-primary" style="margin-top:10px">下载R代码</a>
+                <a href="/static/data/fsqca_analysis.R" class="btn btn-primary" style="margin-top:10px">下载R代码</a>
             </div>
         </div>
     </div>
