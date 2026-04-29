@@ -36,7 +36,7 @@
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（22个成功采集+1个安徽待确认），8个采用替代开放形式。OGD-Collector Pro系统支持采集全国88个主要政府数据开放平台。
+  <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（23个全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。OGD-Collector Pro系统支持采集全国88个主要政府数据开放平台。
   <a href="/v3/analysis" style="color:var(--primary)">完成后再进入 分析验证 →</a>
 </div>
 
@@ -45,7 +45,7 @@
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-value">88</div><div class="stat-label">系统支持平台</div><div style="font-size:12px;color:#16a34a;margin-top:4px">31省+57主要城市，可扩展</div></div>
     <div class="stat-card"><div class="stat-value">23</div><div class="stat-label">论文研究平台</div><div style="font-size:12px;color:#16a34a;margin-top:4px">23个全部成功采集（含Playwright动态渲染）</div></div>
-    <div class="stat-card"><div class="stat-value">31</div><div class="stat-label">省级行政区覆盖</div><div style="font-size:12px;color:#16a34a;margin-top:4px">22独立平台+8替代形式+1待确认</div></div>
+    <div class="stat-card"><div class="stat-value">31</div><div class="stat-label">省级行政区覆盖</div><div style="font-size:12px;color:#16a34a;margin-top:4px">23独立平台+8替代形式</div></div>
     <div class="stat-card"><div class="stat-value">7</div><div class="stat-label">自适应采集策略</div><div style="font-size:12px;color:#16a34a;margin-top:4px">静态/动态/API/混合/目录/产品/登记</div></div>
   </div>
 </div>
@@ -55,8 +55,7 @@
     <div style="margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;font-size:12px">
       <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#dcfce7;border:1px solid #059669;border-radius:3px;display:inline-block"></span> 已采集 (23个)</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#fef3c7;border:1px solid #d97706;border-radius:3px;display:inline-block"></span> 替代形式 (8个)</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#f8fafc;border:1px solid #64748b;border-radius:3px;display:inline-block"></span> 待确认 (1个)</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#fff;border:1px solid #cbd5e1;border-radius:3px;display:inline-block"></span> 系统支持 (56个)</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;background:#fff;border:1px solid #cbd5e1;border-radius:3px;display:inline-block"></span> 系统支持 (57个)</span>
     </div>
     <div class="platform-grid88" id="platformGrid88"></div>
   </div>
@@ -143,7 +142,7 @@
       <tr><td><strong>西藏</strong></td><td>区政府门户网站</td><td>2026-04-26</td><td>约100条</td><td>数据量极少</td></tr>
     </table></div>
     <div style="margin-top:12px;padding:12px;background:#f0fdf4;border-radius:8px;font-size:12px;color:#166534;line-height:1.6">
-      <strong>覆盖说明：</strong>22个独立平台 + 8个替代形式 + 1个待确认(安徽) = 31个省级行政区全覆盖。其中黑龙江/陕西采用"省会城市/副省级城市代行"模式，由下级平台承担省级数据开放职能。
+      <strong>覆盖说明：</strong>23个独立平台 + 8个替代形式 = 31个省级行政区全覆盖。其中黑龙江/陕西采用"省会城市/副省级城市代行"模式，由下级平台承担省级数据开放职能。
     </div>
   </div>
 </div>
@@ -365,7 +364,7 @@ const platforms88 = [
   {code:"shanghai",name:"上海市",level:"省级",status:"已采集",op:"政府自主运营"},
   {code:"jiangsu",name:"江苏省",level:"省级",status:"已采集",op:"政府自主运营"},
   {code:"zhejiang",name:"浙江省",level:"省级",status:"已采集",op:"政府自主运营"},
-  {code:"anhui",name:"安徽省",level:"省级",status:"待确认",op:"政府自主运营"},
+  {code:"anhui",name:"安徽省",level:"省级",status:"已采集",op:"政府自主运营"},
   {code:"fujian",name:"福建省",level:"省级",status:"已采集",op:"政府自主运营"},
   {code:"jiangxi",name:"江西省",level:"省级",status:"已采集",op:"政府自主运营"},
   {code:"shandong",name:"山东省",level:"省级",status:"已采集",op:"政府自主运营"},
