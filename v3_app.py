@@ -240,6 +240,18 @@ def api_csv():
         headers={'Content-Disposition': 'attachment; filename=platforms_data.csv'}
     )
 
+# ========== 导师学术思想小论文集路由 ==========
+
+@app.route('/paper-collection')
+def paper_collection():
+    """导师学术思想小论文集展示页面"""
+    return render_template('v3_papers_showcase.html')
+
+@app.route('/papers/<path:filename>')
+def download_paper(filename):
+    """下载论文docx文件"""
+    return send_from_directory('papers', filename, as_attachment=True)
+
 # 静态数据文件下载路由
 @app.route('/static/data/<path:filename>')
 def download_data_file(filename):
