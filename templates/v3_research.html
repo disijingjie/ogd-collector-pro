@@ -1,5 +1,5 @@
 {% extends "base_v3.html" %}{% set active = "research" %}{% block title %}研究拓展 - OGD-Collector Pro{% endblock %}{% block page_title %}研究拓展{% endblock %}{% block breadcrumb %}研究拓展{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#central" class="active">中央级网站</a><a href="#literature">文献检索</a><a href="#plans">拓展计划</a><a href="#other">其他成果</a><a href="#cooperation">合作交流</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#central" class="active">中央级网站</a><a href="#literature">文献检索</a><a href="#mentors">导师思想</a><a href="#plans">拓展计划</a><a href="#other">其他成果</a><a href="#cooperation">合作交流</a></div>{% endblock %}
 {% block content %}
 
 <div class="position-hint">
@@ -74,9 +74,78 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:16px;padding:12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
+    <!-- 深度专题入口 -->
+    <div style="margin-top:16px;padding:16px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:10px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px">
+          <span style="background:rgba(96,165,250,.25);color:#60a5fa;padding:2px 8px;border-radius:4px;font-size:10px">深度专题</span>
+          PRISMA 2020 系统文献检索全流程展示
+        </div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6">
+          包含：PRISMA筛选流程图 · 三轮检索策略迭代 · 文献计量学仪表盘 · 主题演化分析 · 研究空白识别 · 数据共享复现
+        </div>
+      </div>
+      <a href="/v3/literature" style="display:inline-block;padding:10px 22px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 12px rgba(37,99,235,.3)">查看深度专题 →</a>
+    </div>
+
+    <div style="margin-top:12px;padding:12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
       <div style="font-size:12px;color:#166534;line-height:1.7">
         <strong>文献检索贡献说明：</strong>本研究建立了政府数据开放领域目前最完整的文献数据库之一（WOS+CNKI合计6,003篇）。检索策略经过三轮迭代优化，关键词覆盖中英文核心术语变体。所有检索结果均可通过上述链接复现，欢迎学界同行基于本检索策略开展后续研究。如有数据共享需求，请联系 <a href="mailto:ambit@qq.com" style="color:#2563eb">ambit@qq.com</a>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 导师学术思想与课题导航（突出显示版） ========== -->
+<div id="mentors" class="scroll-section">
+  <div class="card" style="border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#7c3aed,#2563eb,#0891b2) border-box;">
+    <div style="position:absolute;top:0;right:0;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;padding:4px 14px;border-bottom-left-radius:10px;font-size:11px;font-weight:700;letter-spacing:0.5px">博士生导师学术思想</div>
+    <div class="card-header" style="padding-top:28px">
+      <div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb)"></span>导师学术思想与课题导航</div>
+      <span style="font-size:12px;color:#64748b">从导师思想出发，凝练可操作的研究选题</span>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>以下两位博士生导师的学术思想为本研究提供了重要的理论指引与选题启发。
+      系统梳理其思想脉络，可直接转化为高水平学术论文的选题来源。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <!-- 陈传夫教授 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-radius:12px;border:1px solid #e9d5ff;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(124,58,237,0.06);border-radius:50%"></div>
+        <div style="position:relative;z-index:1">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700">陈</div>
+            <div>
+              <div style="font-weight:700;color:#581c87;font-size:14px">陈传夫 教授</div>
+              <div style="font-size:11px;color:#9333ea">国务院学科评议组召集人 | 资深教授</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p>• 核心思想："学科发展为了谁""中国标识的核心概念""守正创新""服务国家重大战略"</p>
+            <p>• 提炼<strong>6个完整课题研究点</strong>，均已撰写为可直接投稿的学术论文</p>
+            <p>• 与你的研究交集：政府数据开放的价值论、概念谱系、方法论创新</p>
+          </div>
+          <a href="/v3/chen-chuanfu" style="display:inline-block;padding:8px 18px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(124,58,237,.25)">进入陈传夫学术思想专题 →</a>
+        </div>
+      </div>
+      <!-- 冉从敬教授 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;border:1px solid #bfdbfe;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(37,99,235,0.06);border-radius:50%"></div>
+        <div style="position:relative;z-index:1">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#2563eb,#3b82f6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700">冉</div>
+            <div>
+              <div style="font-weight:700;color:#1e40af;font-size:14px">冉从敬 教授</div>
+              <div style="font-size:11px;color:#2563eb">博士生导师 | 知识产权与数据治理</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p>• 核心思想："数据产权结构性分置""知识产权制度创新""信息资源公共获取的制度保障"</p>
+            <p>• 提炼<strong>5个完整课题研究点</strong>，聚焦数据产权、开放许可与合规利用</p>
+            <p>• 与你的研究交集：政府数据开放的知识产权框架、数据要素市场制度设计</p>
+          </div>
+          <a href="/v3/ran-congjing" style="display:inline-block;padding:8px 18px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(37,99,235,.25)">进入冉从敬学术思想专题 →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -96,23 +165,34 @@
 
 <div id="other" class="scroll-section">
   <div class="card">
-    <div class="card-header"><div class="card-title"><span class="icon"></span>其他研究成果</div></div>
+    <div class="card-header">
+      <div class="card-title"><span class="icon"></span>其他研究成果</div>
+      <a href="/v3/papers" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">查看小论文研究框架 →</a>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>以下四项研究成果不仅支撑了博士论文的核心论证，更可直接延伸为独立的小论文选题。
+      点击右上角按钮可查看每个方向的完整研究框架（选题依据、理论框架、方法论设计、预期创新点、目标期刊）。</p>
+    </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div class="card" style="margin:0">
+      <div class="card" style="margin:0;border-left:3px solid #2563eb">
         <div style="font-weight:700;margin-bottom:8px;color:#2563eb">数据集质量评估模型</div>
         <div style="font-size:13px;color:#64748b;line-height:1.8">构建了包含完整性、准确性、时效性、可用性、规范性五个维度的数据集质量评估指标体系。</div>
+        <div style="margin-top:8px;font-size:11px;color:#94a3b8">目标期刊：《图书情报工作》《数据分析与知识发现》</div>
       </div>
-      <div class="card" style="margin:0">
+      <div class="card" style="margin:0;border-left:3px solid #059669">
         <div style="font-weight:700;margin-bottom:8px;color:#059669">平台成熟度评估工具</div>
         <div style="font-size:13px;color:#64748b;line-height:1.8">开发了基于五阶段成熟度模型的在线评估工具，可为各平台提供诊断报告和改进建议。</div>
+        <div style="margin-top:8px;font-size:11px;color:#94a3b8">目标期刊：《情报学报》《公共管理学报》</div>
       </div>
-      <div class="card" style="margin:0">
+      <div class="card" style="margin:0;border-left:3px solid #d97706">
         <div style="font-weight:700;margin-bottom:8px;color:#d97706">开放数据利用案例库</div>
         <div style="font-size:13px;color:#64748b;line-height:1.8">收集整理了国内外100+个政府开放数据创新应用案例，涵盖交通、环境、医疗、金融等领域。</div>
+        <div style="margin-top:8px;font-size:11px;color:#94a3b8">目标期刊：《电子政务》《中国行政管理》</div>
       </div>
-      <div class="card" style="margin:0">
-        <div style="font-weight:700;margin-bottom:8px;color:#db2777">数据采集规范指南</div>
+      <div class="card" style="margin:0;border-left:3px solid #9333ea">
+        <div style="font-weight:700;margin-bottom:8px;color:#9333ea">数据采集规范指南</div>
         <div style="font-size:13px;color:#64748b;line-height:1.8">编写了《政府数据开放平台数据采集技术规范》，涵盖采集伦理、技术方案、质量控制、数据安全等方面。</div>
+        <div style="margin-top:8px;font-size:11px;color:#94a3b8">目标期刊：《现代图书情报技术》《情报理论与实践》</div>
       </div>
     </div>
   </div>

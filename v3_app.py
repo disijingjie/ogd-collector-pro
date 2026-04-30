@@ -240,6 +240,18 @@ def api_csv():
         headers={'Content-Disposition': 'attachment; filename=platforms_data.csv'}
     )
 
+# ========== 导师学术思想专题路由 ==========
+
+@app.route('/chen-chuanfu')
+def chen_chuanfu():
+    """陈传夫学术思想与课题导航"""
+    return render_template('v3_chen_chuanfu.html')
+
+@app.route('/ran-congjing')
+def ran_congjing():
+    """冉从敬学术思想与课题导航"""
+    return render_template('v3_ran_congjing.html')
+
 # ========== 导师学术思想小论文集路由 ==========
 
 @app.route('/paper-collection')
