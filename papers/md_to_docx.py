@@ -151,6 +151,8 @@ def add_title_page(doc, title, authors, abstract, keywords):
 if __name__ == '__main__':
     papers_dir = r'C:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\papers'
     papers = [
+        ('paper_15_anonymization.md', '论文15_匿名化标准_数据流通匿名化处理标准下的政府数据开放平台数据集质量评估.docx'),
+        ('paper_03_data_sovereignty.md', '论文03_数据主权_总体国家安全观视域下政府数据开放平台的数据主权安全风险评估.docx'),
         ('paper_D_methodology.md', '论文D_方法论创新_政府数据开放绩效评估的方法论创新.docx'),
         ('paper_A_value_orientation.md', '论文A_价值导向_学科发展为了谁视域下政府数据开放的价值导向研究.docx'),
         ('paper_C_innovation.md', '论文C_守正创新_传统信息资源管理理论与数字时代数据治理的融合路径研究.docx'),
@@ -165,6 +167,6 @@ if __name__ == '__main__':
         if os.path.exists(md_path):
             convert_markdown_to_docx(md_path, docx_path)
         else:
-            print(f"❌ 未找到: {md_path}")
+            print(f"MISSING: {md_path}")
 
-    print("\n✅ 全部转换完成！")
+    print("\nAll conversions completed!")
