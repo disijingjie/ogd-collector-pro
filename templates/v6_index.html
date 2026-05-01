@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGD-Collector Pro V3 - 数据集数量采集系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .stat-card .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .main-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        .platform-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        .platform-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .platform-table th:first-child { border-radius: 8px 0 0 0; }
+        .platform-table th:last-child { border-radius: 0 8px 0 0; }
+        .platform-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .platform-table tr:hover {
+            background: #f8f9ff;
+        }
+        .platform-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+        .platform-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+        .confidence-high {
+            background: #d4edda;
+            color: #155724;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .confidence-medium {
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .confidence-low {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .status-success { color: #28a745; font-weight: 600; }
+        .status-not-found { color: #dc3545; font-weight: 600; }
+        .status-pending { color: #6c757d; font-weight: 600; }
+        .dataset-count {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+        .dataset-count-null {
+            color: #999;
+            font-style: italic;
+        }
+        .platform-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .platform-link:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.8;
+        }
+        .nav-links {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 25px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .method-badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>OGD-Collector Pro V3</h1>
+            <p>省级政府数据开放平台 - 数据集数量采集与验证系统</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">版本 {{ rules_version }} | 更新于 {{ last_updated }}</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">采集总览</a>
+            <a href="/rules">规则映射表</a>
+            <a href="/api/platforms" target="_blank">API数据</a>
+            <a href="/charts/topsis">绩效评估</a>
+            <a href="/charts/dematel">影响因素</a>
+            <a href="/charts/fsqa">组态路径</a>
+            <a href="/provenance">数据溯源</a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">总平台数</div>
+                <div class="number">{{ total }}</div>
+                <div class="label">省级行政区</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">采集成功</div>
+                <div class="number">{{ success }}</div>
+                <div class="label">{{ "%0.1f"|format(success/total*100) }}% 成功率</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">高置信度</div>
+                <div class="number">{{ high_conf }}</div>
+                <div class="label">来源明确可验证</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">中置信度</div>
+                <div class="number">{{ medium_conf }}</div>
+                <div class="label">需进一步验证</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">待采集/失败</div>
+                <div class="number">{{ not_found }}</div>
+                <div class="label">需人工介入</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h2 class="section-title">平台采集状态明细</h2>
+            <table class="platform-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>平台</th>
+                        <th>省份</th>
+                        <th>数据集/目录数</th>
+                        <th>数据类型</th>
+                        <th>置信度</th>
+                        <th>采集状态</th>
+                        <th>来源</th>
+                        <th>采集时间</th>
+                        <th>详情</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in platforms %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><strong>{{ p.name }}</strong></td>
+                        <td>{{ p.province }}</td>
+                        <td>
+                            {% if p.dataset_count %}
+                                <span class="dataset-count">{{ "{:,}".format(p.dataset_count) }}</span>
+                            {% else %}
+                                <span class="dataset-count-null">--</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ p.type }}</td>
+                        <td>
+                            {% if p.confidence == 'high' %}
+                                <span class="confidence-high">高</span>
+                            {% elif p.confidence == 'medium' %}
+                                <span class="confidence-medium">中</span>
+                            {% else %}
+                                <span class="confidence-low">低</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p.status == 'success' %}
+                                <span class="status-success">成功</span>
+                            {% elif p.status == 'not_found' %}
+                                <span class="status-not-found">未找到</span>
+                            {% else %}
+                                <span class="status-pending">待采集</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p.source_url %}
+                                <a href="{{ p.source_url }}" target="_blank" class="platform-link">查看来源</a>
+                            {% else %}
+                                --
+                            {% endif %}
+                        </td>
+                        <td>{{ p.collected_at or '--' }}</td>
+                        <td><a href="/platform/{{ p.code }}" class="platform-link">查看规则</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="main-content">
+            <h2 class="section-title">采集标准说明</h2>
+            <div style="line-height: 1.8; color: #555;">
+                <p><strong>数据集数量定义：</strong>平台可访问的数据目录/数据集条目总数，优先从数据目录页枚举获取，次选首页自我报告数。</p>
+                <p><strong>置信度分级：</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><span class="confidence-high">高置信度</span>：有明确上下文（如"数据集X个"、"数据目录X个"），或数据目录页分页可直接计算</li>
+                    <li><span class="confidence-medium">中置信度</span>：有数字但上下文不够明确，或CSS选择器提取到多个候选值</li>
+                    <li><span class="confidence-low">低置信度</span>：未找到明确数字，或数字疑似非数据集数（如访问次数、部门数）</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>采集频率：</strong>每月1次（论文主分析数据）、每周1次（趋势跟踪）、每天1次（案例标本）</p>
+                <p><strong>交叉验证：</strong>开放数林指数年度报告、清华大学数据治理研究中心评估、平台自我报告年度统计</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>OGD-Collector Pro V3 | 武汉大学博士研究生论文研究支持系统</p>
+            <p style="margin-top: 5px; font-size: 0.85em;">每行数据均可追溯：采集代码、URL、时间戳、验证方式</p>
+        </div>
+    </div>
+</body>
+</html>

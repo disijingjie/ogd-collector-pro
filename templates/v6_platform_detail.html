@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ platform.name }} - 采集规则详情 | OGD-Collector V3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+        }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header p { opacity: 0.9; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #333;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+        .info-item .label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .info-item .value {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        .rule-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+        .rule-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .rule-section p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .status-success { background: #d4edda; color: #155724; }
+        .status-not-found { background: #f8d7da; color: #721c24; }
+        .status-pending { background: #e2e3e5; color: #383d41; }
+        .confidence-high { background: #d4edda; color: #155724; }
+        .confidence-medium { background: #fff3cd; color: #856404; }
+        .confidence-low { background: #f8d7da; color: #721c24; }
+        table.detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table.detail-table th, table.detail-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        table.detail-table th {
+            background: #f8f9ff;
+            font-weight: 600;
+            color: #667eea;
+        }
+        .url-link {
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .url-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回总览</a>
+
+        <div class="header">
+            <h1>{{ platform.name }}</h1>
+            <p>{{ platform.province }}省 | {{ platform.tier }}平台 | 代码: {{ platform.code }}</p>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="card">
+            <h2 class="card-title">平台基本信息</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">数据集/目录数量</div>
+                    <div class="value">
+                        {% if platform.dataset_count.value %}
+                            {{ "{:,}".format(platform.dataset_count.value) }} {{ platform.dataset_count.unit }}
+                        {% else %}
+                            待采集
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">数据类型</div>
+                    <div class="value">{{ platform.dataset_count.type }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">置信度</div>
+                    <div class="value">
+                        {% if platform.dataset_count.confidence == 'high' %}
+                            <span class="confidence-high">高置信度</span>
+                        {% elif platform.dataset_count.confidence == 'medium' %}
+                            <span class="confidence-medium">中置信度</span>
+                        {% else %}
+                            <span class="confidence-low">低置信度</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">采集时间</div>
+                    <div class="value">{{ platform.dataset_count.collected_at or '未采集' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">首页URL</div>
+                    <div class="value"><a href="{{ platform.urls.homepage }}" target="_blank" class="url-link">访问</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">数据目录页URL</div>
+                    <div class="value">
+                        {% if platform.urls.dataset_page %}
+                            <a href="{{ platform.urls.dataset_page }}" target="_blank" class="url-link">访问</a>
+                        {% else %}
+                            未配置
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 平台功能特性 -->
+        <div class="card">
+            <h2 class="card-title">平台功能特性</h2>
+            <table class="detail-table">
+                <tr>
+                    <th>功能</th>
+                    <th>状态</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td>API接口</td>
+                    <td>{{ '✅ 支持' if platform.platform_features.has_api else '❌ 不支持' }}</td>
+                    <td>是否提供数据API接口</td>
+                </tr>
+                <tr>
+                    <td>数据搜索</td>
+                    <td>{{ '✅ 支持' if platform.platform_features.has_search else '❌ 不支持' }}</td>
+                    <td>是否支持数据集搜索功能</td>
+                </tr>
+                <tr>
+                    <td>数据下载</td>
+                    <td>{{ '✅ 支持' if platform.platform_features.has_download else '❌ 不支持' }}</td>
+                    <td>是否支持数据集下载</td>
+                </tr>
+                <tr>
+                    <td>数据可视化</td>
+                    <td>{{ '✅ 支持' if platform.platform_features.has_visualization else '❌ 不支持' }}</td>
+                    <td>是否提供数据可视化工具</td>
+                </tr>
+                <tr>
+                    <td>响应时间</td>
+                    <td>{{ platform.platform_features.response_time_ms }} ms</td>
+                    <td>首页平均响应时间</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 提取规则 -->
+        <div class="card">
+            <h2 class="card-title">数据集数量提取规则</h2>
+
+            {% if platform.extraction_rules.primary %}
+            <div class="rule-section">
+                <h4>主提取策略 ({{ platform.extraction_rules.primary.location }})</h4>
+                <p><strong>方法:</strong> {{ platform.extraction_rules.primary.method }}</p>
+                <p><strong>描述:</strong> {{ platform.extraction_rules.primary.description }}</p>
+                {% if platform.extraction_rules.primary.selector %}
+                <p><strong>CSS选择器:</strong></p>
+                <div class="code-block">{{ platform.extraction_rules.primary.selector }}</div>
+                {% endif %}
+                {% if platform.extraction_rules.primary.pattern %}
+                <p><strong>正则模式:</strong></p>
+                <div class="code-block">{{ platform.extraction_rules.primary.pattern }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if platform.extraction_rules.secondary %}
+            <div class="rule-section">
+                <h4>备用提取策略 ({{ platform.extraction_rules.secondary.location }})</h4>
+                <p><strong>方法:</strong> {{ platform.extraction_rules.secondary.method }}</p>
+                <p><strong>描述:</strong> {{ platform.extraction_rules.secondary.description }}</p>
+                {% if platform.extraction_rules.secondary.selector %}
+                <p><strong>CSS选择器:</strong></p>
+                <div class="code-block">{{ platform.extraction_rules.secondary.selector }}</div>
+                {% endif %}
+                {% if platform.extraction_rules.secondary.pattern %}
+                <p><strong>正则模式:</strong></p>
+                <div class="code-block">{{ platform.extraction_rules.secondary.pattern }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 最新采集结果 -->
+        {% if result %}
+        <div class="card">
+            <h2 class="card-title">最新采集结果</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">采集状态</div>
+                    <div class="value">
+                        {% if result.status == 'success' %}
+                            <span class="status-success">成功</span>
+                        {% elif result.status == 'not_found' %}
+                            <span class="status-not-found">未找到</span>
+                        {% else %}
+                            <span class="status-pending">{{ result.status }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">采集到的数量</div>
+                    <div class="value">
+                        {% if result.dataset_count %}
+                            {{ "{:,}".format(result.dataset_count) }}
+                        {% else %}
+                            无
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">采集方法</div>
+                    <div class="value">{{ result.method or 'N/A' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">采集时间</div>
+                    <div class="value">{{ result.collected_at }}</div>
+                </div>
+            </div>
+            {% if result.source_url %}
+            <div style="margin-top: 15px;">
+                <strong>来源URL:</strong> <a href="{{ result.source_url }}" target="_blank" class="url-link">{{ result.source_url }}</a>
+            </div>
+            {% endif %}
+            {% if result.source_text %}
+            <div style="margin-top: 15px;">
+                <strong>来源文本片段:</strong>
+                <div class="code-block" style="margin-top: 10px;">{{ result.source_text }}</div>
+            </div>
+            {% endif %}
+            {% if result.error %}
+            <div style="margin-top: 15px; color: #dc3545;">
+                <strong>错误信息:</strong> {{ result.error }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- 备注 -->
+        {% if platform.notes %}
+        <div class="card">
+            <h2 class="card-title">备注说明</h2>
+            <p style="line-height: 1.8; color: #555;">{{ platform.notes }}</p>
+        </div>
+        {% endif %}
+
+        <!-- 验证信息 -->
+        {% if platform.dataset_count.verification %}
+        <div class="card">
+            <h2 class="card-title">验证说明</h2>
+            <p style="line-height: 1.8; color: #555;">{{ platform.dataset_count.verification }}</p>
+        </div>
+        {% endif %}
+
+        <div style="text-align: center; padding: 30px; color: white; opacity: 0.8;">
+            <p>OGD-Collector Pro V3 | 每行数据均可追溯：采集代码、URL、时间戳、验证方式</p>
+        </div>
+    </div>
+</body>
+</html>
