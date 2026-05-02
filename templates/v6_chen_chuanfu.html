@@ -2,26 +2,27 @@
 {% block anchor_nav %}
 <div class="anchor-nav">
   <a href="#profile" class="active">学者画像</a>
-  <a href="#ideas">核心思想</a>
-  <a href="#connection">研究关联</a>
-  <a href="#directions">课题方向</a>
+  <a href="#timeline">言论时间线</a>
+  <a href="#keywords">思想关键词</a>
+  <a href="#topics">课题导航</a>
+  <a href="#sources">来源索引</a>
 </div>
 {% endblock %}
 {% block content %}
 
-<!-- ========== 顶级标题区 ========== -->
-<div style="background:linear-gradient(135deg,#0f172a,#1e3a5f 60%,#312e81);border-radius:14px;padding:36px 40px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.08)">
-  <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;background:rgba(99,102,241,0.08);border-radius:50%"></div>
-  <div style="position:absolute;bottom:-30px;left:10%;width:160px;height:160px;background:rgba(139,92,246,0.06);border-radius:50%"></div>
+<!-- 顶部引言 -->
+<div style="background:linear-gradient(135deg,#1e3a5f,#0f172a);border-radius:12px;padding:28px 32px;margin-bottom:24px;color:#fff;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-20px;right:-20px;width:140px;height:140px;background:rgba(255,255,255,.04);border-radius:50%"></div>
   <div style="position:relative;z-index:1">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
-      <span style="background:rgba(250,204,21,.15);color:#facc15;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:0.5px">国务院学科评议组召集人</span>
-      <span style="background:rgba(74,222,128,.15);color:#4ade80;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:0.5px">武汉大学人文社科资深教授</span>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span style="background:rgba(250,204,21,.2);color:#facc15;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">导师学术思想</span>
+      <span style="background:rgba(74,222,128,.2);color:#4ade80;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题灵感</span>
     </div>
-    <h1 style="font-size:28px;font-weight:800;margin-bottom:12px;letter-spacing:-0.3px">陈传夫学术思想与课题导航</h1>
-    <p style="font-size:15px;color:#94a3b8;line-height:1.9;max-width:880px">
-      陈传夫教授，国务院学位委员会第八届信息资源管理学科评议组<strong style="color:#facc15">召集人</strong>、
-      武汉大学人文社会科学资深教授。本专题梳理其核心理论贡献与治学理念，为博士论文研究提供学科定位与价值论指引。
+    <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">从导师言论到研究选题：学术传承与创新转化</h2>
+    <p style="font-size:13px;color:#94a3b8;line-height:1.8;max-width:800px">
+      陈传夫教授（国务院学位委员会信息资源管理学科评议组召集人、武汉大学人文社会科学资深教授）
+      近三年的系列讲话为信息资源管理学科发展指明了方向。本专题系统梳理其学术思想脉络，
+      提炼可操作的课题研究点，为博士生的学术探索提供选题导航。
     </p>
   </div>
 </div>
@@ -30,177 +31,464 @@
 <div id="profile" class="scroll-section">
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span class="icon" style="background:#7c3aed"></span>学者画像</div>
+      <div class="card-title"><span class="icon" style="background:#7c3aed"></span>陈传夫教授学者画像</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
       <div style="padding:20px;background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-radius:10px">
         <div style="font-weight:700;color:#581c87;margin-bottom:10px;font-size:14px">学术身份</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <p>• 武汉大学人文社会科学<strong>资深教授</strong>（文科最高学术荣誉）</p>
-          <p>• 国务院学位委员会第八届IRM学科评议组<strong style="color:#9333ea">召集人</strong></p>
-          <p>• 长江学者特聘教授、国家社科重大项目首席专家</p>
+          <p>• 武汉大学人文社会科学资深教授</p>
+          <p>• 国务院学位委员会第八届信息资源管理学科评议组<strong style="color:#9333ea">召集人</strong></p>
+          <p>• 全国图书情报专业学位研究生教育指导委员会副主任委员</p>
           <p>• 中国图书馆学会副理事长</p>
+          <p>• 长江学者特聘教授、国家社科重大项目首席专家</p>
+          <p>• 国务院政府特殊津贴专家</p>
         </div>
       </div>
       <div style="padding:20px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:10px">
-        <div style="font-weight:700;color:#1e40af;margin-bottom:10px;font-size:14px">核心领域</div>
+        <div style="font-weight:700;color:#1e40af;margin-bottom:10px;font-size:14px">核心研究领域</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <p>• 信息资源公共获取理论</p>
-          <p>• 知识产权与公共利益平衡</p>
-          <p>• 图书馆发展"守正创新"</p>
-          <p>• 学科自主知识体系构建</p>
+          <p>• <strong>信息资源管理</strong>：信息资源公共获取理论、制度本体范式</p>
+          <p>• <strong>图书馆发展理论</strong>："转型发展，守正创新"方向、中国特色图书馆发展理论</p>
+          <p>• <strong>知识产权</strong>：网络环境下知识产权公共政策、公共利益平衡原则</p>
+          <p>• <strong>数字创新</strong>：开放科学发展、数字时代的图书馆学情报学</p>
+          <p>• <strong>学科自主知识体系</strong>：中国标识的核心概念与理论框架构建</p>
         </div>
       </div>
       <div style="padding:20px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:10px">
-        <div style="font-weight:700;color:#14532d;margin-bottom:10px;font-size:14px">标志性贡献</div>
+        <div style="font-weight:700;color:#14532d;margin-bottom:10px;font-size:14px">标志性学术贡献</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <p>• 提出<strong>"信息资源公共获取"</strong>理论框架</p>
-          <p>• 推动武汉大学成为<strong>iSchools首个发展中国家成员</strong></p>
-          <p>• 构建<strong>制度本体范式</strong>，发展图书馆学理论体系</p>
+          <p>• 提出<strong>"信息资源公共获取"</strong>理论框架，建议对公共资助成果实行开放存取</p>
+          <p>• 推动武汉大学成为<strong>iSchools首个发展中国家成员</strong>（2009年）</p>
+          <p>• 组织论证设立<strong>图书情报专业学位</strong>，全国已有70余所高校获授权</p>
+          <p>• 提出<strong>"转型发展，守正创新"</strong>的图书馆发展方向</p>
+          <p>• 构建<strong>制度本体范式</strong>，发展传统图书馆学理论体系</p>
           <p>• 成果入选<strong>国家哲学社会科学成果文库</strong></p>
         </div>
       </div>
       <div style="padding:20px;background:linear-gradient(135deg,#fefce8,#fef9c3);border-radius:10px">
         <div style="font-weight:700;color:#854d0e;margin-bottom:10px;font-size:14px">治学理念</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <p>• <strong>"顶天立地"</strong>：扎根中国、放眼世界、更要落地</p>
-          <p>• <strong>"学科发展为了谁"</strong>：回答好这一根本问题</p>
-          <p>• <strong>"守正创新"</strong>：传承优秀传统，拥抱数字时代</p>
+          <p>• <strong>"顶天立地"</strong>：研究要扎根中国、放眼世界，更要能落地</p>
+          <p>• <strong>"培养优秀人才，推进理论创新，服务国家需求"</strong>是一位教师最大的心愿</p>
+          <p>• <strong>"要珍惜学习时间，努力做出真正有价值的成果"</strong></p>
+          <p>• <strong>"学问之道无他，求其放心而已矣"</strong>（引用孟子，强调治学本心）</p>
+          <p>• <strong>"尊古重今"</strong>：既传承中华优秀传统文化，又推动学科拥抱数字时代</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== 核心学术思想 ========== -->
-<div id="ideas" class="scroll-section">
+<!-- ========== 近三年言论时间线 ========== -->
+<div id="timeline" class="scroll-section">
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span class="icon" style="background:#dc2626"></span>核心学术思想</div>
+      <div class="card-title"><span class="icon" style="background:#db2777"></span>近三年核心言论时间线（2024-2026）</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
-      <div style="padding:20px;background:linear-gradient(135deg,#fef2f2,#fff5f5);border-radius:12px;border:1px solid #fecaca">
-        <div style="font-weight:800;color:#991b1b;font-size:16px;margin-bottom:10px">"学科发展为了谁"</div>
-        <p style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-          陈传夫教授提出的元问题，直指学科发展的价值根基。信息资源管理学科应当服务于公共利益、国家重大战略和人民群众的信息需求，而非沦为技术工具主义的附庸。
-        </p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="font-size:11px;padding:3px 10px;background:#fee2e2;color:#991b1b;border-radius:4px">价值论</span>
-          <span style="font-size:11px;padding:3px 10px;background:#fee2e2;color:#991b1b;border-radius:4px">公共价值</span>
-          <span style="font-size:11px;padding:3px 10px;background:#fee2e2;color:#991b1b;border-radius:4px">学科使命</span>
+
+    <!-- 事件1 -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;align-items:flex-start">
+      <div style="width:100px;flex-shrink:0;text-align:center">
+        <div style="background:#dc2626;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:700">2024.10</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:4px">武汉大学</div>
+      </div>
+      <div style="flex:1;padding:16px;background:#fef2f2;border-radius:8px;border-left:3px solid #dc2626">
+        <div style="font-weight:700;color:#991b1b;margin-bottom:6px">《赓续中华文化，推动数字创新》专题报道</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          <p><strong>核心观点：</strong>"根植中华文化，奋力推动学科拥抱数字时代。"陈传夫教授被定位为"中华优秀文化的守护人"与"数字转型的推动者"。</p>
+          <p><strong>关键论述：</strong></p>
+          <ul style="margin:4px 0;padding-left:18px">
+            <li>将社会公共利益理念引入理论建构，使理论更具有解释力与实践性</li>
+            <li>提出<strong>"转型发展，守正创新"</strong>的理论方向，科学回答新时代图书馆发展方向</li>
+            <li>推动开放科学发展，促进科研与交流变革，促进公众对科学成果与文化的数字化获取与共享</li>
+            <li>以<strong>"服务公共需要、人民立场、立足中国大地"</strong>为核心工作原则</li>
+          </ul>
+          <p style="margin-top:8px;font-size:11px;color:#94a3b8">来源：武汉大学信息管理学院官网，2024年10月9日</p>
         </div>
       </div>
-      <div style="padding:20px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:12px;border:1px solid #bfdbfe">
-        <div style="font-weight:800;color:#1e40af;font-size:16px;margin-bottom:10px">"守正创新"</div>
-        <p style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-          "转型发展，守正创新"是陈传夫教授为学科发展指明的方向。"守正"即坚守信息资源管理学科的核心使命——促进信息资源的有效获取与利用；"创新"即积极拥抱数字技术变革，在数据治理、开放科学等新领域开拓理论疆域。
-        </p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#1e40af;border-radius:4px">传统转化</span>
-          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#1e40af;border-radius:4px">数字时代</span>
-          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#1e40af;border-radius:4px">理论创新</span>
+    </div>
+
+    <!-- 事件2 -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;align-items:flex-start">
+      <div style="width:100px;flex-shrink:0;text-align:center">
+        <div style="background:#f97316;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:700">2025.10</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:4px">四川大学</div>
+      </div>
+      <div style="flex:1;padding:16px;background:#fff7ed;border-radius:8px;border-left:3px solid #f97316">
+        <div style="font-weight:700;color:#9a3412;margin-bottom:6px">第二十二届中国信息资源管理论坛开幕式致辞</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          <p><strong>核心观点：</strong>基于"十四五"收官与"十五五"开启的关键节点，提出学科发展的<strong>三点思考</strong>：</p>
+          <ul style="margin:4px 0;padding-left:18px">
+            <li><strong>第一点</strong>：把握"十五五"时期的核心使命，充分体现学科价值</li>
+            <li><strong>第二点</strong>：构建中国特色的学科自主知识体系，发挥我国信息资源优势，走向国际</li>
+            <li><strong>第三点</strong>：完善人才培养体系，为国家信息化建设和社会进步贡献智慧与力量</li>
+          </ul>
+          <p>本次论坛由四川大学公共管理学院与中国人民大学信息资源管理学院联合主办，信息资源管理学科自主知识体系联盟第三批21家单位扩容。</p>
+          <p style="margin-top:8px;font-size:11px;color:#94a3b8">来源：中国人民大学信息资源管理学院/四川大学官网，2025年10月22日</p>
         </div>
       </div>
-      <div style="padding:20px;background:linear-gradient(135deg,#f0fdf4,#f5fff7);border-radius:12px;border:1px solid #bbf7d0">
-        <div style="font-weight:800;color:#14532d;font-size:16px;margin-bottom:10px">"中国标识的核心概念"</div>
-        <p style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-          陈传夫教授强调，中国信息资源管理学科必须构建具有"中国标识"的核心概念与理论框架，不能简单移植西方理论。要从中国丰富的信息实践（如政府数据开放、公共数据授权运营）中提炼原创概念，建设自主知识体系。
-        </p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="font-size:11px;padding:3px 10px;background:#d1fae5;color:#14532d;border-radius:4px">自主知识体系</span>
-          <span style="font-size:11px;padding:3px 10px;background:#d1fae5;color:#14532d;border-radius:4px">概念创新</span>
-          <span style="font-size:11px;padding:3px 10px;background:#d1fae5;color:#14532d;border-radius:4px">中国实践</span>
+    </div>
+
+    <!-- 事件3 -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;align-items:flex-start">
+      <div style="width:100px;flex-shrink:0;text-align:center">
+        <div style="background:#2563eb;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:700">2026.04.13</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:4px">南开大学</div>
+      </div>
+      <div style="flex:1;padding:16px;background:#eff6ff;border-radius:8px;border-left:3px solid #2563eb">
+        <div style="font-weight:700;color:#1e40af;margin-bottom:6px">"全球视野下中国信息资源管理学科自主知识体系研讨会"致辞</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          <p><strong>核心论述：</strong></p>
+          <blockquote style="margin:8px 0;padding:10px 14px;background:#dbeafe;border-left:3px solid #3b82f6;border-radius:4px;color:#1e40af;font-style:italic">
+            "当前，全球科技竞争加剧、数智技术深度渗透的新形势，要求我们系统构建自主的知识体系，既要厚植理论根基，形成具有<strong>中国标识</strong>的<strong>核心概念</strong>与<strong>理论框架</strong>，又要<strong>创新方法体系</strong>，回应数智时代复杂信息现象的解释需求，更要加强国际传播，让中国智慧、中国方案在世界学术舞台上发出更强声音。"
+          </blockquote>
+          <p><strong>三大路径提炼：</strong></p>
+          <ul style="margin:4px 0;padding-left:18px">
+            <li><strong>厚植理论根基</strong> → 形成具有中国标识的核心概念与理论框架</li>
+            <li><strong>创新方法体系</strong> → 回应数智时代复杂信息现象的解释需求</li>
+            <li><strong>加强国际传播</strong> → 让中国智慧、中国方案在世界学术舞台上发出更强声音</li>
+          </ul>
+          <p style="margin-top:8px;font-size:11px;color:#94a3b8">来源：南开大学新闻网，2026年4月13日</p>
         </div>
       </div>
-      <div style="padding:20px;background:linear-gradient(135deg,#fefce8,#fffbeb);border-radius:12px;border:1px solid #fde68a">
-        <div style="font-weight:800;color:#854d0e;font-size:16px;margin-bottom:10px">"公共利益平衡"</div>
-        <p style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-          在知识产权领域，陈传夫教授提出以公共利益为核心的知识产权公共政策，强调知识传播与权利保护之间的动态平衡。这一理论为数据开放中的"开放悖论"提供了分析框架——如何在保障数据可用性的前提下有效防范个人信息泄露风险。
-        </p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="font-size:11px;padding:3px 10px;background:#fef3c7;color:#92400e;border-radius:4px">知识产权</span>
-          <span style="font-size:11px;padding:3px 10px;background:#fef3c7;color:#92400e;border-radius:4px">利益平衡</span>
-          <span style="font-size:11px;padding:3px 10px;background:#fef3c7;color:#92400e;border-radius:4px">数据开放</span>
+    </div>
+
+    <!-- 事件4 -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;align-items:flex-start">
+      <div style="width:100px;flex-shrink:0;text-align:center">
+        <div style="background:#16a34a;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:700">2026.04.25</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:4px">武汉大学</div>
+      </div>
+      <div style="flex:1;padding:16px;background:#f0fdf4;border-radius:8px;border-left:3px solid #16a34a">
+        <div style="font-weight:700;color:#14532d;margin-bottom:6px">第二十三届中国信息资源管理论坛暨第三届自主知识体系联盟论坛</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.8">
+          <p><strong>核心观点（开幕式致辞）：</strong></p>
+          <ul style="margin:4px 0;padding-left:18px">
+            <li>聚焦学科使命，明确提出要回答好<strong>"学科发展为了谁"</strong>的核心问题</li>
+            <li>要发掘<strong>中华民族丰富的思想文化资源</strong>，在创新转化中形成新的概念和理论</li>
+            <li>强调要强化<strong>专业建设与前沿引领</strong>，全面提升服务国家重大战略的能力</li>
+          </ul>
+          <p><strong>圆桌论坛主持：</strong>与孙建军教授共同主持"面向国家使命的信息资源管理学科自主知识体系建设"圆桌论坛，20余位资深专家学者参与。</p>
+          <p><strong>论坛背景：</strong>2026年是习近平总书记在哲学社会科学工作座谈会上重要讲话发表十周年。论坛由武汉大学信息管理学院、中国人民大学信息资源管理学院联合主办，全国80余家单位、200余位专家学者参会。</p>
+          <p style="margin-top:8px;font-size:11px;color:#94a3b8">来源：武汉大学信息管理学院官网/武汉大学新闻网，2026年4月24-26日</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ========== 与博士论文研究的关联 ========== -->
-<div id="connection" class="scroll-section">
-  <div class="card" style="border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#7c3aed,#2563eb) border-box;">
-    <div class="card-header">
-      <div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb)"></span>学术思想与博士论文研究的关联</div>
-    </div>
-    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
-      <p>陈传夫教授的学术思想为博士论文研究提供了三个层面的理论支撑：</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div style="padding:16px;background:linear-gradient(135deg,#faf5ff,#fdf4ff);border-radius:10px;border-left:3px solid #7c3aed">
-        <div style="font-weight:700;color:#581c87;margin-bottom:8px">价值论层面</div>
-        <p style="font-size:12px;color:#64748b;line-height:1.7">
-          "学科发展为了谁"的追问，促使论文从"效率导向"转向"公共价值导向"，关注政府数据开放的社会效益与公平性问题。
-        </p>
-      </div>
-      <div style="padding:16px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:10px;border-left:3px solid #2563eb">
-        <div style="font-weight:700;color:#1e40af;margin-bottom:8px">方法论层面</div>
-        <p style="font-size:12px;color:#64748b;line-height:1.7">
-          "守正创新"理念指导论文将传统IRM理论（目录学、情报学）转化为数字时代的分析工具，实现"旧瓶装新酒"的理论创新。
-        </p>
-      </div>
-      <div style="padding:16px;background:linear-gradient(135deg,#f0fdf4,#f5fff7);border-radius:10px;border-left:3px solid #16a34a">
-        <div style="font-weight:700;color:#14532d;margin-bottom:8px">概念论层面</div>
-        <p style="font-size:12px;color:#64748b;line-height:1.7">
-          "中国标识的核心概念"要求论文从23个省级平台的实践中提炼原创概念（如"数据口径幻觉""制度同形"），而非简单套用西方OGD框架。
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ========== 课题方向导航 ========== -->
-<div id="directions" class="scroll-section">
+<!-- ========== 思想关键词图谱 ========== -->
+<div id="keywords" class="scroll-section">
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span class="icon" style="background:#ca8a04"></span>基于导师思想的课题方向</div>
-      <span style="font-size:12px;color:#64748b">以下方向可供后续研究参考</span>
+      <div class="card-title"><span class="icon" style="background:#0891b2"></span>陈传夫学术思想关键词图谱</div>
     </div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
-      <p>基于陈传夫教授的学术思想，结合当前政府数据开放实践，以下研究方向具有理论创新潜力和现实关怀价值：</p>
+      <p>基于陈传夫教授近三年公开发表的言论、致辞与学术活动记录，提取高频核心概念，构建其学术思想的关键词网络。
+      节点大小代表概念在其言论体系中的 centrality（中心性），连线代表概念间的共现关系。</p>
     </div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-title">政府数据开放的价值论重构</div>
-        <div class="timeline-desc">从"学科发展为了谁"出发，系统反思OGD研究的价值导向，构建"公共价值创造"分析框架</div>
+
+    <!-- 关键词网络 SVG -->
+    <svg viewBox="0 0 760 420" style="width:100%;height:auto">
+      <rect x="0" y="0" width="760" height="420" fill="#f8fafc" rx="6"/>
+      <!-- 中心节点 -->
+      <circle cx="380" cy="210" r="38" fill="#1e3a5f"/>
+      <text x="380" y="205" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">自主知识</text>
+      <text x="380" y="219" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">体系</text>
+
+      <!-- 一级节点（大） -->
+      <!-- 学科使命 -->
+      <line x1="380" y1="172" x2="380" y2="110" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="380" cy="85" r="28" fill="#dc2626"/>
+      <text x="380" y="80" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">学科使命</text>
+      <text x="380" y="92" text-anchor="middle" fill="#fff" font-size="9">为了谁</text>
+
+      <!-- 中国标识 -->
+      <line x1="342" y1="210" x2="240" y2="210" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="210" cy="210" r="28" fill="#2563eb"/>
+      <text x="210" y="205" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">中国标识</text>
+      <text x="210" y="217" text-anchor="middle" fill="#fff" font-size="9">核心概念</text>
+
+      <!-- 守正创新 -->
+      <line x1="418" y1="210" x2="520" y2="210" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="550" cy="210" r="28" fill="#16a34a"/>
+      <text x="550" y="205" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">守正创新</text>
+      <text x="550" y="217" text-anchor="middle" fill="#fff" font-size="9">数字转型</text>
+
+      <!-- 公共利益 -->
+      <line x1="380" y1="248" x2="380" y2="310" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="380" cy="335" r="28" fill="#ca8a04"/>
+      <text x="380" y="330" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">公共利益</text>
+      <text x="380" y="342" text-anchor="middle" fill="#fff" font-size="9">人民立场</text>
+
+      <!-- 二级节点（中） -->
+      <!-- 人才培养 -->
+      <line x1="357" y1="184" x2="300" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="280" cy="110" r="20" fill="#f97316"/>
+      <text x="280" y="106" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">人才培养</text>
+      <text x="280" y="116" text-anchor="middle" fill="#fff" font-size="8">立德树人</text>
+
+      <!-- 国际传播 -->
+      <line x1="403" y1="184" x2="460" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="480" cy="110" r="20" fill="#9333ea"/>
+      <text x="480" y="106" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">国际传播</text>
+      <text x="480" y="116" text-anchor="middle" fill="#fff" font-size="8">中国声音</text>
+
+      <!-- 方法体系 -->
+      <line x1="500" y1="210" x2="580" y2="140" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="600" cy="120" r="20" fill="#0891b2"/>
+      <text x="600" y="116" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">方法体系</text>
+      <text x="600" y="126" text-anchor="middle" fill="#fff" font-size="8">数智时代</text>
+
+      <!-- 开放科学 -->
+      <line x1="260" y1="210" x2="180" y2="140" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="160" cy="120" r="20" fill="#0ea5e9"/>
+      <text x="160" y="116" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">开放科学</text>
+      <text x="160" y="126" text-anchor="middle" fill="#fff" font-size="8">开放存取</text>
+
+      <!-- 文化资源 -->
+      <line x1="260" y1="210" x2="180" y2="280" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="160" cy="300" r="20" fill="#db2777"/>
+      <text x="160" y="296" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">文化资源</text>
+      <text x="160" y="306" text-anchor="middle" fill="#fff" font-size="8">中华民族</text>
+
+      <!-- 知识产权 -->
+      <line x1="500" y1="210" x2="580" y2="280" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="600" cy="300" r="20" fill="#7c3aed"/>
+      <text x="600" y="296" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">知识产权</text>
+      <text x="600" y="306" text-anchor="middle" fill="#fff" font-size="8">公共利益</text>
+
+      <!-- 制度本体 -->
+      <line x1="357" y1="236" x2="300" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="280" cy="310" r="20" fill="#059669"/>
+      <text x="280" y="306" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">制度本体</text>
+      <text x="280" y="316" text-anchor="middle" fill="#fff" font-size="8">理论范式</text>
+
+      <!-- 数据治理 -->
+      <line x1="403" y1="236" x2="460" y2="290" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="480" cy="310" r="20" fill="#ea580c"/>
+      <text x="480" y="306" text-anchor="middle" fill="#fff" font-size="9" font-weight="600">数据治理</text>
+      <text x="480" y="316" text-anchor="middle" fill="#fff" font-size="8">国家使命</text>
+
+      <!-- 三级节点（小） -->
+      <circle cx="380" cy="45" r="14" fill="#fca5a5"/><text x="380" y="42" text-anchor="middle" fill="#7f1d1d" font-size="8">十五五</text>
+      <text x="380" y="51" text-anchor="middle" fill="#7f1d1d" font-size="7">规划</text>
+
+      <circle cx="110" cy="210" r="14" fill="#93c5fd"/><text x="110" y="207" text-anchor="middle" fill="#1e3a8a" font-size="8">iSchools</text>
+      <text x="110" y="216" text-anchor="middle" fill="#1e3a8a" font-size="7">国际化</text>
+
+      <circle cx="650" cy="210" r="14" fill="#86efac"/><text x="650" y="207" text-anchor="middle" fill="#14532d" font-size="8">专业学位</text>
+      <text x="650" y="216" text-anchor="middle" fill="#14532d" font-size="7">70+高校</text>
+
+      <circle cx="380" cy="375" r="14" fill="#fde68a"/><text x="380" y="372" text-anchor="middle" fill="#713f12" font-size="8">顶天立地</text>
+      <text x="380" y="381" text-anchor="middle" fill="#713f12" font-size="7">服务国家</text>
+
+      <!-- 连接线 -->
+      <line x1="110" y1="196" x2="160" y2="140" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="650" y1="196" x2="600" y2="140" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="110" y1="224" x2="160" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="650" y1="224" x2="600" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="280" y1="130" x2="210" y2="190" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="480" y1="130" x2="550" y2="190" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="280" y1="290" x2="210" y2="230" stroke="#e2e8f0" stroke-width="0.5"/>
+      <line x1="480" y1="290" x2="550" y2="230" stroke="#e2e8f0" stroke-width="0.5"/>
+    </svg>
+
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <div style="padding:12px;background:#fef2f2;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#991b1b;margin-bottom:4px">价值层</div>
+        <div style="font-size:11px;color:#64748b">学科使命 · 为了谁 · 人民立场 · 服务国家</div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-title">政府数据开放的中国概念谱系</div>
-        <div class="timeline-desc">运用概念史方法，从"数据共享"到"数据要素"梳理语义演化，提炼中国标识概念</div>
+      <div style="padding:12px;background:#eff6ff;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#1e40af;margin-bottom:4px">理论层</div>
+        <div style="font-size:11px;color:#64748b">自主知识体系 · 中国标识 · 核心概念 · 制度本体</div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-title">传统IRM理论的数字时代转化</div>
-        <div class="timeline-desc">将目录学、情报学、图书馆学核心理论转化为政府数据开放的分析工具</div>
+      <div style="padding:12px;background:#f0fdf4;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#14532d;margin-bottom:4px">方法层</div>
+        <div style="font-size:11px;color:#64748b">守正创新 · 数字转型 · 方法体系 · 开放科学</div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-title">公共数据开放中的利益平衡机制</div>
-        <div class="timeline-desc">运用"公共利益平衡"理论，分析数据开放与隐私保护、创新激励与权益保障之间的动态平衡</div>
+      <div style="padding:12px;background:#fefce8;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#854d0e;margin-bottom:4px">实践层</div>
+        <div style="font-size:11px;color:#64748b">数据治理 · 知识产权 · 国际传播 · 人才培养</div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-title">政府数据开放赋能数字中国建设</div>
-        <div class="timeline-desc">以"2522"框架为基准，评估平台供给与国家需求的匹配度，提出"需求牵引型"改革方向</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 课题导航 ========== -->
+<div id="topics" class="scroll-section">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="icon" style="background:#ea580c"></span>课题导航：从导师思想到可操作选题</div>
+      <span style="font-size:12px;color:#64748b">结合陈传夫教授言论 + 用户研究方向提炼</span>
+    </div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      <p>以下课题点均从陈传夫教授近三年言论中直接提炼，并与"政府数据开放"研究方向深度融合。
+      每个课题标注了<strong>导师言论来源</strong>、<strong>理论对接</strong>和<strong>可操作性评级</strong>，便于快速决策。</p>
+    </div>
+
+    <!-- 课题1 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#fef2f2,#fff5f5);border-radius:10px;border-left:4px solid #dc2626">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#dc2626;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题A</span>
+        <span style="font-size:14px;font-weight:700;color:#991b1b">"学科发展为了谁"——政府数据开放的价值导向研究</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★★★</span>
       </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>第二十三届论坛（2026.4.25）——"聚焦学科使命，明确提出要回答好'学科发展为了谁'的核心问题"</p>
+        <p><strong>研究问题：</strong>政府数据开放研究的终极价值归属是什么？是服务政府内部治理优化，还是赋能社会创新，还是促进数字经济发展？现有研究是否存在价值偏离？</p>
+        <p><strong>理论对接：</strong>陈传夫"人民立场"+"服务公共需要"理念 → 构建"政府数据开放价值层次模型"（内部效率层/社会服务层/经济赋能层）</p>
+        <p><strong>方法设计：</strong>内容分析法（对428篇文献进行价值导向编码）+ 专家访谈（10-15位平台管理者与数据利用者）</p>
+        <p><strong>创新点：</strong>首次从"学科发展为了谁"的元问题出发，系统反思政府数据开放研究的价值论基础，回应导师关切。</p>
+      </div>
+    </div>
+
+    <!-- 课题2 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:10px;border-left:4px solid #2563eb">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#2563eb;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题B</span>
+        <span style="font-size:14px;font-weight:700;color:#1e40af">"中国标识的核心概念"——政府数据开放领域自主概念体系构建</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★★☆</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>南开大学研讨会（2026.4.13）——"形成具有中国标识的核心概念与理论框架"；第二十三届论坛（2026.4.25）——"发掘中华民族丰富的思想文化资源，在创新转化中形成新的概念和理论"</p>
+        <p><strong>研究问题：</strong>中国语境下的政府数据开放是否存在独特的核心概念（如"数据要素市场化""公共数据授权运营"），这些概念与西方"Open Government Data"概念体系有何差异？如何构建具有中国标识的概念谱系？</p>
+        <p><strong>理论对接：</strong>陈传夫"中国标识"理念 → 运用概念史方法（Begriffsgeschichte）梳理"政府数据开放"概念在中国政策文本与学术文献中的语义演化</p>
+        <p><strong>方法设计：</strong>概念分析法 + 政策文本计量（2012-2026年中央及省级政策文件）+ 中外概念比较</p>
+        <p><strong>创新点：</strong>提出"政府数据开放中国概念谱系"，包括"数据要素""公共数据""授权运营"等具有鲜明中国特色的概念节点。</p>
+      </div>
+    </div>
+
+    <!-- 课题3 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#f0fdf4,#f5fff7);border-radius:10px;border-left:4px solid #16a34a">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题C</span>
+        <span style="font-size:14px;font-weight:700;color:#14532d">"守正创新"——传统信息资源管理理论与数字时代数据治理的融合路径</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★★★</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>《赓续中华文化，推动数字创新》（2024.10）——"根植中华文化，奋力推动学科拥抱数字时代"；"转型发展，守正创新"</p>
+        <p><strong>研究问题：</strong>中国传统信息资源管理理论（如目录学"辨章学术，考镜源流"、情报学"文献计量"）如何在数字时代实现创造性转化？政府数据开放是否可纳入传统理论框架进行解释？</p>
+        <p><strong>理论对接：</strong>陈传夫"守正创新"+"尊古重今" → 构建"传统信息资源管理理论→数字时代数据治理"的转化框架</p>
+        <p><strong>方法设计：</strong>理论演绎法（从传统理论中提取核心命题）+ 案例验证法（用政府数据开放实践检验理论解释力）</p>
+        <p><strong>创新点：</strong>首次将"目录学整体性原则""情报学扩散理论"等传统命题应用于政府数据开放平台分析，实现"旧瓶装新酒"的理论创新。</p>
+      </div>
+    </div>
+
+    <!-- 课题4 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#fefce8,#fffbeb);border-radius:10px;border-left:4px solid #ca8a04">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#ca8a04;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题D</span>
+        <span style="font-size:14px;font-weight:700;color:#854d0e">"厚植理论根基"——政府数据开放绩效评估的方法论创新</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★★★</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>南开大学研讨会（2026.4.13）——"厚植理论根基"；"创新方法体系，回应数智时代复杂信息现象的解释需求"</p>
+        <p><strong>研究问题：</strong>现有政府数据开放评估方法（描述性统计、简单指标体系）为何不足以解释平台效能差异？fsQCA、DID等因果推断方法如何为该领域提供新的解释范式？</p>
+        <p><strong>理论对接：</strong>陈传夫"创新方法体系" → 构建"组态思维+因果识别"混合方法框架，回应复杂信息现象的多元因果性</p>
+        <p><strong>方法设计：</strong>方法论论文，系统论证TOPSIS→DEA→DEMATEL→fsQCA→DID方法链在政府数据开放研究中的适用性与互补性</p>
+        <p><strong>创新点：</strong>将"方法体系创新"从口号转化为可操作的学术实践，为信息资源管理学科的方法论升级提供范例。</p>
+      </div>
+    </div>
+
+    <!-- 课题5 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#faf5ff,#fdf4ff);border-radius:10px;border-left:4px solid #9333ea">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#9333ea;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题E</span>
+        <span style="font-size:14px;font-weight:700;color:#581c87">"公共利益"——政府数据开放中的知识产权与公共获取平衡机制</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★☆☆</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>陈传夫教授长期研究领域——"提出信息资源公共获取的理论框架""发展以公共利益为核心的知识产权公共政策""网络环境下维系私人利益与公共利益平衡原则"</p>
+        <p><strong>研究问题：</strong>政府数据开放中，平台运营方、数据提供部门、数据利用者之间的权利义务如何界定？"开放"是否意味着"无限制使用"？如何在促进数据流通与保护合法权益之间寻求平衡？</p>
+        <p><strong>理论对接：</strong>陈传夫"公共利益平衡"理论 → 构建政府数据开放场景下的"数据流通-权益保护"分析框架</p>
+        <p><strong>方法设计：</strong>比较法研究（分析美/英/欧盟/中国数据开放许可协议差异）+ 政策文本分析（梳理我国数据开放相关法规中的知识产权条款）</p>
+        <p><strong>创新点：</strong>将知识产权领域的经典理论应用于政府数据开放新场景，提出"分级开放+分类许可"的制度设计建议。</p>
+      </div>
+    </div>
+
+    <!-- 课题6 -->
+    <div style="margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#ecfeff,#cffafe);border-radius:10px;border-left:4px solid #0891b2">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="background:#0891b2;color:#fff;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600">课题F</span>
+        <span style="font-size:14px;font-weight:700;color:#0c4a6e">"服务国家重大战略"——政府数据开放赋能数字中国建设的路径研究</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto">可操作性：★★★★☆</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;line-height:1.8">
+        <p><strong>导师言论来源：</strong>第二十三届论坛（2026.4.25）——"全面提升服务国家重大战略的能力"；第二十二届论坛（2025.10）——"为国家信息化建设和社会进步贡献智慧与力量"</p>
+        <p><strong>研究问题：</strong>政府数据开放平台如何有效支撑数字中国战略中的"数字经济、数字社会、数字政府"三大支柱？当前平台供给与国家需求之间存在哪些结构性错配？</p>
+        <p><strong>理论对接：</strong>陈传夫"服务国家重大战略"+"顶天立地" → 构建"平台供给能力-国家战略需求"匹配分析框架</p>
+        <p><strong>方法设计：</strong>政策文本分析（《数字中国建设整体布局规划》任务分解）+ 平台数据对标分析（各平台数据集主题与国家需求的对应度）</p>
+        <p><strong>创新点：</strong>首次将政府数据开放平台作为"数字中国"战略落地的微观载体进行系统评估，提出"需求牵引型数据开放"改革方向。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 来源索引 ========== -->
+<div id="sources" class="scroll-section">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="icon" style="background:#64748b"></span>言论来源索引</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="data-table" style="font-size:12px">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>时间</th>
+            <th>场合</th>
+            <th>来源机构</th>
+            <th>来源URL</th>
+            <th>获取日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2024.10.09</td>
+            <td>《赓续中华文化，推动数字创新》专题报道</td>
+            <td>武汉大学信息管理学院</td>
+            <td><a href="https://sim.whu.edu.cn/info/2178/14226.htm" target="_blank" style="color:#2563eb">sim.whu.edu.cn/info/2178/14226.htm</a></td>
+            <td>2026-04-30</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>2025.10.22</td>
+            <td>第二十二届中国信息资源管理论坛开幕式致辞</td>
+            <td>中国人民大学信息资源管理学院/四川大学</td>
+            <td><a href="https://irm.ruc.edu.cn/xydt/xyxw/c8cadef670274d37ab46bcc5f9d09b4c.htm" target="_blank" style="color:#2563eb">irm.ruc.edu.cn/.../c8cadef...</a></td>
+            <td>2026-04-30</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>2026.04.13</td>
+            <td>"全球视野下中国信息资源管理学科自主知识体系研讨会"致辞</td>
+            <td>南开大学</td>
+            <td><a href="https://news.nankai.edu.cn/ywsd/system/2026/04/13/030071400.shtml" target="_blank" style="color:#2563eb">news.nankai.edu.cn/.../030071400.shtml</a></td>
+            <td>2026-04-30</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>2026.04.24-26</td>
+            <td>第二十三届中国信息资源管理论坛暨第三届自主知识体系联盟论坛</td>
+            <td>武汉大学信息管理学院/武汉大学新闻网</td>
+            <td><a href="https://sim.whu.edu.cn/info/2236/111992.htm" target="_blank" style="color:#2563eb">sim.whu.edu.cn/info/2236/111992.htm</a></td>
+            <td>2026-04-30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:#94a3b8;line-height:1.7">
+      <p>说明：以上言论内容均来自公开发布的官方新闻报道、高校官网资讯。本专题仅供学术研究与选题参考，所有引语均注明原始出处。
+      如需进一步核实或补充，建议直接查阅原始网页或联系相关会议主办方获取完整会议记录。</p>
     </div>
   </div>
 </div>
 
 <div class="page-nav">
-  <a href="/research"><div><div style="font-size:11px;color:#64748b">← 返回</div><strong>研究拓展</strong></div></a>
-  <a href="/ran-congjing" class="next"><div><div style="font-size:11px;color:#64748b">下一专题</div><strong>冉从敬学术思想 →</strong></div></a>
+  <a href="/research"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>返回研究拓展</strong></div></a>
+  <a href="/" class="next"><div><div style="font-size:11px;color:#64748b">返回起点</div><strong>系统概览 →</strong></div></a>
 </div>
 {% endblock %}
