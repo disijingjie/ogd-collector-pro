@@ -392,6 +392,16 @@ def credibility():
     """数据可信度中心"""
     return render_template('v6_credibility.html')
 
+@app.route('/caliber')
+def caliber():
+    """数据口径声明——支撑"数据口径幻觉"概念"""
+    return render_template('v6_caliber.html')
+
+@app.route('/map')
+def china_map():
+    """中国省域绩效热力图"""
+    return render_template('v6_map.html')
+
 @app.route('/prisma')
 def prisma():
     """文献筛选之路"""

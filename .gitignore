@@ -26,3 +26,9 @@ _test_playwright*.py
 cpolar.exe
 cpolar_stdout.txt
 cpolar_stderr.txt
+
+# Archive directories
+scripts/archive/
+static/archive/
+_archive_scripts/
+_archive_deploy/
