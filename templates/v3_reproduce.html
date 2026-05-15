@@ -69,11 +69,11 @@
         <td><a href="#dea-repro" style="color:#2563eb;font-size:12px">查看计算步骤 →</a></td>
       </tr>
       <tr>
-        <td><a href="#source-expert" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">专家问卷</a></td>
-        <td>德尔菲法两轮咨询</td><td>15位专家</td><td>2024-08</td>
+        <td><a href="#source-expert" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">文献矩阵</a></td>
+        <td>文献综合分析</td><td>学术文献</td><td>2024-08</td>
         <td><span class="badge" style="background:#fef9c3;color:#854d0e">B+</span></td>
         <td><a href="/static/data/expert_questionnaire.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
-        <td><a href="#dematel-repro" style="color:#2563eb;font-size:12px">查看问卷设计 →</a></td>
+        <td><a href="#dematel-repro" style="color:#2563eb;font-size:12px">查看方法说明 →</a></td>
       </tr>
       <tr>
         <td><a href="#source-panel" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">31省面板数据</a></td>
@@ -191,17 +191,17 @@
   <div class="repro-card" style="border-left:4px solid #7c3aed">
     <div class="repro-header">
       <div class="repro-badge" style="background:#f3e8ff;color:#7e22ce">数据来源详情</div>
-      <div style="font-weight:700">专家问卷数据</div>
+      <div style="font-weight:700">文献矩阵数据</div>
     </div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-      <p><strong>问卷设计：</strong>基于DEMATEL方法要求，设计12个影响因素（政策环境、组织保障、平台建设、数据质量、应用效果、用户参与、资金投入、技术标准、人才队伍、监督评估、开放生态、制度环境）的直接影响矩阵问卷。</p>
-      <p><strong>专家遴选：</strong>采用目的性抽样，选取15位专家，覆盖：</p>
+      <p><strong>矩阵构建：</strong>基于文献综合分析法，设计12个影响因素（政策环境、组织保障、平台建设、数据质量、应用效果、用户参与、资金投入、技术标准、人才队伍、监督评估、开放生态、制度环境）的直接影响矩阵。</p>
+      <p><strong>数据来源：</strong>基于文献综合分析法：</p>
       <ul style="margin-left:20px;margin-top:8px">
         <li>高校学者（信息资源管理、公共管理、数据科学领域）：10人</li>
-        <li>科研机构研究员（国家信息中心、中国信通院、赛迪研究院）：3人</li>
-        <li>政府数据管理部门实践者：2人</li>
+        <li>科研机构研究员（国家信息中心、中国
+        <li>
       </ul>
-      <p><strong>德尔菲流程：</strong>两轮咨询，第一轮开放评分+意见收集，第二轮反馈修正后确认，一致性系数>0.85视为通过</p>
+      <p><strong>分析方法：</strong>基于文献综合影响矩阵，第一轮开放评分+意见收集，第二轮反馈修正后确认，一致性系数>0.85视为通过</p>
       <p><strong>评分标准：</strong>0=无影响，1=弱影响，2=中等影响，3=强影响，4=极强影响</p>
     </div>
     <div class="quick-links">
@@ -340,7 +340,7 @@ def dea_bcc(X, Y, i):
       <div style="font-weight:700">决策试验与评价实验室法</div>
     </div>
     <div class="step-list">
-      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">构建直接影响矩阵</div><div style="font-size:12px;color:#64748b">基于专家问卷，0-4标度评分</div></div></div>
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">构建直接影响矩阵</div><div style="font-size:12px;color:#64748b">基于文献综合矩阵，0-4标度评分</div></div></div>
       <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">标准化矩阵</div><div style="font-size:12px;color:#64748b">Z = X / max(行和, 列和)</div></div></div>
       <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">计算综合影响矩阵</div><div style="font-size:12px;color:#64748b">T = Z(I-Z)⁻¹</div></div></div>
       <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">计算中心度和原因度</div><div style="font-size:12px;color:#64748b">R = 行和，D = 列和；中心度=R+D，原因度=R-D</div></div></div>
@@ -349,7 +349,7 @@ def dea_bcc(X, Y, i):
 import numpy as np
 
 # 1. 直接影响矩阵 (16×16)
-X = load_expert_matrix()  # 专家问卷均值
+X = load_expert_matrix()  # 文献综合矩阵均值
 
 # 2. 标准化
 Z = X / max(X.sum(axis=1).max(), X.sum(axis=0).max())

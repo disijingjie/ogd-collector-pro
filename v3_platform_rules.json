@@ -448,43 +448,48 @@
       "province": "安徽",
       "tier": "省级",
       "urls": {
-        "homepage": "http://data.ahzwfw.gov.cn:8000",
-        "dataset_page": "http://data.ahzwfw.gov.cn:8000/odweb/catalog/index.htm",
-        "api_base": null
+        "homepage": "https://data.ahzwfw.gov.cn/dataopen-web/index.html",
+        "dataset_page": "https://data.ahzwfw.gov.cn/dataopen-web/",
+        "api_base": null,
+        "note": "平台于2026年迁移至此新URL，旧版 http://data.ahzwfw.gov.cn:8000 已停运（系统维护中）"
       },
       "extraction_rules": {
         "primary": {
-          "method": "css_selector",
+          "method": "playwright_dynamic",
           "location": "homepage",
-          "selector": ".data-count, .catalog-count",
-          "pattern": "([0-9,]+)",
-          "description": "首页数据计数"
+          "selector": "[class*=\"num\"], .number",
+          "pattern": "([\\d.]+)万?(?:个|条|次)",
+          "description": "Vue.js SPA，需Playwright动态渲染后提取首页统计面板（开放目录、数据总量、累计下载、累计调用）"
         },
         "secondary": {
-          "method": "regex",
-          "location": "homepage_text",
-          "pattern": "数据目录|数据集|([0-9,]+)\\s*个",
-          "description": "匹配数据相关数字"
+          "method": "playwright_dynamic",
+          "location": "homepage",
+          "selector": "span:has-text(\"开放目录\")",
+          "pattern": "([\\d.]+)万?个",
+          "description": "精确匹配开放目录数字"
         }
       },
       "dataset_count": {
-        "value": null,
+        "value": 36300,
         "unit": "个",
-        "type": "待确认",
-        "confidence": "low",
-        "source_url": null,
-        "source_text": null,
-        "collected_at": "2026-04-25",
-        "verification": "第一轮未找到，需深入分析数据目录页"
+        "type": "开放目录",
+        "confidence": "high",
+        "source_url": "https://data.ahzwfw.gov.cn/dataopen-web/index.html",
+        "source_text": "3.63万个开放目录",
+        "collected_at": "2026-05-03",
+        "verification": "Playwright动态渲染后提取，首页统计面板明确显示'3.63万个开放目录'，辅以数据总量4,289.50万条、累计下载80.53万次、累计调用222.59万次"
       },
       "platform_features": {
-        "has_api": true,
+        "has_api": false,
         "has_search": true,
         "has_download": true,
         "has_visualization": false,
-        "response_time_ms": 3000
+        "is_spa": true,
+        "framework": "Vue.js",
+        "response_time_ms": 5000,
+        "render_method": "playwright"
       },
-      "notes": "安徽省政务数据开放平台"
+      "notes": "安徽省公共数据开放平台，2026年平台升级为Vue.js SPA架构，旧版8000端口已停运。需Playwright+Chromium动态渲染。2026-05-03 Playwright实采成功，36,300个开放目录。"
     },
     {
       "code": "fujian",

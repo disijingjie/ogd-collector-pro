@@ -1,4 +1,4 @@
-{% extends "base_v3.html" %}{% set active = "reproduce" %}{% block title %}数据复现 - OGD-Collector Pro{% endblock %}{% block page_title %}数据复现实验室{% endblock %}{% block breadcrumb %}数据复现{% endblock %}
+﻿{% extends "base_v6.html" %}{% set active = "reproduce" %}{% block title %}数据复现 - OGD-Collector Pro{% endblock %}{% block page_title %}数据复现实验室{% endblock %}{% block breadcrumb %}数据复现{% endblock %}
 {% block extra_css %}<style>
 .repro-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;margin-bottom:16px;transition:all .2s}
 .repro-card:hover{border-color:#2563eb;box-shadow:0 4px 6px -1px rgba(0,0,0,.07)}
@@ -45,14 +45,14 @@
         <td>手工核实+官网抓取</td><td>88条</td><td>2024-06</td>
         <td><span class="badge" style="background:#dcfce7;color:#166534">A+</span></td>
         <td><a href="/static/data/platforms_88_basic.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
-        <td><a href="/v3/collection#provenance" style="color:#2563eb;font-size:12px">查看采集过程 →</a></td>
+        <td><a href="/collection#provenance" style="color:#2563eb;font-size:12px">查看采集过程 →</a></td>
       </tr>
       <tr>
         <td><a href="#source-23metadata" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">23省数据集元数据</a></td>
         <td>API+静态+动态采集</td><td>~98,000条</td><td>2024-06~10</td>
         <td><span class="badge" style="background:#dbeafe;color:#1e40af">A</span></td>
         <td><a href="/static/data/platforms_23_full.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
-        <td><a href="/v3/collection#strategy" style="color:#2563eb;font-size:12px">查看采集策略 →</a></td>
+        <td><a href="/collection#strategy" style="color:#2563eb;font-size:12px">查看采集策略 →</a></td>
       </tr>
       <tr>
         <td><a href="#source-4e" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">4E指标评分</a></td>
@@ -69,11 +69,11 @@
         <td><a href="#dea-repro" style="color:#2563eb;font-size:12px">查看计算步骤 →</a></td>
       </tr>
       <tr>
-        <td><a href="#source-expert" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">专家问卷</a></td>
-        <td>德尔菲法两轮咨询</td><td>15位专家</td><td>2024-08</td>
+        <td><a href="#source-expert" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">文献矩阵</a></td>
+        <td>文献综合分析</td><td>学术文献</td><td>2024-08</td>
         <td><span class="badge" style="background:#fef9c3;color:#854d0e">B+</span></td>
         <td><a href="/static/data/expert_questionnaire.csv" style="color:#2563eb;font-weight:600">⬇ CSV</a></td>
-        <td><a href="#dematel-repro" style="color:#2563eb;font-size:12px">查看问卷设计 →</a></td>
+        <td><a href="#dematel-repro" style="color:#2563eb;font-size:12px">查看方法说明 →</a></td>
       </tr>
       <tr>
         <td><a href="#source-panel" style="color:#1e293b;font-weight:600;text-decoration:none;border-bottom:1px dashed #2563eb">31省面板数据</a></td>
@@ -104,7 +104,7 @@
     </div>
     <div class="quick-links">
       <a href="/static/data/platforms_88_basic.csv" class="quick-link">⬇ 下载CSV (8KB)</a>
-      <a href="/v3/collection#provenance" class="quick-link">查看88平台清单 →</a>
+      <a href="/collection#provenance" class="quick-link">查看88平台清单 →</a>
     </div>
   </div>
 </div>
@@ -130,7 +130,7 @@
       <a href="/static/data/platforms_23_full.csv" class="quick-link">⬇ 下载CSV (3KB)</a>
       <a href="/static/data/collect_static.py" class="quick-link">⬇ 下载采集脚本</a>
       <a href="/static/data/collect_anhui_playwright.py" class="quick-link">⬇ 下载Playwright脚本</a>
-      <a href="/v3/collection#strategy" class="quick-link">查看采集策略详情 →</a>
+      <a href="/collection#strategy" class="quick-link">查看采集策略详情 →</a>
     </div>
   </div>
 </div>
@@ -191,17 +191,17 @@
   <div class="repro-card" style="border-left:4px solid #7c3aed">
     <div class="repro-header">
       <div class="repro-badge" style="background:#f3e8ff;color:#7e22ce">数据来源详情</div>
-      <div style="font-weight:700">专家问卷数据</div>
+      <div style="font-weight:700">文献综合矩阵数据</div>
     </div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">
-      <p><strong>问卷设计：</strong>基于DEMATEL方法要求，设计12个影响因素（政策环境、组织保障、平台建设、数据质量、应用效果、用户参与、资金投入、技术标准、人才队伍、监督评估、开放生态、制度环境）的直接影响矩阵问卷。</p>
-      <p><strong>专家遴选：</strong>采用目的性抽样，选取15位专家，覆盖：</p>
+      <p><strong>矩阵构建：</strong>基于文献综合分析法，提取12个影响因素（政策环境、组织保障、平台建设、数据质量、应用效果、用户参与、资金投入、技术标准、人才队伍、监督评估、开放生态、制度环境）的直接影响矩阵。</p>
+      <p><strong>数据来源：</strong>基于文献综合分析法，从WOS和CNKI核心文献中提取影响矩阵：</p>
       <ul style="margin-left:20px;margin-top:8px">
         <li>高校学者（信息资源管理、公共管理、数据科学领域）：10人</li>
         <li>科研机构研究员（国家信息中心、中国信通院、赛迪研究院）：3人</li>
         <li>政府数据管理部门实践者：2人</li>
       </ul>
-      <p><strong>德尔菲流程：</strong>两轮咨询，第一轮开放评分+意见收集，第二轮反馈修正后确认，一致性系数>0.85视为通过</p>
+      <p><strong>分析方法：</strong>基于文献综合影响矩阵，采用DEMATEL方法计算中心度与原因度，识别关键驱动因素。</p>
       <p><strong>评分标准：</strong>0=无影响，1=弱影响，2=中等影响，3=强影响，4=极强影响</p>
     </div>
     <div class="quick-links">
@@ -278,7 +278,7 @@ D_neg = np.array([euclidean(x, A_neg) for x in Xw])
 # 6. 计算贴近度
 C_star = D_neg / (D_pos + D_neg)
 </div>
-    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#topsis" class="quick-link">查看分析结果 →</a></div>
+    <div class="quick-links" style="margin-top:12px"><a href="/analysis#topsis" class="quick-link">查看分析结果 →</a></div>
   </div>
 </div>
 
@@ -329,7 +329,7 @@ def dea_bcc(X, Y, i):
                      bounds=[(0,None)]*(n+1+s), method='highs')
     return result.x[n]  # θ = 综合效率
 </div>
-    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#dea" class="quick-link">查看分析结果 →</a></div>
+    <div class="quick-links" style="margin-top:12px"><a href="/analysis#dea" class="quick-link">查看分析结果 →</a></div>
   </div>
 </div>
 
@@ -340,7 +340,7 @@ def dea_bcc(X, Y, i):
       <div style="font-weight:700">决策试验与评价实验室法</div>
     </div>
     <div class="step-list">
-      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">构建直接影响矩阵</div><div style="font-size:12px;color:#64748b">基于专家问卷，0-4标度评分</div></div></div>
+      <div class="step-item"><div class="step-num">1</div><div><div style="font-weight:600">构建直接影响矩阵</div><div style="font-size:12px;color:#64748b">基于文献综合矩阵，0-4标度评分</div></div></div>
       <div class="step-item"><div class="step-num">2</div><div><div style="font-weight:600">标准化矩阵</div><div style="font-size:12px;color:#64748b">Z = X / max(行和, 列和)</div></div></div>
       <div class="step-item"><div class="step-num">3</div><div><div style="font-weight:600">计算综合影响矩阵</div><div style="font-size:12px;color:#64748b">T = Z(I-Z)⁻¹</div></div></div>
       <div class="step-item"><div class="step-num">4</div><div><div style="font-weight:600">计算中心度和原因度</div><div style="font-size:12px;color:#64748b">R = 行和，D = 列和；中心度=R+D，原因度=R-D</div></div></div>
@@ -349,7 +349,7 @@ def dea_bcc(X, Y, i):
 import numpy as np
 
 # 1. 直接影响矩阵 (16×16)
-X = load_expert_matrix()  # 专家问卷均值
+X = load_expert_matrix()  # 文献综合矩阵均值
 
 # 2. 标准化
 Z = X / max(X.sum(axis=1).max(), X.sum(axis=0).max())
@@ -365,7 +365,7 @@ D = T.sum(axis=0)  # 列和 = 被影响度
 prominence = R + D  # 中心度 = 重要性
 causality = R - D   # 原因度 >0为原因因素，<0为结果因素
 </div>
-    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#dematel" class="quick-link">查看分析结果 →</a></div>
+    <div class="quick-links" style="margin-top:12px"><a href="/analysis#dematel" class="quick-link">查看分析结果 →</a></div>
   </div>
 </div>
 
@@ -401,7 +401,7 @@ fuzzy_membership = [calibrate(s, 0.4, 0.6, 0.8) for s in scores]
 # 注: 完整的fsQCA分析需要使用fsQCA 3.0软件
 # 或 Python 的 skfuzzy 库进行布尔最小化
 </div>
-    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#fsqca" class="quick-link">查看分析结果 →</a></div>
+    <div class="quick-links" style="margin-top:12px"><a href="/analysis#fsqca" class="quick-link">查看分析结果 →</a></div>
   </div>
 </div>
 
@@ -439,7 +439,7 @@ result = model.fit(cov_type='clustered', cluster_entity=True)
 print(result.summary)
 # ATT = β = +0.187*** (p<0.01)
 </div>
-    <div class="quick-links" style="margin-top:12px"><a href="/v3/analysis#did" class="quick-link">查看分析结果 →</a></div>
+    <div class="quick-links" style="margin-top:12px"><a href="/analysis#did" class="quick-link">查看分析结果 →</a></div>
   </div>
 </div>
 
@@ -458,7 +458,9 @@ print(result.summary)
 </div>
 
 <div class="page-nav">
-  <a href="/v3/thesis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>论文成果</strong></div></a>
-  <a href="/v3/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
+  <a href="/thesis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>论文成果</strong></div></a>
+  <a href="/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
 </div>
 {% endblock %}
+
+

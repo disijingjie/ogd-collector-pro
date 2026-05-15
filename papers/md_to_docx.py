@@ -151,6 +151,9 @@ def add_title_page(doc, title, authors, abstract, keywords):
 if __name__ == '__main__':
     papers_dir = r'C:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system\papers'
     papers = [
+        ('paper_01_psi_evolution_v2.md', '论文01_PSI演进_打磨版v2_从公共部门信息再利用到政府数据开放的制度演进.docx'),
+        ('paper_15_anonymization_v2.md', '论文15_匿名化标准_打磨版v2_数据流通匿名化处理标准下的政府数据开放平台数据集质量评估.docx'),
+        ('paper_03_data_sovereignty_v2.md', '论文03_数据主权_打磨版v2_总体国家安全观视域下政府数据开放平台的数据主权安全风险评估.docx'),
         ('paper_01_psi_evolution.md', '论文01_PSI演进_从公共部门信息再利用到政府数据开放的制度演进.docx'),
         ('paper_15_anonymization.md', '论文15_匿名化标准_数据流通匿名化处理标准下的政府数据开放平台数据集质量评估.docx'),
         ('paper_03_data_sovereignty.md', '论文03_数据主权_总体国家安全观视域下政府数据开放平台的数据主权安全风险评估.docx'),

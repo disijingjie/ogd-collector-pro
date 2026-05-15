@@ -1,11 +1,12 @@
 {% extends "base_v3.html" %}{% set active = "research" %}{% block title %}研究拓展 - OGD-Collector Pro{% endblock %}{% block page_title %}研究拓展{% endblock %}{% block breadcrumb %}研究拓展{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#central" class="active">中央级网站</a><a href="#literature">文献检索</a><a href="#mentors">导师思想</a><a href="#plans">拓展计划</a><a href="#other">其他成果</a><a href="#cooperation">合作交流</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#central" class="active">中央级网站</a><a href="#literature">文献检索</a><a href="#plans">拓展计划</a><a href="#chen-integration">导师学术思想</a><a href="#other">其他成果</a><a href="#cooperation">合作交流</a></div>{% endblock %}
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：研究拓展（第5/5步）</strong> — 本页展示研究的前瞻性方向、国际合作计划、以及开源合作信息。这是本研究旅程的最后一站。
+  <strong>您正在浏览：研究拓展（第5/5步）</strong> — 本页展示研究的前瞻性方向、导师学术思想导航、以及开源合作信息。这是本研究旅程的最后一站。
 </div>
 
+<!-- ========== 中央级网站 ========== -->
 <div id="central" class="scroll-section">
   <div class="card">
     <div class="card-header"><div class="card-title"><span class="icon"></span>中央级政府网站数据分析</div></div>
@@ -40,6 +41,7 @@
   </div>
 </div>
 
+<!-- ========== 文献检索 ========== -->
 <div id="literature" class="scroll-section">
   <div class="card">
     <div class="card-header"><div class="card-title"><span class="icon"></span>系统文献检索策略与数据共享</div></div>
@@ -50,107 +52,40 @@
       <div class="card" style="margin:0;border-left:4px solid #2563eb">
         <div style="font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#2563eb;display:inline-block"></span>WOS核心合集检索</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <strong>数据库：</strong>Web of Science Core Collection (SCI-E, SSCI, A&HCI, CPCI-S, ESCI)<br>
+          <strong>数据库：</strong>Web of Science Core Collection<br>
           <strong>时间范围：</strong>2012-01-01 至 2026-04-30<br>
-          <strong>检索式：</strong>TS=("open government data" OR "government data open*" OR "public data open*" OR "government data platform" OR "open data platform" OR "data open platform")<br>
-          <strong>精炼：</strong>文献类型=Article OR Review; 语言=English<br>
           <strong>结果：</strong>2,847篇 (截至2026年4月)
         </div>
         <div style="margin-top:10px">
-          <a href="https://www.webofscience.com/wos/woscc/summary/18f3e465-5b71-4ed3-8a63-3b3b13f3c2b6-01c1db3a3d/relevance/1" target="_blank" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">前往WOS查看检索结果 →</a>
+          <a href="https://www.webofscience.com" target="_blank" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">前往WOS查看 →</a>
         </div>
       </div>
-      <div class="card" style="margin:0;border-left:4px solid:#dc2626">
+      <div class="card" style="margin:0;border-left:4px solid #dc2626">
         <div style="font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block"></span>CNKI核心期刊检索</div>
         <div style="font-size:12px;color:#64748b;line-height:1.8">
-          <strong>数据库：</strong>中国知网 (CNKI) 核心期刊 + CSSCI + CSCD<br>
+          <strong>数据库：</strong>中国知网核心期刊 + CSSCI + CSCD<br>
           <strong>时间范围：</strong>2012-01-01 至 2026-04-30<br>
-          <strong>检索式：</strong>主题=("政府数据开放"+"政府数据"*"开放"+"公共数据开放"+"数据开放平台"+"开放政府数据") 并且 主题=("绩效"+"评估"+"评价"+"效率"+"效果"+"质量")<br>
-          <strong>精炼：</strong>期刊来源=核心期刊; 语言=中文<br>
           <strong>结果：</strong>3,156篇 (截至2026年4月)
         </div>
         <div style="margin-top:10px">
-          <a href="https://kns.cnki.net/kns8s/search?classid=WD0FTY92&kw=%E6%94%BF%E5%BA%9C%E6%95%B0%E6%8D%AE%E5%BC%80%E6%94%BE&korder=SU&scope=all" target="_blank" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">前往CNKI查看检索结果 →</a>
+          <a href="https://kns.cnki.net" target="_blank" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">前往CNKI查看 →</a>
         </div>
       </div>
     </div>
-    <!-- 深度专题入口 -->
     <div style="margin-top:16px;padding:16px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:10px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>
         <div style="font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px">
           <span style="background:rgba(96,165,250,.25);color:#60a5fa;padding:2px 8px;border-radius:4px;font-size:10px">深度专题</span>
           PRISMA 2020 系统文献检索全流程展示
         </div>
-        <div style="font-size:12px;color:#94a3b8;line-height:1.6">
-          包含：PRISMA筛选流程图 · 三轮检索策略迭代 · 文献计量学仪表盘 · 主题演化分析 · 研究空白识别 · 数据共享复现
-        </div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6">包含：PRISMA筛选流程图 · 三轮检索策略迭代 · 文献计量学仪表盘 · 主题演化分析</div>
       </div>
       <a href="/v3/literature" style="display:inline-block;padding:10px 22px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 12px rgba(37,99,235,.3)">查看深度专题 →</a>
     </div>
-
-    <div style="margin-top:12px;padding:12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
-      <div style="font-size:12px;color:#166534;line-height:1.7">
-        <strong>文献检索贡献说明：</strong>本研究建立了政府数据开放领域目前最完整的文献数据库之一（WOS+CNKI合计6,003篇）。检索策略经过三轮迭代优化，关键词覆盖中英文核心术语变体。所有检索结果均可通过上述链接复现，欢迎学界同行基于本检索策略开展后续研究。如有数据共享需求，请联系 <a href="mailto:ambit@qq.com" style="color:#2563eb">ambit@qq.com</a>。
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- ========== 导师学术思想与课题导航（突出显示版） ========== -->
-<div id="mentors" class="scroll-section">
-  <div class="card" style="border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#7c3aed,#2563eb,#0891b2) border-box;">
-    <div style="position:absolute;top:0;right:0;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;padding:4px 14px;border-bottom-left-radius:10px;font-size:11px;font-weight:700;letter-spacing:0.5px">博士生导师学术思想</div>
-    <div class="card-header" style="padding-top:28px">
-      <div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb)"></span>导师学术思想与课题导航</div>
-      <span style="font-size:12px;color:#64748b">从导师思想出发，凝练可操作的研究选题</span>
-    </div>
-    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
-      <p>以下两位博士生导师的学术思想为本研究提供了重要的理论指引与选题启发。
-      系统梳理其思想脉络，可直接转化为高水平学术论文的选题来源。</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
-      <!-- 陈传夫教授 -->
-      <div style="padding:20px;background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-radius:12px;border:1px solid #e9d5ff;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(124,58,237,0.06);border-radius:50%"></div>
-        <div style="position:relative;z-index:1">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700">陈</div>
-            <div>
-              <div style="font-weight:700;color:#581c87;font-size:14px">陈传夫 教授</div>
-              <div style="font-size:11px;color:#9333ea">国务院学科评议组召集人 | 资深教授</div>
-            </div>
-          </div>
-          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
-            <p>• 核心思想："学科发展为了谁""中国标识的核心概念""守正创新""服务国家重大战略"</p>
-            <p>• 提炼<strong>6个完整课题研究点</strong>，均已撰写为可直接投稿的学术论文</p>
-            <p>• 与你的研究交集：政府数据开放的价值论、概念谱系、方法论创新</p>
-          </div>
-          <a href="/v3/chen-chuanfu" style="display:inline-block;padding:8px 18px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(124,58,237,.25)">进入陈传夫学术思想专题 →</a>
-        </div>
-      </div>
-      <!-- 冉从敬教授 -->
-      <div style="padding:20px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;border:1px solid #bfdbfe;position:relative;overflow:hidden">
-        <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(37,99,235,0.06);border-radius:50%"></div>
-        <div style="position:relative;z-index:1">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg,#2563eb,#3b82f6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700">冉</div>
-            <div>
-              <div style="font-weight:700;color:#1e40af;font-size:14px">冉从敬 教授</div>
-              <div style="font-size:11px;color:#2563eb">博士生导师 | 知识产权与数据治理</div>
-            </div>
-          </div>
-          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
-            <p>• 核心思想："数据产权结构性分置""知识产权制度创新""信息资源公共获取的制度保障"</p>
-            <p>• 提炼<strong>5个完整课题研究点</strong>，聚焦数据产权、开放许可与合规利用</p>
-            <p>• 与你的研究交集：政府数据开放的知识产权框架、数据要素市场制度设计</p>
-          </div>
-          <a href="/v3/ran-congjing" style="display:inline-block;padding:8px 18px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(37,99,235,.25)">进入冉从敬学术思想专题 →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<!-- ========== 拓展计划 ========== -->
 <div id="plans" class="scroll-section">
   <div class="card">
     <div class="card-header"><div class="card-title"><span class="icon"></span>未来拓展计划</div></div>
@@ -163,15 +98,192 @@
   </div>
 </div>
 
+<!-- ========== 陈传夫学术思想与博士论文研究结合 ========== -->
+<div id="chen-integration" class="scroll-section">
+  <div class="card" style="border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#7c3aed,#a855f7) border-box;">
+    <div class="card-header">
+      <div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7)"></span>陈传夫学术思想与博士论文研究结合</div>
+      <a href="/v3/chen-chuanfu" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">进入陈传夫专题 →</a>
+    </div>
+
+    <!-- 陈传夫简介 -->
+    <div style="display:flex;gap:16px;margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#faf5ff,#fdf4ff);border-radius:12px;border:1px solid #e9d5ff;align-items:flex-start">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700;box-shadow:0 4px 12px rgba(124,58,237,.3);flex-shrink:0">陈</div>
+      <div>
+        <div style="font-weight:800;color:#581c87;font-size:16px;margin-bottom:10px">陈传夫 教授</div>
+        <p style="font-size:13px;color:#64748b;line-height:1.7">
+          陈传夫教授，国务院学位委员会第八届信息资源管理学科评议组召集人、武汉大学人文社会科学资深教授。本专题梳理其核心理论贡献与治学理念，为博士论文研究提供学科定位与价值论指引。
+        </p>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:20px">
+      <p>陈传夫教授的学术思想与博士论文研究在三个核心维度形成深度结合。以下展示价值论、方法论与概念建构如何指导本研究的问题意识与理论框架。</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <!-- 结合点1 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#faf5ff,#fdf4ff);border-radius:12px;border:1px solid #e9d5ff;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#7c3aed;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点一</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#581c87;font-size:15px;margin-bottom:8px">"学科发展为了谁" → OGD研究价值论定位</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>陈传夫"学科发展为了谁"的元问题追问，强调学科应回应国家需求与人民关切</p>
+            <p><strong>论文应用：</strong>将OGD利用绩效研究锚定于"数字中国"与"共同富裕"国家战略需求</p>
+            <p><strong>核心发现：</strong>数据利用绩效差异本质是制度供给与发展需求的匹配度问题，回应"数据为民"的价值命题</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#f3e8ff;color:#7c3aed;border-radius:4px">数字中国</span>
+            <span style="font-size:10px;padding:2px 8px;background:#f3e8ff;color:#7c3aed;border-radius:4px">共同富裕</span>
+            <span style="font-size:10px;padding:2px 8px;background:#f3e8ff;color:#7c3aed;border-radius:4px">价值论</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 结合点2 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:12px;border:1px solid #ddd6fe;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#8b5cf6;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点二</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#6d28d9;font-size:15px;margin-bottom:8px">"守正创新" → IRM范式演进与OGD研究创新</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>陈传夫IRM"三次范式"理论（记录管理→信息管理→数据治理）</p>
+            <p><strong>论文应用：</strong>在IRM第三次范式（数据治理）视域下定位OGD利用研究，继承传统并回应数字化转型</p>
+            <p><strong>核心发现：</strong>OGD利用绩效研究是IRM范式在开放政府数据场景下的自然延伸，体现"守正"与"创新"的统一</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#ede9fe;color:#6d28d9;border-radius:4px">IRM三次范式</span>
+            <span style="font-size:10px;padding:2px 8px;background:#ede9fe;color:#6d28d9;border-radius:4px">数据治理</span>
+            <span style="font-size:10px;padding:2px 8px;background:#ede9fe;color:#6d28d9;border-radius:4px">数字化转型</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 结合点3 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#fdf4ff,#fce7f3);border-radius:12px;border:1px solid #fbcfe8;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#c026d3;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点三</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#86198f;font-size:15px;margin-bottom:8px">"中国标识"核心概念 → 中国特色OGD评价框架</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>陈传夫"中国标识的核心概念"构建主张，反对简单移植西方理论</p>
+            <p><strong>论文应用：</strong>构建适配中国制度语境的"4E"评估框架（效率-公平-效能-效果），区别于西方开放度指数</p>
+            <p><strong>核心发现：</strong>中国OGD平台呈现"层级分化+制度同形"双重特征，需建立本土化评价标准而非照搬data.gov模式</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#fce7f3;color:#86198f;border-radius:4px">4E评估框架</span>
+            <span style="font-size:10px;padding:2px 8px;background:#fce7f3;color:#86198f;border-radius:4px">制度同形</span>
+            <span style="font-size:10px;padding:2px 8px;background:#fce7f3;color:#86198f;border-radius:4px">本土化</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:16px;background:linear-gradient(135deg,#faf5ff,#f5f3ff);border-radius:10px;border:1px solid #e9d5ff">
+      <div style="font-size:13px;color:#581c87;line-height:1.8">
+        <strong>💡 理论贡献总结：</strong>陈传夫教授的三大思想命题（"学科发展为了谁""守正创新""中国标识"）分别从价值论、方法论与概念建构三个层面，为博士论文提供了根本性的学术立场。本研究在IRM第三次范式（数据治理）中定位OGD利用问题，以"4E"框架回应中国特色评价需求，体现了陈传夫学术思想对青年学者的深层塑造。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 冉从敬学术思想与博士论文研究结合（新增） ========== -->
+<div id="ran-integration" class="scroll-section">
+  <div class="card" style="border:2px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#2563eb,#0891b2) border-box;">
+    <div class="card-header">
+      <div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#2563eb,#0891b2)"></span>冉从敬学术思想与博士论文研究结合</div>
+      <a href="/v3/ran-congjing" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">进入冉从敬专题 →</a>
+    </div>
+    <!-- 冉从敬简介 -->
+    <div style="display:flex;gap:16px;margin-bottom:20px;padding:20px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:12px;border:1px solid #bfdbfe;align-items:flex-start">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#2563eb,#3b82f6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700;box-shadow:0 4px 12px rgba(37,99,235,.3);flex-shrink:0">冉</div>
+      <div>
+        <div style="font-weight:800;color:#1e40af;font-size:16px;margin-bottom:4px">冉从敬 教授 <span style="font-size:12px;color:#2563eb;font-weight:400">博士生导师 · 知识产权与数据治理</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#2563eb;border-radius:20px;font-weight:600">数据产权分置</span>
+          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#2563eb;border-radius:20px;font-weight:600">数据主权安全</span>
+          <span style="font-size:11px;padding:3px 10px;background:#dbeafe;color:#2563eb;border-radius:20px;font-weight:600">PSI再利用</span>
+        </div>
+        <p style="font-size:13px;color:#64748b;line-height:1.7">
+          冉从敬教授是武汉大学信息管理学院教授、博士生导师，长期从事知识产权与数据治理研究。他构建PSI"产权-市场-运营"三维框架，提出数据主权安全理论与匿名化评价标准，主持国家社科基金重大项目"总体国家安全观视域下的大数据主权安全保障体系建设研究"（21&ZD169），为本研究提供制度分析工具与风险评估框架。
+        </p>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:20px">
+      <p>冉从敬教授的学术思想与博士论文研究在三个核心维度形成深度结合。以下展示理论框架如何转化为具体的研究设计与实证分析。</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <!-- 结合点1 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#fef2f2,#fff5f5);border-radius:12px;border:1px solid #fecaca;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#dc2626;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点一</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#991b1b;font-size:15px;margin-bottom:8px">数据主权安全理论 → 平台风险评估</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>冉从敬"数据主权安全"三维理论（管辖权-控制权-收益权）</p>
+            <p><strong>论文应用：</strong>构建DSS-RAM评估模型，13项指标量化23个平台风险</p>
+            <p><strong>核心发现：</strong>82.6%平台存在中高风险，"技术薄弱×制度缺失"与"开放过度×监管缺位"两条高风险组态</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#fee2e2;color:#991b1b;border-radius:4px">总体国家安全观</span>
+            <span style="font-size:10px;padding:2px 8px;background:#fee2e2;color:#991b1b;border-radius:4px">fsQCA组态分析</span>
+            <span style="font-size:10px;padding:2px 8px;background:#fee2e2;color:#991b1b;border-radius:4px">13项指标</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 结合点2 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#fff7ed,#fffbeb);border-radius:12px;border:1px solid #fed7aa;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#ea580c;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点二</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#9a3412;font-size:15px;margin-bottom:8px">PSI三维框架 → 制度演进分析</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>冉从敬2015年PSI"产权-市场-运营"三维框架</p>
+            <p><strong>论文应用：</strong>追踪PSI到OGD的制度演进，识别"创造性转化"逻辑</p>
+            <p><strong>核心发现：</strong>产权机制从"国有一元论"演进至"结构性分置"，运营从"部门分散"到"国家数据局统筹"</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#ffedd5;color:#9a3412;border-radius:4px">制度演进</span>
+            <span style="font-size:10px;padding:2px 8px;background:#ffedd5;color:#9a3412;border-radius:4px">路径依赖</span>
+            <span style="font-size:10px;padding:2px 8px;background:#ffedd5;color:#9a3412;border-radius:4px">23平台实证</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 结合点3 -->
+      <div style="padding:20px;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:12px;border:1px solid #bae6fd;position:relative">
+        <div style="position:absolute;top:-1px;left:24px;background:#0284c7;color:#fff;padding:3px 12px;border-radius:0 0 6px 6px;font-size:11px;font-weight:700">结合点三</div>
+        <div style="margin-top:16px">
+          <div style="font-weight:700;color:#075985;font-size:15px;margin-bottom:8px">匿名化评价标准 → 数据集质量评估</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.8;margin-bottom:12px">
+            <p><strong>理论来源：</strong>冉从敬团队参与制定的"数据流通匿名化处理评价标准"</p>
+            <p><strong>论文应用：</strong>构建"识别-关联-推断"三维评估框架，评估690个数据集</p>
+            <p><strong>核心发现：</strong>匿名化质量与下载量呈倒U型关系（拐点AQI≈3.35），提出分级分类矩阵</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;padding:2px 8px;background:#e0f2fe;color:#075985;border-radius:4px">隐私-可用性权衡</span>
+            <span style="font-size:10px;padding:2px 8px;background:#e0f2fe;color:#075985;border-radius:4px">倒U型关系</span>
+            <span style="font-size:10px;padding:2px 8px;background:#e0f2fe;color:#075985;border-radius:4px">690数据集</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:16px;background:linear-gradient(135deg,#eff6ff,#f0fdf4);border-radius:10px;border:1px solid #bfdbfe">
+      <div style="font-size:13px;color:#1e40af;line-height:1.8">
+        <strong>💡 理论贡献总结：</strong>冉从敬教授的三大理论框架（数据主权安全、PSI再利用、匿名化标准）分别对应博士论文的三个实证研究模块，形成"理论-实证-对策"的完整研究闭环。三套框架均源于国家社科基金重大项目"总体国家安全观视域下的大数据主权安全保障体系建设研究"（21&ZD169），实现了重大项目成果向博士论文的转化。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 其他成果 ========== -->
 <div id="other" class="scroll-section">
   <div class="card">
     <div class="card-header">
       <div class="card-title"><span class="icon"></span>其他研究成果</div>
-      <a href="/v3/papers" style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">查看小论文研究框架 →</a>
     </div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
-      <p>以下四项研究成果不仅支撑了博士论文的核心论证，更可直接延伸为独立的小论文选题。
-      点击右上角按钮可查看每个方向的完整研究框架（选题依据、理论框架、方法论设计、预期创新点、目标期刊）。</p>
+      <p>以下四项研究成果不仅支撑了博士论文的核心论证，更可直接延伸为独立的小论文选题。</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
       <div class="card" style="margin:0;border-left:3px solid #2563eb">
@@ -198,6 +310,7 @@
   </div>
 </div>
 
+<!-- ========== 合作交流 ========== -->
 <div id="cooperation" class="scroll-section">
   <div class="card">
     <div class="card-header"><div class="card-title"><span class="icon"></span>合作交流与开源</div></div>

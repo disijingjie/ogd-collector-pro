@@ -136,8 +136,8 @@
     "method": "playwright:动态渲染",
     "source_url": "https://data.ahzwfw.gov.cn/dataopen-web/index.html",
     "source_text": "开放目录 3.63万个",
-    "collected_at": "2026-04-28 23:25:11",
-    "note": "Playwright动态渲染采集成功。平台为Vue.js单页应用，静态爬取无法获取数据。采集结果：开放目录36,300个、数据总量4,289.50万条、累计下载80.53万次、累计调用222.59万次"
+    "collected_at": "2026-05-03 02:05:00",
+    "note": "Playwright动态渲染复采成功。旧版URL(8000端口)已停运，新版URL确认为dataopen-web/index.html。采集结果：开放目录36,300个(3.63万个)、数据总量4,289.50万条、累计下载80.53万次、累计调用222.59万次"
   },
   {
     "code": "fujian",

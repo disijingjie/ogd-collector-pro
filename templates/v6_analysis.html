@@ -1,4 +1,4 @@
-{% extends "base_v3.html" %}{% set active = "analysis" %}{% block title %}分析验证 - OGD-Collector Pro{% endblock %}{% block page_title %}分析验证{% endblock %}{% block breadcrumb %}分析验证{% endblock %}
+﻿{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}分析验证 - OGD-Collector Pro{% endblock %}{% block page_title %}分析验证{% endblock %}{% block breadcrumb %}分析验证{% endblock %}
 {% block extra_css %}<style>
 .rank-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .rank-name{width:60px;font-weight:600;font-size:13px;text-align:right}
@@ -20,7 +20,7 @@
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：分析验证（第3/5步）</strong> — 本页展示论文第5-7章的五种分析方法结果，形成"描述→诊断→归因→处方→验证"的完整证据链。完成后再进入 <a href="/v3/thesis" style="color:var(--primary)">论文成果 →</a>
+  <strong>您正在浏览：分析验证（第3/5步）</strong> — 本页展示论文第5-7章的五种分析方法结果，形成"描述→诊断→归因→处方→验证"的完整证据链。完成后再进入 <a href="/thesis" style="color:var(--primary)">论文成果 →</a>
 </div>
 
 <div id="chain" class="scroll-section">
@@ -43,7 +43,7 @@
       <div class="method-badge" style="background:#fef3c7;color:#92400e">第5章 | 描述"是什么"</div>
       <div style="font-size:16px;font-weight:700">TOPSIS 综合评价排名</div>
     </div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：88平台4E指标标准化数据 | 方法：逼近理想解排序法 | <a href="/v3/thesis#ch5" style="color:#2563eb">查看论文第5章 →</a></div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：88平台4E指标标准化数据 | 方法：逼近理想解排序法 | <a href="/thesis#ch5" style="color:#2563eb">查看论文第5章 →</a></div>
     <div style="max-width:700px;margin:0 auto">
       <div class="rank-bar"><div class="rank-name">山东</div><div class="rank-track"><div class="rank-fill" style="width:95.5%;background:linear-gradient(90deg,#f59e0b,#fbbf24)">C*=0.955</div></div><div class="rank-score">0.955</div></div>
       <div class="rank-bar"><div class="rank-name">浙江</div><div class="rank-track"><div class="rank-fill" style="width:89.2%;background:linear-gradient(90deg,#f59e0b,#fbbf24)">C*=0.892</div></div><div class="rank-score">0.892</div></div>
@@ -63,7 +63,7 @@
     </div>
     <div style="margin-top:20px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>方法说明：</strong>TOPSIS通过计算各评价对象与正理想解、负理想解的距离进行排序。基于4E框架构建16项二级指标，经熵权法赋权后计算综合贴近度C*。山东C*=0.955，显著领先其他省份。
-      <div class="quick-links" style="margin-top:8px"><a href="/v3/thesis#ch5" class="quick-link">查看论文第5章详细分析 →</a><a href="/v3/reproduce" class="quick-link">复现此分析 →</a></div>
+      <div class="quick-links" style="margin-top:8px"><a href="/thesis#ch5" class="quick-link">查看论文第5章详细分析 →</a><a href="/reproduce" class="quick-link">复现此分析 →</a></div>
     </div>
   </div>
 </div>
@@ -74,7 +74,7 @@
       <div class="method-badge" style="background:#d1fae5;color:#065f46">第5章 | 诊断"效率如何"</div>
       <div style="font-size:16px;font-weight:700">DEA 数据包络分析效率评估</div>
     </div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：23个有效平台投入产出数据 | 方法：BCC-DEA（规模报酬可变）| <a href="/v3/thesis#ch5" style="color:#2563eb">查看论文第5章 →</a></div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：23个有效平台投入产出数据 | 方法：BCC-DEA（规模报酬可变）| <a href="/thesis#ch5" style="color:#2563eb">查看论文第5章 →</a></div>
     <div style="overflow-x:auto"><table class="data-table dea-table"><tr><th>平台</th><th>综合效率</th><th>技术效率</th><th>规模效率</th><th>规模报酬</th><th>排名</th></tr>
       <tr><td>山东</td><td class="eff-1">1.000</td><td class="eff-1">1.000</td><td class="eff-1">1.000</td><td>不变</td><td>1</td></tr>
       <tr><td>浙江</td><td class="eff-high">0.982</td><td class="eff-1">1.000</td><td class="eff-high">0.982</td><td>递减</td><td>2</td></tr>
@@ -95,7 +95,7 @@
     </div>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>核心发现：</strong>山东是唯一综合效率=1的DEA有效单元。浙江、广东、北京、上海技术效率=1但规模效率<1，属于"管理优秀但规模过大"。贵州、四川等规模效率递增，扩大投入可提升效率。
-      <div class="quick-links" style="margin-top:8px"><a href="/v3/thesis#ch5" class="quick-link">查看论文第5章DEA详细分析 →</a><a href="/v3/reproduce" class="quick-link">复现此分析 →</a></div>
+      <div class="quick-links" style="margin-top:8px"><a href="/thesis#ch5" class="quick-link">查看论文第5章DEA详细分析 →</a><a href="/reproduce" class="quick-link">复现此分析 →</a></div>
     </div>
   </div>
 </div>
@@ -106,7 +106,7 @@
       <div class="method-badge" style="background:#dbeafe;color:#1e40af">第6章 | 归因"为什么"</div>
       <div style="font-size:16px;font-weight:700">DEMATEL 因果关系网络</div>
     </div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：专家问卷+客观指标融合 | 方法：决策试验与评价实验室法 | <a href="/v3/thesis#ch6" style="color:#2563eb">查看论文第6章 →</a></div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：文献综合影响矩阵+客观指标融合 | 方法：决策试验与评价实验室法 | <a href="/thesis#ch6" style="color:#2563eb">查看论文第6章 →</a></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:20px">
       <div>
         <div style="font-weight:700;margin-bottom:12px">原因度-结果度分布</div>
@@ -140,7 +140,7 @@
     </div>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>核心发现：</strong>制度建设是因果网络中原因度最高的因素，是影响其他指标的根本驱动力。服务效益和用户满意度是结果度最高的因素，最容易受到其他因素影响。
-      <div class="quick-links" style="margin-top:8px"><a href="/v3/thesis#ch6" class="quick-link">查看论文第6章DEMATEL详细分析 →</a><a href="/v3/reproduce" class="quick-link">复现此分析 →</a></div>
+      <div class="quick-links" style="margin-top:8px"><a href="/thesis#ch6" class="quick-link">查看论文第6章DEMATEL详细分析 →</a><a href="/reproduce" class="quick-link">复现此分析 →</a></div>
     </div>
   </div>
 </div>
@@ -151,7 +151,7 @@
       <div class="method-badge" style="background:#fce7f3;color:#9d174d">第6章 | 处方"哪条路径"</div>
       <div style="font-size:16px;font-weight:700">fsQCA 高绩效路径分析</div>
     </div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：TOPSIS得分+4E指标校准 | 方法：模糊集定性比较分析(fsQCA 3.0) | <a href="/v3/thesis#ch6" style="color:#2563eb">查看论文第6章 →</a></div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：TOPSIS得分+4E指标校准 | 方法：模糊集定性比较分析(fsQCA 3.0) | <a href="/thesis#ch6" style="color:#2563eb">查看论文第6章 →</a></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
       <div class="chart-container">
         <div class="chart-title">路径一：制度驱动型（覆盖度0.42）</div>
@@ -189,7 +189,7 @@
     </div>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>核心发现：</strong>两条路径覆盖度合计0.80，解释了中国政府数据开放平台高绩效的80%案例。制度驱动型路径强调"自上而下"的制度建设，质量引领型路径强调"自下而上"的用户驱动。
-      <div class="quick-links" style="margin-top:8px"><a href="/v3/thesis#ch6" class="quick-link">查看论文第6章fsQCA详细分析 →</a><a href="/v3/reproduce" class="quick-link">复现此分析 →</a></div>
+      <div class="quick-links" style="margin-top:8px"><a href="/thesis#ch6" class="quick-link">查看论文第6章fsQCA详细分析 →</a><a href="/reproduce" class="quick-link">复现此分析 →</a></div>
     </div>
   </div>
 </div>
@@ -200,7 +200,7 @@
       <div class="method-badge" style="background:#f3e8ff;color:#7e22ce">第7章 | 验证"政策有效吗"</div>
       <div style="font-size:16px;font-weight:700">DID 政策效应评估</div>
     </div>
-    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：31省面板数据(2018-2024) | 方法：双重差分法+平行趋势检验 | <a href="/v3/thesis#ch7" style="color:#2563eb">查看论文第7章 →</a></div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:16px">数据来源：31省面板数据(2018-2024) | 方法：双重差分法+平行趋势检验 | <a href="/thesis#ch7" style="color:#2563eb">查看论文第7章 →</a></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
       <div class="chart-container">
         <div class="chart-title">政策处理效应（ATT）</div>
@@ -244,7 +244,7 @@
     </div>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>核心发现：</strong>"数据二十条"政策对数据开放平台绩效有显著正向效应（ATT=+0.187，p<0.01）。平行趋势检验和四项稳健性检验均通过，结果可信。这是首次将DID方法应用于数据开放平台政策评估。
-      <div class="quick-links" style="margin-top:8px"><a href="/v3/thesis#ch7" class="quick-link">查看论文第7章DID详细分析 →</a><a href="/v3/reproduce" class="quick-link">复现此分析 →</a></div>
+      <div class="quick-links" style="margin-top:8px"><a href="/thesis#ch7" class="quick-link">查看论文第7章DID详细分析 →</a><a href="/reproduce" class="quick-link">复现此分析 →</a></div>
     </div>
   </div>
 </div>
@@ -254,11 +254,11 @@
     <div class="card-header"><div class="card-title"><span class="icon"></span>数据来源与可复现性</div></div>
     <table class="data-table">
       <tr><th>分析方法</th><th>数据来源</th><th>样本量</th><th>时间范围</th><th>工具</th><th>复现</th></tr>
-      <tr><td>TOPSIS</td><td>88平台4E指标评分</td><td>88个平台</td><td>2024年截面数据</td><td>Python scipy</td><td><a href="/v3/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
-      <tr><td>DEA</td><td>23平台投入产出数据</td><td>23个DMU</td><td>2024年截面数据</td><td>Python deapy</td><td><a href="/v3/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
-      <tr><td>DEMATEL</td><td>专家问卷+客观指标</td><td>16项指标</td><td>2024年</td><td>Python numpy</td><td><a href="/v3/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
-      <tr><td>fsQCA</td><td>TOPSIS得分校准</td><td>31个案例</td><td>2024年</td><td>fsQCA 3.0</td><td><a href="/v3/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
-      <tr><td>DID</td><td>31省面板数据</td><td>217个观测</td><td>2018-2024</td><td>Python linearmodels</td><td><a href="/v3/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
+      <tr><td>TOPSIS</td><td>88平台4E指标评分</td><td>88个平台</td><td>2024年截面数据</td><td>Python scipy</td><td><a href="/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
+      <tr><td>DEA</td><td>23平台投入产出数据</td><td>23个DMU</td><td>2024年截面数据</td><td>Python deapy</td><td><a href="/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
+      <tr><td>DEMATEL</td><td>文献综合矩阵+客观指标</td><td>12项指标</td><td>2024年</td><td>Python numpy</td><td><a href="/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
+      <tr><td>fsQCA</td><td>TOPSIS得分校准</td><td>31个案例</td><td>2024年</td><td>fsQCA 3.0</td><td><a href="/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
+      <tr><td>DID</td><td>31省面板数据</td><td>217个观测</td><td>2018-2024</td><td>Python linearmodels</td><td><a href="/reproduce" style="color:#2563eb">去复现 →</a></td></tr>
     </table>
     <div style="margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.8">
       <strong>可复现性承诺：</strong>所有原始数据、处理代码、分析脚本均已开源至 <a href="https://github.com/disijingjie/ogd-collector-pro" target="_blank" style="color:#2563eb">GitHub 仓库</a>。
@@ -267,7 +267,9 @@
 </div>
 
 <div class="page-nav">
-  <a href="/v3/collection"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>数据来源</strong></div></a>
-  <a href="/v3/thesis" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>论文成果 →</strong></div></a>
+  <a href="/collection"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>数据来源</strong></div></a>
+  <a href="/thesis" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>论文成果 →</strong></div></a>
 </div>
 {% endblock %}
+
+

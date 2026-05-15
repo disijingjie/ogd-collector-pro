@@ -1,5 +1,5 @@
 {% extends "base_v6.html" %}{% set active = "dashboard" %}{% block title %}系统概览 - OGD-Collector Pro{% endblock %}{% block page_title %}系统概览{% endblock %}{% block breadcrumb %}系统概览{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#roadmap">技术路线</a><a href="#thesis-preview">核心发现</a><a href="#analysis-nav">交互分析</a><a href="#architecture">系统架构</a><a href="#highlights">创新亮点</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#methodology">研究方法论</a><a href="#roadmap">技术路线</a><a href="#products">学术成果</a><a href="#advisors">导师思想</a><a href="#findings">核心发现</a><a href="#tools">数据与工具</a></div>{% endblock %}
 {% block content %}
 
 <div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
@@ -63,6 +63,85 @@
     <strong style="color:var(--primary)">快速跳转：</strong>点击上方任意卡片开始旅程，或使用顶部步骤导航条随时切换。如需复现论文数据或重新采集，请访问 <a href="/reproduce" style="color:var(--primary);font-weight:600">数据复现实验室</a>。
   </div>
 </div>
+
+<div id="methodology" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>研究方法论</div><div style="font-size:12px;color:#64748b">OGD-Collector Pro / 研究拓展 / 熵权TOPSIS→DEA→DEMATEL→fsQCA→多期DID</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:20px">
+      本研究采用<strong style="color:var(--primary)">混合方法设计</strong>，以熵权TOPSIS→DEA→DEMATEL→fsQCA→多期DID为主干方法链，构建"描述-诊断-归因-组态-验证"五位一体评估闭环。以下九个维度展示本研究完整的方法论体系，点击任意卡片进入专题页查看详情。
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <!-- 1. 现实触发 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#2563eb';this.style.boxShadow='0 4px 12px rgba(37,99,235,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">1</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">现实触发</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">从政府数据开放实践中的真实问题出发，锚定研究起点</div>
+        </div></a>
+      <!-- 2. 研究范式 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#059669';this.style.boxShadow='0 4px 12px rgba(5,150,105,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">2</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">研究范式</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">混合方法设计：定量主导+定性辅助，多方法交叉验证</div>
+        </div></a>
+      <!-- 3. 八步方法论 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#7c3aed';this.style.boxShadow='0 4px 12px rgba(124,58,237,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">3</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">八步方法论</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">从问题界定到结论验证的完整八步研究流程</div>
+        </div></a>
+      <!-- 4. 文献深潜 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#d97706';this.style.boxShadow='0 4px 12px rgba(217,119,6,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">4</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">文献深潜</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">PRISMA 2020系统文献检索，WOS 2,847+CNKI 3,156篇</div>
+        </div></a>
+      <!-- 5. 为什么这样做 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#dc2626';this.style.boxShadow='0 4px 12px rgba(220,38,38,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">5</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">为什么这样做</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">解释每个方法选择背后的方法论逻辑与合理性论证</div>
+        </div></a>
+      <!-- 6. 传统vs新范式 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#0891b2';this.style.boxShadow='0 4px 12px rgba(8,145,178,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">6</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">传统vs新范式</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">对比传统评估范式与本研究的方法论创新突破</div>
+        </div></a>
+      <!-- 7. 外部评估对话 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#db2777';this.style.boxShadow='0 4px 12px rgba(219,39,119,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#db2777,#ec4899);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">7</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">外部评估对话</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">与同行专家、盲审意见的外部评估对话与回应记录</div>
+        </div></a>
+      <!-- 8. 衍生小论文 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#4f46e5';this.style.boxShadow='0 4px 12px rgba(79,70,229,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">8</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">衍生小论文</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">从方法论体系中衍生的9篇独立小论文选题框架</div>
+        </div></a>
+      <!-- 9. AI时代方法论创新 -->
+      <a href="/methodology" style="padding:16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;text-decoration:none;color:inherit;transition:all .2s;display:flex;align-items:flex-start;gap:12px" onmouseover="this.style.borderColor='#9333ea';this.style.boxShadow='0 4px 12px rgba(147,51,234,.1)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#9333ea,#c084fc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">9</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px">AI时代方法论创新</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.5">探索AI辅助研究的方法论边界、伦理规范与创新空间</div>
+        </div></a>
+    </div>
+    <div style="margin-top:16px;text-align:right">
+      <a href="/methodology" style="font-size:12px;color:#2563eb;text-decoration:none;font-weight:600">查看完整方法论体系 →</a>
+      &nbsp;|&nbsp;
+      <a href="/lit-extract" style="font-size:12px;color:#7c3aed;text-decoration:none;font-weight:600">📝 文献摘录与笔记（462篇） →</a>
+    </div>
+  </div>
+</div>
+
 
 <div id="roadmap" class="scroll-section">
   <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>博士论文研究技术路线图（全文）</div><div style="font-size:12px;color:#64748b">点击各模块可跳转到论文成果对应章节</div></div>
@@ -173,45 +252,38 @@
   </div>
 </div>
 
-<div id="analysis-nav" class="scroll-section">
-  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>交互式分析工具</div><div style="font-size:12px;color:#64748b">四大分析模块的交互式图表，支持缩放、悬停、下钻</div></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
-      <a href="/charts/topsis" style="padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-        <div style="font-size:2em;margin-bottom:8px">📊</div>
-        <div style="font-weight:700;font-size:14px">TOPSIS绩效评估</div>
-        <div style="font-size:12px;opacity:.9;margin-top:4px">4E框架五维度综合评价</div>
-      </a>
-      <a href="/charts/dematel" style="padding:20px;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-        <div style="font-size:2em;margin-bottom:8px">🕸️</div>
-        <div style="font-weight:700;font-size:14px">DEMATEL影响因素</div>
-        <div style="font-size:12px;opacity:.9;margin-top:4px">因果网络与四象限分析</div>
-      </a>
-      <a href="/charts/fsqa" style="padding:20px;background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-        <div style="font-size:2em;margin-bottom:8px">🔀</div>
-        <div style="font-weight:700;font-size:14px">fsQCA组态路径</div>
-        <div style="font-size:12px;opacity:.9;margin-top:4px">多重并发因果路径识别</div>
-      </a>
-      <a href="/provenance" style="padding:20px;background:linear-gradient(135deg,#43e97b 0%,#38f9d7 100%);border-radius:12px;color:#fff;text-align:center;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-        <div style="font-size:2em;margin-bottom:8px">🔍</div>
-        <div style="font-weight:700;font-size:14px">数据溯源中心</div>
-        <div style="font-size:12px;opacity:.9;margin-top:4px">研究数据与代码开放验证</div>
-      </a>
-    </div>
-  </div>
-</div>
+<div id="products" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>学术成果</div><div style="font-size:12px;color:#64748b">博士论文 + 小论文集</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+      <a href="/thesis" style="padding:20px;background:linear-gradient(135deg,#1e293b,#334155);border-radius:12px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">📄</div><div style="font-weight:700;font-size:15px">博士论文</div>
+        <div style="font-size:12px;opacity:.8;margin-top:4px;line-height:1.6">8章 · 22万字 · 36张图<br>TOPSIS→DEA→DEMATEL<br>→fsQCA→DID方法链</div></a>
+      <a href="/paper-collection" style="padding:20px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:12px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">📚</div><div style="font-weight:700;font-size:15px">小论文集</div>
+        <div style="font-size:12px;opacity:.8;margin-top:4px;line-height:1.6">9篇导师思想论文<br>陈传夫老师6篇 + 冉从敬老师3篇<br>可直接投稿CSSCI期刊</div></a>
+      <a href="/paper-collection" style="padding:20px;background:linear-gradient(135deg,#059669,#10b981);border-radius:12px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">🏫</div><div style="font-weight:700;font-size:15px">陈传夫老师专题</div>
+        <div style="font-size:12px;opacity:.8;margin-top:4px;line-height:1.6">学术思想·课题导航<br>6篇衍生论文</div></a>
+      <a href="/ran-congjing" style="padding:20px;background:linear-gradient(135deg,#2563eb,#3b82f6);border-radius:12px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:2em;margin-bottom:8px">🎓</div><div style="font-weight:700;font-size:15px">冉从敬老师专题</div>
+        <div style="font-size:12px;opacity:.8;margin-top:4px;line-height:1.6">知识产权·数据治理<br>3篇衍生论文</div></a>
+    </div></div></div>
 
-<div id="architecture" class="scroll-section">
-  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>系统技术架构</div></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#2563eb">采集引擎</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 动态请求：Selenium + ChromeDriver<br>• 静态解析：Requests + BeautifulSoup4<br>• 反爬策略：随机UA + 代理池 + 频率控制<br>• 容错机制：自动重试 + 异常捕获 + 断点续采</div></div>
-      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#059669">数据治理</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 存储层：SQLite + JSON + CSV<br>• 清洗流程：去重 → 标准化 → 校验 → 关联<br>• 版本管理：Git + 数据库快照<br>• 增量更新：哈希比对 + 时间戳追踪</div></div>
-      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#d97706">分析引擎</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 排名分析：TOPSIS（逼近理想解）<br>• 效率评估：DEA（数据包络分析）<br>• 因果挖掘：DEMATEL（决策试验法）<br>• 路径分析：fsQCA（模糊集定性比较）<br>• 政策评估：DID（双重差分法）</div></div>
-      <div style="padding:16px;background:#f8fafc;border-radius:8px"><div style="font-weight:700;margin-bottom:8px;color:#db2777">展示层</div><div style="font-size:13px;color:#64748b;line-height:1.8">• 后端框架：Flask + Jinja2 模板<br>• 前端图表：ECharts 5.x + D3.js 7.x<br>• 响应式布局：CSS Grid + Flexbox<br>• 部署环境：腾讯云 + Nginx + Gunicorn</div></div>
-    </div>
-  </div>
-</div>
 
-<div id="thesis-preview" class="scroll-section">
+<div id="advisors" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>导师学术思想</div><div style="font-size:12px;color:#64748b">两位导师的学术思想与研究方向提炼</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <a href="/chen-chuanfu" style="padding:20px;background:linear-gradient(135deg,#faf5ff,#fdf4ff);border-radius:12px;border:1px solid #e9d5ff;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.transform='translateY(-2px);border-color:#7c3aed'" onmouseout="this.style.transform=''">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">陈</span><div><div style="font-weight:700;font-size:14px;color:#7c3aed">陈传夫老师</div><div style="font-size:11px;color:#64748b">学科评议组召集人 · 武大资深教授</div></div></div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">"学科发展为了谁" · "守正创新" · "中国标识" → 6篇小论文从学术思想中衍生</div>
+        <div style="margin-top:8px;font-size:11px;color:#7c3aed;font-weight:600">进入专题 →</div></a>
+      <a href="/ran-congjing" style="padding:20px;background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:12px;border:1px solid #bfdbfe;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.transform='translateY(-2px);border-color:#2563eb'" onmouseout="this.style.transform=''">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">冉</span><div><div style="font-weight:700;font-size:14px;color:#2563eb">冉从敬老师</div><div style="font-size:11px;color:#64748b">国家社科重大项目首席专家</div></div></div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">数据产权结构性分置 · 数据主权安全 · 匿名化标准 → 3篇小论文从研究方向中衍生</div>
+        <div style="margin-top:8px;font-size:11px;color:#2563eb;font-weight:600">进入专题 →</div></a>
+    </div></div></div>
+
+<div id="findings" class="scroll-section">
   <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>核心研究发现</div><div style="font-size:12px;color:#64748b">博士论文四大核心发现，点击卡片进入论文成果页查看完整分析</div></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
       <a href="/thesis#ch5" style="padding:16px;background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:10px;border:1px solid #bfdbfe;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
@@ -227,31 +299,37 @@
         <div style="margin-top:8px;font-size:11px;color:#10b981">点击查看效率分析 →</div>
       </a>
       <a href="/thesis#ch6" style="padding:16px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:10px;border:1px solid #fcd34d;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-        <div style="font-weight:700;margin-bottom:8px;color:#92400e">两条高绩效路径</div>
-        <div style="font-size:28px;font-weight:800;color:#d97706;margin-bottom:4px">覆盖80%</div>
-        <div style="font-size:12px;color:#64748b">制度驱动型 + 质量引领型 | fsQCA识别</div>
+        <div style="font-weight:700;margin-bottom:8px;color:#92400e">三条高绩效路径</div>
+        <div style="font-size:28px;font-weight:800;color:#d97706;margin-bottom:4px">覆盖89%</div>
+        <div style="font-size:12px;color:#64748b">技术驱动型 + 效率-区域型 + 生态协同型 | fsQCA识别</div>
         <div style="margin-top:8px;font-size:11px;color:#f59e0b">点击查看路径详情 →</div>
       </a>
       <a href="/thesis#ch7" style="padding:16px;background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-radius:10px;border:1px solid #d8b4fe;text-decoration:none;color:inherit;display:block;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-        <div style="font-weight:700;margin-bottom:8px;color:#6b21a8">DID政策效应</div>
-        <div style="font-size:28px;font-weight:800;color:#7c3aed;margin-bottom:4px">ATT +0.187</div>
-        <div style="font-size:12px;color:#64748b">"数据二十条"显著正向效应 p&lt;0.01</div>
+        <div style="font-weight:700;margin-bottom:8px;color:#6b21a8">多期DID政策效应</div>
+        <div style="font-size:28px;font-weight:800;color:#7c3aed;margin-bottom:4px">ATT +0.043</div>
+        <div style="font-size:12px;color:#64748b">"数据二十条"显著正向效应 p&lt;0.01 | 存在维度异质性</div>
         <div style="margin-top:8px;font-size:11px;color:#a855f7">点击查看政策评估 →</div>
       </a>
     </div>
   </div>
 </div>
 
-<div id="highlights" class="scroll-section">
-  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>核心亮点与创新</div></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
-      <div class="card" style="margin:0;border-left:4px solid #2563eb"><div style="font-weight:700;margin-bottom:8px">多层级全覆盖</div><div style="font-size:13px;color:#64748b">全国31个省级行政区、88个政府数据开放平台全覆盖采集。<div class="quick-links"><a href="/collection#coverage" class="quick-link">查看覆盖详情 →</a></div></div></div>
-      <div class="card" style="margin:0;border-left:4px solid #059669"><div style="font-weight:700;margin-bottom:8px">方法链创新</div><div style="font-size:13px;color:#64748b">首创"TOPSIS→DEA→DEMATEL→fsQCA→DID"五方法递进分析链。<div class="quick-links"><a href="/analysis" class="quick-link">查看分析结果 →</a></div></div></div>
-      <div class="card" style="margin:0;border-left:4px solid #d97706"><div style="font-weight:700;margin-bottom:8px">自适应采集</div><div style="font-size:13px;color:#64748b">针对不同平台技术架构差异，实现自适应采集策略。<div class="quick-links"><a href="/collection#strategy" class="quick-link">查看采集策略 →</a></div></div></div>
-      <div class="card" style="margin:0;border-left:4px solid #db2777"><div style="font-weight:700;margin-bottom:8px">政策因果推断</div><div style="font-size:13px;color:#64748b">首次将DID方法应用于数据开放平台政策效应评估。<div class="quick-links"><a href="/analysis#did" class="quick-link">查看DID结果 →</a></div></div></div>
-    </div>
-  </div>
-</div>
+
+<div id="tools" class="scroll-section">
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>数据与工具</div><div style="font-size:12px;color:#64748b">一站式访问分析工具、数据可信度中心和文献资源</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <a href="/analysis" style="padding:18px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.8em;margin-bottom:6px">📊</div><div style="font-weight:700;font-size:14px">分析看板</div><div style="font-size:11px;opacity:.9;margin-top:4px">TOPSIS·DEA·DEMATEL·fsQCA·DID</div></a>
+      <a href="/reproduce" style="padding:18px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:10px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.8em;margin-bottom:6px">🛡</div><div style="font-weight:700;font-size:14px">数据复现（可信度中心）</div><div style="font-size:11px;opacity:.9;margin-top:4px">数据溯源·规则映射·可信度评估</div></a>
+      <a href="/literature" style="padding:18px;background:linear-gradient(135deg,#059669,#10b981);border-radius:10px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.8em;margin-bottom:6px">📖</div><div style="font-weight:700;font-size:14px">文献数据库</div><div style="font-size:11px;opacity:.9;margin-top:4px">200篇·PRISMA·WOS+CNKI</div></a>
+      <a href="/bibliography" style="padding:18px;background:linear-gradient(135deg,#4338ca,#6366f1);border-radius:10px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.8em;margin-bottom:6px">📚</div><div style="font-weight:700;font-size:14px">参考文献库</div><div style="font-size:11px;opacity:.9;margin-top:4px">462篇·62篇全文PDF·可搜索</div></a>
+      <a href="/research" style="padding:18px;background:linear-gradient(135deg,#4338ca,#6366f1);border-radius:10px;color:#fff;text-decoration:none;display:block;transition:all .3s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+        <div style="font-size:1.8em;margin-bottom:6px">🔬</div><div style="font-weight:700;font-size:14px">研究拓展</div><div style="font-size:11px;opacity:.9;margin-top:4px">小论文集·导师专题·拓展计划</div></a>
+    </div></div></div>
+
 
 <div class="page-nav"><div></div><a href="/collection" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>数据来源 →</strong></div></a></div>
 {% endblock %}

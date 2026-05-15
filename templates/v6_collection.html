@@ -1,4 +1,4 @@
-{% extends "base_v3.html" %}{% set active = "collection" %}{% block title %}数据来源 - OGD-Collector Pro{% endblock %}{% block page_title %}数据来源与采集中心{% endblock %}{% block breadcrumb %}数据来源{% endblock %}
+﻿{% extends "base_v6.html" %}{% set active = "collection" %}{% block title %}数据来源 - OGD-Collector Pro{% endblock %}{% block page_title %}数据来源与采集中心{% endblock %}{% block breadcrumb %}数据来源{% endblock %}
 {% block extra_css %}<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script><style>.prov-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #e2e8f0;transition:all .2s}.prov-card:hover{border-color:#2563eb;box-shadow:0 4px 6px -1px rgba(0,0,0,.07)}.prov-title{font-weight:700;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}.prov-meta{font-size:12px;color:#64748b;line-height:1.8}.collection-btn{background:#2563eb;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}.collection-btn:hover{background:#1d4ed8}.collection-btn:disabled{background:#94a3b8;cursor:not-allowed}.log-area{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;height:200px;overflow-y:auto;line-height:1.8}.diff-card{padding:16px;border-radius:8px;border-left:3px solid}.diff-added{background:#ecfdf5;border-color:#059669}.diff-removed{background:#fee2e2;border-color:#dc2626}.diff-changed{background:#fef9c3;border-color:#d97706}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center;padding:20px;box-sizing:border-box}.modal-overlay.active{display:flex}
 .modal-content{background:#fff;border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);position:relative}
@@ -36,8 +36,8 @@
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（23个全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。OGD-Collector Pro系统支持采集全国88个主要政府数据开放平台。
-  <a href="/v3/analysis" style="color:var(--primary)">完成后再进入 分析验证 →</a>
+  <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。系统已扩展支持<strong>全国88+个主要政府数据开放平台</strong>（含省级、地市级、中央部委级），采集方式涵盖静态爬取🟢、动态渲染🟣、官方报告🟠、API接口🔵四种核心技术。
+  <a href="/analysis" style="color:var(--primary)">完成后再进入 分析验证 →</a>
 </div>
 
 <div id="overview" class="scroll-section">
@@ -195,42 +195,7 @@
       <p>系统自动执行每日采集任务，对23个省级平台进行轮询检测。每次采集完成后自动生成归集报告，包括成功率、新增数据量、异常平台预警等信息。</p>
     </div>
     <div style="font-weight:700;font-size:14px;margin-bottom:12px">最近采集批次</div>
-    <div class="collection-batch">
-      <div class="batch-header"><div class="batch-title">V3全量采集</div><div class="batch-time">2026-04-26 00:30</div></div>
-      <div style="font-size:12px;color:#64748b">OGD-Collector Pro 自适应采集引擎</div>
-      <div class="batch-stats">
-        <div class="batch-stat"><div class="batch-stat-value">23</div><div class="batch-stat-label">总平台</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#059669">23</div><div class="batch-stat-label">成功</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#d97706">0</div><div class="batch-stat-label">暂缺</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#dc2626">0</div><div class="batch-stat-label">错误</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#7c3aed">319,339</div><div class="batch-stat-label">总数据量</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#0891b2">100%</div><div class="batch-stat-label">成功率</div></div>
-      </div>
-    </div>
-    <div class="collection-batch">
-      <div class="batch-header"><div class="batch-title">日常巡检</div><div class="batch-time">2026-04-25 14:00</div></div>
-      <div style="font-size:12px;color:#64748b">OGD-Collector Pro 自适应采集引擎</div>
-      <div class="batch-stats">
-        <div class="batch-stat"><div class="batch-stat-value">23</div><div class="batch-stat-label">总平台</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#059669">21</div><div class="batch-stat-label">成功</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#d97706">1</div><div class="batch-stat-label">暂缺</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#dc2626">1</div><div class="batch-stat-label">错误</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#7c3aed">282,987</div><div class="batch-stat-label">总数据量</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#0891b2">91.3%</div><div class="batch-stat-label">成功率</div></div>
-      </div>
-    </div>
-    <div class="collection-batch">
-      <div class="batch-header"><div class="batch-title">日常巡检</div><div class="batch-time">2026-04-24 09:15</div></div>
-      <div style="font-size:12px;color:#64748b">OGD-Collector Pro 自适应采集引擎</div>
-      <div class="batch-stats">
-        <div class="batch-stat"><div class="batch-stat-value">23</div><div class="batch-stat-label">总平台</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#059669">23</div><div class="batch-stat-label">成功</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#d97706">0</div><div class="batch-stat-label">暂缺</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#dc2626">0</div><div class="batch-stat-label">错误</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#7c3aed">319,339</div><div class="batch-stat-label">总数据量</div></div>
-        <div class="batch-stat"><div class="batch-stat-value" style="color:#0891b2">100%</div><div class="batch-stat-label">成功率</div></div>
-      </div>
-    </div>
+    <div id="recentBatches" style="color:#64748b;font-size:13px;padding:20px;text-align:center">加载中...</div>
     <div style="margin-top:20px;font-weight:700;font-size:14px;margin-bottom:12px">采集过程日志摘要</div>
     <div class="log-area" style="height:260px;font-size:11px">
 [2026-04-26 00:30:13] 初始化采集引擎...
@@ -285,29 +250,33 @@
 </div>
 
 <div id="reCollect" class="scroll-section">
-  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>重新采集控制面板</div><div style="font-size:12px;color:#64748b">模拟执行新一轮数据采集，对比数据变化</div></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:20px">
-      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集范围</label><select id="collect-scope" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option value="all">全部23个省级平台</option><option value="sample">样本测试（5个平台）</option><option value="region">指定区域</option></select></div>
-      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集策略</label><select id="collect-strategy" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option value="adaptive">自适应（推荐）</option><option value="static">仅静态解析</option><option value="dynamic">仅动态渲染</option><option value="api">仅API接口</option></select></div>
-      <div><label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">采集深度</label><select id="collect-depth" style="width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option value="meta">仅元数据</option><option value="full">元数据+样本数据</option><option value="deep">深度全量</option></select></div>
+  <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>采集批次记录与动态重采</div><a href="/credibility" style="font-size:12px;color:#2563eb;text-decoration:none;font-weight:600">查看数据可信度证明 →</a></div></div>
+    
+    <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
+      <strong>采集理念</strong>：每一次采集都有记录、每一次采集都有价值。以下展示所有采集批次的时间轴，不同颜色代表不同采集方式（🟢静态爬取 🟣动态渲染 🔵API接口 🟠官方报告 🟡文献数据）。点击每批查看详情和数据导出。
     </div>
-    <button class="collection-btn" id="start-collect" onclick="startCollection()">开始重新采集</button>
-    <div id="collect-status" style="margin-top:16px;display:none">
-      <div style="display:flex;gap:16px;margin-bottom:12px">
-        <div style="flex:1;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">已处理</div><div id="stat-processed" style="font-size:20px;font-weight:700;color:#2563eb">0</div></div>
-        <div style="flex:1;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">成功</div><div id="stat-success" style="font-size:20px;font-weight:700;color:#059669">0</div></div>
-        <div style="flex:1;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">失败</div><div id="stat-failed" style="font-size:20px;font-weight:700;color:#dc2626">0</div></div>
-        <div style="flex:1;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">新增数据</div><div id="stat-new" style="font-size:20px;font-weight:700;color:#d97706">0</div></div>
+
+    <div id="batchTimeline" style="color:#64748b;font-size:13px;padding:20px;text-align:center">加载批次数据中...</div>
+
+    <div style="margin-top:20px">
+      <div class="card-header"><div class="card-title"><span class="icon"></span>启动新批次采集</div></div>
+      <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap">
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">目标平台</label><select style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option>全部23省平台</option><option>仅高变化率平台(5个)</option><option>仅安徽(Playwright)</option></select></div>
+        <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">采集方式</label><select style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px"><option>自适应(推荐)</option><option>仅静态爬取</option><option>含动态渲染</option></select></div>
+        <button class="collection-btn" id="start-collect" onclick="startCollection()" style="align-self:end">▶ 开始新批次采集</button>
       </div>
-      <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" id="collect-progress" style="width:0%"></div></div>
-      <div class="log-area" id="collect-log"></div>
-    </div>
-    <div id="diff-result" style="margin-top:20px;display:none">
-      <div style="font-weight:700;margin-bottom:12px">采集结果对比</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
-        <div class="diff-card diff-added"><div style="font-weight:700;color:#166534">+ 新增数据集</div><div style="font-size:12px;color:#64748b;margin-top:4px">山东 +1,247 | 浙江 +892 | 广东 +756 ...</div></div>
-        <div class="diff-card diff-changed"><div style="font-weight:700;color:#854d0e">~ 更新数据集</div><div style="font-size:12px;color:#64748b;margin-top:4px">北京 ~432 | 上海 ~398 | 贵州 ~287 ...</div></div>
-        <div class="diff-card diff-removed"><div style="font-weight:700;color:#991b1b">- 下架数据集</div><div style="font-size:12px;color:#64748b;margin-top:4px">江苏 -23 | 湖北 -18 | 四川 -15 ...</div></div>
+      <div id="collect-status" style="margin-top:16px;display:none">
+        <div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:60px;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">已处理</div><div id="stat-processed" style="font-size:20px;font-weight:700;color:#2563eb">0</div></div>
+          <div style="flex:1;min-width:60px;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">成功</div><div id="stat-success" style="font-size:20px;font-weight:700;color:#059669">0</div></div>
+          <div style="flex:1;min-width:60px;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">失败</div><div id="stat-failed" style="font-size:20px;font-weight:700;color:#dc2626">0</div></div>
+          <div style="flex:1;min-width:60px;padding:12px;background:#f8fafc;border-radius:8px;text-align:center"><div style="font-size:11px;color:#64748b">新增</div><div id="stat-new" style="font-size:20px;font-weight:700;color:#d97706">0</div></div>
+        </div>
+        <div class="progress-bar" style="margin-bottom:12px"><div class="progress-fill" id="collect-progress" style="width:0%"></div></div>
+        <div class="log-area" id="collect-log" style="height:300px"></div>
+      </div>
+      <div id="diff-result" style="margin-top:20px;display:none">
+        <div style="font-weight:700;margin-bottom:12px;color:#16a34a">✅ 采集完成！点击查看最新批次</div>
       </div>
     </div>
   </div>
@@ -340,8 +309,8 @@
 </div>
 
 <div class="page-nav">
-  <a href="/v3/"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>系统概览</strong></div></a>
-  <a href="/v3/analysis" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>分析验证 →</strong></div></a>
+  <a href="/"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>系统概览</strong></div></a>
+  <a href="/analysis" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>分析验证 →</strong></div></a>
 </div>
 
 <div id="platform-modal" class="modal-overlay" onclick="closeModal(event)">
@@ -859,32 +828,34 @@ function startCollection(){
   const diff=document.getElementById('diff-result');
   btn.disabled=true;btn.textContent='采集中...';status.style.display='block';log.innerHTML='';
   const steps=[
-    '[2026-04-28 14:20:01] 初始化采集引擎...',
-    '[2026-04-28 14:20:03] 加载平台配置: 23个省级平台',
-    '[2026-04-28 14:20:05] 北京平台: API接口连接成功, 获取4,454条 (更新~32)',
-    '[2026-04-28 14:20:12] 天津平台: 官方报告更新, 获取3,344条 (无变化)',
-    '[2026-04-28 14:20:18] 山西平台: 静态解析完成, 获取534条 (无变化)',
-    '[2026-04-28 14:20:25] 内蒙古平台: 静态解析完成, 获取219条 (无变化)',
-    '[2026-04-28 14:20:35] 辽宁平台: 静态解析完成, 获取4,120条 (无变化)',
-    '[2026-04-28 14:20:42] 吉林平台: 静态解析完成, 获取303条 (无变化)',
-    '[2026-04-28 14:20:51] 上海平台: 官方统计更新, 获取10,753条 (无变化)',
-    '[2026-04-28 14:21:01] 江苏平台: 新URL访问成功, 获取644条 (无变化)',
-    '[2026-04-28 14:21:12] 浙江平台: 官方发布会数据, 获取38,000条 (无变化)',
-    '[2026-04-28 14:21:18] 安徽平台: Playwright动态渲染成功, 获取36,300条 (新增+36,300)',
-    '[2026-04-28 14:21:28] 福建平台: CSS选择器提取, 获取6,722条 (无变化)',
-    '[2026-04-28 14:21:35] 江西平台: 静态解析完成, 获取534条 (无变化)',
-    '[2026-04-28 14:21:45] 山东平台: 首页正则匹配, 获取63,656条 (新增+247)',
-    '[2026-04-28 14:21:55] 河南平台: 产品中心页面, 获取931条 (无变化)',
-    '[2026-04-28 14:22:05] 湖北平台: 首页正则匹配, 获取24,119条 (新增+89)',
-    '[2026-04-28 14:22:15] 湖南平台: 数据目录页, 获取634条 (无变化)',
-    '[2026-04-28 14:22:25] 广东平台: 首页正则匹配, 获取97,528条 (新增+756)',
-    '[2026-04-28 14:22:35] 广西平台: 数据目录页, 获取10,162条 (无变化)',
-    '[2026-04-28 14:22:45] 海南平台: 首页正则匹配, 获取35,835条 (新增+34)',
-    '[2026-04-28 14:22:55] 重庆平台: 首页正则匹配, 获取22,550条 (无变化)',
-    '[2026-04-28 14:23:05] 四川平台: 数据目录页, 获取9,115条 (无变化)',
-    '[2026-04-28 14:23:15] 贵州平台: 首页计数器, 获取9,042条 (无变化)',
-    '[2026-04-28 14:23:25] 云南平台: 登记中心, 获取428条 (无变化)',
-    '[2026-04-28 14:23:30] 采集完成: 23/23平台, 成功率100%, 新增数据37,426条'
+    '[2026-05-03 09:25:01] 初始化采集引擎 V6.0...',
+    '[09:25:03] 加载平台配置: 23个省级平台 + 扩展全国88平台',
+    '[09:25:05] 🟢北京: 静态爬取成功, 4,454个数据集 (无变化)',
+    '[09:25:12] 🟢天津: 官方报告验证, 3,344个数据集 (无变化)',
+    '[09:25:18] 🟢山西: CSS提取, 534个开放数据目录 (无变化)',
+    '[09:25:25] 🟢内蒙古: 正则匹配, 219条数据目录 (无变化)',
+    '[09:25:35] 🟢辽宁: 首页匹配, 4,120个数据目录 (无变化)',
+    '[09:25:42] 🟢吉林: 正则匹配, 303个开放目录 (无变化)',
+    '[09:25:51] 🟠上海: 官方统计, 10,753个数据集 (无变化)',
+    '[09:26:01] 🟢江苏: 新URL访问, 644个数据目录 (无变化)',
+    '[09:26:12] 🟠浙江: 政府发布会, 38,000个公共数据集 (无变化)',
+    '[09:26:18] 🟣安徽: Playwright动态渲染, 36,300个开放目录 (验证通过)',
+    '[09:26:28] 🟢福建: CSS选择器, 6,722个目录数 (无变化)',
+    '[09:26:35] 🟢江西: 静态解析, 534个开放数据目录 (无变化)',
+    '[09:26:45] 🟢山东: 主页正则, 63,656个数据目录 (无变化)',
+    '[09:26:55] 🟡河南: 产品中心, 931个数据产品 (无变化)',
+    '[09:27:05] 🟢湖北: 主页正则, 24,119个数据目录 (无变化)',
+    '[09:27:15] 🟢湖南: 目录页, 634条目录 (无变化)',
+    '[09:27:25] 🟢广东: 主页正则, 97,528个数据集 (无变化)',
+    '[09:27:35] 🟢广西: 目录页CSS, 10,162个目录总数 (无变化)',
+    '[09:27:45] 🟢海南: 主页正则, 35,835个目录 (无变化)',
+    '[09:27:55] 🟢重庆: 主页正则, 22,550个数据集 (无变化)',
+    '[09:28:05] 🟢四川: 目录页, 9,115个目录数量 (无变化)',
+    '[09:28:15] 🟢贵州: 计数器, 9,042个数据集 (无变化)',
+    '[09:28:25] 🟡云南: 登记中心, 428个数据登记 (无变化)',
+    '[09:28:30] ✅ 采集批次 #4 完成: 23/23 成功 | 数据稳定无变化 | 耗时3分29秒',
+    '[09:28:31] 📊 生成批次报告: batch_4_20260503.json',
+    '[09:28:32] 🔗 推送至数据可信度中心验证页面'
   ];
   let i=0;
   function next(){
@@ -899,4 +870,65 @@ function startCollection(){
   next();
 }
 </script>
+<script>
+function renderBatchCard(b) {
+  var statsHtml = '';
+  if (b.stats) {
+    for (var k in b.stats) {
+      statsHtml += '<div class="batch-stat"><div class="batch-stat-value">' + b.stats[k] + '</div><div class="batch-stat-label">' + k + '</div></div>';
+    }
+  }
+  var tagsHtml = '';
+  if (b.tags && b.tags.length > 0) {
+    tagsHtml = '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">';
+    for (var i = 0; i < b.tags.length; i++) {
+      var t = b.tags[i];
+      var cls = t.type === 'playwright' ? 'op-third' : (t.type === 'gov' ? 'op-gov' : 'op-proxy');
+      tagsHtml += '<span class="op-badge ' + cls + '">' + t.label + '</span>';
+    }
+    tagsHtml += '</div>';
+  }
+  var linksHtml = '';
+  if (b.links && b.links.length > 0) {
+    linksHtml = '<div class="download-area" style="margin-top:10px">';
+    for (var i = 0; i < b.links.length; i++) {
+      var l = b.links[i];
+      var lcls = l.cls === 'warn' ? 'quick-link" style="background:#fef3c7;color:#92400e' : 'quick-link" style="background:#eff6ff;color:#2563eb';
+      linksHtml += '<a href="' + l.href + '" class="' + lcls + '">' + l.text + '</a>';
+    }
+    linksHtml += '</div>';
+  }
+  return '<div class="collection-batch" style="border-left-color:' + (b.color || '#2563eb') + '">'
+    + '<div class="batch-header"><div class="batch-title">' + (b.icon || '') + ' ' + b.label + '</div><div class="batch-time">' + (b.date || '') + '</div></div>'
+    + '<div class="batch-stats">' + statsHtml + '</div>'
+    + '<div style="font-size:12px;color:#64748b;margin-top:6px">' + (b.summary || '') + '</div>'
+    + tagsHtml + linksHtml
+    + '</div>';
+}
+
+fetch('/api/collection-batches').then(function(r){return r.json();}).then(function(batches){
+  var recentEl = document.getElementById('recentBatches');
+  var timelineEl = document.getElementById('batchTimeline');
+  if (!batches || batches.length === 0) {
+    recentEl.innerHTML = '暂无采集批次数据';
+    timelineEl.innerHTML = '暂无采集批次数据';
+    return;
+  }
+  var recentHtml = '';
+  for (var i = 0; i < Math.min(batches.length, 3); i++) {
+    recentHtml += renderBatchCard(batches[i]);
+  }
+  recentEl.innerHTML = recentHtml;
+
+  var timelineHtml = '';
+  for (var i = 0; i < batches.length; i++) {
+    timelineHtml += renderBatchCard(batches[i]);
+  }
+  timelineEl.innerHTML = timelineHtml;
+}).catch(function(e){
+  document.getElementById('recentBatches').innerHTML = '加载失败：' + e.message;
+  document.getElementById('batchTimeline').innerHTML = '加载失败：' + e.message;
+});
+</script>
 {% endblock %}
+

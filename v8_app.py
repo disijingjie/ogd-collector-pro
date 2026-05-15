@@ -47,6 +47,30 @@ def research():
     """研究拓展"""
     return render_template('v3_research.html')
 
+@app.route('/literature')
+@app.route('/v3/literature')
+def literature():
+    """文献检索深度专题"""
+    return render_template('v3_literature.html')
+
+@app.route('/papers')
+@app.route('/v3/papers')
+def papers():
+    """小论文研究框架"""
+    return render_template('v3_papers.html')
+
+@app.route('/chen-chuanfu')
+@app.route('/v3/chen-chuanfu')
+def chen_chuanfu():
+    """陈传夫学术思想专题"""
+    return render_template('v3_chen_chuanfu.html')
+
+@app.route('/paper-collection')
+@app.route('/v3/paper-collection')
+def paper_collection():
+    """导师学术思想小论文集"""
+    return render_template('v3_papers_showcase.html')
+
 @app.route('/reproduce')
 def reproduce():
     """数据复现"""

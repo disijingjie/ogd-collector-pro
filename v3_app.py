@@ -270,5 +270,95 @@ def download_data_file(filename):
     """下载static/data目录下的数据文件"""
     return send_from_directory('static/data', filename, as_attachment=True)
 
+# ========== /v3/ 前缀路由（兼容 base_v3.html 链接） ==========
+
+@app.route('/v3/')
+def v3_root():
+    """V3系统概览（/v3/前缀兼容）"""
+    try:
+        with open('data/v3_collection_results.json', 'r', encoding='utf-8') as f:
+            collection_results = json.load(f)
+    except FileNotFoundError:
+        collection_results = []
+    total = len(PLATFORMS)
+    success = sum(1 for r in collection_results if r.get('status') == 'success')
+    high_conf = sum(1 for r in collection_results if r.get('confidence') == 'high')
+    medium_conf = sum(1 for r in collection_results if r.get('confidence') == 'medium')
+    not_found = total - success
+    platform_status = []
+    for code, platform in PLATFORMS.items():
+        result = next((r for r in collection_results if r['code'] == code), None)
+        platform_status.append({
+            'code': code,
+            'name': platform['name'],
+            'province': platform['province'],
+            'dataset_count': result['dataset_count'] if result else platform['dataset_count']['value'],
+            'confidence': result['confidence'] if result else platform['dataset_count']['confidence'],
+            'type': platform['dataset_count']['type'],
+            'status': result['status'] if result else 'pending',
+            'source_url': result['source_url'] if result else platform['dataset_count']['source_url'],
+            'collected_at': result.get('collected_at', '') if result else '',
+        })
+    platform_status.sort(key=lambda x: x['dataset_count'] or 0, reverse=True)
+    return render_template('v3_index.html',
+                         total=total,
+                         success=success,
+                         high_conf=high_conf,
+                         medium_conf=medium_conf,
+                         not_found=not_found,
+                         platforms=platform_status,
+                         rules_version=PLATFORM_RULES.get('version', '3.0'),
+                         last_updated=PLATFORM_RULES.get('last_updated', ''))
+
+@app.route('/v3/collection')
+def v3_collection():
+    """V3采集中心"""
+    return render_template('v3_collection.html')
+
+@app.route('/v3/analysis')
+def v3_analysis():
+    """V3分析看板"""
+    return render_template('v3_analysis.html')
+
+@app.route('/v3/thesis')
+def v3_thesis():
+    """V3论文成果"""
+    return render_template('v3_thesis.html')
+
+@app.route('/v3/research')
+def v3_research():
+    """V3研究拓展"""
+    return render_template('v3_research.html')
+
+@app.route('/v3/reproduce')
+def v3_reproduce():
+    """V3数据复现实验室"""
+    return render_template('v3_reproduce.html')
+
+@app.route('/v3/literature')
+def v3_literature():
+    """V3文献深度专题"""
+    return render_template('v3_literature.html')
+
+@app.route('/v3/papers')
+def v3_papers():
+    """V3小论文研究框架"""
+    return render_template('v3_papers.html')
+
+@app.route('/v3/chen-chuanfu')
+def v3_chen_chuanfu():
+    """V3陈传夫学术思想专题"""
+    return render_template('v3_chen_chuanfu.html')
+
+@app.route('/v3/ran-congjing')
+def v3_ran_congjing():
+    """V3冉从敬学术思想专题"""
+    return render_template('v3_ran_congjing.html')
+
+@app.route('/v3/paper-collection')
+def v3_paper_collection():
+    """V3导师学术思想小论文集"""
+    return render_template('v3_papers_showcase.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

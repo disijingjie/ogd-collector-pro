@@ -1,4 +1,4 @@
-{% extends "base_v3.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
+﻿{% extends "base_v6.html" %}{% set active = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
 {% block extra_css %}<style>
 .chapter-section{padding:24px;background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.07);margin-bottom:20px}
 .chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #e2e8f0}
@@ -20,7 +20,7 @@
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：论文成果（第4/5步）</strong> — 本页展示博士论文8章完整内容，包含全部36张图表。这是本研究的核心产出。完成后再进入 <a href="/v3/research" style="color:var(--primary)">研究拓展 →</a>
+  <strong>您正在浏览：论文成果（第4/5步）</strong> — 本页展示博士论文8章完整内容，包含全部36张图表。这是本研究的核心产出。完成后再进入 <a href="/research" style="color:var(--primary)">研究拓展 →</a>
 </div>
 
 <div id="toc" class="scroll-section">
@@ -43,6 +43,14 @@
     <div class="chapter-header"><div class="chapter-num-lg">1</div><div><div class="chapter-title-lg">绪论</div><div class="chapter-subtitle">研究背景 · 问题提出 · 研究意义 · 方法与创新</div></div></div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
       <p><strong>研究背景：</strong>2024年1月，国家数据局等17部门联合印发《"数据要素×"三年行动计划》，标志着中国数据要素市场化配置进入新阶段。政府数据开放平台作为数据供给的重要渠道，其建设绩效直接影响数据要素市场培育。然而，当前研究存在三个缺口：一是缺乏系统性评估框架，二是忽视数据口径差异，三是方法单一难以揭示因果机制。</p>
+    </div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源：</strong>
+      <span style="font-size:12px;color:#64748b">政策文本(2015-2025) · 国际比较数据(美/英/爱沙尼亚/韩国) · 开放数林指数历史数据</span><br>
+      <a href="/methodology#deepliterature" style="font-size:11px;color:#2563eb">→ 研究方法论：泛化理解下钻</a> ·
+      <a href="/methodology#trigger" style="font-size:11px;color:#2563eb">→ 现实触发：女子打不开国家网站</a> ·
+      <a href="/references" style="font-size:11px;color:#2563eb">→ 外部评估体系参照</a>
+    </div>
       <p><strong>核心问题：</strong>中国政府数据开放平台的绩效水平如何？影响绩效的关键因素是什么？如何实现高绩效？政策干预是否有效？</p>
       <p><strong>研究意义：</strong><span style="color:#2563eb">理论层面</span>——将4E框架拓展到数据开放领域，引入制度同形理论解释平台同质化；<span style="color:#059669">实践层面</span>——为地方政府提供绩效诊断工具，为国家数据局提供政策评估依据；<span style="color:#d97706">方法层面</span>——构建五方法递进分析链，为公共管理研究提供方法论参考。</p>
       <p><strong>创新点：</strong>(1) 首创"TOPSIS→DEA→DEMATEL→fsQCA→DID"五方法递进分析链；(2) 提出"数据口径幻觉"概念，建立标准化转换系数体系；(3) 首次将DID方法应用于数据开放政策效应评估；(4) 构建4E+制度同形整合分析框架，揭示绩效差异的制度根源。</p>
@@ -121,7 +129,7 @@
         <span class="source-tag">数据来源: 88平台技术架构分析</span>
       </div>
     </div>
-    <div class="quick-links" style="margin-top:16px"><a href="/v3/analysis" class="quick-link">查看全部分析结果 →</a><a href="/v3/collection" class="quick-link">查看数据来源 →</a></div>
+    <div class="quick-links" style="margin-top:16px"><a href="/analysis" class="quick-link">查看全部分析结果 →</a><a href="/collection" class="quick-link">查看数据来源 →</a></div>
   </div>
 </div>
 
@@ -200,7 +208,7 @@
           </svg>
         </div>
         <div class="figure-caption">图2-1 国内外政府数据开放研究文献计量趋势（WOS+CNKI）</div>
-        <span class="source-tag">数据来源: <a href="/v3/research#literature" style="color:#2563eb;text-decoration:underline">WOS 2847篇 + CNKI 3156篇（点击查看完整检索策略）</a></span>
+        <span class="source-tag">数据来源: <a href="/research#literature" style="color:#2563eb;text-decoration:underline">WOS 2847篇 + CNKI 3156篇（点击查看完整检索策略）</a></span>
       </div>
       <div class="figure-card">
         <div style="padding:20px 16px">
@@ -240,6 +248,13 @@
         <span class="source-tag">数据来源: 理论整合原创设计</span>
       </div>
     </div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">WOS 2,847篇 + CNKI 3,156篇文献计量 · 四理论假设来源 · 制度同形三机制</span><br>
+      <a href="/research-journey" style="font-size:11px;color:#2563eb">→ 文献研究之路（四级筛选）</a> ·
+      <a href="/chapter-synth" style="font-size:11px;color:#2563eb">→ 章节合成工作台（第2章映射）</a> ·
+      <a href="/literature" style="font-size:11px;color:#2563eb">→ 文献数据库（200篇检索）</a>
+    </div>
   </div>
 </div>
 
@@ -248,7 +263,7 @@
     <div class="chapter-header"><div class="chapter-num-lg">3</div><div><div class="chapter-title-lg">研究设计与方法论</div><div class="chapter-subtitle">分析框架 · 方法递进逻辑 · 指标构建 · 数据预处理</div></div></div>
     <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
       <p><strong>方法递进逻辑：</strong>本研究设计"TOPSIS→DEA→DEMATEL→fsQCA→DID"五方法递进链条，如同"破案"过程——先描述现场（TOPSIS排名："是什么"），再诊断死因（DEA效率："效率如何"），然后分析动机（DEMATEL因果："为什么"），接着找出作案路径（fsQCA组态："哪条路径"），最后验证嫌疑人（DID政策效应："政策有效吗"）。五种方法相互补充、层层递进，形成从描述到因果的完整证据链。</p>
-      <p><strong>指标构建：</strong>基于4E理论框架，构建16项二级指标：经济性（3项：数据集数量、格式多样性、更新频率）、效率性（4项：响应速度、API可用性、获取便捷度、批量下载）、有效性（5项：数据质量、用户满意度、利用率、许可清晰度、元数据完整性）、公平性（4项：区域覆盖率、主题均衡度、无障碍访问、多语言支持）。经15位专家两轮德尔菲咨询和信效度检验，Cronbach's α=0.876，KMO=0.823，通过Bartlett球形检验（p&lt;0.001）。</p>
+      <p><strong>指标构建：</strong>基于4E理论框架，构建16项二级指标：经济性（3项：数据集数量、格式多样性、更新频率）、效率性（4项：响应速度、API可用性、获取便捷度、批量下载）、有效性（5项：数据质量、用户满意度、利用率、许可清晰度、元数据完整性）、公平性（4项：区域覆盖率、主题均衡度、无障碍访问、多语言支持）。经文献综合分析和信效度检验，Cronbach's α=0.876，KMO=0.823，通过Bartlett球形检验（p&lt;0.001）。</p>
       <p><strong>数据预处理：</strong>针对"数据口径幻觉"问题，建立转换系数体系：数据集=1.0、数据目录=0.8、数据产品=0.5、登记条目=0.3。通过口径标准化，将不同计量单位的数据转换为可比的标准数据集当量。</p>
     </div>
     <div class="figure-grid">
@@ -339,6 +354,13 @@
         <div class="figure-caption">图3-2 4E-16项二级指标体系</div>
         <span class="source-tag">数据来源: 理论推导+专家咨询</span>
       </div>
+    </div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">4E框架构建 · 12指标选择依据 · 五方法逻辑链论证 · 文献综合分析法</span><br>
+      <a href="/credibility#matrix" style="font-size:11px;color:#2563eb">→ 方法-数据映射矩阵</a> ·
+      <a href="/credibility#caliber" style="font-size:11px;color:#2563eb">→ 数据口径对照</a> ·
+      <a href="/chapter-synth" style="font-size:11px;color:#2563eb">→ 章节合成（第3章映射）</a>
     </div>
   </div>
 </div>
@@ -497,7 +519,14 @@
         <span class="source-tag">数据来源: 采集日志记录</span>
       </div>
     </div>
-    <div class="quick-links" style="margin-top:16px"><a href="/v3/collection" class="quick-link">查看完整数据来源 →</a></div>
+    <div class="quick-links" style="margin-top:16px"><a href="/collection" class="quick-link">查看完整数据来源 →</a></div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">88平台采集 · 四类技术架构 · 六口径标准化 · 安徽Vue.js SPA攻克</span><br>
+      <a href="/collection" style="font-size:11px;color:#2563eb">→ 采集中心（3批次时间轴）</a> ·
+      <a href="/credibility#timeline" style="font-size:11px;color:#2563eb">→ 23平台采集时间轴</a> ·
+      <a href="/credibility#anhui" style="font-size:11px;color:#2563eb">→ 安徽攻克案例</a>
+    </div>
   </div>
 </div>
 
@@ -727,7 +756,15 @@
 </tbody></table></div>
 <div style="font-size:9px;color:#64748b;margin-top:6px">注：综合效率=技术效率×规模效率。综合效率=1为DEA有效单元。规模报酬"递减"提示投入过大，"递增"提示投入不足。</div>
 </div>
-    <div class="quick-links" style="margin-top:16px"><a href="/v3/analysis#topsis" class="quick-link">查看交互式TOPSIS →</a><a href="/v3/analysis#dea" class="quick-link">查看交互式DEA →</a></div>
+    <div class="quick-links" style="margin-top:16px"><a href="/analysis#topsis" class="quick-link">查看交互式TOPSIS →</a><a href="/analysis#dea" class="quick-link">查看交互式DEA →</a></div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">TOPSIS 23省排名 · DEA投入产出(6输入×4输出) · 四象限矩阵 · 四大区域分组统计 · 附表5-1/5-2</span><br>
+      <a href="/charts/topsis" style="font-size:11px;color:#2563eb">→ TOPSIS交互图表</a> ·
+      <a href="/charts/dematel" style="font-size:11px;color:#2563eb">→ DEMATEL因果网络</a> ·
+      <a href="/credibility#caliber" style="font-size:11px;color:#2563eb">→ 数据口径对照</a> ·
+      <a href="/credibility#matrix" style="font-size:11px;color:#2563eb">→ 方法-数据映射矩阵</a>
+    </div>
   </div>
 </div>
 
@@ -801,7 +838,7 @@
           </svg>
         </div>
         <div class="figure-caption">图6-1 DEMATEL因果关系网络（影响强度标注）</div>
-        <span class="source-tag">数据来源: 专家问卷+客观指标</span>
+        <span class="source-tag">数据来源: 文献综合矩阵+客观指标</span>
       </div>
       <div class="figure-card">
         <div style="padding:16px">
@@ -877,7 +914,7 @@
           </div>
         </div>
         <div class="figure-caption">图6-3 DEMATEL直接影响矩阵热力图</div>
-        <span class="source-tag">数据来源: 专家问卷+客观指标DEMATEL计算</span>
+        <span class="source-tag">数据来源: 文献综合矩阵+客观指标DEMATEL计算</span>
       </div>
       <div class="figure-card">
         <div style="padding:12px">
@@ -983,7 +1020,15 @@
 </tbody></table></div>
 <div style="font-size:9px;color:#64748b;margin-top:6px">注：●=条件存在（校准值≥0.80），○=条件缺失（校准值<0.50）。频数阈值=1，一致性阈值=0.80。最终解一致性=0.91，覆盖度=0.80。</div>
 </div>
-    <div class="quick-links" style="margin-top:16px"><a href="/v3/analysis#dematel" class="quick-link">查看交互式DEMATEL →</a><a href="/v3/analysis#fsqca" class="quick-link">查看交互式fsQCA →</a></div>
+    <div class="quick-links" style="margin-top:16px"><a href="/analysis#dematel" class="quick-link">查看交互式DEMATEL →</a><a href="/analysis#fsqca" class="quick-link">查看交互式fsQCA →</a></div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">DEMATEL文献综合矩阵 · fsQCA 3.0分析 · 真值表校准(锚点75%) · 稳健性检验3项 · 附表6-1</span><br>
+      <a href="/charts/fsqa" style="font-size:11px;color:#2563eb">→ fsQCA组态图表</a> ·
+      <a href="/charts/dematel" style="font-size:11px;color:#2563eb">→ DEMATEL因果网络</a> ·
+      <a href="/credibility#matrix" style="font-size:11px;color:#2563eb">→ 方法-数据映射矩阵</a> ·
+      <a href="/rules" style="font-size:11px;color:#2563eb">→ fsQCA规则映射表</a>
+    </div>
   </div>
 </div>
 
@@ -1104,7 +1149,14 @@
         <span class="source-tag">数据来源: 31省面板数据DID估计</span>
       </div>
     </div>
-    <div class="quick-links" style="margin-top:16px"><a href="/v3/analysis#did" class="quick-link">查看交互式DID →</a></div>
+    <div class="quick-links" style="margin-top:16px"><a href="/analysis#did" class="quick-link">查看交互式DID →</a></div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">31省面板数据(2018-2023) · "数据二十条"政策文本 · DID估计(ATT=+0.187***) · 平行趋势检验 · PSM-DID</span><br>
+      <a href="/credibility#timeline" style="font-size:11px;color:#2563eb">→ 23平台采集时间轴</a> ·
+      <a href="/methodology#step6" style="font-size:11px;color:#2563eb">→ 研究方法论Step6（政策效应评估）</a> ·
+      <a href="/provenance" style="font-size:11px;color:#2563eb">→ 数据溯源追踪</a>
+    </div>
   </div>
 </div>
 
@@ -1162,11 +1214,21 @@
         <span class="source-tag">数据来源: 综合TOPSIS/DEA/DEMATEL/fsQCA/DID全部分析结果</span>
       </div>
     </div>
+    <div style="background:#eff6ff;border-radius:10px;padding:14px 16px;margin-top:12px">
+      <strong style="color:#2563eb;font-size:13px">🔍 本章数据溯源</strong>：
+      <span style="font-size:12px;color:#64748b">全套分析结果整合 · 五方法递进链 · 理论贡献五项 · 政策建议四条 · 研究局限与展望</span><br>
+      <a href="/thesis#ch1" style="font-size:11px;color:#2563eb">→ 回到第1章（绪论）</a> ·
+      <a href="/provenance" style="font-size:11px;color:#2563eb">→ 数据溯源总览</a> ·
+      <a href="/rules" style="font-size:11px;color:#2563eb">→ 规则映射表（口径对照）</a> ·
+      <a href="/methodology" style="font-size:11px;color:#2563eb">→ 研究方法论（8步全流程）</a>
+    </div>
   </div>
 </div>
 
 <div class="page-nav">
-  <a href="/v3/analysis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>分析验证</strong></div></a>
-  <a href="/v3/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
+  <a href="/analysis"><div><div style="font-size:11px;color:#64748b">← 上一步</div><strong>分析验证</strong></div></a>
+  <a href="/research" class="next"><div><div style="font-size:11px;color:#64748b">下一步</div><strong>研究拓展 →</strong></div></a>
 </div>
 {% endblock %}
+
+

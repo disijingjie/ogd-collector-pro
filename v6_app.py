@@ -6,7 +6,7 @@ OGD-Collector Pro V6 - 统一版本Flask应用
 import json
 import sqlite3
 from datetime import datetime
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request, send_from_directory, redirect, url_for
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -196,7 +196,7 @@ def provenance():
 @app.route('/dashboard')
 def dashboard():
     """采集中心数据看板"""
-    return render_template('v6_collection_dashboard.html')
+    return render_template('v6_collection.html')
 
 @app.route('/api/csv')
 def api_csv():
@@ -235,6 +235,126 @@ def api_csv():
         headers={'Content-Disposition': 'attachment; filename=platforms_data.csv'}
     )
 
+@app.route('/api/collection-batches')
+def api_collection_batches():
+    """API: 采集批次数据"""
+    try:
+        with open('data/collection_batches.json', 'r', encoding='utf-8') as f:
+            batches = json.load(f)
+    except FileNotFoundError:
+        batches = []
+    return jsonify(batches)
+
+@app.route('/api/collection-results')
+def api_collection_results():
+    """API: 23平台采集结果"""
+    try:
+        with open('data/v3_collection_results.json', 'r', encoding='utf-8') as f:
+            results = json.load(f)
+    except FileNotFoundError:
+        results = []
+    return jsonify(results)
+
+@app.route('/api/literature-notes')
+def api_literature_notes():
+    """API: 200篇文献精读笔记"""
+    try:
+        with open('data/literature_notes.json', 'r', encoding='utf-8') as f:
+            notes = json.load(f)
+    except FileNotFoundError:
+        notes = []
+    return jsonify(notes)
+
+@app.route('/api/literature-note/<int:n>')
+def api_literature_note_detail(n):
+    """API: 单篇文献精读笔记详情"""
+    try:
+        with open('data/literature_notes.json', 'r', encoding='utf-8') as f:
+            notes = json.load(f)
+        note = next((x for x in notes if x['n'] == n), None)
+    except FileNotFoundError:
+        note = None
+    if note is None:
+        return jsonify({"error": "not found"}), 404
+    return jsonify(note)
+
+@app.route('/api/literature-filter-log')
+def api_literature_filter_log():
+    """API: 文献漏斗筛选日志"""
+    try:
+        with open('data/literature_filter_log.json', 'r', encoding='utf-8-sig') as f:
+            log = json.load(f)
+    except FileNotFoundError:
+        log = {}
+    return jsonify(log)
+
+@app.route('/api/literature-db')
+def api_literature_db():
+    """API: 200篇文献数据库"""
+    try:
+        with open('data/literature_db.json', 'r', encoding='utf-8-sig') as f:
+            db = json.load(f)
+    except FileNotFoundError:
+        db = []
+    return jsonify(db)
+
+@app.route('/api/external-sources')
+def api_external_sources():
+    """API: 外部来源索引（政策文件/报告/网站/技术文档）"""
+    try:
+        with open('data/external_sources.json', 'r', encoding='utf-8') as f:
+            sources = json.load(f)
+    except FileNotFoundError:
+        sources = {}
+    return jsonify(sources)
+
+@app.route('/api/literature-categories')
+def api_literature_categories():
+    """API: 文献分类索引"""
+    try:
+        with open('data/literature_categories.json', 'r', encoding='utf-8') as f:
+            cats = json.load(f)
+    except FileNotFoundError:
+        cats = {}
+    return jsonify(cats)
+
+@app.route('/api/fulltext-search')
+def api_fulltext_search():
+    """API: 全文检索"""
+    query = request.args.get('q', '').lower()
+    try:
+        with open('data/fulltext_index.json', 'r', encoding='utf-8') as f:
+            idx = json.load(f)
+    except FileNotFoundError:
+        return jsonify({"results": [], "total": 0})
+    if not query:
+        return jsonify({"stats": idx.get('stats', {}), "results": []})
+    results = []
+    for item in idx.get('search_index', []):
+        if query in item.get('text', ''):
+            results.append(item['n'])
+    return jsonify({"query": query, "results": results, "total": len(results)})
+
+@app.route('/api/chapter-references')
+def api_chapter_references():
+    """API: 章节-文献引用映射"""
+    try:
+        with open('data/chapter_references.json', 'r', encoding='utf-8') as f:
+            refs = json.load(f)
+    except FileNotFoundError:
+        refs = {}
+    return jsonify(refs)
+
+@app.route('/api/thesis-claims')
+def api_thesis_claims():
+    """API: 论文声明-文献引用映射"""
+    try:
+        with open('data/thesis_claims.json', 'r', encoding='utf-8') as f:
+            claims = json.load(f)
+    except FileNotFoundError:
+        claims = {}
+    return jsonify(claims)
+
 # ========== 核心页面路由 ==========
 @app.route('/collection')
 def collection():
@@ -256,15 +376,81 @@ def research():
     """研究拓展"""
     return render_template('v6_research.html')
 
+@app.route('/external-sources')
+def external_sources():
+    """外部来源索引"""
+    return render_template('v6_external_sources.html')
+
 @app.route('/reproduce')
+@app.route('/reproduce.html')
 def reproduce():
-    """数据复现"""
-    return render_template('v6_reproduce.html')
+    """数据复现 → 重定向到数据可信度中心"""
+    return redirect('/credibility', code=301)
+
+@app.route('/credibility')
+def credibility():
+    """数据可信度中心"""
+    return render_template('v6_credibility.html')
+
+@app.route('/prisma')
+def prisma():
+    """文献筛选之路"""
+    return render_template('v6_prisma.html')
 
 @app.route('/literature')
 def literature():
-    """文献专题"""
-    return render_template('v6_literature.html')
+    """文献数据库"""
+    return render_template('v6_literature_db.html')
+
+@app.route('/cnki-results')
+def cnki_results():
+    """CNKI论文完整信息库"""
+    return render_template('v6_cnki_results.html')
+
+# API: CNKI metadata
+@app.route('/api/cnki-metadata')
+def api_cnki_metadata():
+    try:
+        with open('data/whu_export/cnki_metadata_merged.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except FileNotFoundError:
+        return jsonify([])
+
+@app.route('/methodology-paper')
+def methodology_paper():
+    """方法论小论文"""
+    return render_template('v6_methodology_paper.html')
+
+@app.route('/research-journey')
+def research_journey():
+    """文献研究之路"""
+    return render_template('v6_literature_journey.html')
+
+@app.route('/lit-extract')
+def lit_extract():
+    """文献摘录"""
+    return render_template('v6_literature_extract.html')
+
+@app.route('/chapter-synth')
+def chapter_synth():
+    """章节合成"""
+    return render_template('v6_chapter_synth.html')
+
+@app.route('/methodology')
+def methodology():
+    """研究方法论"""
+    return render_template('v6_methodology.html')
+
+@app.route('/references')
+def references():
+    """外部评估参照"""
+    return render_template('v6_references.html')
+
+@app.route('/bibliography')
+def bibliography():
+    """参考文献库·全文检索"""
+    return render_template('v6_bibliography.html')
 
 @app.route('/papers')
 def papers():
@@ -287,6 +473,17 @@ def paper_collection():
     """小论文集"""
     return render_template('v6_papers_showcase.html')
 
+# ========== PDF引用文献溯源系统 ==========
+@app.route('/pdf-showcase')
+def pdf_showcase():
+    """PDF引用文献溯源 - 向导师展示所有引用和数据依据"""
+    return render_template('v6_pdf_showcase.html')
+
+@app.route('/data/pdf_extracted/<path:filename>')
+def serve_pdf_data(filename):
+    """提供PDF提取数据文件"""
+    return send_from_directory('data/pdf_extracted', filename)
+
 @app.route('/papers/<path:filename>')
 def download_paper(filename):
     """下载论文docx文件"""
@@ -297,6 +494,73 @@ def download_paper(filename):
 def download_data_file(filename):
     """下载static/data目录下的数据文件"""
     return send_from_directory('static/data', filename, as_attachment=True)
+
+# ========== /v3/ 旧版路径 → V6 重定向（兼容性兜底） ==========
+@app.route('/v3/')
+def v3_redirect_root():
+    return redirect('/', code=301)
+
+@app.route('/v3/collection')
+@app.route('/v3/collection.html')
+def v3_redirect_collection():
+    return redirect('/collection', code=301)
+
+@app.route('/v3/analysis')
+@app.route('/v3/analysis.html')
+def v3_redirect_analysis():
+    return redirect('/analysis', code=301)
+
+@app.route('/v3/thesis')
+@app.route('/v3/thesis.html')
+def v3_redirect_thesis():
+    return redirect('/thesis', code=301)
+
+@app.route('/v3/research')
+@app.route('/v3/research.html')
+def v3_redirect_research():
+    return redirect('/research', code=301)
+
+@app.route('/v3/reproduce')
+@app.route('/v3/reproduce.html')
+def v3_redirect_reproduce():
+    return redirect('/reproduce', code=301)
+
+@app.route('/v3/literature')
+@app.route('/v3/literature.html')
+def v3_redirect_literature():
+    return redirect('/literature', code=301)
+
+@app.route('/v3/papers')
+@app.route('/v3/papers.html')
+def v3_redirect_papers():
+    return redirect('/papers', code=301)
+
+@app.route('/v3/<path:dummy>')
+def v3_redirect_catchall(dummy):
+    """兜底：所有其他 /v3/* 路径重定向到首页"""
+    return redirect('/', code=301)
+
+# ========== 博士论文完整版（隐藏页面） ==========
+@app.route('/thesis-full')
+def thesis_full():
+    """博士论文完整HTML渲染版 - 隐藏页面，用于打印导出"""
+    return render_template('v6_thesis_full.html')
+
+@app.route('/api/generate-docx')
+def api_generate_docx():
+    """一键生成docx"""
+    import subprocess, os
+    script = os.path.join(os.path.dirname(__file__), '_build_pipeline.py')
+    subprocess.run(['python', script], capture_output=True, timeout=120)
+    docx_path = os.path.join(os.path.dirname(__file__), 'data', 'thesis_generated.docx')
+    if os.path.exists(docx_path):
+        return send_from_directory(
+            os.path.join(os.path.dirname(__file__), 'data'),
+            'thesis_generated.docx',
+            as_attachment=True,
+            download_name='博士论文_武大标准格式.docx'
+        )
+    return jsonify({'error': '生成失败'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
