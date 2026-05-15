@@ -1,0 +1,254 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}数据溯源中心 - 可复现的研究数据{% endblock %}{% block page_title %}数据溯源中心{% endblock %}{% block breadcrumb %}分析看板 / 数据溯源中心{% endblock %}
+{% block extra_css %}
+<style>
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+.tag-success { background: #dcfce7; color: #166534; }
+.tag-warning { background: #fef9c3; color: #854d0e; }
+.tag-danger { background: #fee2e2; color: #991b1b; }
+.tag-info { background: #dbeafe; color: #1e40af; }
+.provenance-panel { background: #f8fafc; border-left: 4px solid #2563eb; padding: 15px 20px; margin-top: 15px; border-radius: 0 8px 8px 0; }
+.provenance-panel h4 { color: #1e293b; margin-bottom: 10px; font-size: 0.95em; }
+.flow-step { display: flex; gap: 16px; padding: 16px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px; }
+.flow-step-num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#2563eb,#3b82f6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.flow-step-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: #1e293b; }
+.flow-step-content p { font-size: 13px; color: #64748b; line-height: 1.6; }
+.flow-arrow { text-align: center; color: #cbd5e1; font-size: 18px; margin: 4px 0; }
+.meta-item { display: flex; margin: 6px 0; font-size: 0.9em; }
+.meta-label { width: 110px; color: #64748b; flex-shrink: 0; }
+.meta-value { color: #1e293b; }
+.btn { display: inline-block; padding: 6px 14px; border-radius: 8px; font-size: 13px; text-decoration: none; transition: all .2s; cursor: pointer; border: none; }
+.btn-outline { background: #fff; border: 1px solid #e2e8f0; color: #475569; }
+.btn-outline:hover { background: #f1f5f9; color: #2563eb; border-color: #2563eb; }
+.btn-primary { background: linear-gradient(135deg,#2563eb,#3b82f6); color: #fff; }
+.btn-primary:hover { opacity: 0.9; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">数据溯源中心</div>
+    <div style="font-size:14px;color:#94a3b8">所有研究数据、计算过程、采集日志开放可验证 | 确保研究可复现、可审计</div>
+  </div>
+</div>
+
+<!-- 数据下载总览 -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value" style="background:linear-gradient(135deg,#2563eb,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">8</div>
+    <div class="stat-label">原始数据集（CSV/JSON）</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="background:linear-gradient(135deg,#16a34a,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">5</div>
+    <div class="stat-label">分析代码（Python脚本）</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="background:linear-gradient(135deg,#ca8a04,#eab308);-webkit-background-clip:text;-webkit-text-fill-color:transparent">23</div>
+    <div class="stat-label">采集截图（平台首页）</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="background:linear-gradient(135deg,#9333ea,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2,847</div>
+    <div class="stat-label">采集日志记录</div>
+  </div>
+</div>
+
+<!-- 数据采集溯源 -->
+<div class="card">
+  <div class="card-title">数据采集过程溯源</div>
+  <div class="flow-step">
+    <div class="flow-step-num">1</div>
+    <div class="flow-step-content">
+      <h4>平台识别与URL确认</h4>
+      <p>通过政府官网、开放数林指数、学术论文确认31个省级平台官方URL</p>
+      <a href="/api/platforms" class="btn btn-outline" style="margin-top:8px">下载平台清单JSON</a>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="flow-step-num">2</div>
+    <div class="flow-step-content">
+      <h4>静态页面采集</h4>
+      <p>Requests+BeautifulSoup采集22个平台，CSS选择器/正则提取数据集数量；Playwright动态渲染采集1个平台（安徽Vue.js单页应用）</p>
+      <a href="/static/data/collect_static.py" class="btn btn-outline" style="margin-top:8px">下载采集脚本</a>
+      <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载原始数据CSV</a>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="flow-step-num">3</div>
+    <div class="flow-step-content">
+      <h4>动态渲染采集（安徽平台案例）</h4>
+      <p>Playwright+Chromium无头浏览器采集Vue.js单页应用，等待JS渲染后提取</p>
+      <a href="/static/data/collect_anhui_playwright.py" class="btn btn-outline" style="margin-top:8px">下载Playwright脚本</a>
+      <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载采集数据CSV</a>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="flow-step-num">4</div>
+    <div class="flow-step-content">
+      <h4>第三方权威数据补充</h4>
+      <p>数据局新闻发布会、官方统计报告补充3个平台数据</p>
+      <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载来源数据CSV</a>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="flow-step-num">5</div>
+    <div class="flow-step-content">
+      <h4>三角验证与交叉核对</h4>
+      <p>自主采集 vs 开放数林指数 vs 官方数据，一致性系数CR>0.8视为可信</p>
+      <a href="/static/data/platforms_23_full.csv" class="btn btn-outline" style="margin-top:8px">下载验证数据CSV</a>
+    </div>
+  </div>
+</div>
+
+<!-- TOPSIS数据复现 -->
+<div class="card">
+  <div class="card-title">TOPSIS绩效评估 - 数据复现</div>
+  <div class="two-col" style="margin-bottom:20px">
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">原始数据</h4>
+      <div class="meta-item"><span class="meta-label">决策矩阵：</span><span class="meta-value">23平台 × 5维度</span></div>
+      <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">自主采集+官方统计</span></div>
+      <div class="meta-item"><span class="meta-label">采集时间：</span><span class="meta-value">2026年4月</span></div>
+      <a href="/static/data/4e_scores.csv" class="btn btn-primary" style="margin-top:10px">下载决策矩阵CSV</a>
+    </div>
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">计算过程</h4>
+      <div class="meta-item"><span class="meta-label">标准化方法：</span><span class="meta-value">向量标准化</span></div>
+      <div class="meta-item"><span class="meta-label">权重方法：</span><span class="meta-value">熵权法</span></div>
+      <div class="meta-item"><span class="meta-label">距离计算：</span><span class="meta-value">欧氏距离</span></div>
+      <a href="/static/data/topsis_analysis.py" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+    </div>
+  </div>
+  <div class="code-block" style="position:relative">
+    <span class="lang">python</span>
+    <span class="cm"># TOPSIS计算步骤</span><br>
+    <span class="kw">import</span> numpy <span class="kw">as</span> np<br>
+    <span class="kw">import</span> pandas <span class="kw">as</span> pd<br><br>
+    <span class="cm"># 1. 读取决策矩阵</span><br>
+    X = pd.<span class="fn">read_csv</span>(<span class="str">'decision_matrix.csv'</span>)<br><br>
+    <span class="cm"># 2. 向量标准化</span><br>
+    X_norm = X / np.<span class="fn">sqrt</span>((X**2).<span class="fn">sum</span>(axis=0))<br><br>
+    <span class="cm"># 3. 熵权法计算权重</span><br>
+    p = X_norm / X_norm.<span class="fn">sum</span>(axis=0)<br>
+    E = -np.<span class="fn">sum</span>(p * np.<span class="fn">log</span>(p + 1e-10), axis=0) / np.<span class="fn">log</span>(<span class="fn">len</span>(X))<br>
+    w = (1 - E) / (1 - E).<span class="fn">sum</span>()<br><br>
+    <span class="cm"># 4. 加权标准化矩阵</span><br>
+    V = X_norm * w<br><br>
+    <span class="cm"># 5. 确定正负理想解</span><br>
+    V_pos = V.<span class="fn">max</span>(axis=0)  <span class="cm"># 正理想解</span><br>
+    V_neg = V.<span class="fn">min</span>(axis=0)  <span class="cm"># 负理想解</span><br><br>
+    <span class="cm"># 6. 计算距离</span><br>
+    D_pos = np.<span class="fn">sqrt</span>(((V - V_pos)**2).<span class="fn">sum</span>(axis=1))<br>
+    D_neg = np.<span class="fn">sqrt</span>(((V - V_neg)**2).<span class="fn">sum</span>(axis=1))<br><br>
+    <span class="cm"># 7. 计算相对贴近度</span><br>
+    C = D_neg / (D_pos + D_neg)
+  </div>
+</div>
+
+<!-- DEMATEL数据复现 -->
+<div class="card">
+  <div class="card-title">DEMATEL影响因素分析 - 数据复现</div>
+  <div class="two-col" style="margin-bottom:20px">
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">原始数据</h4>
+      <div class="meta-item"><span class="meta-label">直接影响矩阵：</span><span class="meta-value">12因素 × 12因素</span></div>
+      <div class="meta-item"><span class="meta-label">数据来源：</span><span class="meta-value">文献综合影响矩阵</span></div>
+      <div class="meta-item"><span class="meta-label">评分标准：</span><span class="meta-value">0-4分李克特量表</span></div>
+      <a href="/static/data/dematel_matrix.csv" class="btn btn-primary" style="margin-top:10px">下载直接影响矩阵</a>
+    </div>
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">计算过程</h4>
+      <div class="meta-item"><span class="meta-label">归一化：</span><span class="meta-value">Z = X / max(行和)</span></div>
+      <div class="meta-item"><span class="meta-label">综合影响：</span><span class="meta-value">T = Z(I-Z)^(-1)</span></div>
+      <div class="meta-item"><span class="meta-label">阈值设定：</span><span class="meta-value">α = 0.05</span></div>
+      <a href="/static/data/dematel_analysis.py" class="btn btn-primary" style="margin-top:10px">下载Python代码</a>
+    </div>
+  </div>
+</div>
+
+<!-- fsQCA数据复现 -->
+<div class="card">
+  <div class="card-title">fsQCA组态路径分析 - 数据复现</div>
+  <div class="two-col" style="margin-bottom:20px">
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">原始数据</h4>
+      <div class="meta-item"><span class="meta-label">案例数：</span><span class="meta-value">23个平台</span></div>
+      <div class="meta-item"><span class="meta-label">条件变量：</span><span class="meta-value">6个（政策、技术、数据、用户、开放、资金）</span></div>
+      <div class="meta-item"><span class="meta-label">结果变量：</span><span class="meta-value">高绩效（TOPSIS得分>0.5）</span></div>
+      <a href="/static/data/fsqca_truth_table.csv" class="btn btn-primary" style="margin-top:10px">下载校准数据</a>
+    </div>
+    <div>
+      <h4 style="color:#1e293b;margin-bottom:10px">分析参数</h4>
+      <div class="meta-item"><span class="meta-label">一致性阈值：</span><span class="meta-value">0.80</span></div>
+      <div class="meta-item"><span class="meta-label">案例频数：</span><span class="meta-value">≥1</span></div>
+      <div class="meta-item"><span class="meta-label">PRI一致性：</span><span class="meta-value">≥0.70</span></div>
+      <a href="/static/data/fsqca_analysis.R" class="btn btn-primary" style="margin-top:10px">下载R代码</a>
+    </div>
+  </div>
+</div>
+
+<!-- 文件下载中心 -->
+<div class="card">
+  <div class="card-title">文件下载中心</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>文件名</th>
+        <th>类型</th>
+        <th>大小</th>
+        <th>说明</th>
+        <th>下载</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>v3_platforms_full.csv</td>
+        <td>CSV</td>
+        <td>3.2 KB</td>
+        <td>23平台完整采集记录</td>
+        <td><a href="/api/csv" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+      <tr>
+        <td>v3_collection_results.json</td>
+        <td>JSON</td>
+        <td>8.5 KB</td>
+        <td>采集结果原始JSON</td>
+        <td><a href="/api/platforms" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+      <tr>
+        <td>collect_anhui_playwright.py</td>
+        <td>Python</td>
+        <td>4.1 KB</td>
+        <td>安徽平台Playwright采集脚本</td>
+        <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+      <tr>
+        <td>topsis_analysis.py</td>
+        <td>Python</td>
+        <td>5.8 KB</td>
+        <td>TOPSIS绩效评估代码</td>
+        <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+      <tr>
+        <td>dematel_analysis.py</td>
+        <td>Python</td>
+        <td>6.2 KB</td>
+        <td>DEMATEL影响因素分析代码</td>
+        <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+      <tr>
+        <td>fsqca_analysis.R</td>
+        <td>R</td>
+        <td>4.5 KB</td>
+        <td>fsQCA组态路径分析代码</td>
+        <td><a href="#" class="btn btn-outline" style="padding:4px 12px;font-size:0.8em">下载</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}外部引用来源 - OGD-Collector Pro{% endblock %}{% block page_title %}外部引用来源索引{% endblock %}{% block breadcrumb %}研究拓展 / 外部来源{% endblock %}
+{% block extra_css %}<style>
+.src-card{padding:14px 18px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:10px}
+.src-card:hover{border-color:#2563eb}
+.src-title{font-weight:600;font-size:13px;color:#1e293b;margin-bottom:4px}
+.src-meta{font-size:11px;color:#64748b;line-height:1.6}
+.src-link{font-size:11px;color:#2563eb;text-decoration:none;font-weight:500}
+.cat-header{padding:10px 16px;background:#f1f5f9;border-radius:8px;font-weight:600;font-size:14px;margin:16px 0 8px}
+</style>{% endblock %}
+{% block content %}
+<div style="background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:12px;padding:24px 28px;margin-bottom:20px;color:#fff">
+  <div style="font-size:18px;font-weight:700;margin-bottom:6px">外部引用来源索引</div>
+  <div style="font-size:13px;color:#94a3b8;line-height:1.7">除学术论文外，本研究还引用了大量政策文件、评估报告、外部网站和技术文档。所有非学术来源均在此页索引，确保引用可追溯。</div>
+</div>
+
+<div id="srcList" style="color:#64748b;font-size:13px;padding:20px;text-align:center">加载中...</div>
+
+<script>
+var CAT_LABELS = {
+  '政策文件': '\u{1F4DC} 政策文件',
+  '评估报告': '\u{1F4CA} 评估报告',
+  '外部网站': '\u{1F310} 外部网站',
+  '技术文档': '\u{1F527} 技术文档'
+};
+
+fetch('/api/external-sources').then(function(r){return r.json();}).then(function(data){
+  var cats = data.categories || {};
+  var html = '';
+  for (var cat in cats) {
+    html += '<div class="cat-header">' + (CAT_LABELS[cat] || cat) + ' (' + cats[cat].length + ')</div>';
+    cats[cat].forEach(function(s){
+      html += '<div class="src-card">'
+        + '<div class="src-title">' + s.title + '</div>'
+        + '<div class="src-meta">来源: ' + s.source + ' | 日期: ' + s.date + '</div>'
+        + (s.url ? '<a href="' + s.url + '" target="_blank" class="src-link">\u{1F517} ' + s.url + '</a>' : '')
+        + '<div style="font-size:11px;color:#475569;margin-top:4px">引用意义: ' + s.relevance + '</div>'
+        + '</div>';
+    });
+  }
+  document.getElementById('srcList').innerHTML = html || '暂无外部来源数据';
+}).catch(function(e){
+  document.getElementById('srcList').innerHTML = '加载失败: ' + e.message;
+});
+</script>
+{% endblock %}

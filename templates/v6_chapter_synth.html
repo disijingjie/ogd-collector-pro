@@ -1,0 +1,81 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}章节合成 - 从文献到论文{% endblock %}{% block page_title %}章节合成工作台{% endblock %}{% block breadcrumb %}研究拓展 / 章节合成{% endblock %}
+{% block extra_css %}<style>
+.ch-block{margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid #e2e8f0}
+.ch-header{padding:18px 22px;background:#f8fafc;display:flex;align-items:center;gap:14px;cursor:pointer}
+.ch-header:hover{background:#f1f5f9}
+.ch-num{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:#fff;flex-shrink:0}
+.ch-info h3{font-size:16px;margin-bottom:2px}.ch-info .sub{font-size:12px;color:#64748b}
+.ch-body{padding:20px 22px;display:none}.ch-block.open .ch-body{display:block}
+.section-row{padding:10px 0;border-bottom:1px solid #f1f5f9}
+.section-row .label{font-weight:600;font-size:13px;color:#2563eb;margin-bottom:4px}
+.section-row .desc{font-size:12px;color:#64748b;line-height:1.7}
+.section-row .ref-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ref-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;background:#eff6ff;color:#2563eb}
+.summary-box{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-radius:12px;padding:20px;text-align:center}
+.summary-box .big{font-size:36px;font-weight:800}
+</style>{% endblock %}
+{% block content %}
+<div style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:14px;padding:28px;margin-bottom:20px">
+  <div style="font-size:18px;font-weight:700;margin-bottom:6px">章节合成工作台：从文献摘录到论文第1-3章</div>
+  <div style="font-size:13px;color:#94a3b8;line-height:1.7">每一节标注了该节需要的文献类型、已匹配的核心文献数量、以及写作要点提示。这是"先网站后论文"策略的核心操作台——网站上的文献摘录直接反哺论文写作。</div>
+</div>
+
+<div class="summary-box" style="margin-bottom:24px">
+  <div class="big">200篇 → 3章 → 15节</div>
+  <div style="font-size:13px;margin-top:6px">第1章(绪论) 22篇 | 第2章(文献综述) 48篇 | 第3章(方法论) 25篇 | 第4-8章 105篇</div>
+</div>
+
+<div class="ch-block open">
+  <div class="ch-header" onclick="this.parentElement.classList.toggle('open')"><div class="ch-num" style="background:#2563eb">1</div><div class="ch-info"><h3>绪论：研究背景与问题提出</h3><div class="sub">匹配文献: 22篇 (政策文件8 + 评估报告4 + 学术论文10)</div></div></div>
+  <div class="ch-body">
+    <div class="section-row"><div class="label">1.1 研究背景</div><div class="desc">从全球OGD运动到中国"数据二十条"，建立四层背景：国际趋势→中国政策→平台建设→利用困境。核心发现："开放多、利用少"的结构性悖论。</div><div class="ref-tags"><span class="ref-tag">[10]数据二十条</span><span class="ref-tag">[96]公共数据开发利用意见</span><span class="ref-tag">[4]数林报告2023</span><span class="ref-tag">[6]数林指数2024</span><span class="ref-tag">[11]黄璜·数字政府逻辑</span></div></div>
+    <div class="section-row"><div class="label">1.2 问题提出</div><div class="desc">三个核心缺口：缺乏系统性评估框架 / 忽视数据口径差异 / 方法单一难以揭示因果机制。引出"数据口径幻觉"作为核心概念。</div><div class="ref-tags"><span class="ref-tag">[35]郑磊·方法论反思</span><span class="ref-tag">[5]孟天广·效率与价值</span><span class="ref-tag">[14]张晓·区域差异</span></div></div>
+    <div class="section-row"><div class="label">1.3 研究意义</div><div class="desc">理论意义(评估范式转变+方法创新)+实践意义(三层次政策建议)。注意：不要过度拔高，紧扣"利用绩效"这一核心概念。</div><div class="ref-tags"><span class="ref-tag">[92]孟华·4E绩效评估</span><span class="ref-tag">[23]何艳玲·公平性</span></div></div>
+    <div class="section-row"><div class="label">1.4 研究方法与创新</div><div class="desc">五个方法的逻辑链条：TOPSIS(排序)→DEA(诊断)→DEMATEL(归因)→fsQCA(组态)→DID(验证)。三个创新点：框架创新/方法创新/数据创新。</div><div class="ref-tags"><span class="ref-tag">[124]Fetters·混合方法</span><span class="ref-tag">[132]Vivek·三角验证</span></div></div>
+  </div>
+</div>
+
+<div class="ch-block">
+  <div class="ch-header" onclick="this.parentElement.classList.toggle('open')"><div class="ch-num" style="background:#7c3aed">2</div><div class="ch-info"><h3>理论基础与文献综述</h3><div class="sub">匹配文献: 48篇 (中文29 + 英文19) · 三大理论支柱 + 四类文献聚类</div></div></div>
+  <div class="ch-body">
+    <div class="section-row"><div class="label">2.1 核心概念界定</div><div class="desc">政府数据开放、数据利用绩效、4E框架、数据口径。区分"数据目录"vs"数据集"vs"有效数据集"。</div><div class="ref-tags"><span class="ref-tag">[111]陈全真·概念演进</span><span class="ref-tag">[155]Wang·数据质量</span></div></div>
+    <div class="section-row"><div class="label">2.2 文献计量分析</div><div class="desc">WOS 2,847+CNKI 3,156→PRISMA→三阶段演化。图2-7关键词共现图谱。</div><div class="ref-tags"><span class="ref-tag">[122]Mustapa·系统综述</span><span class="ref-tag">[129]Wirtz·OGD综述</span><span class="ref-tag">[170]Attard·综述</span></div></div>
+    <div class="section-row"><div class="label">2.3 理论基础</div><div class="desc">IRM三次范式、NPG新公共治理、制度同形三机制。注意：不要堆砌理论，要解释每个理论与本研究的关联。</div><div class="ref-tags"><span class="ref-tag">[43]马费成·数据治理</span><span class="ref-tag">[46]司林波·整体智治</span><span class="ref-tag">[29]刘新萍·省际学习</span></div></div>
+    <div class="section-row"><div class="label">2.4 研究述评与研究空间</div><div class="desc">总结四类研究范式(供给侧/用户侧/生态侧/效果侧)→指出"利用绩效"的研究空白→本研究的切入点。</div><div class="ref-tags"><span class="ref-tag">[139]Zuiderwijk·失败因素</span><span class="ref-tag">[190]Safarov·利用综述</span></div></div>
+  </div>
+</div>
+
+<div class="ch-block">
+  <div class="ch-header" onclick="this.parentElement.classList.toggle('open')"><div class="ch-num" style="background:#0891b2">3</div><div class="ch-info"><h3>评估框架与指标体系</h3><div class="sub">匹配文献: 25篇 · 4E框架构建 + 指标体系 + 方法选择论证</div></div></div>
+  <div class="ch-body">
+    <div class="section-row"><div class="label">3.1 4E评估框架的构建</div><div class="desc">Economy(供给保障)·Efficiency(平台效率)·Quality(数据质量)·Effectiveness(利用效果)。每个E的理论来源、操作化定义、与其他评估框架的对比。</div><div class="ref-tags"><span class="ref-tag">[7]张成岗·4E框架</span><span class="ref-tag">[92]孟华·4E绩效</span><span class="ref-tag">[1]黄璜·四维模型</span></div></div>
+    <div class="section-row"><div class="label">3.2 指标体系设计</div><div class="desc">12个二级指标的选择依据、数据来源、测度方式。特别说明：指标选择不是越多越好——从504篇文献中提取最常出现的12个指标。</div><div class="ref-tags"><span class="ref-tag">[22]李广建·质量指标</span><span class="ref-tag">[67]赵龙文·利用效能</span></div></div>
+    <div class="section-row"><div class="label">3.3 方法论递进逻辑</div><div class="desc">TOPSIS→DEA→DEMATEL→fsQCA→DID的"破案"逻辑——不是堆砌方法，而是每个方法解决前一个方法遗留的问题。这一节是论文方法论的核心。</div><div class="ref-tags"><span class="ref-tag">[128]Charnes·DEA</span><span class="ref-tag">[127]Tzeng·DEMATEL</span><span class="ref-tag">[145]Ragin·fsQCA</span><span class="ref-tag">[150]Cook·DEA综述</span></div></div>
+  </div>
+</div>
+
+<div style="text-align:center;margin:24px 0">
+  <a href="/lit-extract" style="display:inline-block;padding:10px 24px;background:#7c3aed;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;margin-right:12px">← 精读笔记（52/200已完成）</a>
+  <a href="/research-journey" style="display:inline-block;padding:10px 24px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600">← 文献漏斗全景</a>
+</div>
+<script>
+fetch('/api/literature-notes').then(function(r){return r.json();}).then(function(notes){
+  var done = notes.filter(function(n){return n.status==='done';});
+  document.querySelector('.summary-box .big').textContent = done.length + '篇精读 \u2192 3章 \u2192 15节';
+  document.querySelectorAll('.ref-tag').forEach(function(tag){
+    var match = tag.textContent.match(/^\[(\d+)\]/);
+    if (match) {
+      var n = parseInt(match[1]);
+      var note = notes.find(function(x){return x.n===n;});
+      if (note && note.status==='done') {
+        tag.style.cursor = 'pointer';
+        tag.title = note.note.substring(0,100) + '...';
+        tag.addEventListener('click', function(){
+          window.open('/lit-extract#' + n, '_blank');
+        });
+      }
+    }
+  });
+}).catch(function(e){console.log('notes load error',e);});
+</script>
+{% endblock %}

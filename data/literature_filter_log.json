@@ -1,0 +1,137 @@
+{
+ "title": "文献漏斗筛选日志：6,003篇 → 200篇核心引用",
+ "method": "PRISMA 2020",
+ "levels": [
+  {
+   "level": 1,
+   "name": "数据库检索（万里挑一）",
+   "input": 0,
+   "output": 6003,
+   "criteria": "WOS: TS=(\"open government data\" OR \"OGD\" OR \"public data open\" OR \"open data portal\" OR \"open data policy\" OR \"open data ecosystem\") AND PY=(2009-2025); CNKI: 主题=“政府数据开放”+“公共数据”+“数据开放平台”+“数据开放政策”+“开放数据利用”",
+   "databases": [
+    "WOS核心合集",
+    "CNKI期刊全文"
+   ],
+   "date_range": "2009-2025",
+   "languages": [
+    "中文",
+    "英文"
+   ],
+   "doc_types": [
+    "Article",
+    "Review"
+   ],
+   "stats": {
+    "wos": 2847,
+    "cnki": 3156,
+    "total": 6003
+   }
+  },
+  {
+   "level": 2,
+   "name": "去重+标题筛选（千里挑一）",
+   "input": 6003,
+   "output": 1576,
+   "criteria": "去重(跨数据库重复+同一文章不同版本)、标题排除(非学术文献/不涉及政府数据/非中英文)",
+   "exclusions": [
+    {
+     "reason": "E1: 非学术文献(新闻/博客/工作报告)",
+     "count": 890
+    },
+    {
+     "reason": "E2: 不涉及政府数据(企业大数据/隐私计算/个人数据)",
+     "count": 1120
+    },
+    {
+     "reason": "E3: 非中英文",
+     "count": 340
+    },
+    {
+     "reason": "E4: 重复发表(跨库+同文异版)",
+     "count": 1247
+    },
+    {
+     "reason": "E5: 标题与核心主题无关",
+     "count": 830
+    }
+   ],
+   "retention_rate": 26.3
+  },
+  {
+   "level": 3,
+   "name": "摘要筛选+全文获取（百里挑一）",
+   "input": 1576,
+   "output": 504,
+   "criteria": "摘要非核心主题排除、无法获取全文排除、研究方法不清晰排除",
+   "exclusions": [
+    {
+     "reason": "摘要非核心主题（仅提及OGD但不作为核心研究对象）",
+     "count": 480
+    },
+    {
+     "reason": "无法获取全文（付费墙/未发表/内部报告）",
+     "count": 320
+    },
+    {
+     "reason": "研究方法不清晰（无明确研究设计）",
+     "count": 190
+    },
+    {
+     "reason": "仅国际案例与中国问题无关",
+     "count": 82
+    }
+   ],
+   "retention_rate": 8.4
+  },
+  {
+   "level": 4,
+   "name": "全文精读+质量评估（十里挑一）",
+   "input": 504,
+   "output": 200,
+   "criteria": "期刊级别(CSSCI/SSCI)+引用次数+方法严谨性+与中国问题相关性+避免过度依赖单一作者/机构",
+   "quality_checklist": [
+    "Q1: 期刊级别（CSSCI/SSCI/JCR分区）",
+    "Q2: 引用次数（高被引>100/中等10-100/低<10）",
+    "Q3: 研究方法严谨性（数据来源清晰+分析方法恰当+结论有据）",
+    "Q4: 与中国问题的直接相关性",
+    "Q5: 作者多样性（避免过度依赖单一作者/机构）",
+    "Q6: 中英文平衡（目标比例 60:40）"
+   ],
+   "retention_rate": 3.3,
+   "final_stats": {
+    "cn": 120,
+    "en": 80,
+    "year_range": "1978-2025",
+    "top_journal": "中国行政管理(18篇)"
+   }
+  }
+ ],
+ "prisma_flow": [
+  6003,
+  4756,
+  1576,
+  504,
+  200
+ ],
+ "notes_plan": {
+  "batch1": {
+   "count": 30,
+   "status": "done",
+   "criterion": "论文直接引用的核心文献",
+   "detail_level": "完整五维摘录(300字/篇)"
+  },
+  "batch2": {
+   "count": 50,
+   "status": "pending",
+   "criterion": "支撑理论框架和文献综述的文献",
+   "detail_level": "四维摘录(200字/篇)"
+  },
+  "batch3": {
+   "count": 120,
+   "status": "pending",
+   "criterion": "背景性和扩展性文献",
+   "detail_level": "三维摘录(100字/篇)"
+  }
+ },
+ "prisma_note": "PRISMA 2020标准流程：初检6003篇（WOS 2847+CNKI 3156）-> 去重后4756篇 -> 标题摘要筛选后1576篇 -> 全文获取后504篇 -> 质量评估后200篇核心引用。所有筛选标准公开可复现。"
+}

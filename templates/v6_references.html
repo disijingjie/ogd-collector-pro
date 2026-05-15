@@ -1,0 +1,105 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}外部评估参照 - OGD-Collector Pro{% endblock %}{% block page_title %}外部评估与方法参照{% endblock %}{% block breadcrumb %}研究拓展 / 外部评估参照{% endblock %}
+{% block extra_css %}<style>
+.ref-card{border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px}
+.ref-card h4{font-size:15px;margin-bottom:6px}
+.ref-card .source{font-size:11px;color:#64748b;margin-bottom:8px}
+.ref-card .desc{font-size:13px;color:#334155;line-height:1.7}
+.ref-card .diff{font-size:12px;padding:8px 12px;background:#fef3c7;border-radius:8px;margin-top:10px;color:#92400e}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600;margin-right:4px}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#domestic" class="active">国内评估体系</a><a href="#international">国际评估框架</a><a href="#our-position">本研究的定位</a></div>{% endblock %}
+{% block content %}
+
+<div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
+  <strong>本页定位</strong>：系统梳理国内外主要政府数据开放评估体系、数据采集方法和分析框架。通过对比，明确本研究的学术定位和创新贡献——不是另起炉灶，而是在充分吸收现有成果基础上的范式跃迁。
+</div>
+
+<div id="domestic" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>国内主要评估体系</div></div>
+
+  <div class="ref-card">
+    <h4>中国开放数林指数（复旦大学 DMG）</h4>
+    <div class="source"><span class="tag" style="background:#dbeafe;color:#1e40af">年度报告</span> 2017-2025 | 复旦大学数字与移动治理实验室</div>
+    <div class="desc">国内最权威的政府数据开放评估体系。采用"数林指数"从准备度、数据层、平台层、利用层四个维度评估地方政府数据开放水平。2025年评估覆盖200+个地方政府平台。<br>
+    <strong>采集方式</strong>：专家评估+平台主动提交数据+在线指标检测。<br>
+    <strong>数据口径</strong>：以"有效数据集数量"为核心指标，与本研究发现的"数据口径幻觉"中的"口径比值"直接相关。</div>
+    <div class="diff"><strong>本研究与之差异</strong>：(1) 数林指数侧重"开放水平"，本研究聚焦"利用绩效"；(2) 数林指数覆盖200+地方平台，本研究深度分析30省平台；(3) 本研究首次提出"数据口径幻觉"理论并对数林指数的统计口径进行了方法论反思。</div>
+  </div>
+
+  <div class="ref-card">
+    <h4>中国政府数据开放平台评估（清华大学数据治理研究中心）</h4>
+    <div class="source"><span class="tag" style="background:#dbeafe;color:#1e40af">年度报告</span> 2019-2024 | 清华大学公共管理学院</div>
+    <div class="desc">从制度保障、平台建设、数据质量、应用成效四个维度评估省级政府数据开放平台。采用混合方法（专家打分+技术检测+用户调查）。<br>
+    <strong>采集方式</strong>：实地调研+在线爬取+API测试。<br>
+    <strong>样本规模</strong>：31省+重点城市。</div>
+    <div class="diff"><strong>本研究与之差异</strong>：(1) 清华大学侧重制度与平台建设，本研究侧重数据利用效果；(2) 本研究公开了完整的采集规则和代码，可复现性更高；(3) 本研究结合fsQCA和DID揭示了绩效改善的因果机制。</div>
+  </div>
+
+  <div class="ref-card">
+    <h4>中国地方政府数据开放报告（国家信息中心）</h4>
+    <div class="source"><span class="tag" style="background:#fef3c7;color:#854d0e">专题报告</span> 2020-2024 | 国家信息中心大数据发展部</div>
+    <div class="desc">从数据开放范围、数据质量、平台功能、利用成效四个维度评估。特色是强调"数据开发利用"的生态建设，关注数据应用案例和产业带动效应。<br>
+    <strong>采集方式</strong>：政府报告+平台检测+企业访谈。<br>
+    <strong>关注点</strong>：数据开放对数字经济的贡献。</div>
+    <div class="diff"><strong>本研究与之差异</strong>：(1) 国家信息中心侧重宏观经济效应，本研究侧重微观平台绩效；(2) 本研究的方法论递进逻辑（TOPSIS→DEA→DEMATEL→fsQCA→DID）形成了完整的分析闭环。</div>
+  </div>
+</div>
+</div>
+
+<div id="international" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>国际评估框架与参照</div></div>
+
+  <div class="ref-card">
+    <h4>Open Data Barometer（万维网基金会）</h4>
+    <div class="source"><span class="tag" style="background:#dcfce7;color:#166534">国际指数</span> 2013-2020 | World Wide Web Foundation</div>
+    <div class="desc">全球最具影响力的政府数据开放评估，覆盖115个国家。从准备度(Readiness)、执行力(Implementation)和影响力(Impact)三个维度评估。已停更，但其方法论框架被广泛引用。<br>
+    <strong>评分方式</strong>：专家评分(0-100)，基于10个关键数据集（交通、预算、公司注册等）。<br>
+    <strong>核心发现</strong>：全球仅10%的政府数据集"完全开放"，大多数数据在格式、许可或可获取性上存在障碍。</div>
+    <div class="diff"><strong>参照价值</strong>：ODB的"影响力"维度启发了本研究的"利用效果"维度设计。但ODB影响力仅基于专家感知（"政府数据是否对经济/社会/政治产生了影响？"），本研究用TOPSIS/DEA/DID等方法提供了客观的利用绩效量化证据。</div>
+  </div>
+
+  <div class="ref-card">
+    <h4>OECD OURdata Index（经合组织）</h4>
+    <div class="source"><span class="tag" style="background:#dcfce7;color:#166534">国际指数</span> 2015-2023 | OECD</div>
+    <div class="desc">从数据可用性(Data Availability)、数据可访问性(Data Accessibility)和政府支持(Government Support)三个维度评估成员国政府数据开放。2023年覆盖40个国家。<br>
+    <strong>采集方式</strong>：成员国自报+OECD专家审核+平台自动检测。</div>
+    <div class="diff"><strong>参照价值</strong>：OURdata的"可访问性"指标（数据格式、API可用性、许可条款）直接对应本研究的Efficiency维度。但OURdata不评估利用绩效——这也是国际评估体系的普遍缺陷。</div>
+  </div>
+
+  <div class="ref-card">
+    <h4>Global Open Data Index（开放知识基金会）</h4>
+    <div class="source"><span class="tag" style="background:#dcfce7;color:#166534">国际指数</span> 2013-2019 | Open Knowledge Foundation</div>
+    <div class="desc">社区驱动的评估，关注"数据是否真正开放"——基于开放定义（Open Definition）的11项标准逐条检验。<br>
+    <strong>方法</strong>：众包+专家审核，评估具体数据集而非平台总体水平。<br>
+    <strong>核心贡献</strong>：将"开放"定义为技术开放+法律开放，而非仅"可获取"。</div>
+    <div class="diff"><strong>参照价值</strong>：GODI对"开放"的严格定义启发了本研究对"数据口径"的反思——"可获取"不等于"可开放"，"有数据"不等于"有效数据"。</div>
+  </div>
+
+  <div class="ref-card">
+    <h4>欧洲数据门户（data.europa.eu）评估框架</h4>
+    <div class="source"><span class="tag" style="background:#dcfce7;color:#166534">区域评估</span> 2015-至今 | 欧盟委员会</div>
+    <div class="desc">欧盟层面的元数据质量和数据可复用性评估。通过DCAT-AP标准进行元数据互操作性评估，通过SPARQL端点测试数据可查询性。<br>
+    <strong>评估重点</strong>：跨成员国数据互操作性(Interoperability)、元数据标准化程度、数据新鲜度(Freshness)。</div>
+    <div class="diff"><strong>参照价值</strong>：data.europa.eu的"数据新鲜度"评估与本研究提出的"定期复采"机制一致。但其技术门槛高（需要SPARQL/DACT），中国平台普遍不支持。</div>
+  </div>
+</div>
+</div>
+
+<div id="our-position" class="scroll-section">
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
+  <div style="padding:24px">
+    <div style="font-size:18px;font-weight:700;margin-bottom:16px">本研究的学术定位</div>
+    <table style="width:100%;color:#cbd5e1;font-size:13px;line-height:2">
+      <tr><td style="width:30%;padding:8px;font-weight:600;color:#fff">评估范式</td><td style="padding:8px">从"供给侧评估"（多少数据被开放）到"效果侧评估"（数据被利用了多少、产生了什么效果）的范式跃迁</td></tr>
+      <tr><td style="padding:8px;font-weight:600;color:#fff">方法论创新</td><td style="padding:8px">形成 TOPSIS→DEA→DEMATEL→fsQCA→DID 的五方法组合链，实现"描述-诊断-解释-预测-验证"的完整分析闭环</td></tr>
+      <tr><td style="padding:8px;font-weight:600;color:#fff">理论贡献</td><td style="padding:8px">发现并测量"数据口径幻觉"现象；将制度同形理论拓展到数据要素市场化语境；揭示 fsQCA 三条等效路径的管理学内涵</td></tr>
+      <tr><td style="padding:8px;font-weight:600;color:#fff">可复现性</td><td style="padding:8px">所有采集规则、代码、数据、分析结果全面公开，建立了完整的学术可信度证明链</td></tr>
+      <tr><td style="padding:8px;font-weight:600;color:#fff">实践价值</td><td style="padding:8px">面向国家数据局的三条行动建议 + 2025-2030三阶段路线图，可直接转化为政策文件</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+{% endblock %}

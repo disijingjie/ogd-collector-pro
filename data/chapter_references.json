@@ -1,0 +1,578 @@
+{
+ "ch1": {
+  "title": "绪论",
+  "sections": {
+   "1.1": {
+    "name": "研究背景",
+    "papers": [
+     {
+      "n": 2,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 3,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 5,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 21,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 27,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 90,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 96,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 98,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 100,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 104,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 109,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "1.2": {
+    "name": "问题提出",
+    "papers": [
+     {
+      "n": 4,
+      "status": "done",
+      "confidence": "low"
+     }
+    ]
+   }
+  },
+  "total": 12,
+  "done": 12
+ },
+ "ch2": {
+  "title": "理论基础与文献综述",
+  "sections": {
+   "2.3": {
+    "name": "理论基础",
+    "papers": [
+     {
+      "n": 1,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 7,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 16,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 17,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 18,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 21,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 26,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 28,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 29,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 41,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 43,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 46,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 48,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 85,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 92,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 94,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 100,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 142,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "2.1": {
+    "name": "核心概念界定",
+    "papers": [
+     {
+      "n": 2,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 8,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 35,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "2.4": {
+    "name": "研究述评与研究空间",
+    "papers": [
+     {
+      "n": 3,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 4,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 6,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 9,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 10,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 19,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 23,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 25,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 30,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 32,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 40,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 42,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 47,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 50,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 51,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 52,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 57,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 59,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 65,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 68,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 73,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 113,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 122,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 133,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 136,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 137,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 139,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 140,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 157,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 169,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 170,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 175,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 177,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 178,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 189,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 190,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "2.2": {
+    "name": "文献计量分析",
+    "papers": [
+     {
+      "n": 22,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 104,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 129,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 157,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 170,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  "total": 62,
+  "done": 62
+ },
+ "ch3": {
+  "title": "研究设计与方法论",
+  "sections": {
+   "3.1": {
+    "name": "4E评估框架构建",
+    "papers": [
+     {
+      "n": 1,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 2,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 92,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "3.2": {
+    "name": "指标体系设计",
+    "papers": [
+     {
+      "n": 8,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 25,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 35,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 68,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 122,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 140,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "3.3": {
+    "name": "方法论递进逻辑",
+    "papers": [
+     {
+      "n": 10,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 11,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 12,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 13,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 14,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 20,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 49,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 51,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 131,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 132,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 149,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 150,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 162,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 179,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   },
+   "3.0": {
+    "name": "研究框架总览",
+    "papers": [
+     {
+      "n": 15,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 24,
+      "status": "done",
+      "confidence": "low"
+     },
+     {
+      "n": 98,
+      "status": "done",
+      "confidence": "high"
+     },
+     {
+      "n": 99,
+      "status": "done",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  "total": 27,
+  "done": 27
+ }
+}

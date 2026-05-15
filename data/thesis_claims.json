@@ -1,0 +1,1311 @@
+{
+ "ch1": {
+  "title": "绪论",
+  "claims": {
+   "1.1-政策背景": {
+    "description": "中国政府数据开放政策演进",
+    "papers": [
+     {
+      "n": 2,
+      "confidence": "low",
+      "relevance": "核心数据来源和基准参照。本研究的“数据口径幻觉”发现，从方法论层面反思了数林指数中“数据集数量”作为核心指标的有效性问题。"
+     },
+     {
+      "n": 3,
+      "confidence": "low",
+      "relevance": "论文第2章国际比较部分的核心文献。为制度同形理论在中国语境下的适用性提供了参照。"
+     },
+     {
+      "n": 5,
+      "confidence": "low",
+      "relevance": "论文第1章政策背景部分的核心文献。为本研究的时间跨度选择(2015-2025)和政策评估节点(2022年“数据二十条”)提供了制度背景支撑。"
+     },
+     {
+      "n": 21,
+      "confidence": "low",
+      "relevance": "论文第1章研究背景和第2章理论基础中“数据要素理论”的核心文献。为论文第8章政策建议中的数据要素市场化改革提供了理论支撑。"
+     },
+     {
+      "n": 27,
+      "confidence": "low",
+      "relevance": "本研究DID政策评估的核心政策文本。论文第7章的“处理组/对照组”划分直接依据各省是否响应数据二十条出台了地方配套政策。"
+     },
+     {
+      "n": 90,
+      "confidence": "high",
+      "relevance": "Core reference for understanding China's public data authorization framework. Supports policy recomm"
+     },
+     {
+      "n": 96,
+      "confidence": "high",
+      "relevance": "Core policy document for Chapters 1 and 8. Represents the latest policy direction in China's OGD dev"
+     },
+     {
+      "n": 98,
+      "confidence": "high",
+      "relevance": "Core legal reference for Chapter 3's discussion of data collection ethics and Chapter 8's discussion"
+     },
+     {
+      "n": 100,
+      "confidence": "high",
+      "relevance": "论文第1章研究背景和第2章理论基础的核心文献。为本研究将OGD评估置于数字政府建设的宏观背景中提供了理论基础。"
+     },
+     {
+      "n": 104,
+      "confidence": "high",
+      "relevance": "论文第1章政策背景和第2章文献综述的核心文献。为“数据二十条”作为政策评估节点的合理性提供了历史依据。"
+     },
+     {
+      "n": 109,
+      "confidence": "high",
+      "relevance": "Core reference for understanding China's data governance institutional evolution. Supports Chapter 1"
+     }
+    ],
+    "sources": [
+     "data二十条",
+     "数据要素×",
+     "数字政府指导意见"
+    ]
+   },
+   "1.2-问题提出": {
+    "description": "研究缺口：评估框架/数据口径/因果机制",
+    "papers": [
+     {
+      "n": 4,
+      "confidence": "low",
+      "relevance": "直接支撑本研究“利用绩效”核心概念——说明开放量不等于利用效果。为DID方法的应用提供了方法论先例。"
+     }
+    ],
+    "sources": []
+   },
+   "1.3-研究意义": {
+    "description": "理论+实践+方法三维意义",
+    "papers": [],
+    "sources": []
+   },
+   "1.4-创新点": {
+    "description": "五方法递进链/数据口径幻觉/DID首创/4E+制度同形",
+    "papers": [],
+    "sources": []
+   }
+  }
+ },
+ "ch2": {
+  "title": "理论基础与文献综述",
+  "claims": {
+   "2.1-核心概念": {
+    "description": "OGD/利用绩效/4E框架/数据口径概念界定",
+    "papers": [
+     {
+      "n": 2,
+      "confidence": "low",
+      "relevance": "核心数据来源和基准参照。本研究的“数据口径幻觉”发现，从方法论层面反思了数林指数中“数据集数量”作为核心指标的有效性问题。"
+     },
+     {
+      "n": 8,
+      "confidence": "low",
+      "relevance": "直接支撑本研究第3章指标体系中“有效性(Effectiveness)”维度的设计，特别是数据质量子指标的选取。"
+     },
+     {
+      "n": 35,
+      "confidence": "high",
+      "relevance": "直接支撑本研究“数据口径幻觉”概念的方法论基础。为TOPSIS指标体系中增加利用效果维度提供了批判性论证。"
+     }
+    ],
+    "sources": []
+   },
+   "2.2-文献计量": {
+    "description": "WOS 2847+CNKI 3156三阶段演化",
+    "papers": [
+     {
+      "n": 22,
+      "confidence": "low",
+      "relevance": "论文第2章文献计量分析的核心文献。为WOS 2,847篇文献的三阶段演化提供了分类框架。"
+     },
+     {
+      "n": 104,
+      "confidence": "high",
+      "relevance": "论文第1章政策背景和第2章文献综述的核心文献。为“数据二十条”作为政策评估节点的合理性提供了历史依据。"
+     },
+     {
+      "n": 129,
+      "confidence": "high",
+      "relevance": "Core reference for Chapter 2 literature review and bibliometric analysis. Provides the thematic stru"
+     },
+     {
+      "n": 157,
+      "confidence": "high",
+      "relevance": "Core reference for Chapter 2 literature review. The identified research gaps justify this study's me"
+     },
+     {
+      "n": 170,
+      "confidence": "high",
+      "relevance": "Foundational systematic review for Chapter 2. The identified success factors inform the fsQCA condit"
+     }
+    ],
+    "sources": [
+     "WOS",
+     "CNKI"
+    ]
+   },
+   "2.3-理论基础": {
+    "description": "4E+NPG+制度同形+数据要素四理论",
+    "papers": [
+     {
+      "n": 1,
+      "confidence": "low",
+      "relevance": "直接启发了本研究4E框架的设计——特别是Effectiveness维度的理论基础。本研究的创新在于将四维框架升级为包含Equity维度的4E体系，并用混合方法进行定量验证。"
+     },
+     {
+      "n": 7,
+      "confidence": "low",
+      "relevance": "论文第8章政策建议部分的核心文献。为制度同形理论中的“规范性同形”提供了政策实践层面的支撑。"
+     },
+     {
+      "n": 16,
+      "confidence": "low",
+      "relevance": "论文第2章理论基础部分的核心文献。为本研究的学科定位提供了“信息资源管理(IRM)三次范式”的理论背景。"
+     },
+     {
+      "n": 17,
+      "confidence": "low",
+      "relevance": "论文第2章理论基础的四支柱之一。NPG的“多元主体协同”理念为本研究的公平性(Equity)维度提供了理论根源。"
+     },
+     {
+      "n": 18,
+      "confidence": "low",
+      "relevance": "论文第2章理论基础的四大支柱之一。为本研究解释“31省平台功能趋同但绩效分化”提供了核心理论框架。"
+     },
+     {
+      "n": 21,
+      "confidence": "low",
+      "relevance": "论文第1章研究背景和第2章理论基础中“数据要素理论”的核心文献。为论文第8章政策建议中的数据要素市场化改革提供了理论支撑。"
+     },
+     {
+      "n": 26,
+      "confidence": "low",
+      "relevance": "论文第2章制度同形分析中“模仿性同形”机制的实证支撑。为fsQCA组态分析中“制度建设”作为核心条件提供了政策扩散层面的证据。"
+     },
+     {
+      "n": 28,
+      "confidence": "low",
+      "relevance": "论文第2章学科定位的核心文献。为本研究的“学科定位（IRM三次范式）”提供了理论背景。"
+     },
+     {
+      "n": 29,
+      "confidence": "low",
+      "relevance": "论文第2章理论基础中“NPG新公共治理”的中国本土化表述。为论文第8章政策建议提供了理论支持。"
+     },
+     {
+      "n": 41,
+      "confidence": "high",
+      "relevance": "论文第2章理论基础中数据治理理论的核心文献。为“制度建设”作为DEMATEL核心驱动因素的发现提供了理论解释。"
+     },
+     {
+      "n": 43,
+      "confidence": "high",
+      "relevance": "论文第2章理论基础的核心文献。为本研究关于“IRM三次范式”和“数据治理三阶段”的学科定位讨论提供了文献支撑。"
+     },
+     {
+      "n": 46,
+      "confidence": "high",
+      "relevance": "论文第2章理论基础中“NPG新公共治理”的中国本土化表述。为论文第8章政策建议中的“跨部门数据共享机制”提供了理论支持。"
+     },
+     {
+      "n": 48,
+      "confidence": "high",
+      "relevance": "论文第2章制度分析和第8章政策建议的核心文献。为制度同形理论中的“强制性同形”机制提供了制度困境层面的经验证据。"
+     },
+     {
+      "n": 85,
+      "confidence": "high",
+      "relevance": "论文第2章理论基础和第8章政策建议的核心文献。为本研究的“三层架构31省”研究设计和差异化政策建议提供了生态系统层面的理论支撑。"
+     },
+     {
+      "n": 92,
+      "confidence": "high",
+      "relevance": "本研究4E框架的理论核心文献。为本研究选择4E框架作为评估理论基础提供了学术合法性，也为Equity维度的引入和操作化提供了理论依据。"
+     },
+     {
+      "n": 94,
+      "confidence": "high",
+      "relevance": "论文第8章政策建议部分的核心文献。为“从开放向运营转型”的政策建议提供了理论基础。"
+     },
+     {
+      "n": 100,
+      "confidence": "high",
+      "relevance": "论文第1章研究背景和第2章理论基础的核心文献。为本研究将OGD评估置于数字政府建设的宏观背景中提供了理论基础。"
+     },
+     {
+      "n": 142,
+      "confidence": "high",
+      "relevance": "Theoretical foundation for the 4E framework's public value orientation. Supports the selection of Eq"
+     }
+    ],
+    "sources": [
+     "DiMaggio(1983)",
+     "Osborne(2010)"
+    ]
+   },
+   "2.4-研究空间": {
+    "description": "四类研究范式→利用绩效研究空白",
+    "papers": [
+     {
+      "n": 3,
+      "confidence": "low",
+      "relevance": "论文第2章国际比较部分的核心文献。为制度同形理论在中国语境下的适用性提供了参照。"
+     },
+     {
+      "n": 4,
+      "confidence": "low",
+      "relevance": "直接支撑本研究“利用绩效”核心概念——说明开放量不等于利用效果。为DID方法的应用提供了方法论先例。"
+     },
+     {
+      "n": 6,
+      "confidence": "low",
+      "relevance": "为本研究的TOPSIS排名和fsQCA组态分析提供了基准假设——区域差异存在且制度是关键前因条件。"
+     },
+     {
+      "n": 9,
+      "confidence": "low",
+      "relevance": "本研究“利用绩效”核心概念的直接经验基础。为TOPSIS指标体系中“利用效果”维度提供了实证锚点。"
+     },
+     {
+      "n": 10,
+      "confidence": "low",
+      "relevance": "本研究第5章DEA效率评估的方法论基础。为DEA在政府数据开放这一非传统领域的应用提供了方法论论证。"
+     },
+     {
+      "n": 19,
+      "confidence": "low",
+      "relevance": "论文第2章文献综述中“生态侧”研究范式的核心文献。为第8章的政策建议提供了生态学视角。"
+     },
+     {
+      "n": 23,
+      "confidence": "low",
+      "relevance": "论文第2章文献综述中“供给侧”研究范式的核心文献。为第8章政策建议中的“制度考核”和“一把手负责制”提供了国际经验参照。"
+     },
+     {
+      "n": 25,
+      "confidence": "low",
+      "relevance": "论文第3章指标体系中国际参照的核心文献。为本研究4E指标体系中的指标选择提供了国际比较基础。"
+     },
+     {
+      "n": 30,
+      "confidence": "low",
+      "relevance": "论文第2章文献综述和第8章讨论部分的核心文献。为“下载量≠经济价值”的代理变量偏差讨论提供了文献支撑。"
+     },
+     {
+      "n": 31,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 32,
+      "confidence": "high",
+      "relevance": "论文第2章生态系统理论和第8章政策建议的核心文献。为“从开放向运营转型”的政策建议提供了生态学视角。"
+     },
+     {
+      "n": 39,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 40,
+      "confidence": "high",
+      "relevance": "本研究第7章DID政策评估的直接前驱文献。为“数据二十条”作为政策干预节点的选择提供了实证依据。"
+     },
+     {
+      "n": 42,
+      "confidence": "high",
+      "relevance": "Core reference for ecosystem theory application in OGD (Chapter 2) and policy recommendations (Chapt"
+     },
+     {
+      "n": 47,
+      "confidence": "high",
+      "relevance": "本研究的“利用绩效”核心概念的实证支撑。为TOPSIS指标体系中“利用效果”维度的构建提供了用户侧的实证锚点。"
+     },
+     {
+      "n": 50,
+      "confidence": "high",
+      "relevance": "论文第2章国际比较部分的核心文献。为论文第8章政策建议中“建立专门的数据开放法”提供了国际比较支撑。"
+     },
+     {
+      "n": 51,
+      "confidence": "high",
+      "relevance": "本研究fsQCA组态分析的方法论合法性来源。论文第6章明确提出本研究属于“解释性评估”范式，直接引用了本文的范式转换框架。"
+     },
+     {
+      "n": 52,
+      "confidence": "high",
+      "relevance": "论文第2章国际比较部分的核心文献。为论文第8章政策建议中“建立数据治理组织架构”提供了美国经验参照。"
+     },
+     {
+      "n": 55,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 57,
+      "confidence": "high",
+      "relevance": "论文第2章生态系统理论和第8章政策建议的核心文献。为“从开放向运营转型”的政策建议提供了生态链视角。"
+     },
+     {
+      "n": 59,
+      "confidence": "high",
+      "relevance": "本研究“利用绩效”核心概念的实证支撑。为TOPSIS指标体系中“利用效果”维度的权重设定提供了经验依据。"
+     },
+     {
+      "n": 60,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 65,
+      "confidence": "high",
+      "relevance": "本研究第6章fsQCA组态分析的最直接前驱文献。为本研究选择fsQCA方法和设定前因条件提供了直接参考。"
+     },
+     {
+      "n": 67,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 68,
+      "confidence": "high",
+      "relevance": "Core reference for the 'user participation' dimension in the 4E framework. Supports indicator select"
+     },
+     {
+      "n": 69,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 70,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 72,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 73,
+      "confidence": "high",
+      "relevance": "本研究第6章DEMATEL分析的方法论参照。为本研究将DEMATEL方法应用于OGD领域提供了先例，也验证了DEMATEL在识别多层次影响因素网络中的适用性。"
+     },
+     {
+      "n": 74,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 75,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 76,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 77,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 79,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 80,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 82,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 83,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 86,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 87,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 88,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 93,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 95,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 105,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 110,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 111,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 112,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 113,
+      "confidence": "high",
+      "relevance": "本研究第5章DEA效率评估的方法论参照。为DEA在政府数据领域的应用提供了先例，也为“投入产出指标选取”提供了参考。"
+     },
+     {
+      "n": 114,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 116,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 117,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 118,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 121,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 122,
+      "confidence": "high",
+      "relevance": "Direct methodological support for Chapter 3 indicator system design. Validates the selection of 12 i"
+     },
+     {
+      "n": 130,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 133,
+      "confidence": "high",
+      "relevance": "Theoretical justification for the 4E framework's multi-dimensional design. Explains why efficiency ("
+     },
+     {
+      "n": 136,
+      "confidence": "high",
+      "relevance": "Direct empirical support for the 'utilization performance' concept. Validates the Effectiveness dime"
+     },
+     {
+      "n": 137,
+      "confidence": "high",
+      "relevance": "Direct methodological precedent for the fsQCA analysis in Chapter 6. The finding that multiple paths"
+     },
+     {
+      "n": 139,
+      "confidence": "high",
+      "relevance": "Core reference for understanding 'why some platforms perform poorly despite similar institutional pr"
+     },
+     {
+      "n": 140,
+      "confidence": "high",
+      "relevance": "Core reference for the 'efficiency' dimension indicator design. The four usability dimensions inform"
+     },
+     {
+      "n": 157,
+      "confidence": "high",
+      "relevance": "Core reference for Chapter 2 literature review. The identified research gaps justify this study's me"
+     },
+     {
+      "n": 169,
+      "confidence": "high",
+      "relevance": "Core reference for the 'institutional construction' dimension in the DEMATEL analysis. Supports the "
+     },
+     {
+      "n": 170,
+      "confidence": "high",
+      "relevance": "Foundational systematic review for Chapter 2. The identified success factors inform the fsQCA condit"
+     },
+     {
+      "n": 175,
+      "confidence": "high",
+      "relevance": "Direct empirical support for the regional disparity findings in Chapter 5 (TOPSIS ranking) and Chapt"
+     },
+     {
+      "n": 177,
+      "confidence": "high",
+      "relevance": "Core reference for the 'utilization performance' concept and user-centric policy recommendations in "
+     },
+     {
+      "n": 178,
+      "confidence": "high",
+      "relevance": "Empirical support for the 'platform efficiency' dimension in the 4E framework. Explains why utilizat"
+     },
+     {
+      "n": 189,
+      "confidence": "high",
+      "relevance": "International validation for the regional disparity findings. Supports the generalizability of China"
+     },
+     {
+      "n": 190,
+      "confidence": "high",
+      "relevance": "Core reference for the 'utilization performance' concept and the discussion of proxy variable limita"
+     },
+     {
+      "n": 216,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 217,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 221,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 222,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 223,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 224,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 225,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 226,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 227,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 228,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 229,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 231,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 232,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 236,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 237,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 238,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 240,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 241,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 242,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 243,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 244,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 245,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 246,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 247,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 248,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 249,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 250,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 251,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 252,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 253,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 254,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 262,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 265,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 270,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 271,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 272,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 273,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 274,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 275,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 277,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 279,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 280,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 281,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 282,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 283,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 313,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 314,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 315,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 316,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 318,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 320,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 321,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 322,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 326,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 331,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 356,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 361,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 362,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 366,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 367,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 368,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 370,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 372,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 373,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 375,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 376,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 377,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 380,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 381,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 383,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 384,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 386,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 388,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 390,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 391,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 393,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 394,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 395,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 396,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 397,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 406,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 416,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 417,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 418,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 419,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 420,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 421,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 423,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 424,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 426,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 428,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 429,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 430,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 433,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 434,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 436,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 438,
+      "confidence": "low",
+      "relevance": "International comparison reference for Chapter 2."
+     },
+     {
+      "n": 441,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 442,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 443,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 444,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     },
+     {
+      "n": 446,
+      "confidence": "low",
+      "relevance": "论文相关章节的理论支撑和实证参照。"
+     }
+    ],
+    "sources": []
+   }
+  }
+ },
+ "ch3": {
+  "title": "研究设计与方法论",
+  "claims": {
+   "3.0-研究框架": {
+    "description": "分析框架总览+方法递进逻辑",
+    "papers": [
+     {
+      "n": 15,
+      "confidence": "low",
+      "relevance": "论文第4章数据采集部分的核心方法论文献。为本研究的“七种自适应采集策略”提供了技术分类基础。"
+     },
+     {
+      "n": 24,
+      "confidence": "low",
+      "relevance": "论文第3章数据采集伦理和第8章研究局限部分的核心文献。为“数据口径不一致部分源于隐私脱敏处理”提供了法理支撑。"
+     },
+     {
+      "n": 98,
+      "confidence": "high",
+      "relevance": "Core legal reference for Chapter 3's discussion of data collection ethics and Chapter 8's discussion"
+     },
+     {
+      "n": 99,
+      "confidence": "high",
+      "relevance": "Core legal reference for Chapter 3's data ethics discussion and Chapter 4's explanation of why some "
+     }
+    ],
+    "sources": []
+   },
+   "3.1-4E框架": {
+    "description": "Economy/Efficiency/Effectiveness/Equity操作化",
+    "papers": [
+     {
+      "n": 1,
+      "confidence": "low",
+      "relevance": "直接启发了本研究4E框架的设计——特别是Effectiveness维度的理论基础。本研究的创新在于将四维框架升级为包含Equity维度的4E体系，并用混合方法进行定量验证。"
+     },
+     {
+      "n": 2,
+      "confidence": "low",
+      "relevance": "核心数据来源和基准参照。本研究的“数据口径幻觉”发现，从方法论层面反思了数林指数中“数据集数量”作为核心指标的有效性问题。"
+     },
+     {
+      "n": 92,
+      "confidence": "high",
+      "relevance": "本研究4E框架的理论核心文献。为本研究选择4E框架作为评估理论基础提供了学术合法性，也为Equity维度的引入和操作化提供了理论依据。"
+     }
+    ],
+    "sources": [
+     "孟华(2022)4E绩效"
+    ]
+   },
+   "3.2-指标体系": {
+    "description": "16项二级指标选择依据+信效度",
+    "papers": [
+     {
+      "n": 8,
+      "confidence": "low",
+      "relevance": "直接支撑本研究第3章指标体系中“有效性(Effectiveness)”维度的设计，特别是数据质量子指标的选取。"
+     },
+     {
+      "n": 25,
+      "confidence": "low",
+      "relevance": "论文第3章指标体系中国际参照的核心文献。为本研究4E指标体系中的指标选择提供了国际比较基础。"
+     },
+     {
+      "n": 35,
+      "confidence": "high",
+      "relevance": "直接支撑本研究“数据口径幻觉”概念的方法论基础。为TOPSIS指标体系中增加利用效果维度提供了批判性论证。"
+     },
+     {
+      "n": 68,
+      "confidence": "high",
+      "relevance": "Core reference for the 'user participation' dimension in the 4E framework. Supports indicator select"
+     },
+     {
+      "n": 122,
+      "confidence": "high",
+      "relevance": "Direct methodological support for Chapter 3 indicator system design. Validates the selection of 12 i"
+     },
+     {
+      "n": 140,
+      "confidence": "high",
+      "relevance": "Core reference for the 'efficiency' dimension indicator design. The four usability dimensions inform"
+     }
+    ],
+    "sources": [
+     "李广建数据质量",
+     "黄璜四维模型"
+    ]
+   },
+   "3.3-方法论": {
+    "description": "TOPSIS→DEA→DEMATEL→fsQCA→DID递进逻辑",
+    "papers": [
+     {
+      "n": 10,
+      "confidence": "low",
+      "relevance": "本研究第5章DEA效率评估的方法论基础。为DEA在政府数据开放这一非传统领域的应用提供了方法论论证。"
+     },
+     {
+      "n": 11,
+      "confidence": "low",
+      "relevance": "本研究第6章DEMATEL分析的方法论基础。原论文的“原因-结果”二分框架直接应用于本研究的六维度因果网络分析。"
+     },
+     {
+      "n": 12,
+      "confidence": "low",
+      "relevance": "本研究第6章fsQCA组态分析的核心方法论文献。31省的样本量恰好落在fsQCA的最佳适用范围。"
+     },
+     {
+      "n": 13,
+      "confidence": "low",
+      "relevance": "本研究第7章DID政策效应评估的核心方法论文献。为评估“数据二十条”政策效应提供了方法论框架。"
+     },
+     {
+      "n": 14,
+      "confidence": "low",
+      "relevance": "本研究方法论递进逻辑的核心文献。“TOPSIS→DEA→DEMATEL→fsQCA→DID”五方法递进链的设计，直接借鉴了Fetters的“顺序整合”理念。"
+     },
+     {
+      "n": 20,
+      "confidence": "low",
+      "relevance": "本研究第5章TOPSIS综合评价的方法论基础。为TOPSIS在OGD评估中的应用提供了方法论先例。"
+     },
+     {
+      "n": 49,
+      "confidence": "high",
+      "relevance": "本研究方法论逻辑的核心文献。论文第8章“从评估到处方”的政策建议框架直接借鉴了本文的三环节模型。"
+     },
+     {
+      "n": 51,
+      "confidence": "high",
+      "relevance": "本研究fsQCA组态分析的方法论合法性来源。论文第6章明确提出本研究属于“解释性评估”范式，直接引用了本文的范式转换框架。"
+     },
+     {
+      "n": 127,
+      "confidence": "high",
+      "relevance": "Foundational paper for the DEMATEL method used in Chapter 6's causal network analysis of OGD perform"
+     },
+     {
+      "n": 131,
+      "confidence": "high",
+      "relevance": "Methodological reference for DEA model specification in Chapter 5. Provides guidance on input-output"
+     },
+     {
+      "n": 132,
+      "confidence": "high",
+      "relevance": "Methodological justification for the mixed-method design. Supports the study's claim of 'triangulati"
+     },
+     {
+      "n": 149,
+      "confidence": "high",
+      "relevance": "Methodological reference for the study's sequential design (TOPSIS -> DEA -> DEMATEL -> fsQCA -> DID"
+     },
+     {
+      "n": 150,
+      "confidence": "high",
+      "relevance": "Methodological justification for using DEA in Chapter 5. Provides the theoretical basis for model se"
+     },
+     {
+      "n": 152,
+      "confidence": "high",
+      "relevance": "Foundational paper for the DEMATEL method used in Chapter 6's causal network analysis of OGD perform"
+     },
+     {
+      "n": 153,
+      "confidence": "high",
+      "relevance": "Foundational paper for the DEMATEL method used in Chapter 6's causal network analysis of OGD perform"
+     },
+     {
+      "n": 154,
+      "confidence": "high",
+      "relevance": "Foundational paper for the DEMATEL method used in Chapter 6's causal network analysis of OGD perform"
+     },
+     {
+      "n": 156,
+      "confidence": "high",
+      "relevance": "Foundational paper for the DEMATEL method used in Chapter 6's causal network analysis of OGD perform"
+     },
+     {
+      "n": 161,
+      "confidence": "high",
+      "relevance": "Methodological reference for the TOPSIS weight determination in Chapter 5. The entropy method is use"
+     },
+     {
+      "n": 162,
+      "confidence": "high",
+      "relevance": "Methodological justification for the study's sequential mixed-method design. Validates the use of fs"
+     },
+     {
+      "n": 166,
+      "confidence": "high",
+      "relevance": "Methodological reference for the TOPSIS weight determination in Chapter 5. The entropy method is use"
+     },
+     {
+      "n": 179,
+      "confidence": "high",
+      "relevance": "Methodological justification for using fsQCA in Chapter 6. The 'integration with other methods' tren"
+     }
+    ],
+    "sources": [
+     "Charnes(1978)",
+     "Ragin(2008)",
+     "Fetters(2023)"
+    ]
+   }
+  }
+ }
+}

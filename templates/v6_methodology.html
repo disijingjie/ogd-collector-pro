@@ -1,0 +1,334 @@
+{% extends "base_v6.html" %}{% set active = "methodology" %}{% block title %}研究方法论 - AI时代的数据驱动研究范式{% endblock %}{% block page_title %}研究方法论{% endblock %}{% block breadcrumb %}研究拓展 / 研究方法论{% endblock %}
+{% block extra_css %}<style>
+.principle-card{background:#fff;border-radius:12px;padding:22px;border-left:4px solid #2563eb;margin-bottom:16px}
+.principle-card h4{font-size:15px;margin-bottom:8px;color:#1e293b}
+.principle-card p{font-size:13px;color:#64748b;line-height:1.8}
+.paradigm-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:24px 0}
+.pf-step{display:flex;flex-direction:column;align-items:center;padding:16px 12px;background:#fff;border-radius:12px;border:2px solid #e2e8f0;min-width:100px;transition:all .2s}
+.pf-step:hover{border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.08)}
+.pf-step .num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:8px;color:#fff}
+.pf-step .label{font-size:12px;font-weight:600;text-align:center}
+.pf-step .sub{font-size:10px;color:#64748b;text-align:center;margin-top:4px}
+.pf-arrow{font-size:20px;color:#cbd5e1}
+.compare-table th{background:#1e293b;color:#fff;padding:10px 14px;font-size:12px;text-align:center}
+.compare-table td{padding:10px 14px;font-size:12px;text-align:center;border-bottom:1px solid #e2e8f0}
+.compare-table .ours{background:#eff6ff}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#trigger" class="active">现实触发</a><a href="#paradigm">研究范式</a><a href="#pipeline">八步方法论</a><a href="#deepliterature">文献深潜</a><a href="#why-site">为什么这样做</a><a href="#comparison">传统vs新范式</a><a href="#references">外部评估对话</a><a href="#papers">衍生小论文</a><a href="#ai-paper">AI时代方法论创新</a></div>{% endblock %}
+{% block content %}
+
+<div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.7;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
+  <strong>本文档定位</strong>：记录本研究从选题到结论的完整方法论思考。这不是事后总结——这些方法论原则指导了采集系统的开发、网站的设计和论文的写作。在 AI 技术快速发展的背景下，数据驱动的研究范式正在改变博士论文的写作方式。
+</div>
+
+<div id="trigger" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Step 0：现实触发 — 从社会现象到研究问题</div></div>
+  <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#fef2f2;border-left:3px solid #dc2626;color:#991b1b">
+    <strong>方法论核心观点</strong>：真正的研究问题不是从文献中找到的，而是从现实中"看到"的。文献帮你验证这个问题是否值得研究、别人是否已经解决——但问题的来源，是现实世界的"经验触发"。
+  </div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:#1e293b;border-radius:12px;padding:0;overflow:hidden">
+      <div style="padding:16px;color:#fff">
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px">触发场景：当"开放"变成"无法打开"</div>
+        <div style="font-size:12px;color:#94a3b8;line-height:1.6">2024年，一则新闻视频引发广泛关注：一位普通公民试图访问国家级政府数据开放平台，却发现网站打不开、数据看不到、搜索无结果。这则新闻的背后，是一个更深刻的问题——<strong>政府数据的"开放"究竟是事实还是口号？</strong></div>
+      </div>
+      <video controls preload="metadata" style="width:100%;display:block" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Crect fill='%23334155' width='400' height='225'/%3E%3Ctext fill='%2394a3b8' font-size='14' text-anchor='middle' x='200' y='115'%3E点击播放：女子打不开国家级网站%3C/text%3E%3C/svg%3E">
+        <source src="/static/video/gov_site_inaccessible.mp4" type="video/mp4">
+        您的浏览器不支持视频播放。
+      </video>
+      <div style="padding:12px 16px;font-size:11px;color:#64748b">视频来源：新闻媒体报道 | 仅供学术研究引用</div>
+    </div>
+    <div>
+      <div class="principle-card" style="border-left-color:#dc2626">
+        <h4>从"看到"到"想研究"</h4>
+        <p>这个视频触发了三个层层递进的问题：<br>
+        <strong>(1) 这个现象普遍吗？</strong> → 不止一个平台打不开，大量省级平台"名义开放、实际难用"<br>
+        <strong>(2) 为什么？</strong> → 是技术问题、制度问题还是态度问题？<br>
+        <strong>(3) 怎么解决？</strong> → 如何科学评估、精准诊断、提出有效对策？</p>
+      </div>
+      <div class="principle-card" style="border-left-color:#2563eb">
+        <h4>现实触发→泛化理解的桥梁</h4>
+        <p>这个具体案例导向了一个更广泛的问题：<em>"我国政府数据开放到底做得怎么样？数据被利用了多少？瓶颈在哪？如何改进？"</em><br>
+        有了这个"问题锚点"，下一步的文献检索就有了明确的方向——不是泛泛地搜"政府数据开放"，而是搜"数据利用绩效""数据口径""平台评估方法"。</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="paradigm" class="scroll-section">
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
+  <div style="text-align:center;padding:24px">
+    <div style="font-size:22px;font-weight:700;margin-bottom:8px">AI 时代的数据驱动研究范式</div>
+    <div style="font-size:14px;color:#94a3b8;line-height:1.8">传统博士论文：假设 → 验证 → 结论<br>本研究：泛化理解 → 精准调研 → 数据获取可行性评估 → 精准采集 → 方法匹配 → 可靠结论 → 优化迭代</div>
+  </div>
+</div>
+</div>
+
+<div id="pipeline" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>八步研究方法论</div></div>
+  
+  <div class="paradigm-flow">
+    <div class="pf-step"><div class="num" style="background:#dc2626">0</div><div class="label">现实触发</div><div class="sub">社会现象观察</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#2563eb">1</div><div class="label">泛化理解</div><div class="sub">文献检索与综述</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#3b82f6">2</div><div class="label">精准调研</div><div class="sub">行业现状与问题</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#7c3aed">3</div><div class="label">可行性评估</div><div class="sub">数据可获取性</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#0891b2">4</div><div class="label">精准采集</div><div class="sub">23省+5种方法</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#16a34a">5</div><div class="label">方法匹配</div><div class="sub">TOPSIS→DEA→...</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#ca8a04">6</div><div class="label">可靠结论</div><div class="sub">5大研究发现</div></div>
+    <div class="pf-arrow">→</div>
+    <div class="pf-step"><div class="num" style="background:#9333ea">7</div><div class="label">优化迭代</div><div class="sub">复采验证+对策</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>Step 1：泛化理解——文献的系统检索与归纳</h4>
+      <p>借助 AI 工具对 Web of Science (2,847篇) 和 CNKI (3,156篇) 文献进行系统检索、PRISMA 筛选和主题聚类。从海量文献中提取政府数据开放领域的三大演化阶段、四类研究范式和关键学术争论。这一步回答"别人做了什么、没做什么"。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#3b82f6">
+      <h4>Step 2：精准调研——锁定核心问题</h4>
+      <p>在泛化理解基础上，聚焦到"数据利用绩效"这一被忽视的核心问题。发现现有评估体系的系统性缺陷——"开放多、利用少"的结构性悖论和"数据口径幻觉"。确定 30 个省级平台为研究样本。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>Step 3：可行性评估——数据能不能拿到？</h4>
+      <p>这是本研究与传统博士论文最大的区别。在确定研究问题后，不是直接开始写，而是先评估数据可获取性。对 30 个省级平台逐一测试：哪些有首页数据？哪些需要爬取目录页？哪些是动态渲染？哪些平台根本无独立数据平台（归集到政务平台）？这一步决定了研究样本从 31 省缩减到 23 省直采+7省归集。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#0891b2">
+      <h4>Step 4：精准采集——多方法混合</h4>
+      <p>根据 Step 3 的评估结果，对 23 个平台采用 5 种不同的采集方法：静态爬取(Requests+BeautifulSoup)、CSS选择器提取、正则匹配、Playwright动态渲染、官方报告引用。安徽平台从"无法采集"到 Playwright 攻克的过程，是这一步的核心案例。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#16a34a">
+      <h4>Step 5：方法匹配——为数据找到合适的分析工具</h4>
+      <p>采集到的数据有不同的结构和性质——横截面排序数据适合 TOPSIS、投入产出关系适合 DEA、专家判断适合 DEMATEL、条件组合适合 fsQCA、时间面板适合 DID。不是先学方法再找数据，而是先拿到数据再选择最适合的方法。这是"数据驱动"的核心含义。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#ca8a04">
+      <h4>Step 6-7：可靠结论 + 优化迭代</h4>
+      <p>五种方法交叉验证得到五大核心发现（区域差异、"数据口径幻觉"、数据质量的核心驱动作用、三条等效路径、政策时滞效应），提出三层次政策建议和2025-2030路线图。之后通过复采验证数据的稳定性，通过网站公开展示接受学术审查。</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="deepliterature" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Step 1 下钻：泛化理解 = 文献综述 + 政策脉络 + 理论框架</div><div style="font-size:12px;color:#64748b">对应论文第二章"理论基础与文献综述"和第三章"评估框架与指标体系"</div></div>
+  
+  <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
+    <strong>"泛化理解"不是漫无目的地读书</strong>——它是在"现实触发"锚定问题之后，有方向地检索、筛选、归纳。本研究的泛化理解遵循三层结构：<strong>文献计量全景</strong>（WOS 2,847篇 + CNKI 3,156篇）→ <strong>政策演化脉络</strong>（2015-2025三阶段递进逻辑）→ <strong>理论基础整合</strong>（IRM三次范式 + NPG新公共治理 + 制度同形理论）。
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>层面一：文献计量分析</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.8"><strong>数据来源</strong>：Web of Science 核心合集 + CNKI期刊全文数据库<br>
+      <strong>检索策略</strong>：PRISMA系统筛选流程（识别→筛选→合格→纳入）<br>
+      <strong>分析方法</strong>：关键词共现图谱 + 突现词检测 + 三阶段演化分析<br>
+      <strong>核心发现</strong>：政府数据开放研究经历了"技术驱动期(2009-2015)"→"制度驱动期(2016-2020)"→"价值驱动期(2021至今)"，但"利用效果"始终是研究薄弱环节。</p>
+      <div style="margin-top:10px"><a href="/literature#prisma" class="quick-link" style="font-size:12px;color:#2563eb">查看完整文献检索策略 →</a></div>
+    </div>
+    <div class="principle-card" style="border-left-color:#3b82f6">
+      <h4>层面二：政策演化分析</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.8"><strong>分析对象</strong>：2015-2025年国家层面11份关键政策文件<br>
+      <strong>分析框架</strong>：三阶段递进逻辑（技术推动→制度驱动→价值牵引）<br>
+      <strong>核心发现</strong>：政策焦点从"开放什么"转向"如何利用"，但评估体系尚未同步转型——仍在用"供给侧指标"衡量"效果侧目标"。<br>
+      <strong>代表性文件</strong>：《促进大数据发展行动纲要》(2015)、《数据安全法》(2021)、"数据二十条"(2022)、国家数据局成立(2023)。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>层面三：理论基础整合</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.8"><strong>三大理论支柱</strong>：<br>
+      (1) <strong>信息资源管理(IRM)三次范式</strong>：技术管理→信息管理→知识管理，对应数据开放的三个阶段<br>
+      (2) <strong>新公共治理(NPG)</strong>：从"划桨"到"掌舵"再到"服务"，解释政府角色的演变<br>
+      (3) <strong>制度同形理论</strong>：强制性同形+模仿性同形+规范性同形，解释省份间数据开放趋同现象</p>
+      <div style="margin-top:10px"><a href="/thesis#theories" class="quick-link" style="font-size:12px;color:#2563eb">查看论文理论章节 →</a></div>
+    </div>
+  </div>
+  <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-top:16px;background:#fef3c7;border-left:3px solid #ca8a04;color:#92400e">
+    <strong>方法论要点</strong>：泛化理解的三个层面不是线性关系，而是循环迭代——文献告诉你政策怎么走，政策告诉你理论缺口在哪里，理论告诉你文献怎么分类。AI工具在每一步都发挥了关键作用：文献计量聚类、政策文本摘要、理论框架生成。
+  </div>
+  
+  <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-top:12px;background:#fff7ed;border-left:3px solid #ea580c;color:#9a3412">
+    <strong>🔬 深度下钻入口（文献研究四件套）</strong>：<br>
+    (1) <strong>文献研究之路</strong>：万里挑一→千里挑一→百里挑一→十里挑一，完整还原6,003篇→200篇筛选过程——<a href="/research-journey" style="color:#ea580c;font-weight:600">进入四级筛选操作台 →</a><br>
+    (2) <strong>文献摘录笔记</strong>：200篇核心文献逐篇五维度摘录（问题/方法/数据/发现/关联）——<a href="/lit-extract" style="color:#ea580c;font-weight:600">查看摘录笔记 →</a><br>
+    (3) <strong>章节合成工作台</strong>：200篇文献→3章15节的映射表，每节标注匹配文献+写作要点——<a href="/chapter-synth" style="color:#ea580c;font-weight:600">进入章节合成 →</a><br>
+    (4) <strong>文献数据库</strong>：200篇可搜索可筛选完整库——<a href="/literature" style="color:#ea580c;font-weight:600">检索文献 →</a>
+  </div>
+</div>
+</div>
+
+<div id="why-site" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>为什么如此认真地做采集系统和网站？</div></div>
+  
+  <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#fef3c7;border-left:3px solid #ca8a04;color:#92400e">
+    <strong>核心信念</strong>：在 AI 时代，取数环节是研究工作中最重要的工作。因为 AI 可以做文献综述、可以做数据分析、甚至可以写论文初稿——但它不能替你爬到 23 个政府网站上把数据取回来。数据的真实性、完整性和可复现性，是 AI 无法替代的研究者核心能力。
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="principle-card" style="border-left-color:#16a34a">
+      <h4>原因一：数据采集是 AI 时代的"研究者护城河"</h4>
+      <p>AI 可以写文献综述、跑回归、画图表，但它无法替你访问安徽政府网站、发现 URL 变更、用 Playwright 攻克 Vue.js SPA。这些"脏活"构成了研究的独特性和不可替代性。采集系统就是这份独特性的物化证明。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>原因二：公开网站 = 学术审查的前置</h4>
+      <p>传统论文的数据和方法描述藏在几页纸里，评审只能"相信你"。把采集过程、规则、日志、截图全部公开在网站上，等于在论文提交前就接受了公众审查。数据如果有问题，网站先暴露——这就是"用透明换信任"。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>原因三：数据口径幻觉只有可视化才能讲清楚</h4>
+      <p>论文里写"山东63,656个数据目录与广东97,528个数据集不可直接比较"——读者需要想象。但在网站上，6类口径用不同颜色标注、不可比关系用红色警告——读者一眼看懂。这弥补了论文文字表达的天然局限。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#dc2626">
+      <h4>原因四：网站本身就是一种新的学术写作</h4>
+      <p>传统博士论文写完就锁在 PDF 里。但网站可以有交互图表、可下载数据、动态更新的复采结果。答辩时投屏展示，评审可以当场点开安徽平台的采集过程看——这比任何 PPT 都有说服力。</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="comparison" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>传统研究范式 vs 本研究范式</div></div>
+  <table class="data-table compare-table">
+    <tr><th>维度</th><th>传统博士论文范式</th><th>本研究范式（数据驱动）</th></tr>
+    <tr><td style="font-weight:600">起点</td><td>理论缺口 → 研究假设</td><td class="ours">现实问题 → 数据可获取性评估</td></tr>
+    <tr><td style="font-weight:600">数据角色</td><td>验证假设的工具</td><td class="ours">驱动问题定义和研究设计的核心</td></tr>
+    <tr><td style="font-weight:600">方法选择</td><td>先学方法再找适配数据</td><td class="ours">先获取数据再匹配最适方法</td></tr>
+    <tr><td style="font-weight:600">技术工具</td><td>SPSS/Stata 单机分析</td><td class="ours">Python采集系统 + Flask网站 + GitHub开源 + AI辅助</td></tr>
+    <tr><td style="font-weight:600">可复现性</td><td>文字描述数据来源</td><td class="ours">采集规则JSON + 日志 + 截图 + 代码全公开</td></tr>
+    <tr><td style="font-weight:600">成果形式</td><td>论文PDF</td><td class="ours">论文 + 支撑网站 + 开源代码 + 可下载数据</td></tr>
+    <tr><td style="font-weight:600">核心能力</td><td>理论推导、写作</td><td class="ours">数据获取 + 方法适配 + 系统开发 + 理论建构</td></tr>
+    <tr><td style="font-weight:600">AI 的定位</td><td>不涉及</td><td class="ours">全面辅助：文献筛选、代码生成、网站搭建、论文润色</td></tr>
+  </table>
+</div>
+</div>
+
+<div id="papers" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>衍生小论文方向</div><div style="font-size:12px;color:#64748b">在开发采集系统和网站过程中自然发现的研究问题</div></div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>选题1：异构平台数据采集方法论</h4>
+      <p><strong>来源</strong>：开发23平台采集系统的工程实践。<br>
+      <strong>问题</strong>：政府数据开放平台存在静态HTML、Vue.js SPA、React SPA、传统JSP四种技术架构，数据统计口径有6类——如何建立统一采集框架？<br>
+      <strong>方法</strong>：多案例研究方法，对比5种采集技术的适用场景和技术边界。<br>
+      <strong>期刊</strong>：图书情报工作、数据分析与知识发现</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>选题2：政府数据开放平台的"数据口径幻觉"</h4>
+      <p><strong>来源</strong>：发现23省6类统计口径的不可比性。<br>
+      <strong>问题</strong>：口径差异如何影响评估结果的可靠性？如何设计口径标准化方案？<br>
+      <strong>方法</strong>：基于"开放数林指数"等第三方数据的校准实验。<br>
+      <strong>期刊</strong>：中国行政管理、公共管理学报</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#16a34a">
+      <h4>选题3：平台技术架构与数据可获取性的关系</h4>
+      <p><strong>来源</strong>：安徽平台Vue.js SPA的Playwright攻克过程。<br>
+      <strong>问题</strong>：政府数据平台的技术架构选择如何影响第三方数据获取？"开放"的技术内涵是什么？<br>
+      <strong>方法</strong>：技术测评+法规分析。<br>
+      <strong>期刊</strong>：信息资源管理学报、电子政务</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#dc2626">
+      <h4>选题4：数据开放平台的"隐性壁垒"</h4>
+      <p><strong>来源</strong>：采集过程中发现的非技术障碍。<br>
+      <strong>问题</strong>：URL频繁变更、API需要申请、反爬机制、数据格式不统一——这些构成"开而不放"的隐性壁垒。<br>
+      <strong>方法</strong>：混合方法（技术测评+政策文本分析）。<br>
+      <strong>期刊</strong>：情报学报、公共行政评论</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="references" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>与现有评估体系的对话</div><div style="font-size:12px;color:#64748b">本研究不是另起炉灶——是在充分吸收国内外评估经验基础上的范式跃迁</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>国内参照：中国开放数林指数（复旦大学 DMG）</h4>
+      <p style="font-size:12px;color:#64748b">国内最权威的政府数据开放评估。从准备度、数据层、平台层、利用层四维度评估200+地方平台。<br>
+      <strong>差异</strong>：侧重"开放水平"，本研究聚焦"利用绩效"；本研究首次对"口径比值"进行方法论反思。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>国内参照：清华大学数据治理研究中心</h4>
+      <p style="font-size:12px;color:#64748b">从制度保障、平台建设、数据质量、应用成效四维度评估。<br>
+      <strong>差异</strong>：侧重制度与建设；本研究公开完整采集规则和代码；结合fsQCA/DID揭示因果机制。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#16a34a">
+      <h4>国际参照：Open Data Barometer</h4>
+      <p style="font-size:12px;color:#64748b">覆盖115国的全球评估，从准备度→执行力→影响力三维度。<strong>核心发现</strong>：全球仅10%的政府数据集"完全开放"。<br>
+      <strong>启发</strong>：影响力维度的设计启发了本研究的 "利用效果"维度——但ODB用专家感知代替客观测度。</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#ca8a04">
+      <h4>国际参照：OECD OURdata + GODI + 欧盟DCAT-AP</h4>
+      <p style="font-size:12px;color:#64748b"><strong>OURdata</strong>：40国评估，数据可用性/可访问性/政府支持，但不评利用绩效。<br>
+      <strong>GODI</strong>："开放"=技术开放+法律开放。<strong>data.europa.eu</strong>：元数据标准化评估。<br>
+      <strong>启发</strong>：对"开放"定义的反思→"可获取≠可开放，有数据≠有效数据"。</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="papers" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>衍生小论文方向</div><div style="font-size:12px;color:#64748b">在开发采集系统和网站过程中自然发现的研究问题</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="principle-card" style="border-left-color:#2563eb">
+      <h4>选题1：异构平台数据采集方法论</h4>
+      <p><strong>来源</strong>：静态HTML/Vue.js/React/传统JSP四种架构的5种采集方法。<br>
+      <strong>问题</strong>：如何建立统一的多架构政府数据采集框架？<br>
+      <strong>期刊</strong>：图书情报工作、数据分析与知识发现</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#7c3aed">
+      <h4>选题2：政府数据开放平台的"数据口径幻觉"</h4>
+      <p><strong>来源</strong>：23省6类统计口径的不可比性。<br>
+      <strong>问题</strong>：口径差异如何影响评估结果的可靠性？<br>
+      <strong>期刊</strong>：中国行政管理、公共管理学报</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#16a34a">
+      <h4>选题3：平台技术架构与数据可获取性</h4>
+      <p><strong>来源</strong>：安徽平台Vue.js SPA的Playwright攻克。<br>
+      <strong>问题</strong>：技术架构如何影响第三方数据获取？<br>
+      <strong>期刊</strong>：信息资源管理学报、电子政务</p>
+    </div>
+    <div class="principle-card" style="border-left-color:#dc2626">
+      <h4>选题4：数据开放平台的"隐性壁垒"</h4>
+      <p><strong>来源</strong>：URL变更、反爬、API申请等非技术障碍。<br>
+      <strong>问题</strong>：这些壁垒如何构成"开而不放"？<br>
+      <strong>期刊</strong>：情报学报、公共行政评论</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="ai-paper" class="scroll-section">
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
+  <div style="padding:24px">
+    <div style="font-size:18px;font-weight:700;margin-bottom:16px">🎓 核心小论文：AI时代信息资源管理学科的研究方法论创新</div>
+    <div style="font-size:13px;color:#94a3b8;line-height:1.8;margin-bottom:20px">
+      这是从本研究实践中提炼的最重要的小论文选题。它将本研究的八步方法论提升为学科层面的方法论贡献。
+    </div>
+    <table style="width:100%;color:#cbd5e1;font-size:13px;line-height:2.2">
+      <tr><td style="width:120px;padding:4px;color:#60a5fa;font-weight:600">研究问题</td><td style="padding:4px">AI技术的快速发展如何改变信息资源管理学科的研究范式？传统的"假设-验证"范式能否被"数据驱动-方法适配"范式补充或替代？</td></tr>
+      <tr><td style="padding:4px;color:#60a5fa;font-weight:600">理论框架</td><td style="padding:4px">以"八步方法论"为实证案例，从认识论（如何知道）、方法论（如何研究）和工具论（用什么工具）三个层面分析AI对学科研究范式的影响</td></tr>
+      <tr><td style="padding:4px;color:#60a5fa;font-weight:600">核心论点</td><td style="padding:4px">(1) 数据获取能力取代传统文献综述成为研究的"第一生产力"；(2) "先获取数据再匹配方法"颠覆了"先学方法再找数据"的传统路径；(3) 公开网站+开源代码+可下载数据构成了新的"学术成果三角"——论文、数据和系统同等重要</td></tr>
+      <tr><td style="padding:4px;color:#60a5fa;font-weight:600">方法论贡献</td><td style="padding:4px">提出"数据驱动型博士论文"的八步操作框架——不仅是本研究的总结，也是可供后续博士生参照的方法论模板</td></tr>
+      <tr><td style="padding:4px;color:#60a5fa;font-weight:600">目标期刊</td><td style="padding:4px">中国图书馆学报、情报学报、Journal of the Association for Information Science and Technology (JASIST)</td></tr>
+      <tr><td style="padding:4px;color:#60a5fa;font-weight:600">与导师方向关联</td><td style="padding:4px">陈传夫教授的信息资源管理理论研究 + 冉从敬教授的数据治理与开放科学方向，均在本文的学科方法论创新中有直接体现</td></tr>
+    </table>
+    <div style="text-align:center;margin-top:14px">
+      <a href="/methodology-paper" style="display:inline-block;padding:8px 20px;background:#2563eb;color:#fff;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600">📄 阅读完整论文稿（7000字框架版）→</a>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

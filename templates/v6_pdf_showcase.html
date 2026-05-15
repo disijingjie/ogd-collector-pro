@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文献引用溯源 - 政府数据开放研究</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #2563eb;
+            --accent: #7c3aed;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg); 
+            color: var(--text); 
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 20px; font-weight: 600; }
+        .header p { font-size: 12px; opacity: 0.85; margin: 4px 0 0 0; }
+        .header .badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+        
+        /* Search */
+        .search-section {
+            background: white;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 88px;
+            z-index: 99;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .search-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .stats-badge {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            background: #eff6ff;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+        
+        /* Paper Cards */
+        .content { padding: 24px 40px; max-width: 1200px; }
+        .card-grid { display: grid; gap: 16px; }
+        
+        .paper-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .paper-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+            transform: translateY(-2px);
+        }
+        .paper-card .index {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 11px;
+            color: #94a3b8;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .paper-card .title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .paper-card .meta {
+            font-size: 12px;
+            color: var(--text-light);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .paper-card .meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .empty-state i { font-size: 48px; display: block; margin-bottom: 12px; }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #94a3b8;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        /* Loading */
+        .loading { text-align: center; padding: 40px; color: var(--text-light); }
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header, .search-section, .content { padding-left: 16px; padding-right: 16px; }
+            .search-section { flex-direction: column; }
+            .paper-card .meta { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div>
+            <h1>📑 文献引用溯源系统</h1>
+            <p>政府数据开放研究 · 所有引用均有据可查</p>
+        </div>
+        <span class="badge" id="totalBadge">加载中...</span>
+    </div>
+    
+    <!-- Search -->
+    <div class="search-section">
+        <input type="text" class="search-input" id="searchInput" 
+               placeholder="输入关键词搜索文献：标题、作者、文件名...">
+        <span class="stats-badge" id="statsBadge">共 0 篇文献</span>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <div class="loading" id="loadingState">
+            <div class="spinner"></div>
+            <p>正在加载文献数据库...</p>
+        </div>
+        <div class="card-grid" id="papersGrid"></div>
+        <div class="empty-state" id="emptyState" style="display:none">
+            <i class="bi bi-inbox"></i>
+            <p>未找到匹配的文献</p>
+            <p style="font-size:12px;margin-top:4px">尝试其他关键词搜索</p>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>OGD-Collector Pro · 文献引用溯源系统 · 所有文献均可溯源至原始PDF文件</p>
+        <p style="margin-top:4px">用于博士论文答辩时向导师展示：所有引用和数据均有原始依据</p>
+    </div>
+    
+    <script>
+        let papersData = [];
+        
+        async function loadPapers() {
+            try {
+                // 数据直接嵌入HTML，避免fetch请求
+                papersData = [{"title": "Orchestrating_an_open_innovati", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "Orchestrating_an_open_innovati.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\Orchestrating_an_open_innovati.pdf"}, {"title": "Public_data_openness_and_digit", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "Public_data_openness_and_digit.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\Public_data_openness_and_digit.pdf"}, {"title": "Same_platform__different_outco", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "Same_platform__different_outco.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\Same_platform__different_outco.pdf"}, {"title": "_恰到好处_抑或_过犹不及____公共数据开放与企业投资效率", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "_恰到好处_抑或_过犹不及____公共数据开放与企业投资效率.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\_恰到好处_抑或_过犹不及____公共数据开放与企业投资效率.pdf"}, {"title": "企业新质生产力与供应链中断风险", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "企业新质生产力与供应链中断风险.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\企业新质生产力与供应链中断风险.pdf"}, {"title": "公共数据开放何以提升城市经济韧性_", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "公共数据开放何以提升城市经济韧性_.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\公共数据开放何以提升城市经济韧性_.pdf"}, {"title": "公共数据开放平台与数据交易平台开放对企业创新边界的协同效应", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "公共数据开放平台与数据交易平台开放对企业创新边界的协同效应.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\公共数据开放平台与数据交易平台开放对企业创新边界的协同效应.pdf"}, {"title": "基于开放平台的个人数据传播生态系统的评估方法建构与应用", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "基于开放平台的个人数据传播生态系统的评估方法建构与应用.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\基于开放平台的个人数据传播生态系统的评估方法建构与应用.pdf"}, {"title": "政府开放数据价值释放驱动要素与运行机制研究", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府开放数据价值释放驱动要素与运行机制研究.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府开放数据价值释放驱动要素与运行机制研究.pdf"}, {"title": "政府开放数据影响力评价与提升路径研究__基于31个省级平台的", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府开放数据影响力评价与提升路径研究__基于31个省级平台的.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府开放数据影响力评价与提升路径研究__基于31个省级平台的.pdf"}, {"title": "政府开放数据影响力评价与提升路径研究__基于31个省级平台的组态分析", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府开放数据影响力评价与提升路径研究__基于31个省级平台的组态分析.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府开放数据影响力评价与提升路径研究__基于31个省级平台的组态分析.pdf"}, {"title": "政府开放数据赋能水平的影响因素关联研究", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府开放数据赋能水平的影响因素关联研究.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府开放数据赋能水平的影响因素关联研究.pdf"}, {"title": "政府数据公开背景下的档案开放与利用", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府数据公开背景下的档案开放与利用.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府数据公开背景下的档案开放与利用.pdf"}, {"title": "政府数据开放背景下知情同意与目的限制规则豁免适用研究", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府数据开放背景下知情同意与目的限制规则豁免适用研究.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府数据开放背景下知情同意与目的限制规则豁免适用研究.pdf"}, {"title": "政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上.pdf"}, {"title": "政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上市企业的实证分析", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上市企业的实证分析.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\政府数据开放能提高粮食企业综合生产能力吗___基于A股涉粮上市企业的实证分析.pdf"}, {"title": "数字政府建设中数据共享开放的新时代机制及其路径创新研究", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数字政府建设中数据共享开放的新时代机制及其路径创新研究.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数字政府建设中数据共享开放的新时代机制及其路径创新研究.pdf"}, {"title": "数字时代下公共数据资产化研究__基于共享_开放与授权运营三条", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数字时代下公共数据资产化研究__基于共享_开放与授权运营三条.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数字时代下公共数据资产化研究__基于共享_开放与授权运营三条.pdf"}, {"title": "数字时代下公共数据资产化研究__基于共享_开放与授权运营三条路径", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数字时代下公共数据资产化研究__基于共享_开放与授权运营三条路径.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数字时代下公共数据资产化研究__基于共享_开放与授权运营三条路径.pdf"}, {"title": "数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与.pdf"}, {"title": "数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与数据开放双重视角", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与数据开放双重视角.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数据政策协同如何驱动企业数字创新网络嵌入___基于数据交易与数据开放双重视角.pdf"}, {"title": "数据要素视角下数字化商业模式创新的多元实现路径", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "数据要素视角下数字化商业模式创新的多元实现路径.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\数据要素视角下数字化商业模式创新的多元实现路径.pdf"}, {"title": "检验检测数据要素赋能智慧治理和产业发展路径研究", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "检验检测数据要素赋能智慧治理和产业发展路径研究.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\检验检测数据要素赋能智慧治理和产业发展路径研究.pdf"}, {"title": "生成式人工智能时代的政府数据管理权_法理证成与治理创新", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "生成式人工智能时代的政府数据管理权_法理证成与治理创新.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\生成式人工智能时代的政府数据管理权_法理证成与治理创新.pdf"}, {"title": "论公共数据授权运营行政性垄断的识别和控制", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "论公共数据授权运营行政性垄断的识别和控制.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\论公共数据授权运营行政性垄断的识别和控制.pdf"}, {"title": "论公共物品理论视角下的公共数据开放模式", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "论公共物品理论视角下的公共数据开放模式.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\论公共物品理论视角下的公共数据开放模式.pdf"}, {"title": "面向大数据实验的通用开放平台构建与实践", "author": "未知", "subject": "", "pages": 0, "first_page_text": "", "file_name": "面向大数据实验的通用开放平台构建与实践.pdf", "file_path": "c:\\Users\\MI\\WorkBuddy\\newbbbb\\ogd_collector_system\\data\\papers\\面向大数据实验的通用开放平台构建与实践.pdf"}];
+                
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('totalBadge').textContent = papersData.length + ' 篇文献';
+                document.getElementById('statsBadge').textContent = '共 ' + papersData.length + ' 篇文献';
+                
+                renderPapers(papersData);
+            } catch (error) {
+                document.getElementById('loadingState').innerHTML = '<p style="color:#dc2626">⚠️ 文献数据加载失败</p><p style="font-size:12px">共 ' + papersData.length + ' 篇文献</p>'; renderPapers(papersData);
+                console.error('加载失败:', error);
+            }
+        }
+        
+        function renderPapers(papers) {
+            const grid = document.getElementById('papersGrid');
+            const empty = document.getElementById('emptyState');
+            
+            if (papers.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            
+            empty.style.display = 'none';
+            
+            grid.innerHTML = papers.map((paper, idx) => {
+                const title = paper.title || paper.file_name.replace('.pdf', '').replace(/_/g, ' ');
+                const author = paper.author || '未知';
+                const pages = paper.pages ? paper.pages + ' 页' : '';
+                const preview = paper.first_page_text ? 
+                    paper.first_page_text.substring(0, 120).replace(/
+/g, ' ') + '...' : 
+                    '（点击查看完整引用信息）';
+                
+                return `
+                <div class="paper-card" onclick="showDetail(${idx})" title="点击查看详情">
+                    <span class="index">#${idx + 1}</span>
+                    <div class="title">${escapeHtml(title)}</div>
+                    <div class="meta">
+                        <span><i class="bi bi-person"></i> ${escapeHtml(author)}</span>
+                        ${pages ? '<span><i class="bi bi-file-earmark"></i> ' + pages + '</span>' : ''}
+                        <span style="color:#94a3b8"><i class="bi bi-file-pdf"></i> ${escapeHtml(paper.file_name)}</span>
+                    </div>
+                </div>`;
+            }).join('');
+            
+            document.getElementById('statsBadge').textContent = 
+                '显示 ' + papers.length + ' / 共 ' + papersData.length + ' 篇';
+        }
+        
+        function showDetail(idx) {
+            const paper = papersData[idx];
+            const title = paper.title || paper.file_name.replace('.pdf', '').replace(/_/g, ' ');
+            
+            alert(
+                '📄 文献详情\n\n' +
+                '标题：' + title + '\n' +
+                '文件：' + paper.file_name + '\n' +
+                '页数：' + (paper.pages || '未知') + '\n' +
+                '作者：' + (paper.author || '未知') + '\n\n' +
+                '📌 此文献为博士论文参考文献，原始PDF文件可溯源。'
+            );
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const keyword = e.target.value.toLowerCase().trim();
+            
+            if (!keyword) {
+                renderPapers(papersData);
+                return;
+            }
+            
+            const filtered = papersData.filter(p => 
+                (p.title && p.title.toLowerCase().includes(keyword)) ||
+                (p.author && p.author.toLowerCase().includes(keyword)) ||
+                (p.file_name && p.file_name.toLowerCase().includes(keyword)) ||
+                (p.subject && p.subject.toLowerCase().includes(keyword)) ||
+                (p.first_page_text && p.first_page_text.toLowerCase().includes(keyword))
+            );
+            renderPapers(filtered);
+        });
+        
+        // 页面加载
+        loadPapers();
+    </script>
+</body>
+</html>

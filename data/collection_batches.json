@@ -1,0 +1,46 @@
+[
+  {
+    "id": 4,
+    "date": "2026-05-03T02:05:00",
+    "label": "Batch #4 · 安徽复采验证",
+    "icon": "🟣",
+    "color": "#7c3aed",
+    "stats": {"platforms": 1, "open_dirs": 36300, "data_volume": "4,289.50万", "downloads": "80.53万", "api_calls": "222.59万"},
+    "summary": "Playwright复采成功。旧版8000端口已停运(系统维护中)，新版URL确认为唯一入口。数据稳定，与2026-04-28初采结果一致。",
+    "tags": [{"label": "安徽", "type": "playwright"}, {"label": "36,300开放目录", "type": "count"}],
+    "links": [{"href": "/credibility#anhui", "text": "→ 完整攻克故事", "cls": "warn"}, {"href": "https://data.ahzwfw.gov.cn/dataopen-web/index.html", "text": "🔗 访问平台", "cls": ""}]
+  },
+  {
+    "id": 3,
+    "date": "2026-04-25T00:30:00",
+    "label": "Batch #3 · 静态爬取全量采集",
+    "icon": "🟢",
+    "color": "#16a34a",
+    "stats": {"platforms": 22, "success": 22, "failed": 0, "static": 18, "official": 4},
+    "summary": "对22个省级平台执行批量静态爬取+官方报告采集。安徽除外(待Playwright专项)。采集成功率100%。",
+    "tags": [{"label": "广东157,528", "type": "gov"}, {"label": "山东63,656", "type": "gov"}, {"label": "浙江38,000", "type": "gov"}, {"label": "海南35,835", "type": "gov"}, {"label": "安徽⚠️待处理", "type": "third"}],
+    "links": [{"href": "#", "text": "⬇ 导出批次CSV", "cls": "csv"}, {"href": "#", "text": "📋 采集日志", "cls": "log"}, {"href": "/credibility#timeline", "text": "→ 数据可信度中心", "cls": ""}]
+  },
+  {
+    "id": 2,
+    "date": "2026-04-28T23:25:00",
+    "label": "Batch #2 · 安徽Playwright初采",
+    "icon": "🟣",
+    "color": "#7c3aed",
+    "stats": {"platforms": 1, "open_dirs": 36300, "data_volume": "4,289.50万", "downloads": "80.53万"},
+    "summary": "首次使用Playwright动态渲染成功采集安徽Vue.js SPA。采集脚本：collect_anhui_playwright.py",
+    "tags": [{"label": "安徽", "type": "playwright"}, {"label": "Playwright攻克", "type": "third"}],
+    "links": [{"href": "/credibility#anhui", "text": "→ 查看攻克案例", "cls": "warn"}]
+  },
+  {
+    "id": 1,
+    "date": "2026-04-22T00:00:00",
+    "label": "Batch #1 · 初始摸底采集",
+    "icon": "🟠",
+    "color": "#ca8a04",
+    "stats": {"platforms": 31, "confirmed": 23, "redirected": 8, "caliber_types": 6},
+    "summary": "首批摸底确认：31省中23省有独立平台，8省归集至省级政务平台。发现6种数据口径类型。甘肃/河北/黑龙江/宁夏/青海/陕西/新疆/西藏无独立平台。",
+    "tags": [],
+    "links": []
+  }
+]

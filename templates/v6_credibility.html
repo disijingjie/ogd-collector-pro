@@ -1,0 +1,328 @@
+{% extends "base_v6.html" %}{% set active = "credibility" %}{% block title %}数据可信度中心 - OGD-Collector Pro{% endblock %}{% block page_title %}数据可信度中心{% endblock %}{% block breadcrumb %}数据可信度中心{% endblock %}
+{% block extra_css %}<style>
+.cred-alert{padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.7}
+.cred-alert.info{background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af}
+.cred-alert.warn{background:#fef3c7;border-left:3px solid #ca8a04;color:#92400e}
+.cred-alert.danger{background:#fef2f2;border-left:3px solid #dc2626;color:#991b1b}
+.matrix-wrap{overflow-x:auto}
+.matrix th:first-child,.matrix td:first-child{position:sticky;left:0;background:#fff;font-weight:600;z-index:1}
+.matrix th{background:#1e293b;color:#fff;padding:12px 14px;font-size:12px;font-weight:600;text-align:center;white-space:nowrap}
+.matrix td{padding:10px 12px;text-align:center;font-size:12px;border-bottom:1px solid #e2e8f0}
+.matrix tr:hover td{background:#f8fafc}
+.matrix .match{background:#dcfce7;color:#166534;font-weight:600}
+.matrix .partial{background:#fef3c7;color:#854d0e;font-weight:600}
+.matrix .none{color:#94a3b8}
+.caliber-card{border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:12px}
+.caliber-card h4{font-size:15px;margin-bottom:6px}
+.caliber-card .meta{font-size:12px;color:#64748b;line-height:1.7}
+.caliber-card .incompat{font-size:11px;color:#dc2626;margin-top:6px;padding:4px 8px;background:#fef2f2;border-radius:6px;display:inline-block}
+.v6-chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:20px}
+.chain-node{display:flex;flex-direction:column;align-items:center;padding:14px;background:#fff;border-radius:12px;border:2px solid #e2e8f0;min-width:90px;transition:all .2s;text-decoration:none;color:inherit}
+.chain-node:hover{border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.1)}
+.chain-node .dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:6px}
+.chain-node .label{font-size:11px;font-weight:600;text-align:center}
+.chain-node .sub{font-size:10px;color:#64748b;text-align:center;margin-top:2px}
+.chain-arrow{font-size:20px;color:#cbd5e1}
+.chain-node.done .dot{background:#dcfce7;color:#166534}
+.chain-node.partial .dot{background:#fef3c7;color:#854d0e}
+.chain-node.todo .dot{background:#f1f5f9;color:#94a3b8}
+.timeline-matrix th{background:#1e293b;color:#fff;font-size:11px;padding:8px 10px;white-space:nowrap;text-align:center}
+.timeline-matrix td{font-size:11px;padding:8px 10px;text-align:center;border-bottom:1px solid #e2e8f0}
+.timeline-matrix .dot{width:10px;height:10px;border-radius:50%;margin:0 auto}
+.timeline-matrix .dot.high{background:#16a34a}
+.timeline-matrix .dot.medium{background:#ca8a04}
+.timeline-matrix .dot.low{background:#dc2626}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#matrix" class="active">方法映射矩阵</a><a href="#anhui">安徽攻克案例</a><a href="#timeline">采集时间轴</a><a href="#chain">完整溯源链</a><a href="#caliber">数据口径对照</a><a href="#expert">专家方法说明</a><a href="#charts">联动图表</a></div>{% endblock %}
+{% block content %}
+
+<div class="cred-alert info">
+  <strong>本页定位</strong>：学术可信度证明中心。将采集方法、分析工具、数据口径、溯源流程集中展示，形成一条完整的"原始数据→分析结论"信任链。论文 V14 基于 <strong>30 个省级平台</strong>（23 省有独立数据开放平台 + 7 个归集至省级政务服务平台），本页展示的 23 平台为可直接采集的样本。
+</div>
+
+<!-- ========== Block 1: 方法映射矩阵 ========== -->
+<div id="matrix" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Block 1：采集方法 → 分析方法映射矩阵</div></div>
+  <div class="cred-alert info" style="margin-bottom:20px">
+    矩阵展示每种分析方法使用的数据类型、采集技术及样本量。解决评审常见质疑："这个分析为什么用这种数据？<br>
+    <strong>逻辑说明</strong>：TOPSIS需23平台全量数据做排序→用静态爬取。DEMATEL依赖文献综合影响矩阵→基于已有研究文献。DID需要跨时间面板→统计年鉴+平台。fsQCA需要条件组合→混合多种数据源。
+  </div>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <tr>
+        <th style="min-width:130px">分析方法</th>
+        <th>静态爬取<br><span style="font-weight:400;font-size:10px">18平台</span></th>
+        <th>动态渲染<br><span style="font-weight:400;font-size:10px">安徽1平台</span></th>
+        <th>官方报告<br><span style="font-weight:400;font-size:10px">浙江/天津</span></th>
+        <th>统计年鉴<br><span style="font-weight:400;font-size:10px">31省面板</span></th>
+        <th>样本量</th>
+        <th>置信度</th>
+      </tr>
+      <tr>
+        <td><strong>TOPSIS</strong><br><span style="font-size:10px;color:#64748b">绩效排序评估</span></td>
+        <td class="match">23平台</td>
+        <td class="match">安徽补充</td>
+        <td class="partial">官方验证</td>
+        <td class="none">—</td>
+        <td>88条</td>
+        <td><span class="badge" style="background:#dcfce7;color:#166534">A</span></td>
+      </tr>
+      <tr>
+        <td><strong>DEA</strong><br><span style="font-size:10px;color:#64748b">效率前沿分析</span></td>
+        <td class="match">23平台</td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td>23条</td>
+        <td><span class="badge" style="background:#dbeafe;color:#1e40af">B+</span></td>
+      </tr>
+      <tr>
+        <td><strong>DEMATEL</strong><br><span style="font-size:10px;color:#64748b">影响因素分析</span></td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td class="match">文献综合</td>
+        <td>12因素</td>
+        <td><span class="badge" style="background:#fef9c3;color:#854d0e">B</span></td>
+      </tr>
+      <tr>
+        <td><strong>fsQCA</strong><br><span style="font-size:10px;color:#64748b">组态路径分析</span></td>
+        <td class="match">23平台</td>
+        <td class="match">安徽补充</td>
+        <td class="partial">验证</td>
+        <td class="match">文献推导</td>
+        <td>23案例</td>
+        <td><span class="badge" style="background:#dcfce7;color:#166534">A</span></td>
+      </tr>
+      <tr>
+        <td><strong>多期DID</strong><br><span style="font-size:10px;color:#64748b">政策效应评估</span></td>
+        <td class="match">23平台</td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td class="none">—</td>
+        <td class="match">31省年鉴</td>
+        <td>217观测</td>
+        <td><span class="badge" style="background:#dcfce7;color:#166534">A</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="cred-alert warn" style="margin-top:16px">
+    <strong>需要关注</strong>：TOPSIS 和 fsQCA 的分析单元都是"平台"，但 TOPSIS 用的是 88 平台 4E 评分，fsQCA 用的是 23 省平台条件组态。两者的样本量不同(88 vs 23)，这是有意为之——TOPSIS 追求覆盖面的绩效排序，fsQCA 追求条件组合的逻辑完备性。但需在论文中明确解释这一差异。
+  </div>
+</div>
+</div>
+
+<!-- ========== Block 2: 采集时间轴 ========== -->
+<div id="timeline" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Block 2：23平台采集时间轴</div></div>
+  <div class="cred-alert warn" style="margin-bottom:16px">
+    <strong>诚实声明</strong>：当前 23 个平台均为 2026-04-25/26 同一批次采集。研究目前处于首次数据采集完成阶段。<br>
+    定期复采功能架构已就绪（v3_platform_rules.json 中定义了 baseline/每周/每天 三级频率），但<strong>尚未执行第二批次</strong>。<br>
+    计划后续每周对 3-5 个高变化率平台进行复采，累积时间序列后自动更新本页面对比。
+  </div>
+  <div class="matrix-wrap" style="max-height:500px;overflow-y:auto">
+    <table class="timeline-matrix">
+      <tr>
+        <th style="position:sticky;left:0;background:#1e293b;z-index:2;min-width:100px">平台</th>
+        <th>数据值</th>
+        <th>口径类型</th>
+        <th>采集方式</th>
+        <th>置信度</th>
+        <th>采集时间</th>
+        <th>来源验证</th>
+      </tr>
+      <tr><td style="font-weight:600">广东</td><td><strong>97,528</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">首页统计面板</td></tr>
+      <tr><td style="font-weight:600">山东</td><td><strong>63,656</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">数据目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"63,656个数据目录"</td></tr>
+      <tr><td style="font-weight:600">浙江</td><td><strong>38,000</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">公共数据集</span></td><td>官方发布会</td><td><span class="dot high"></span></td><td>2026-04-26</td><td style="font-size:10px">省数据局发布会</td></tr>
+      <tr><td style="font-weight:600">安徽</td><td><strong style="color:#16a34a">36,300</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">开放目录</span></td><td>Playwright动态渲染</td><td><span class="dot high"></span></td><td>2026-05-03</td><td style="font-size:10px;color:#16a34a">新版URL复采成功！3.63万个</td></tr>
+      <tr><td style="font-weight:600">海南</td><td><strong>35,835</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px">同时显示334个数据集</td></tr>
+      <tr><td style="font-weight:600">湖北</td><td><strong>24,119</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">数据目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"24,119个数据目录"</td></tr>
+      <tr><td style="font-weight:600">重庆</td><td><strong>22,550</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"22,550个数据集"</td></tr>
+      <tr><td style="font-weight:600">上海</td><td><strong>10,753</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>官方统计</td><td><span class="dot high"></span></td><td>2026-04-26</td><td style="font-size:10px">官方统计数字</td></tr>
+      <tr><td style="font-weight:600">广西</td><td><strong>10,162</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">目录总数</span></td><td>数据目录页CSS</td><td><span class="dot medium"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#ca8a04">第一轮抓取值疑似访问次数</td></tr>
+      <tr><td style="font-weight:600">四川</td><td><strong>9,115</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">目录数量</span></td><td>数据目录页正则</td><td><span class="dot medium"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#ca8a04">首页3465值疑似访问次数</td></tr>
+      <tr><td style="font-weight:600">贵州</td><td><strong>9,042</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>首页数字计数器</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">动态数字计数器</td></tr>
+      <tr><td style="font-weight:600">福建</td><td><strong>6,722</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">目录数</span></td><td>首页CSS选择器</td><td><span class="dot medium"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#ca8a04">CSS提取到多个候选值</td></tr>
+      <tr><td style="font-weight:600">北京</td><td><strong>4,454</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">首页统计面板</td></tr>
+      <tr><td style="font-weight:600">辽宁</td><td><strong>4,120</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">数据目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"4,120个数据目录"</td></tr>
+      <tr><td style="font-weight:600">天津</td><td><strong>3,344</strong></td><td><span class="badge" style="background:#dcfce7;color:#166534">数据集</span></td><td>官方报告</td><td><span class="dot high"></span></td><td>2026-04-26</td><td style="font-size:10px">天津数港2023年报告</td></tr>
+      <tr><td style="font-weight:600">河南</td><td><strong>931</strong></td><td><span class="badge" style="background:#fee2e2;color:#991b1b">数据产品</span></td><td>产品中心页面</td><td><span class="dot medium"></span></td><td>2026-04-26</td><td style="font-size:10px;color:#dc2626">口径不兼容！平台转型运营</td></tr>
+      <tr><td style="font-weight:600">江苏</td><td><strong>644</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">数据目录</span></td><td>新URL访问</td><td><span class="dot high"></span></td><td>2026-04-26</td><td style="font-size:10px;color:#16a34a">通过新URL成功访问</td></tr>
+      <tr><td style="font-weight:600">湖南</td><td><strong>634</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">目录</span></td><td>数据目录页正则</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"共634条目录"</td></tr>
+      <tr><td style="font-weight:600">山西</td><td><strong>534</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">开放数据目录</span></td><td>首页正则匹配</td><td><span class="dot medium"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#ca8a04">上下文不够明确</td></tr>
+      <tr><td style="font-weight:600">江西</td><td><strong>534</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">开放数据目录</span></td><td>首页正则匹配</td><td><span class="dot medium"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#ca8a04">需进一步验证</td></tr>
+      <tr><td style="font-weight:600">云南</td><td><strong>428</strong></td><td><span class="badge" style="background:#fee2e2;color:#991b1b">数据登记</span></td><td>登记中心页面</td><td><span class="dot medium"></span></td><td>2026-04-26</td><td style="font-size:10px;color:#dc2626">平台转型为登记平台</td></tr>
+      <tr><td style="font-weight:600">吉林</td><td><strong>303</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">开放目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"303个开放目录"</td></tr>
+      <tr><td style="font-weight:600">内蒙古</td><td><strong>219</strong></td><td><span class="badge" style="background:#dbeafe;color:#1e40af">数据目录</span></td><td>首页正则匹配</td><td><span class="dot high"></span></td><td>2026-04-25</td><td style="font-size:10px;color:#16a34a">"219条数据目录"</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ========== Block 3: 完整溯源链 ========== -->
+<div id="chain" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Block 3：完整数据溯源链（7步审计路径）</div></div>
+  <div class="cred-alert info">每一步均可点击验证。当前标注"已完成"的步骤有完整证据；标注"部分完成"的步骤需要通过后续复采和完善来补充。</div>
+  <div class="v6-chain">
+    <div class="chain-node done">
+      <div class="dot">1</div><div class="label">平台首页截图</div><div class="sub">23/23 已截图</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node done">
+      <div class="dot">2</div><div class="label">提取规则</div><div class="sub">JSON 可下载</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node done">
+      <div class="dot">3</div><div class="label">原始采集日志</div><div class="sub">2,847条记录</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node partial">
+      <div class="dot">4</div><div class="label">清洗后CSV</div><div class="sub">部分可下载</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node partial">
+      <div class="dot">5</div><div class="label">分析代码</div><div class="sub">GitHub开源</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node partial">
+      <div class="dot">6</div><div class="label">中间计算结果</div><div class="sub">DEA/TOPSIS可见</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node done">
+      <div class="dot">7</div><div class="label">论文图表</div><div class="sub">36张图表</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== Block 4: 数据口径对照表 ========== -->
+<div id="caliber" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>Block 4：数据口径对照表 — "数据口径幻觉"可视化</div></div>
+  <div class="cred-alert danger" style="margin-bottom:20px">
+    <strong>核心学术发现</strong>：这是论文 v25 中提出的"数据口径幻觉"理论的直接可视化。<br>
+    23 个平台使用了 <strong>6 类不同的统计口径</strong>（"数据集"、"数据目录"、"开放目录"、"接口"、"产品"、"登记"），直接比较这些数字会产生严重的口径偏差。例如山东 63,656 个"数据目录"与广东 97,528 个"数据集"不可直接比较大小——前者统计的是目录层级，后者统计的是数据集条目。
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #2563eb">
+    <h4>口径 A：数据集（Dataset Count）</h4>
+    <div class="meta">适用平台：广东(97,528)、重庆(22,550)、上海(10,753)、贵州(9,042)、北京(4,454)、天津(3,344)、浙江(38,000·公共数据集)</div>
+    <div style="font-size:11px;color:#16a34a;margin-top:4px">可信度：高 | 与论文4E评估框架的"效力 Efficiency" 维度直接对应</div>
+    <div class="incompat">不可直接比较：数据目录口径（口径B）、数据产品口径（口径E）</div>
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #7c3aed">
+    <h4>口径 B：数据目录（Catalog Count）</h4>
+    <div class="meta">适用平台：山东(63,656)、海南(35,835)、湖北(24,119)、广西(10,162)、四川(9,115)、福建(6,722)、辽宁(4,120)、江苏(644)、内蒙古(219)</div>
+    <div style="font-size:11px;color:#ca8a04;margin-top:4px">可信度：中-高 | 目录可能包含子目录嵌套，与"数据集"存在 1:N 映射关系</div>
+    <div class="incompat">不可直接比较：数据集口径（口径A）— 山东63,656个"数据目录"≠广东97,528个"数据集"，两者的定义和粒度不同</div>
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #0891b2">
+    <h4>口径 C：开放目录/开放数据目录（Open Catalog Count）</h4>
+    <div class="meta">适用平台：山西(534·开放数据目录)、江西(534·开放数据目录)、吉林(303·开放目录)</div>
+    <div style="font-size:11px;color:#ca8a04;margin-top:4px">可信度：中 | 这类平台通常数据量较小，但"开放"定语暗示可能仅统计了公开可访问的子集</div>
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #dc2626">
+    <h4>口径 D：其他目录口径变体</h4>
+    <div class="meta">适用平台：湖南(634·"目录条")、海南(35,835·"目录"而非"数据集")——同平台可能同时显示两种口径</div>
+    <div style="font-size:11px;color:#dc2626;margin-top:4px">注意：海南同时显示35,835个"目录"和334个"数据集"，两个数字差异达100倍。</div>
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #ca8a04">
+    <h4>口径 E：数据产品/数据登记（Product/Registration Count）</h4>
+    <div class="meta">适用平台：河南(931·"数据产品"，由运营公司管理)、云南(428·"数据登记"，平台转型为登记中心)</div>
+    <div style="font-size:11px;color:#dc2626;margin-top:4px">严重警告：这两个平台的数据口径与其他平台完全不同。"数据产品"是经过加工封装后的服务单元，"数据登记"是目录登记条目，与原始数据集数量无可比性。</div>
+    <div class="incompat">不可直接比较：所有其他口径。河南和云南的数据建议在论文中单独讨论，不纳入跨平台比较。</div>
+  </div>
+
+  <div class="caliber-card" style="border-left:4px solid #16a34a">
+    <h4>口径 F：动态渲染采集（Playwright专项）</h4>
+    <div class="meta">适用平台：安徽(36,300·开放目录，2026-05-03 Playwright复采成功)。同时采集到：4,289.50万条数据总量、80.53万次累计下载、222.59万次累计调用。</div>
+    <div style="font-size:11px;color:#16a34a;margin-top:4px">状态：已攻克，已复采验证。旧版8000端口已停运，新版URL为唯一入口。Vue.js SPA架构需Playwright动态渲染。</div>
+  </div>
+
+  <div class="cred-alert warn" style="margin-top:16px">
+    <strong>方法论声明</strong>：本研究的 TOPSIS 和 fsQCA 分析在数据预处理阶段已对口径差异做了标准化处理（通过归一化和模糊集校准消解单位差异）。但论文 v25 第 8.4 节明确指出：<em>"下载量不等于经济价值，数据集数不等于数据质量，平台数不等于开放水平——这是数据口径幻觉的三个维度。"</em> 本节将此理论发现直接可视化。
+  </div>
+</div>
+</div>
+
+<!-- ========== 安徽动态渲染攻克案例 ========== -->
+<div id="anhui" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>专项案例：安徽平台 — 动态渲染技术攻克全过程</div></div>
+  <div class="cred-alert info" style="margin-bottom:16px">
+    <strong>为什么单独展示安徽？</strong>安徽平台是 23 省中最具技术挑战性的采集目标。其平台使用 Vue.js 单页应用(SPA)架构，数据需要 JavaScript 动态渲染后才能获取，传统的 Requests+BeautifulSoup 方法完全无法工作。攻克这一平台证明了本研究采集系统的技术覆盖面和诚实性。
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:#dc2626"></div>
+      <div class="timeline-title" style="color:#dc2626">第一阶段：传统方法失败 (2026-04-25)</div>
+      <div class="timeline-desc">使用 Requests + BeautifulSoup 访问旧版 URL (data.ahzwfw.gov.cn)，仅获取到空白 HTML 骨架。Vue.js 渲染的数据完全不可见。规则标记为 confidence:low，value:null。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:#ca8a04"></div>
+      <div class="timeline-title" style="color:#ca8a04">第二阶段：URL 变更发现 (2026-04-27)</div>
+      <div class="timeline-desc">检测到安徽平台迁移至新版 URL (data.ahzwfw.gov.cn/dataopen-web/index.html)，同时确认平台架构为 Element UI + Vue.js 单页应用，需要浏览器环境执行 JavaScript。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:#2563eb"></div>
+      <div class="timeline-title" style="color:#2563eb">第三阶段：Playwright 动态渲染 (2026-04-28)</div>
+      <div class="timeline-desc">部署 Playwright + Chromium 无头浏览器，等待页面 JS 完全渲染(networkidle)，提取首页统计面板中的"开放目录"数字。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:#16a34a"></div>
+      <div class="timeline-title" style="color:#16a34a">第四阶段：采集成功 (2026-04-28)</div>
+      <div class="timeline-desc"><strong>成功采集到 36,300 个开放目录</strong>，采集方法标记为 playwright:动态渲染。这是本研究首次使用动态渲染技术，证明系统可处理 JavaScript SPAs 平台。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:#2563eb"></div>
+      <div class="timeline-title" style="color:#2563eb">第五阶段：复采验证 (2026-05-03)</div>
+      <div class="timeline-desc"><strong>今天通过 Playwright 再次复采成功</strong>。确认数据稳定：3.63万个开放目录、4,289.50万条数据总量、80.53万次累计下载、222.59万次累计调用。旧版 8000 端口已彻底停运（显示"系统维护中"），新版 URL 为唯一入口。复采脚本：collect_anhui_playwright.py（已开源到 GitHub）。</div>
+    </div>
+  </div>
+  <div class="cred-alert info" style="margin-top:12px">
+    <strong>技术意义</strong>：采集方法从"静态爬取"到"动态渲染"的扩展，使本研究覆盖了 Vue.js/React 等现代前端框架构建的平台。23 省中仅安徽一省需要此技术，但这一技术突破保证了样本完整性——如果跳过安徽，样本将缺失一个重要的中部省份数据点。
+  </div>
+</div>
+</div>
+
+<!-- ========== 联动图表 ========== -->
+<div id="charts" class="scroll-section">
+<div class="card">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>联动分析图表 — 一键跳转到交互式可视化</div></div>
+  <div class="journey-cards">
+    <a href="/charts/topsis" class="journey-card">
+      <div class="journey-card-num">1</div>
+      <div class="journey-card-title">TOPSIS 绩效排序</div>
+      <div class="journey-card-desc">30省4E综合得分排名图，交互式展示各省得分与维度分解</div>
+      <div class="journey-card-question">→ 查看交互式图表</div>
+    </a>
+    <a href="/charts/dematel" class="journey-card">
+      <div class="journey-card-num">2</div>
+      <div class="journey-card-title">DEMATEL 影响网络</div>
+      <div class="journey-card-desc">12个二级指标的中心度-原因度散点图与影响网络拓扑</div>
+      <div class="journey-card-question">→ 查看交互式图表</div>
+    </a>
+    <a href="/charts/fsqa" class="journey-card">
+      <div class="journey-card-num">3</div>
+      <div class="journey-card-title">fsQCA 组态路径</div>
+      <div class="journey-card-desc">3条等效高绩效路径的条件组合与覆盖率可视化</div>
+      <div class="journey-card-question">→ 查看交互式图表</div>
+    </a>
+    <a href="/analysis" class="journey-card">
+      <div class="journey-card-num" style="background:#7c3aed">4</div>
+      <div class="journey-card-title">全部分析看板</div>
+      <div class="journey-card-desc">DEA效率前沿 + DID政策效应 + 完整的分析结果面板</div>
+      <div class="journey-card-question">→ 查看完整分析</div>
+    </a>
+  </div>
+</div>
+</div>
+
+{% endblock %}

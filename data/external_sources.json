@@ -1,0 +1,36 @@
+{
+  "title": "OGD研究外部来源索引",
+  "description": "除学术论文外的政策文件、外部网站、评估报告、法律法规等非学术来源",
+  "updated": "2026-05-04",
+  "categories": {
+    "政策文件": [
+      {"id": "p001", "title": "中共中央 国务院关于构建数据基础制度更好发挥数据要素作用的意见（\"数据二十条\"）", "date": "2022-12", "source": "中共中央、国务院", "url": "https://www.gov.cn/zhengce/2022-12/19/content_5732695.htm", "relevance": "本研究DID政策评估的核心政策文本。论文第7章的处理组划分依据。", "chapter_tags": ["ch1", "ch7", "ch8"]},
+      {"id": "p002", "title": "\"数据要素×\"三年行动计划（2024-2026年）", "date": "2024-01", "source": "国家数据局等17部门", "url": "https://www.gov.cn/", "relevance": "论文第1章研究背景的核心政策文件。标志着中国数据要素市场化进入新阶段。", "chapter_tags": ["ch1"]},
+      {"id": "p003", "title": "关于加强数字政府建设的指导意见", "date": "2022-06", "source": "国务院", "url": "https://www.gov.cn/", "relevance": "论文第1章政策背景和第2章理论基础的重要政策文件。", "chapter_tags": ["ch1", "ch2"]},
+      {"id": "p004", "title": "促进大数据发展行动纲要", "date": "2015-09", "source": "国务院", "url": "https://www.gov.cn/", "relevance": "论文第1章政策演进的核心政策文件。中国大数据战略的起点。", "chapter_tags": ["ch1"]},
+      {"id": "p005", "title": "关于促进数据产业高质量发展的指导意见", "date": "2025-01", "source": "国家数据局", "url": "https://www.gov.cn/", "relevance": "论文第1章最新政策动态。", "chapter_tags": ["ch1"]},
+      {"id": "p006", "title": "中华人民共和国数据安全法", "date": "2021-09", "source": "全国人大常委会", "url": "https://www.gov.cn/", "relevance": "论文第3章数据采集伦理和第8章研究局限的法规基础。", "chapter_tags": ["ch3", "ch8"]},
+      {"id": "p007", "title": "中华人民共和国个人信息保护法", "date": "2021-11", "source": "全国人大常委会", "url": "https://www.gov.cn/", "relevance": "论文第3章数据采集伦理和第4章数据口径讨论的法规基础。部分平台数据集数量低于预期可能因隐私保护需要脱敏处理。", "chapter_tags": ["ch3", "ch4"]},
+      {"id": "p008", "title": "促进和规范公共数据资源开发利用的意见", "date": "2024-10", "source": "中共中央办公厅、国务院办公厅", "url": "https://www.gov.cn/", "relevance": "论文第8章政策建议的重要政策参照。", "chapter_tags": ["ch8"]}
+    ],
+    "评估报告": [
+      {"id": "r001", "title": "中国地方政府数据开放报告（2024年度）· 数林指数", "date": "2024", "source": "复旦大学数字与移动治理实验室(DMG)", "url": "https://www.dmg.fudan.edu.cn/", "relevance": "本研究核心数据来源和基准参照。数林指数是国内OGD评估的黄金标准。本研究发现的数据口径问题是其方法论层面未解决的问题。", "chapter_tags": ["ch1", "ch2", "ch3"]},
+      {"id": "r002", "title": "Open Data Barometer (ODB)", "date": "2016-2020", "source": "World Wide Web Foundation", "url": "https://opendatabarometer.org/", "relevance": "论文第2章国际比较的国际评估框架参照。", "chapter_tags": ["ch2"]},
+      {"id": "r003", "title": "Global Open Data Index (GODI)", "date": "2013-2020", "source": "Open Knowledge Foundation", "url": "https://index.okfn.org/", "relevance": "论文第2章国际比较的国际评估框架参照。", "chapter_tags": ["ch2"]},
+      {"id": "r004", "title": "OECD Open, Useful and Re-usable data (OURdata) Index", "date": "2015-2023", "source": "OECD", "url": "https://www.oecd.org/", "relevance": "论文第2章国际比较的国际评估框架参照。OURdata强调\"利用\"和\"再用\"，与本研究\"利用绩效\"核心概念一致。", "chapter_tags": ["ch2"]},
+      {"id": "r005", "title": "EU Open Data Maturity Report", "date": "2015-2025", "source": "European Commission", "url": "https://data.europa.eu/", "relevance": "论文第2章国际比较的国际评估框架参照。", "chapter_tags": ["ch2"]}
+    ],
+    "外部网站": [
+      {"id": "w001", "title": "国家数据局官方网站", "url": "https://www.ndrc.gov.cn/", "relevance": "国家数据政策发布和解读的核心渠道。论文第1章政策背景和第7章政策评估的数据来源。", "chapter_tags": ["ch1", "ch7"]},
+      {"id": "w002", "title": "全国公共数据开放平台导航", "url": "https://data.gov.cn/", "relevance": "中国公共数据开放的统一入口。论文第4章88平台全覆盖的基准参照。", "chapter_tags": ["ch4"]},
+      {"id": "w003", "title": "各省政府数据开放平台（23个）", "url": "见论文第4章表4-1", "relevance": "本研究的核心数据来源。23个省级平台的URL、采集方法和数据量详见论文第4章。", "chapter_tags": ["ch4"]},
+      {"id": "w004", "title": "data.gov (美国联邦政府数据开放平台)", "url": "https://data.gov/", "relevance": "论文第2章国际比较的美国案例。", "chapter_tags": ["ch2"]},
+      {"id": "w005", "title": "data.gov.uk (英国政府数据开放平台)", "url": "https://data.gov.uk/", "relevance": "论文第2章国际比较的英国案例。", "chapter_tags": ["ch2"]}
+    ],
+    "技术文档": [
+      {"id": "t001", "title": "Playwright官方文档", "url": "https://playwright.dev/", "relevance": "论文第4章安徽平台动态渲染采集的技术基础。", "chapter_tags": ["ch4"]},
+      {"id": "t002", "title": "PRISMA 2020 Statement", "url": "https://www.prisma-statement.org/", "relevance": "论文第2章文献筛选的方法论规范。本研究遵循PRISMA 2020进行系统性文献检索。", "chapter_tags": ["ch2"]},
+      {"id": "t003", "title": "fsQCA 3.0 软件官方文档", "url": "http://www.fsqca.com/", "relevance": "论文第6章fsQCA分析的软件工具。", "chapter_tags": ["ch6"]}
+    ]
+  }
+}

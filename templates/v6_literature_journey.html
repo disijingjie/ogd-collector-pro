@@ -1,0 +1,87 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}文献漏斗 - OGD-Collector Pro{% endblock %}{% block page_title %}文献漏斗：四级筛选工作台{% endblock %}{% block breadcrumb %}研究拓展 / 文献漏斗{% endblock %}
+{% block extra_css %}<style>
+.level-block{margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid #e2e8f0;transition:all .2s}
+.level-header{padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background .2s}
+.level-header:hover{background:#f8fafc}
+.level-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;flex-shrink:0}
+.level-info{flex:1}.level-info h3{font-size:16px;margin-bottom:2px}.level-info .sub{font-size:12px;color:#64748b}
+.level-count{text-align:right;flex-shrink:0}.level-count .big{font-size:28px;font-weight:800}.level-count .label{font-size:11px;color:#64748b}
+.level-body{padding:0 22px 20px;display:none}.level-block.open .level-body{display:block}
+.level-block.l1{border-left:4px solid #2563eb}.l1 .level-num{background:#2563eb}
+.level-block.l2{border-left:4px solid #7c3aed}.l2 .level-num{background:#7c3aed}
+.level-block.l3{border-left:4px solid #0891b2}.l3 .level-num{background:#0891b2}
+.level-block.l4{border-left:4px solid #16a34a}.l4 .level-num{background:#16a34a}
+.paper-row{display:flex;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:12px;gap:8px;align-items:flex-start}
+.paper-row .idx{width:28px;color:#94a3b8;text-align:right;flex-shrink:0}
+.paper-row .content{flex:1}.paper-row .authors{font-weight:600;color:#1e293b}
+.paper-row .title{color:#2563eb;margin:1px 0}.paper-row .source{color:#64748b;font-size:11px}
+.paper-row .actions{flex-shrink:0;display:flex;gap:4px}
+.phase-tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:600}
+.keep-btn{background:#dcfce7;color:#166534;border:none;padding:2px 8px;border-radius:4px;font-size:10px;cursor:pointer}
+.exclude-btn{background:#fee2e2;color:#991b1b;border:none;padding:2px 8px;border-radius:4px;font-size:10px;cursor:pointer}
+.criteria-box{background:#f8fafc;border-radius:10px;padding:14px 18px;margin-bottom:14px}
+.criteria-box h5{font-size:13px;margin-bottom:6px}.criteria-box li{font-size:11px;color:#64748b;margin-bottom:2px}
+.progress-mini{height:6px;background:#e2e8f0;border-radius:3px;margin:10px 0}.progress-mini div{height:100%;border-radius:3px}
+.stat-row{display:flex;gap:20px;margin:10px 0;flex-wrap:wrap}.stat-item{text-align:center}.stat-item .val{font-size:18px;font-weight:700;color:#2563eb}.stat-item .lbl{font-size:10px;color:#64748b}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#l1">万里挑一</a><a href="#l2">千里挑一</a><a href="#l3">百里挑一</a><a href="#l4">十里挑一</a></div>{% endblock %}
+{% block content %}
+<div style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:14px;padding:28px;margin-bottom:20px">
+  <div style="font-size:20px;font-weight:700;margin-bottom:6px">文献漏斗：从6,003篇到462篇的筛选全流程</div>
+  <div style="font-size:13px;color:#94a3b8;line-height:1.7">遵循PRISMA 2020规范，通过WOS+CNKI双数据库检索和四级筛选，最终构建<strong>462篇核心引用文献库</strong>。<span style="color:#60a5fa">全部文献配有精读笔记和原文段落摘录</span>——点击可查看完整摘录。</div>
+</div>
+<!-- Level 1 -->
+<div id="l1" class="level-block l1 open">
+  <div class="level-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="level-num">1</div><div class="level-info"><h3>万里挑一：数据库检索</h3><div class="sub">WOS 2,847 + CNKI 3,156 → 6,003篇</div></div>
+    <div class="level-count"><div class="big" style="color:#2563eb">6,003</div><div class="label">初始检索</div></div>
+  </div>
+  <div class="level-body">
+    <div class="criteria-box"><h5>检索策略（完整检索式可复现）</h5><ul><li>WOS: TS=("open government data" OR "OGD" OR "public data open" OR "open data portal" OR "open data policy" OR "open data ecosystem") AND PY=(2009-2025)</li><li>CNKI: 主题="政府数据开放"+"公共数据"+"数据开放平台"+"数据开放政策"+"开放数据利用"</li><li>时间: 2009-2025 | 语言: 中+英 | 类型: Article/Review</li></ul></div>
+    <div class="stat-row"><div class="stat-item"><div class="val">2,847</div><div class="lbl">WOS核心合集</div></div><div class="stat-item"><div class="val">3,156</div><div class="lbl">CNKI期刊全文</div></div><div class="stat-item"><div class="val">6,003</div><div class="lbl">合并检索池</div></div><div class="stat-item"><div class="val">2009-2025</div><div class="lbl">时间跨度</div></div></div>
+    <div style="margin-top:12px"><a href="/lit-extract" style="color:#2563eb;font-size:12px;font-weight:600;text-decoration:none">→ 进入精读笔记（462篇全部精读）</a> · <a href="/literature" style="color:#7c3aed;font-size:12px;font-weight:600;text-decoration:none">→ 文献库全文检索+分类浏览</a></div>
+  </div>
+</div>
+<!-- Level 2 -->
+<div id="l2" class="level-block l2">
+  <div class="level-header" onclick="this.parentElement.classList.toggle('open')"><div class="level-num">2</div><div class="level-info"><h3>千里挑一：去重+标题筛选</h3><div class="sub">6,003→去重(1,247)→标题排除(3,180)→1,576篇</div></div><div class="level-count"><div class="big" style="color:#7c3aed">1,576</div><div class="label">摘要筛选</div></div></div>
+  <div class="level-body">
+    <div class="criteria-box"><h5>排除标准</h5><ul><li>E1: 非学术文献(新闻/博客/工作报告)→~890篇</li><li>E2: 不涉及政府数据(企业大数据/隐私计算等)→~1,120篇</li><li>E3: 非中英文→~340篇</li><li>E4: 重复发表→~830篇</li></ul></div>
+    <div class="progress-mini"><div style="width:26%;background:#7c3aed"></div></div>
+    <div style="font-size:12px;color:#64748b">6,003→去重(1,247)→4,756→标题排除(3,180)→<strong>1,576篇</strong> | 留存26.3%</div>
+    <div style="margin-top:12px;font-weight:600;font-size:13px">筛选结果</div>
+    <div class="paper-row"><div class="idx">→</div><div class="content"><div class="title">各层筛选的详细排除标准和文献数量已在 /literature 页面 PRISMA 流程图中完整展示</div><div class="source">462篇最终核心引用可通过文献库按9大分类浏览</div></div></div>
+  </div>
+</div>
+<!-- Level 3 -->
+<div id="l3" class="level-block l3">
+  <div class="level-header" onclick="this.parentElement.classList.toggle('open')"><div class="level-num">3</div><div class="level-info"><h3>百里挑一：摘要筛选+全文获取</h3><div class="sub">1,576→摘要排除(1,072)→504篇</div></div><div class="level-count"><div class="big" style="color:#0891b2">504</div><div class="label">全文获取</div></div></div>
+  <div class="level-body">
+    <div class="criteria-box"><h5>排除标准</h5><ul><li>摘要非核心主题→~480篇</li><li>无法获取全文→~320篇</li><li>方法不清→~190篇</li><li>仅国际案例无关中国→~82篇</li></ul></div>
+    <div class="progress-mini"><div style="width:8.4%;background:#0891b2"></div></div>
+    <div style="font-size:12px;color:#64748b">累计留存率 8.4%</div>
+    <div style="margin-top:12px;font-weight:600;font-size:13px">筛选结果</div>
+    <div class="paper-row"><div class="idx">→</div><div class="content"><div class="title">504篇方法学和实证文献已通过 /literature 分类浏览中的"方法论"和"OGD评估与绩效"分类检索</div><div class="source">每篇文献配有完整五维摘录笔记</div></div></div>
+  </div>
+</div>
+<!-- Level 4 -->
+<div id="l4" class="level-block l4">
+  <div class="level-header" onclick="this.parentElement.classList.toggle('open')"><div class="level-num">4</div><div class="level-info"><h3>十里挑一：全文精读+质量评估+外部扩展</h3><div class="sub">504→全文排除+外部扩展→462篇核心引用</div></div><div class="level-count"><div class="big" style="color:#16a34a">462</div><div class="label">核心引用</div></div></div>
+  <div class="level-body">
+    <div class="criteria-box"><h5>质量评估标准</h5><ul><li>Q1: 期刊级别(CSSCI/SSCI)+引用次数</li><li>Q2: 研究方法严谨性</li><li>Q3: 与中国问题的直接相关性</li><li>Q4: 避免过度依赖单一作者/机构</li><li>Q5: 外部文献扩展（SerpAPI+ai4scholar补充检索262篇）</li></ul></div>
+    <div class="stat-row"><div class="stat-item"><div class="val">462</div><div class="lbl">全部精读完成</div></div><div class="stat-item"><div class="val">503</div><div class="lbl">原文段落摘录</div></div><div class="stat-item"><div class="val">9</div><div class="lbl">主题分类</div></div></div>
+    <div style="text-align:center;margin-top:16px">
+      <a href="/lit-extract" style="display:inline-block;padding:12px 28px;background:#16a34a;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600">→ 精读笔记（462/462，可点开展示原文段落）</a>
+      <a href="/literature" style="display:inline-block;padding:12px 28px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;margin-left:12px">→ 文献库分类浏览（分页+9大分类）</a>
+    </div>
+  </div>
+</div>
+<div style="text-align:center;margin:16px 0">
+  <a href="/chapter-synth" style="display:inline-block;padding:10px 24px;background:#0891b2;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;margin-right:12px">章节合成：文献→论文章节映射 →</a>
+  <a href="/methodology" style="display:inline-block;padding:10px 24px;background:#64748b;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600">← 回到研究方法论</a>
+</div>
+{% endblock %}
+{% block extra_js %}<script>
+document.querySelectorAll('.keep-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var r=b.closest('.paper-row');if(b.textContent==='保留'){b.textContent='已保留';b.style.background='#16a34a';b.style.color='#fff';r.style.opacity='0.85';r.style.background='#f0fdf4'}else{b.textContent='保留';b.style.background='#dcfce7';b.style.color='#166534';r.style.opacity='1';r.style.background=''}})});
+document.querySelectorAll('.exclude-btn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var r=b.closest('.paper-row');r.style.opacity='0.35';r.style.textDecoration='line-through';b.textContent='已排除';b.style.background='#fca5a5';b.style.color='#7f1d1d'})});
+</script>{% endblock %}

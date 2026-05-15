@@ -1,0 +1,189 @@
+{
+  "matched": 18,
+  "unmatched": 444,
+  "total_db": 462,
+  "cnki_unique": 229,
+  "match_rate": 3.9,
+  "matches": [
+    {
+      "n": 18,
+      "db_title": "公共数据授权运营的定价机制研究",
+      "cnki_title": "财政法视角下公共数据授权运营法律制度研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AZmNrdJ1Bz9xqGDDzrae1ZNw0vy4i11bQLSMA08Ei4w6CRVyjqsr8dUrHmOrNuZ4_XL-yfW6-ErFmFqexzbQtAVcxv1VB41KOVZcMikqZ64-WsLvi-hEB7n15qL4PSI0WfWt0mWNPsGQsU1QbDopy_mUDC-HzoNSdNRjdov9Aibw==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 绩效评估",
+      "similarity": 0.629,
+      "db_journal": "经济学动态",
+      "db_year": "2024"
+    },
+    {
+      "n": 33,
+      "db_title": "政府数据开放的法治保障研究",
+      "cnki_title": "公共数据开放的法律问题研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Bb2_KSe5jHy-72Iur-iy8aoJyWsL1fbI4P4wYLo8QOTCAjqVZ88EOWJxHuEd8UORg_w5pLer_fxDgm5DO2y9zb-9mSF9KXPXZEDsnmUBfbNVYSBCoSHfSccvJnMnhGIHjFe9zlYy3_nNexkau-GqfSYJw_e5-F-MM-u2tV5I9zQE1MIsXzL1eU&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 政策评估",
+      "similarity": 0.615,
+      "db_journal": "中国行政管理",
+      "db_year": "2020"
+    },
+    {
+      "n": 40,
+      "db_title": "政策冲击对政府数据开放绩效的影响研究",
+      "cnki_title": "基于固定效应回归分析的省级公共数据政策对政府数据开放绩效的影响研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AWpCHJlhNvr3FmThOBi0UWvxe4SPCkFEwhmjojTQnZFWlLpVd9q8niC1DjHGFcJ5nkjPMeZxTZsAsupaZYPcQqAJdfosJ2GsutmsqCrrJ1nHw2b8okVAgnCAw1aheI-b4K8ncq9S_LmRX0CNwNaDBc628o2eZK6kOqgPZ5xPXiVg==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 绩效评估",
+      "similarity": 0.627,
+      "db_journal": "公共管理学报",
+      "db_year": "2024"
+    },
+    {
+      "n": 44,
+      "db_title": "中国地方政府数据开放可持续性评估研究",
+      "cnki_title": "中国政策执行中政府数据开放研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CZEwbb-FfMiv8q1h8xJYZfe0FfuFdKAXSURqNd_MgVeEIwqOVm8ogmMN4rovlSyDRMv96VBl5LgkIDBFXtto0r3qXRmDyQlt_cEfsWoazQ9gZNYoP1XZ_su4vNhKTAwSIQJ1aMr6KCdM1UGRDqmaw80eJxbjvLBpot5crV6C8GCwhHW8bHyVL_&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 政策评估",
+      "similarity": 0.606,
+      "db_journal": "图书情报工作",
+      "db_year": "2024"
+    },
+    {
+      "n": 59,
+      "db_title": "政府数据开放平台数据资源利用率评估",
+      "cnki_title": "政府数据开放平台数据资源利用效率评估",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cen0sgWE_27omU2bcOL5CFDXQjPaE5xAtiAWkIv_qOGNJQi9IiX1DaNydl-6Ce9xEyLAoLyBBOKu-MLxx5VIcNA5vo21jD8Khn8_cGTQ5pU5KWpkz4a8OnVpzqk3Jy87wbgkoKBrumtjK5hZ8rRZ_Nj7vHyA-Kk2sh9GIDwXN59w==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "DEA 政府数据",
+      "similarity": 0.971,
+      "db_journal": "图书馆学研究",
+      "db_year": "2024"
+    },
+    {
+      "n": 65,
+      "db_title": "中国省级政府数据开放平台利用水平的组态效应研究——基于NCA与fsQCA的实证分析",
+      "cnki_title": "WSR视角下我国省级政府数据开放水平的影响因素研究——基于NCA与fsQCA的实证分析",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BeSkdcW5y4tg4GB7fJqAMaVSz4QnN-XdH1RKA6_6_C9j9tBFqk4t_cQ6XPk0-KO8i7ztjhUZRE5Uz0ZB7bmweqf9yUO1B9s6pWOLQYBTPGTbGjPpdvkrhh8gq-clE87QQ0YIeOYqCrCgz-0PKl6g7eXolx8f80XYLoHua-oGnSvg==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 fsQCA",
+      "similarity": 0.75,
+      "db_journal": "图书情报工作",
+      "db_year": "2024"
+    },
+    {
+      "n": 67,
+      "db_title": "政府开放数据资源利用与创新应用效能评价研究",
+      "cnki_title": "政府开放数据资源利用与创新应用效能评价研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C5FpCsPvADJdxIPXHPQmDkR-UWRY1La-o6L3DZow4lv9jeVcqA90BI19HHIdqUT-8llqYnGJQeBlKqnF8iYmJXsHaLDHLHDfHD7KtVm6kl64BSyV8ufaPQItkgSH14smKpyRt95YWo1_sJpBd-TtJZALA8Dud8ExNA7C1u8GMbXA==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "DEA 政府数据",
+      "similarity": 1.0,
+      "db_journal": "现代情报",
+      "db_year": "2023"
+    },
+    {
+      "n": 76,
+      "db_title": "公共数据开放与营商环境优化——来自政府数据平台上线的准自然实验",
+      "cnki_title": "公共数据开放的减污降碳协同效应——基于政府数据平台上线的准自然实验证据",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DDN4Ouag9MfjSbAXqQkVt-WmHyQgTDB3oU4xxDZwDmkPDOCDHBwh0p2u2zm22m7rMBopBPtRXUvtMuU7F4LAKx8iB_e2729vkmGv4LNYDJPBwPLsVCC88PHK44jEddVzkIlb7yhIplxYr854tjN2AuaEzuoMHYMI6NOhxN0zMgTA==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "开放政府数据",
+      "similarity": 0.645,
+      "db_journal": "现代财经(天津财经大学学报)",
+      "db_year": "2025"
+    },
+    {
+      "n": 85,
+      "db_title": "政务服务数据治理生态系统概念框架研究",
+      "cnki_title": "政务服务数据治理生态系统及其成熟度评估研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DObv4w2e9-9aCks_OYOCAEPSxZ8dH3HbatwVYlaT0vxSqcvbLN6I8cmpRvr9WJp3lS836UfG48EE_HVr9nIZdrNe82GIvFiBLO1-kBL5JgKRSCKD8D0JTaHYHZk2zTFAANN_e0ccZ84e8V_QysfiAPO_VWS1lB2srzHjbgl6G4fTufO1pziIDZ&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 绩效评估",
+      "similarity": 0.718,
+      "db_journal": "中国行政管理",
+      "db_year": "2024"
+    },
+    {
+      "n": 96,
+      "db_title": "关于加快公共数据资源开发利用的意见",
+      "cnki_title": "中共广东省委办公厅  广东省人民政府办公厅关于加快公共数据资源开发利用的实施意见",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CU9vHGf2AhylrkZXNU8DvAYXLNxiRTAatL4CmGiGXo2TnMuaHgBH_geHtstc_AAcxNkFHoONhLeynIJrw4xOZ4ODl4HRYxyjpVDb8SPNFs65YJDAwJf6Eal-aDRyCFtyPsgyv96bltpEK2JHG77Wv06NgSgtZfOFKKpYeONnsvmd_kIkV9rfjy&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 利用",
+      "similarity": 0.618,
+      "db_journal": "(2024-10-09)\\[2025-01-15\\]. https://www.gov.cn/gongbao/2024/content_5726.htm",
+      "db_year": "2024"
+    },
+    {
+      "n": 117,
+      "db_title": "政府数据要素共享的稳投资效应：来自公共数据开放平台的证据",
+      "cnki_title": "数据要素共享与城乡融合发展——来自公共数据开放的经验证据",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BuKm8I6GxImZK-sAx2QvLQyItj3t8OFCZUzDt6fZZCLFoCferdJxGVgGpIXgoIsP-LFKCTGteowyjBRysA7a01rAizIBb5gJIXzypjFGg1wsZ-x0LEarqls0FHxvLn6YMnjd3SrJV-tpGj7V9kupSPwFQZzgDT1YKA5JZnGpJ_3A==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "开放政府数据",
+      "similarity": 0.642,
+      "db_journal": "数量经济技术经济研究",
+      "db_year": "2025"
+    },
+    {
+      "n": 224,
+      "db_title": "基于固定效应回归分析的省级公共数据政策对政府数据开放绩效的影响研究",
+      "cnki_title": "基于固定效应回归分析的省级公共数据政策对政府数据开放绩效的影响研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AWpCHJlhNvr3FmThOBi0UWvxe4SPCkFEwhmjojTQnZFWlLpVd9q8niC1DjHGFcJ5nkjPMeZxTZsAsupaZYPcQqAJdfosJ2GsutmsqCrrJ1nHw2b8okVAgnCAw1aheI-b4K8ncq9S_LmRX0CNwNaDBc628o2eZK6kOqgPZ5xPXiVg==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 绩效评估",
+      "similarity": 1.0,
+      "db_journal": "陈媛媛， 林安洁， 马海群",
+      "db_year": "待确认"
+    },
+    {
+      "n": 231,
+      "db_title": "我国政府数据开放利用的影响因素与实现路径",
+      "cnki_title": "地方政府数据开放高水平的驱动因素与实现路径",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AGsVYmTIB2Jep9UKZ1-Qw0d8py9rprRChX_eXPInLxedxJpVnWd8wBgRqKndYOFvsc8FCSknOKNZ5NdEbFguJZV-qb6DiAFMqOUv3kCt_cHHqjUcm1O8OaSxFjEooN-dnG585ATq9bRj0OKLQmjnpPWQlGCugQdHAv1PEKtHU6IA==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 fsQCA",
+      "similarity": 0.683,
+      "db_journal": "王法硕， 王翔",
+      "db_year": "待确认"
+    },
+    {
+      "n": 239,
+      "db_title": "公共数据开放与企业数字技术创新",
+      "cnki_title": "政府数据开放赋能企业技术创新",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DrS3NV5hyAnFlfgy16BxyO3EclIwGKPnvulhSYggkuuAhcP97nVX9tlxbQND5SVjvRyTOe1r9TmN6JsKKq2sm_B_zf3Vh33ABVj20fju04cdkUPhvixf9Rf3n89gDyNr-jwX98U9pZcLnESJQbWHD_nxHv5UgcR0LiYztCRY4KLg==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "开放政府数据",
+      "similarity": 0.69,
+      "db_journal": "郑志强， 何佳俐， 陈尧",
+      "db_year": "待确认"
+    },
+    {
+      "n": 242,
+      "db_title": "公共数据开放对企业高质量发展的影响研究——基于城市公共数据开放平台上线的准自然实验分析",
+      "cnki_title": "政府公共数据开放对城市创新韧性的影响机制研究——基于政府公共数据平台上线的准自然实验",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6By1EJQVY79xR0-aVbe9T08mL0g0dwfD15_pI8bsEcB2ZmHlxotTnvwqxieV9HWGmPbafjpE73NqhXSFOqzxmbAjyI4LIS-oiu-yk9xAh1fnnkJepXF3klV4eDpcEnDnJkQ_KI8VuS8aIgIGNINzMgRANV-2kva3P4f0F5CKVXQxw==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "开放政府数据",
+      "similarity": 0.691,
+      "db_journal": "李恩极， 谢康， 李晶",
+      "db_year": "待确认"
+    },
+    {
+      "n": 275,
+      "db_title": "政府数据开放平台数据创新性开发利用服务研究",
+      "cnki_title": "政府数据开放平台数据资源利用效率评估",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cen0sgWE_27omU2bcOL5CFDXQjPaE5xAtiAWkIv_qOGNJQi9IiX1DaNydl-6Ce9xEyLAoLyBBOKu-MLxx5VIcNA5vo21jD8Khn8_cGTQ5pU5KWpkz4a8OnVpzqk3Jy87wbgkoKBrumtjK5hZ8rRZ_Nj7vHyA-Kk2sh9GIDwXN59w==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "DEA 政府数据",
+      "similarity": 0.615,
+      "db_journal": "莫富传",
+      "db_year": "待确认"
+    },
+    {
+      "n": 373,
+      "db_title": "政府数据开放与城市创新——来自政府数据开放平台上线的经验证据",
+      "cnki_title": "政府公共数据开放与城市数字化绿色化协同发展——来自公共数据开放平台上线的证据",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AqtmlYbcaEuQki1c73m-h963ySwXSTsLJVAFtFAkzSWuEB9eHTmLZT8szA0JYz97MeUFEHaXZHjidzZxxD7_yoglT34m5uxDaPNoPKADwkamrXoO0U15kYmSIc_0sGLrUb7udaFBRM7L78Rvdy-RIC_N6w5o7Td_GNPLQMQh2VOA==&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "开放政府数据",
+      "similarity": 0.688,
+      "db_journal": "李北伟， 朱婧祎， 季忠洋",
+      "db_year": "待确认"
+    },
+    {
+      "n": 398,
+      "db_title": "国内外政府数据开放现状比较研究",
+      "cnki_title": "中美政府数据开放政策比较研究",
+      "cnki_link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CfiosiHW0yIV9t1pewDVgDg2pOQveU4DPNpe07rfYcB7htBYG9hYHd3odbrhyIUgKrSi873P_njJ_yWlhpjnVXELSiyS_wjAYx4DEyw46e0lMHptcQ7PxD0Ec0kXqngwrHconc0BjAFSJ9GRu3Dm7MrcUYtDbV3HSaVkcak4nW2tbFMes-5U8w&uniplatform=NZKPT&language=CHS",
+      "cnki_keyword": "政府数据 政策评估",
+      "similarity": 0.69,
+      "db_journal": "岳丽欣， 刘文云",
+      "db_year": "待确认"
+    }
+  ]
+}

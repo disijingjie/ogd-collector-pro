@@ -1,0 +1,88 @@
+{
+ "title": "电子资源导航",
+ "cnki_found": true,
+ "wos_found": false,
+ "database_links": [
+  {
+   "text": "数据库导航",
+   "href": "https://whu.metaersp.cn/databaseList"
+  },
+  {
+   "text": "期刊导航",
+   "href": "https://whu-sfx.exlibrisgroup.com.cn/ej/86whu/ej.htm"
+  },
+  {
+   "text": "数据库使用规定",
+   "href": "https://whu.metaersp.cn/helpPage"
+  },
+  {
+   "text": "中文库",
+   "href": "https://whu.metaersp.cn/databaseList#labelNav_%E4%B8%AD%E6%96%87%E5%BA%93"
+  },
+  {
+   "text": "试用库",
+   "href": "https://whu.metaersp.cn/databaseList#labelNav_%E8%AF%95%E7%94%A8%E5%BA%93"
+  },
+  {
+   "text": "免费库",
+   "href": "https://whu.metaersp.cn/databaseList#labelNav_%E5%85%8D%E8%B4%B9%E5%BA%93"
+  },
+  {
+   "text": "自建库",
+   "href": "https://whu.metaersp.cn/databaseList#labelNav_%E8%87%AA%E5%BB%BA%E5%BA%93"
+  },
+  {
+   "text": "外文库",
+   "href": "https://whu.metaersp.cn/databaseList#labelNav_%E5%A4%96%E6%96%87%E5%BA%93"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_eaa83f015cf645209bd2b9c26d"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_ad7190a99b1246ad82a034a70a"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_fb6d005ae72c4e3296073bf37a"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_f4ce47238a194d71b578bb8d46"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_fbc513d9b1e64174a5225e3b5f"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_697935eec2345a486c284fa95f"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_ca21cea023f6455c944225fbc3"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_1607582e20cdd7c8705c0d8b55"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_15ce2f3a4a384a02ba2bf6cae4"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_18db64f0789f43b18db484c0a6"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_c846014c5b6a40d49b66c5aa3b"
+  },
+  {
+   "text": "",
+   "href": "https://whu.metaersp.cn/databaseDetail?databaseNum=DB_4d78d542e4955a51e2449341dc"
+  }
+ ],
+ "screenshot": "data/whu_export/whu_db_home.png"
+}

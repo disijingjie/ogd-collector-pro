@@ -1,0 +1,151 @@
+{% extends "base_v6.html" %}{% set active = "methodology" %}{% block title %}AI时代研究方法论创新 - OGD-Collector Pro{% endblock %}{% block page_title %}AI时代信息资源管理学科研究方法论创新{% endblock %}{% block breadcrumb %}研究方法论 / 小论文 / 投稿版{% endblock %}
+{% block extra_css %}<style>
+.paper{max-width:1100px;margin:0 auto;font-size:15px;line-height:2;color:#334155}
+.paper h2{font-size:20px;color:#1e293b;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #e2e8f0}
+.paper h3{font-size:17px;color:#1e293b;margin:24px 0 8px}
+.paper p{margin:10px 0;text-indent:2em}
+.paper .abstract{background:#f8fafc;padding:20px 24px;border-radius:10px;border-left:3px solid #2563eb;margin:16px 0}
+.paper .keywords{font-size:13px;color:#64748b;margin-top:8px}
+.paper blockquote{background:#fffbeb;border-left:3px solid #f59e0b;padding:12px 18px;margin:14px 0;font-size:14px;color:#92400e}
+.chart-box{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:24px 0;text-align:center;overflow-x:auto}
+.chart-box img{min-width:850px;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in;transition:transform .2s}
+.chart-box:hover{box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.chart-caption{font-size:14px;color:#64748b;margin-top:12px;font-weight:600}
+.charts-grid{display:flex;flex-direction:column;gap:20px;margin:24px 0}
+.chart-card{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);text-align:center;overflow-x:auto}
+.chart-card img{min-width:500px;max-width:100%;height:auto;border-radius:4px;cursor:zoom-in}
+.chart-card img:hover{transform:scale(1.02)}
+.chart-card p{font-size:13px;color:#64748b;margin-top:8px;text-indent:0}
+.table-box{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:24px 0;text-align:center;overflow-x:auto}
+.table-box img{min-width:700px;max-width:100%;height:auto;border-radius:4px}
+.table-caption{font-size:13px;color:#64748b;margin-top:8px;font-weight:600}
+.dl-section{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border-radius:12px;padding:24px;margin:32px 0;text-align:center}
+.dl-btn{display:inline-block;padding:10px 22px;margin:6px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:opacity .2s}
+.dl-btn:hover{opacity:.85}
+.dl-btn.green{background:#10b981}
+.dl-btn.amber{background:#d97706}
+.insight{background:#f8fafc;padding:12px 16px;border-left:3px solid #2563eb;margin:10px 0;border-radius:0 8px 8px 0;font-size:14px;text-indent:0}
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;cursor:zoom-out;align-items:center;justify-content:center}
+.lightbox.show{display:flex}
+.lightbox img{max-width:95vw;max-height:95vh;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+@media(max-width:768px){.chart-card img{max-width:100%}}
+</style>{% endblock %}
+{% block anchor_nav %}
+<div class="anchor-nav">
+  <a href="#sec1">引言</a><a href="#sec2">范例对比</a>
+  <a href="#sec3">八步方法论</a><a href="#sec4">范式对比</a>
+  <a href="#sec5">政策建议</a><a href="#sec6">衍生论文</a>
+  <a href="#downloads">下载</a>
+</div>{% endblock %}
+{% block content %}
+<div class="paper">
+  <div class="cred-alert info" style="margin-bottom:20px">
+    <strong>📄 投稿版本</strong>：约15,000字，9张图，2张表，23篇参考文献。目标期刊：中国图书馆学报 / 情报学报 / JASIST。
+  </div>
+
+  <div class="abstract">
+    <strong>摘要</strong>：人工智能（AI）技术的快速发展正在深刻改变信息资源管理（IRM）学科的研究范式。传统IRM研究遵循"假设→验证→结论"的线性逻辑，面临数据获取成本高、方法选择依赖经验、分析手段单一等局限。本文以"政府数据开放平台数据利用绩效评估"研究为实证案例，提出了一套适应AI时代的<strong>八步研究方法论框架</strong>：现实触发→泛化理解→精准调研→数据获取→方法匹配→实证分析→对策生成→迭代优化。研究构建了"熵权TOPSIS→DEA→DEMATEL→fsQCA→多期DID"的五方法递进分析链，从认识论、方法论和工具论三个层面系统分析了AI对IRM学科研究范式的影响。<br>
+    <span class="keywords"><strong>关键词</strong>：人工智能；信息资源管理；研究方法论；数据驱动；混合方法；八步方法论；政府数据开放</span>
+  </div>
+
+  <!-- ====== 图1-1 ====== -->
+  <div class="chart-box">
+    <img src="{{ url_for('static', filename='figures/图1-1_研究框架总览.svg') }}" alt="研究框架总览">
+    <p class="chart-caption">图1-1 研究框架总览：AI时代IRM研究方法论创新逻辑</p>
+  </div>
+
+  <div id="sec1"><h2>1. 引言：当AI可以写文献综述时，博士论文还剩什么？</h2>
+    <p>2023年以来，以大语言模型为代表的AI技术迅速渗透到学术研究的各个环节。AI可以检索文献、总结摘要、润色语言、生成图表，甚至在特定领域写出通过同行评审的论文初稿。这一技术变革对博士研究生培养提出了一个根本性的问题：<strong>当AI可以完成传统博士论文的大部分"技术性工作"时，博士论文的学术价值究竟体现在哪里？</strong></p>
+    <blockquote>本文认为，答案在于两个方面：<strong>数据获取的独特性和研究设计的创造性</strong>。AI可以分析已有的数据，但它不能替你爬到23个政府网站上把数据取回来；AI可以建议分析方法，但它不能判断在特定数据约束下哪种方法真正适合。正是这两个"AI无法替代"的环节，构成了AI时代博士论文的核心竞争力。</blockquote>
+  </div>
+
+  <!-- ====== 图2-1 ====== -->
+  <div class="chart-box">
+    <img src="{{ url_for('static', filename='figures/图2-1_文献筛选流程.svg') }}" alt="文献筛选流程">
+    <p class="chart-caption">图2-1 文献筛选流程（PRISMA 2020）：WOS 2,847篇 + CNKI 3,156篇</p>
+  </div>
+
+  <div id="sec2"><h2>2. 传统IRM研究方法与AI方法的对比</h2>
+    <p>传统IRM研究面临三个结构性局限：数据获取的"高摩擦"问题、方法选择的"经验依赖"问题、分析手段的"单维"问题。AI技术为大语言模型、自动化数据采集工具和多模态分析框架为IRM研究方法论创新提供了四个维度的新可能：文献处理能力指数级提升、数据采集自动化和规模化、多方法组合的自动化匹配、写作效率的结构性提升。</p>
+    <p>本研究在PRISMA 2020系统性文献综述流程的基础上，结合AI辅助工具完成了WOS核心合集2,847篇和CNKI 3,156篇文献的筛选、分类和关键信息提取，将文献综述的效率提升了约5倍。</p>
+  </div>
+
+  <div id="sec3"><h2>3. 八步研究方法论框架</h2>
+    <p>本研究在实践基础上总结出"八步研究方法论"框架，作为AI时代IRM研究的系统性方法论指南。该框架不是线性的八个步骤，而是具有反馈回路的迭代系统——前三步侧重于"建构研究框架"，中两步侧重于"创造研究素材"，后三步侧重于"产出研究结论"。</p>
+    <p><strong>Step 0·现实触发</strong>：从社会现象到研究问题，研究的问题锚点来自现实观察而非文献空白。<strong>Step 1·泛化理解</strong>：系统文献检索与领域全景把握。<strong>Step 2·精准调研</strong>：聚焦核心变量与研究空白。<strong>Step 3·数据获取</strong>：自动化采集管道（23平台，88个数据维度）。<strong>Step 4·方法匹配</strong>：问题驱动的方法选择。<strong>Step 5·实证分析</strong>：多方法交叉验证。<strong>Step 6·对策生成</strong>：组态-对策对应矩阵。<strong>Step 7·迭代优化</strong>：持续改进闭环。</p>
+  </div>
+
+  <!-- ====== 图3系列 ====== -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <img src="{{ url_for('static', filename='figures/图3-1_八步方法论框架.svg') }}" alt="八步方法论">
+      <p>图3-1 八步方法论框架</p>
+    </div>
+    <div class="chart-card">
+      <img src="{{ url_for('static', filename='figures/图3-2_采集系统架构.svg') }}" alt="采集系统架构">
+      <p>图3-2 多策略自动化采集系统架构</p>
+    </div>
+    <div class="chart-card">
+      <img src="{{ url_for('static', filename='figures/图3-3_方法适配三角.svg') }}" alt="方法适配三角">
+      <p>图3-3 方法适配三角模型</p>
+    </div>
+    <div class="chart-card">
+      <img src="{{ url_for('static', filename='figures/图3-4_方法决策树.svg') }}" alt="方法决策树">
+      <p>图3-4 数据采集方法决策树</p>
+    </div>
+  </div>
+
+  <div id="sec4"><h2>4. 传统范式与新范式的对比分析</h2>
+    <p>表4-1系统对比了传统研究范式与AI时代新范式在认识论基础、选题路径、数据获取、方法选择、分析流程、工具使用、研究过程、成果形式和迭代机制九个维度的核心变革。</p>
+    <p><strong>线性研究逻辑 vs 迭代研究逻辑</strong>：传统博士论文遵循"选题→文献综述→研究设计→数据采集→分析→结论"的线性流程。AI时代的迭代研究逻辑允许研究者在任何阶段回溯前面的步骤，实现了从"一次性完成"到"持续优化"的转变。</p>
+    <p><strong>单一方法 vs 多方法三角验证</strong>：本研究的多方法组合设计在方法互补、交叉验证和递进深化三个层面超越了单一方法的局限。</p>
+  </div>
+
+  <div class="chart-box">
+    <img src="{{ url_for('static', filename='figures/图4-1_范式对比雷达图.svg') }}" alt="范式对比">
+    <p class="chart-caption">图4-1 研究范式对比雷达图：传统范式（蓝色）vs AI驱动范式（红色）</p>
+  </div>
+
+  <div id="sec5"><h2>5. 研究结论與政策建议</h2>
+    <div class="insight"><strong>启示一：</strong>从"追求数据增量"转向"提升配置效率"——实证发现山东平台DEA技术效率仅0.634，"高绩效低效率"悖论普遍存在。</div>
+    <div class="insight"><strong>启示二：</strong>实施差异化的高绩效路径提升策略——fsQCA识别三条等效路径（技术驱动型、效率区域型、生态协同型），无单一必要条件。</div>
+    <div class="insight"><strong>启示三：</strong>将"数据质量"从软约束提升为硬指标——DEMATEL识别数据质量中心度0.082，为核心驱动因素。</div>
+  </div>
+
+  <div class="chart-box">
+    <img src="{{ url_for('static', filename='figures/图5-1_政策启示框架.svg') }}" alt="政策启示">
+    <p class="chart-caption">图5-1 政策启示框架：数据开放·方法创新·人才培养</p>
+  </div>
+
+  <div id="sec6"><h2>6. 九篇衍生小论文体系</h2>
+    <div class="table-box">
+    <img src="{{ url_for('static', filename='figures/表6-1_衍生论文.png') }}" alt="表6-1">
+    <p class="table-caption">表6-1 九篇衍生小论文框架</p>
+  </div>
+  <p>方法论创新的成果延伸为九篇衍生小论文，分别对应不同的方法论环节。九篇论文共享八步方法论和五方法递进链基础，形成了"一个框架、多重输出"的学术产出模式。</p>
+  </div>
+
+  <div class="chart-box">
+    <img src="{{ url_for('static', filename='figures/图6-1_九篇衍生论文框架.svg') }}" alt="衍生论文">
+    <p class="chart-caption">图6-1 九篇衍生论文框架：从方法论核心到学术产出矩阵</p>
+  </div>
+
+  <div id="downloads" class="dl-section">
+    <h3 style="margin:0 0 12px;color:#1e293b">📥 资源下载与访问</h3>
+    <a href="/static/papers/methodology_paper.docx" class="dl-btn" download>📄 下载论文全文 (DOCX)</a>
+    <a href="https://github.com/disijingjie/ogd-collector-pro" class="dl-btn green" target="_blank">💻 查看开源代码</a>
+    <a href="/reproduce" class="dl-btn amber">🔬 数据复现中心</a>
+    <p style="font-size:12px;color:#64748b;margin-top:12px">论文未发表，访问需验证。联系：ambit@qq.com | 基金：国家社科基金重大项目(21&ZDXXX)</p>
+  </div>
+</div>
+<!-- Image lightbox -->
+<div id="img-lightbox" class="lightbox" onclick="this.classList.remove('show')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+(function(){var lb=document.getElementById('img-lightbox');var li=document.getElementById('lightbox-img');
+document.querySelectorAll('.chart-box img, .chart-card img').forEach(function(img){img.addEventListener('click',function(e){li.src=this.src;lb.classList.add('show');e.stopPropagation()})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('show')})})();
+</script>
+{% endblock %}

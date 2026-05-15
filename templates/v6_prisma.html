@@ -1,0 +1,91 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}文献筛选之路 - OGD-Collector Pro{% endblock %}{% block page_title %}文献筛选之路{% endblock %}{% block breadcrumb %}研究拓展 / 文献筛选之路{% endblock %}
+{% block extra_css %}<style>
+.prisma-stage{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;border-left:4px solid #2563eb}
+.prisma-stage h3{font-size:16px;margin-bottom:8px}
+.prisma-stage .meta{font-size:12px;color:#64748b;margin-bottom:10px}
+.prisma-stage .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;margin:12px 0}
+.flow-box{padding:10px 16px;border-radius:8px;text-align:center;font-weight:600;min-width:80px}
+.flow-box.in{background:#dbeafe;color:#1e40af}
+.flow-box.out{background:#dcfce7;color:#166534}
+.flow-box.ex{background:#fee2e2;color:#991b1b}
+.flow-arrow{font-size:18px;color:#cbd5e1}
+.criteria-list{font-size:12px;color:#475569;line-height:1.8}
+.criteria-list li{margin-bottom:4px}
+.journal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.journal-card{padding:14px;border-radius:10px;border:1px solid #e2e8f0;background:#fff}
+.journal-card .name{font-weight:700;font-size:13px}
+.journal-card .count{font-size:22px;font-weight:800;color:#2563eb}
+.journal-card .level{font-size:11px;color:#64748b;margin-top:2px}
+</style>{% endblock %}
+{% block content %}
+<div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
+  <strong>文献筛选之路</strong>：还原一个普通学者如何从海量文献中逐步聚焦到200篇核心文献的完整过程。每一步都记录了筛选标准、排除理由和留下的文献数量。这是论文第二章"理论基础与文献综述"的方法论基础。
+</div>
+
+<div class="prisma-stage">
+  <h3>第一层：万里挑一 —— 数据库检索</h3>
+  <div class="meta">检索时间：2024年6月 | 工具：Web of Science + CNKI + AI辅助筛选</div>
+  <div class="flow">
+    <div class="flow-box in">WOS<br>2,847篇</div><span class="flow-arrow">+</span>
+    <div class="flow-box in">CNKI<br>3,156篇</div><span class="flow-arrow">→</span>
+    <div class="flow-box out">初始池<br>6,003篇</div>
+  </div>
+  <div class="criteria-list">
+    <strong>检索策略：</strong>WOS: TS=("open government data" OR "OGD" OR "public data open") | CNKI: 主题="政府数据开放"+"公共数据"+"数据开放平台" | 时间范围: 2009-2024
+  </div>
+</div>
+
+<div class="prisma-stage" style="border-left-color:#7c3aed">
+  <h3>第二层：千里挑一 —— PRISMA去重与标题筛选</h3>
+  <div class="flow">
+    <div class="flow-box in">初始池<br>6,003</div><span class="flow-arrow">→</span>
+    <div class="flow-box ex">去重<br>-1,247</div><span class="flow-arrow">→</span>
+    <div class="flow-box in">去重后<br>4,756</div><span class="flow-arrow">→</span>
+    <div class="flow-box ex">标题排除<br>-3,180</div><span class="flow-arrow">→</span>
+    <div class="flow-box out">标题入<br>1,576</div>
+  </div>
+  <div class="criteria-list">
+    <strong>排除标准：</strong>(1)非学术文献（新闻、博客、工作报告）；(2)不涉及政府数据的纯技术论文；(3)非中英文文献；(4)重复发表；(5)标题明显不相关（如仅涉及企业数据、个人隐私保护等）
+  </div>
+</div>
+
+<div class="prisma-stage" style="border-left-color:#0891b2">
+  <h3>第三层：百里挑一 —— 摘要筛选与全文获取</h3>
+  <div class="flow">
+    <div class="flow-box in">标题入<br>1,576</div><span class="flow-arrow">→</span>
+    <div class="flow-box ex">摘要排除<br>-1,072</div><span class="flow-arrow">→</span>
+    <div class="flow-box out">全文获取<br>504篇</div>
+  </div>
+  <div class="criteria-list">
+    <strong>排除标准：</strong>(1)摘要表明仅提及政府数据而非核心研究主题；(2)无法获取全文（会议摘要、未发表等）；(3)研究方法描述不清；(4)仅涉及国际案例而非中国语境（英文文献保留，中文非中国语境排除）
+  </div>
+</div>
+
+<div class="prisma-stage" style="border-left-color:#16a34a">
+  <h3>第四层：十里挑一 —— 全文精读与质量评估</h3>
+  <div class="flow">
+    <div class="flow-box in">全文<br>504篇</div><span class="flow-arrow">→</span>
+    <div class="flow-box ex">质量排除<br>-304</div><span class="flow-arrow">→</span>
+    <div class="flow-box out">核心引用<br>200篇</div>
+  </div>
+  <div class="criteria-list">
+    <strong>质量评估标准：</strong>(1)期刊级别（CSSCI/SSCI/SCI）+ 引用次数；(2)研究方法严谨性；(3)与中国研究问题的相关性；(4)避免过度依赖单一作者或机构；(5)中英比60:40<br>
+    <strong>趋势判断标签：</strong>每篇标注属于"技术驱动期(2009-2015)"、"制度驱动期(2016-2020)"还是"价值驱动期(2021至今)"。
+  </div>
+</div>
+
+<div class="card-header" style="margin-top:24px"><div class="card-title"><span class="icon"></span>200篇核心文献的期刊分布</div></div>
+<div class="journal-grid">
+  <div class="journal-card"><div class="name">中国行政管理</div><div class="count">12</div><div class="level">CSSCI · 管理学顶刊</div></div>
+  <div class="journal-card"><div class="name">电子政务</div><div class="count">11</div><div class="level">CSSCI</div></div>
+  <div class="journal-card"><div class="name">Government Information Quarterly</div><div class="count">10</div><div class="level">SSCI · Q1</div></div>
+  <div class="journal-card"><div class="name">情报学报</div><div class="count">6</div><div class="level">CSSCI · 情报学顶刊</div></div>
+  <div class="journal-card"><div class="name">公共管理学报</div><div class="count">6</div><div class="level">CSSCI · 管理学期刊</div></div>
+  <div class="journal-card"><div class="name">图书情报工作</div><div class="count">5</div><div class="level">CSSCI</div></div>
+  <div class="journal-card"><div class="name">Public Management Review</div><div class="count">4</div><div class="level">SSCI · Q1</div></div>
+  <div class="journal-card"><div class="name">中国图书馆学报</div><div class="count">4</div><div class="level">CSSCI · 顶刊</div></div>
+</div>
+<div style="text-align:center;margin:16px 0">
+  <a href="/literature" style="display:inline-block;padding:10px 24px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600">进入完整文献数据库（200篇可检索）→</a>
+</div>
+{% endblock %}

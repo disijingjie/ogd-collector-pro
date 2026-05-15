@@ -1,0 +1,190 @@
+{% extends "base_v6.html" %}{% set active = "research" %}{% block title %}文献摘录 - OGD-Collector Pro{% endblock %}{% block page_title %}文献摘录与笔记{% endblock %}{% block breadcrumb %}研究拓展 / 文献摘录{% endblock %}
+{% block extra_css %}<style>
+.extract-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px;transition:all .2s}
+.extract-card:hover{border-color:#2563eb;box-shadow:0 2px 8px rgba(37,99,235,.08)}
+.extract-meta{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0}
+.extract-meta span{font-size:11px;color:#64748b}
+.extract-body{font-size:13px;color:#334155;line-height:1.8;margin-top:10px}
+.extract-body strong{color:#1e293b}
+.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:#92400e}
+.note-box::before{content:"📝 研究笔记：";font-weight:700;display:block;margin-bottom:4px}
+.chapter-link{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;margin:2px;text-decoration:none}
+.ch-link-intro{background:#dbeafe;color:#1e40af}
+.ch-link-lit{background:#fce7f3;color:#be185d}
+.ch-link-method{background:#dcfce7;color:#166534}
+.ch-link-emp{background:#fef3c7;color:#92400e}
+.ch-link-disc{background:#e0e7ff;color:#3730a3}
+.paper-modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:1000;justify-content:center;align-items:center;padding:20px}
+.paper-modal.open{display:flex}
+.modal-inner{background:#fff;border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:28px}
+.modal-inner h3{font-size:16px;margin-bottom:12px}
+.modal-inner .close{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:#94a3b8}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar button{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;font-size:12px;cursor:pointer;transition:all .2s}
+.toolbar button:hover,.toolbar button.active{border-color:#2563eb;color:#2563eb;background:#eff6ff}
+</style>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#filter">筛选导航</a><a href="#papers" class="active">文献摘录</a></div>{% endblock %}
+{% block content %}
+
+<div style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:14px;padding:28px;margin-bottom:20px">
+  <div style="font-size:18px;font-weight:700;margin-bottom:6px">文献摘录与笔记：从200篇到论文章节</div>
+  <div style="font-size:13px;color:#94a3b8;line-height:1.7">每篇核心文献的摘录包含五个维度：<strong>研究问题、方法设计、数据来源、主要发现、与本研究关系</strong>。摘录完成后自动归类到论文第1-3章各小节。</div>
+</div>
+
+<div id="filter" class="scroll-section">
+<div class="toolbar">
+  <button class="active" onclick="applyFilters('all',this)">全部(462)</button>
+  <button onclick="applyFilters('ch1',this)">第1章·绪论</button>
+  <button onclick="applyFilters('ch2',this)">第2章·综述</button>
+  <button onclick="applyFilters('ch3',this)">第3章·方法</button>
+  <button onclick="applyFilters('ch4',this)">第4章·采集</button>
+  <button onclick="applyFilters('ch5',this)">第5-8章·实证</button>
+  <button onclick="applyFilters('cn',this)">中文文献</button>
+  <button onclick="applyFilters('en',this)">英文文献</button>
+  <button onclick="applyFilters('core',this)">核心期刊</button>
+</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">
+  <input type="text" id="searchInput" placeholder="搜索标题、作者、关键词..." style="flex:1;min-width:200px;padding:6px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:12px" oninput="applyFilters(currentFilter)">
+  <span id="resultCount" style="font-size:11px;color:#64748b"></span>
+</div>
+</div>
+
+<div id="papers" class="scroll-section" style="margin-top:16px">
+  <div style="text-align:center;padding:40px;color:#64748b">
+    <div style="font-size:24px;margin-bottom:8px">&#128218;</div>
+    <div style="font-size:14px;font-weight:600">精读笔记加载中...</div>
+    <div style="font-size:12px;margin-top:4px">正在获取462篇文献笔记</div>
+  </div>
+</div>
+
+<div id="pagination" style="text-align:center;margin:20px 0;display:none"></div>
+
+<script>
+function renderNoteCard(note, db) {
+  var paper = db.find(function(p) { return p.n === note.n; });
+  if (!paper) return '';
+  var title = '[' + note.n + '] ' + paper.a.replace(/,/g, ', ') + '. ' + paper.t;
+  var dims = note.dimensions;
+  var dimsHtml = '';
+  if (note.status === 'done') {
+    dimsHtml = '<strong>研究问题：</strong>' + (dims.research_question || '') + '<br>'
+      + '<strong>方法：</strong>' + (dims.method || '') + '<br>'
+      + '<strong>数据：</strong>' + (dims.data || '') + '<br>'
+      + '<strong>主要发现：</strong>' + (dims.findings || '') + '<br>'
+      + '<strong>与本研究关系：</strong>' + (dims.relevance || '');
+  } else {
+    dimsHtml = '<em style="color:#94a3b8">笔记待补充（优先级 ' + (note.priority || 3) + '）</em>';
+  }
+  var tagsHtml = '';
+  if (note.chapter_tags && note.chapter_tags.length > 0) {
+    tagsHtml = note.chapter_tags.map(function(t) {
+      var clsMap = {ch1: 'ch-link-intro', ch2: 'ch-link-lit', ch3: 'ch-link-method', ch4: 'ch-link-emp', ch5: 'ch-link-emp', ch6: 'ch-link-emp', ch7: 'ch-link-disc', ch8: 'ch-link-disc'};
+      var labelMap = {ch1: '\u2192\u7b2c1\u7ae0', ch2: '\u2192\u7b2c2\u7ae0', ch3: '\u2192\u7b2c3\u7ae0', ch4: '\u2192\u7b2c4\u7ae0', ch5: '\u2192\u7b2c5\u7ae0', ch6: '\u2192\u7b2c6\u7ae0', ch7: '\u2192\u7b2c7\u7ae0', ch8: '\u2192\u7b2c8\u7ae0'};
+      return '<a href="#ch' + t.replace('ch','') + '" class="chapter-link ' + (clsMap[t]||'ch-link-intro') + '">' + (labelMap[t]||t) + '</a>';
+    }).join('');
+  }
+  var noteHtml = note.note ? '<div class="note-box">' + note.note + '</div>' : '';
+  var confBadge = '';
+  if (note.confidence === 'high') confBadge = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#dcfce7;color:#166534;margin-left:4px">高置信</span>';
+  else if (note.confidence === 'medium') confBadge = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#fef3c7;color:#92400e;margin-left:4px">中置信</span>';
+  else if (note.confidence === 'low') confBadge = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#fee2e2;color:#991b1b;margin-left:4px">待复核</span>';
+  var usage = note.thesis_usage || {};
+  var usageBadge = '';
+  if (usage.status === 'cited') usageBadge = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#dbeafe;color:#1e40af;margin-left:4px">已引用</span>';
+  else if (usage.status === 'planned') usageBadge = '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#f1f5f9;color:#64748b;margin-left:4px">待引用</span>';
+  var statusBadge = note.status === 'done' ? '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#dcfce7;color:#166534;margin-left:8px">已完成</span>' : '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;background:#e2e8f0;color:#64748b;margin-left:8px">待补充</span>';
+  var kwTags = '';
+  if (note.keywords && note.keywords.length > 0) {
+    kwTags = '<div style="margin-top:4px">' + note.keywords.map(function(k) { return '<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;background:#f1f5f9;color:#64748b;margin:2px">' + k + '</span>'; }).join('') + '</div>';
+  }
+  var quotesHtml = '';
+  if (note.key_quotes && note.key_quotes.length > 0) {
+    quotesHtml = '<div style="margin-top:8px"><div style="font-weight:600;font-size:12px;color:#92400e;cursor:pointer;padding:4px 0" onclick="var p=this.nextElementSibling;p.style.display=p.style.display===&quot;none&quot;?&quot;block&quot;:&quot;none&quot;">&#x1F4D6; 原文段落 (' + note.key_quotes.length + '段) &#x25BC;</div><div style="display:none">';
+    note.key_quotes.forEach(function(q){
+      quotesHtml += '<div style="padding:6px 10px;background:#fffef5;border-radius:4px;margin-bottom:4px;font-size:11px;color:#78350f;line-height:1.6;border-left:2px solid #f59e0b">' + q.text + (q.context ? '<span style="display:block;font-size:10px;color:#b45309;margin-top:2px">&#x2014;&#x2014; ' + q.context + '</span>' : '') + '</div>';
+    });
+    quotesHtml += '</div></div>';
+  }
+  return '<div class="extract-card" data-chapter="' + (note.chapter_tags||[]).join(' ') + '" data-country="' + (paper.c||'') + '" data-priority="' + (note.priority||3) + '" data-confidence="' + (note.confidence||'low') + '">'
+    + '<div style="font-weight:700;font-size:14px;color:#1e293b">' + title + statusBadge + confBadge + usageBadge + '</div>'
+    + '<div class="extract-meta"><span>' + (paper.j||'') + ', ' + (paper.y||'') + '</span>' + (paper.c==='cn'?'<span>中文</span>':'<span>英文</span>') + '<span>优先级 ' + (note.priority||3) + '</span>' + tagsHtml + '</div>'
+    + '<div class="extract-body">' + dimsHtml + '</div>'
+    + noteHtml + quotesHtml + kwTags
+    + '</div>';
+}
+
+function renderPage(allNotes, allDb, currentFilter, page, pageSize) {
+  var search = (document.getElementById('searchInput') || {}).value || '';
+  search = search.toLowerCase();
+  var filtered = allNotes.filter(function(note) {
+    var paper = allDb.find(function(p) { return p.n === note.n; });
+    if (!paper) return false;
+    if (currentFilter === 'cn' && paper.c !== 'cn') return false;
+    if (currentFilter === 'en' && paper.c !== 'en') return false;
+    if (currentFilter === 'core' && note.priority !== 1) return false;
+    if (currentFilter === 'ch1' && (note.chapter_tags||[]).indexOf('ch1') < 0) return false;
+    if (currentFilter === 'ch2' && (note.chapter_tags||[]).indexOf('ch2') < 0) return false;
+    if (currentFilter === 'ch3' && (note.chapter_tags||[]).indexOf('ch3') < 0) return false;
+    if (currentFilter === 'ch4' && (note.chapter_tags||[]).indexOf('ch4') < 0) return false;
+    if (currentFilter === 'ch5') {
+      var tags = note.chapter_tags||[];
+      if (tags.indexOf('ch5')<0 && tags.indexOf('ch6')<0 && tags.indexOf('ch7')<0 && tags.indexOf('ch8')<0) return false;
+    }
+    if (search) {
+      var paper = allDb.find(function(p){return p.n===note.n;});
+      var txt = ((paper.a||'') + ' ' + (paper.t||'') + ' ' + (note.keywords||[]).join(' ')).toLowerCase();
+      if (txt.indexOf(search) < 0) return false;
+    }
+    return true;
+  });
+  var total = filtered.length;
+  var pages = Math.ceil(total / pageSize) || 1;
+  if (page > pages) page = pages;
+  var start = (page - 1) * pageSize;
+  var pageItems = filtered.slice(start, start + pageSize);
+  var doneCount = allNotes.filter(function(n){return n.status==='done';}).length;
+  var html = '<div style="background:#eff6ff;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1e40af"><strong>精读笔记：' + doneCount + '/462 篇已完成</strong> | 当前筛选：' + total + '篇 | 第' + page + '/' + pages + '页</div>';
+  pageItems.forEach(function(note) { html += renderNoteCard(note, allDb); });
+  if (total === 0) html += '<div style="text-align:center;padding:40px;color:#94a3b8">没有匹配的文献笔记</div>';
+  var pEl = document.getElementById('papers'); if(pEl) pEl.innerHTML = html;
+  var cEl = document.getElementById('resultCount'); if(cEl) cEl.textContent = total + ' 篇';
+  var pagEl = document.getElementById('pagination');
+  if (pagEl) {
+    var pagHtml = '';
+    if (pages > 1) {
+      pagHtml = '<div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">';
+      if (page > 1) pagHtml += '<button onclick="goPage(1)" style="padding:4px 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;cursor:pointer;font-size:12px">首页</button>';
+      if (page > 1) pagHtml += '<button onclick="goPage(' + (page-1) + ')" style="padding:4px 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;cursor:pointer;font-size:12px">← 上页</button>';
+      pagHtml += '<span style="padding:4px 10px;font-size:12px;color:#64748b">' + page + '/' + pages + '</span>';
+      if (page < pages) pagHtml += '<button onclick="goPage(' + (page+1) + ')" style="padding:4px 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;cursor:pointer;font-size:12px">下页 →</button>';
+      if (page < pages) pagHtml += '<button onclick="goPage(' + pages + ')" style="padding:4px 10px;border:1px solid #e2e8f0;border-radius:6px;background:#fff;cursor:pointer;font-size:12px">末页</button>';
+      pagHtml += '</div>';
+    }
+    pagEl.innerHTML = pagHtml;
+    pagEl.style.display = pages > 1 ? 'block' : 'none';
+  }
+}
+
+var _notes = null, _db = null, _filter = 'all', _page = 1, _pageSize = 20;
+
+function applyFilters(type, btn) {
+  _filter = type; _page = 1;
+  if (btn) { document.querySelectorAll('.toolbar button').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); }
+  if (_notes && _db) renderPage(_notes, _db, _filter, _page, _pageSize);
+}
+function goPage(p) { _page = p; if (_notes && _db) renderPage(_notes, _db, _filter, _page, _pageSize); }
+function init() {
+  Promise.all([
+    fetch('/api/literature-notes').then(function(r){return r.json();}),
+    fetch('/api/literature-db').then(function(r){return r.json();})
+  ]).then(function(results) {
+    _notes = results[0]; _db = results[1];
+    renderPage(_notes, _db, _filter, _page, _pageSize);
+    document.getElementById('searchInput').oninput = function() { _page = 1; renderPage(_notes, _db, _filter, _page, _pageSize); };
+  }).catch(function(e) {
+    document.getElementById('papers').innerHTML = '<div style="color:#dc2626;padding:20px">加载失败：' + e.message + '</div>';
+  });
+}
+init();
+</script>
+{% endblock %}

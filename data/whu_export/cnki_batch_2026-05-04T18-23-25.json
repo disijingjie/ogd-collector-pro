@@ -1,0 +1,994 @@
+{
+  "exported_at": "2026-05-04T18:23:25",
+  "source": "CNKI via WHU Library (batch)",
+  "keywords": [
+    "政府数据开放",
+    "开放政府数据",
+    "公共数据开放",
+    "数据开放平台",
+    "政府数据 绩效评估",
+    "政府数据 DID",
+    "政府数据 fsQCA",
+    "政府数据 制度同形",
+    "数据要素 市场配置",
+    "数字政府 数据共享",
+    "政府数据 利用",
+    "政府数据 质量",
+    "TOPSIS 政府数据",
+    "DEA 政府数据",
+    "DEMATEL 政府数据",
+    "政府数据 价值",
+    "政务数据 治理",
+    "政府数据 政策评估",
+    "政府数据 企业创新",
+    "政府数据 区域差异"
+  ],
+  "total_unique": 193,
+  "results": [
+    {
+      "title": "政府开放数据价值释放驱动要素与运行机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Dgex64668CLO2MD-ZLt40fMu6GqBuC-kZzAFQ-XByO29tYx19MPtMh9l0BM_r2gPLctZpAPnk7JzN0_SHLdE2vpbu3Vd8ZX7R5iehNnWisZwTPPflk1suTPy9KZgk3DdAaNzR3plIsXw7uvYKYvZDSM5EC9ZDepmSFxHigXqSl-g==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "公共数据开放对“专精特新”企业创新的影响——以A股上市“专精特新”企业为研究样本",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DW00pXWKgXVe0GUhe5vmpCf8vPVvO9xoWRPTSKaufcY3H_KpKPNB5QegLjtE06hcyRqzVIAy5fpM5jieLZzbXbwYX8jKtkD8Iv3daVSKuEnusMAwC1FjkrVeN_sZbg4dds00pREVHfvSVy3m08klzcDENSX6dZsB13gwknkg0U4Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "数字政府建设中数据共享开放的新时代机制及其路径创新研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DW00pXWKgXVe0GUhe5vmpCmO1JX0G5SjD77Qb1oaCXE3G8u6HMr-YGzYV_JWBsAu2TD0Tp-Y1pwphgyreSHH-I2uyG0jbpHBPk8H2iCxVRwzEMF0YpmthNPiuqFHlIu8RFFNUg-AR7LTwaJg3VtfxbThpUqqIrGMX8LMDI2R0jFA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据开放赋能企业技术创新",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BBTdVr5mNjANw195ReozCOF-Qc2IAcn99NEIuwGMIPXGEm0ktalZc1NEuc0SK8O4aWrJkk6-sYPdkOb5HKkl_zT7mLYjQKXRX9E6V9-nbSoBH-LiaU1Ap4Zj2o4LC2GPcKywm5J9skRHKDZxBB5_UtDEcwI8qze_YB9qsdKbR1sg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据公开背景下的档案开放与利用",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ClsTNFXkN_dBXNX-xRa-tLjorqd8iogHx8I3uFKrtLTB9GNzlW5O2raNTGOsICMM-ArRi_Hrh3ueuWZbckSMm4xEc_JDXCgbv5_7puMo9lhon7GpjNDBqsVhRENDIyD97YyMTqMqPARw9vcQSdq2aC0DfZusEnl3M7DUbSmzrYvQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "公共数据开放的减污降碳协同效应——基于政府数据平台上线的准自然实验证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ClsTNFXkN_dBXNX-xRa-tLpQrXoz0ZLJutcwt7MYynxsYV3kjgMg3FZQeE4Byqb07pdRRZiKqStu7tGw6V48PtjotmHZT7YsIjETyX1CQ9Wg8iHtm64CS6meNOssLHBS9wYMyrl_KdsbQfzJdp7Oq4EgFbKwlVpbODtdOdiqC7Hg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据开放背景下知情同意与目的限制规则豁免适用研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C7710GrBt__WsD7SaNHyEULJsu-lRYQk8Ph77ZqjloCxwbqLvK-XOnzxayIw0RHH-LTboeP7qKjygKZZdkfD8HTLySv8TorexeqdaV4RMf7aWwdJpfGFmXemei1wa03m-7djzvDjFfS0pcIxJooX0IJP3JgQnM6V8DylDR-fYt6w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "数据要素共享与城乡融合发展——来自公共数据开放的经验证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AjxL3KP838LaEsapz1TFHY0VbTrmv4XstA_wpDJ5EBi_MlzfOeRSebdZ0uGcARMFdGlaA_j1Mp0qMnrL2tpZ9U_BZa-nbtxj5P8zAhlv16nO89yvDg1c66Iym3CvrqaqtqIh5bfi64WyQ-qTKmtxbbuW5Fmch0oCOqB0-m1DSmXw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "企业新质生产力与供应链中断风险",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AjxL3KP838LaEsapz1TFHYYR8T65m2qJYLIT16QhgtCPH7sMQCd3W4oxR0zJPB71wzzZ0L--1xpB-dnHpXcewiMvPqRowmwmypJ7u2bns4p4w4O2QoeW2r_xZnxVOHw5HBF8egT93FtGkJcErg8AXgFIxfYrWSC0qa2t-HWfyqmg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据开放中企业应用创新行为影响因素及其驱动机制的多智能体仿真研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6APeSZSdU9WnYRBe8mvdH8c6oruJIa_NQW43ZTyvBtXv_kIIi5W2Q4FvPiLyN7Ahi2hraEh4iLOXW1sZFSeJRx1iheRBfagklXMx09tYF3TuhOyhCGfnFZkea_thkgLJwb33Ta8AljZT8YSEieMYwEl-wpra1CdponM1IrqI_WEHQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "数据要素视角下数字化商业模式创新的多元实现路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AoVIib9S1f655FtSmSNHJcDsLqAlEBdV0euPvCW_yFGckvJ7xFenECSVxulZQiNASb5YsmdODwVfLcpmPJlslyxDKNeyZmFar2sWEu_BUJEGpbkCRmIKIPnfnrrCNcGRasJOSDu6cosTIzef9FwVUeCakknZ7B4snAaSVa0gMeEQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府公共数据开放对城市创新韧性的影响机制研究——基于政府公共数据平台上线的准自然实验",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AoVIib9S1f655FtSmSNHJcdmZstPGaCHivEm-ae1GkMsbBRx4PVLOg7MaL6Qblt63j2Uk6IX_4XtfWB8A3XW3uMQmWoa822xnlMwYwz3bqn7X3cVr3Howz3L8n4nvamHUzy1XuzmfNXH8EN7vsK2p89nZpE0h0e5zxgSVFCWcv8w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府开放数据赋能水平的影响因素关联研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A2BvviFDurBLca_QFSBhu41E7nAsKKs0Qr_ecE7ctnd1y0_T9k7wiA6KVZN_hOV-UBNiqUGiNV8GBPMf0rsM_Rl9ao9ASXmONBWkNCD9XwePHdD0CjPnB7FEvgn92-PjMhBugI76wY3PkhEdwe2nBdksexJxq3cHvlzxyKmgJKqg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "数据资源共享与企业数字技术创新——来自政府数据开放的证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DMr4swVa-550q9LLyQTidaXRrncWn1TLjJUVHIu_-wV07s5rDZ4P5pRfvuGG5FCW7SiqUnMAbESeC_ptxhKAsPEhRm0atrFTAMMudp0u92iKZ0Qpj3yI2zgzbI30gjC5NIlRTElFc3kzrLPKDX5OiCyOEmWWXXfY3X15_5lMJ03w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "公共数据开放对地方政府债务率的影响研究——基于政府公共数据平台的准自然实验",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DMr4swVa-550q9LLyQTidaXRrncWn1TLj0OD4Dli_agKLiD8xAn3s6JFjO_QCOnkmRLRRpRWd_Q-iVyzYOlhOSU7jFXkLvOIqGiij0dXxt8pTP0G8fDWosj_n2L7Nb9Rp5e0uBw9KoUh3vYz3dTb_FjyxvYHftx0lL_phjyvA_tg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "生成式人工智能时代的政府数据管理权:法理证成与治理创新",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BvGUDgxyfUrpwqMnCPbazF7Wz9vxrHgdQK8dwqQ4-sQVmt2Bg9wDFYoLC-OD_p6wwFygpVIrehrJs1n95Gxy7OJ2TOhuwZgCTTuDDsdFczppIUp8vheG6XtcjBUBmiTCAPVwX1mNVPiytXcuMYW0FiI-1ymyyvZtRKVnNpiHBYHg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府开放数据影响力评价与提升路径研究——基于31个省级平台的组态分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BvGUDgxyfUrpwqMnCPbazFe9aphZKCvDzRyfWU6OzFM6qmoH1NGrzpn1n63Y-ylnifzNZSXBRopis6H7xwSNYrOq0cIW1llaGLU57aMEA9Zjqp40P8xUC02-ZoRlWhOJDFXjDEyWiGt1ETqZhtBQBFiNNM8bPT08b34QsqX6Gd5w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据开放驱动新质生产力发展路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CkJxvq8wRpImys4j_xD58JAchuLh6-GNfWBo55_HBjeXxNBWf9EjLccBBXNeNk7Bjr0ftrsLBC0vsDxUsDu0Y0ssaGKGwIkmj6xZ6gJif7EfhvCxO5S7LWftZKCQoolJjaaBf5ZE_FwXtUE1sz9lLrJqAzN0IHTp1sdxxGwqIG5A==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府公共数据开放与城市数字化绿色化协同发展——来自公共数据开放平台上线的证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CkJxvq8wRpImys4j_xD58JAchuLh6-GNdZpq6FTAsk7MTeiS6DE77uRv4YYYwTgfVt14sLjxAbXsUlN9OcDyzn2bUJgnl9JAmkmQh6p5HoxDmJeaHiJnWEGi8ogWPZcvVYT7O1lxdw8cOM4ZVwCB7NjTP3uO1IddL3e938Yqzp2w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "政府数据开放能提高粮食企业综合生产能力吗？——基于A股涉粮上市企业的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A8H7wl9oEyVYClQCgHJCd7QZryQ3-GrpoXUw86IuVxI2o0k4-lxE82bWHFGzrfS9PHrLIEa6Qr1upoyk18bvdQt5Z0JTjqpsc1Xxmxk4NQCg8Yrz9-4XNBgD5BQqM1gTACm0r7sTaLSYD_xzljq-MpAmekQGv_XPwVBcnEiKia9Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据开放"
+    },
+    {
+      "title": "Open Government Data and Urban Air Quality: Evidence from the Staggered Rollout of Provincial and City Platforms in China",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BJrHDwZL72dsZSalXAC8k6ob-OBVPWllWUIgtDjidmdGdPErNDAtGgMkxfoMvXZkerh5dSREz2VsURszm1mneZzKuEUP2AT0XVdFVb-EXZGskmbbiNR3aT6MujaVvUjCa19PhSAZz4c9a9wP20exlXV31Nt6jOUxtuC9xf2CnaehZrsEJsAphEznIsiC8S6y7-wm9TSmawQQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "How does government open data suppress corporate ESG Greenwashing? Evidence from the dual mechanisms of financing constraints and external monitoring",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AChs7GUry1Zh8RwDNv-2qb_Q36aC_65GdsLShlzh-n8DRoXB9J6F9lUoXAauL4YWqBFOU1K9m6wYm13ukvgTv0ihbaA6gPvXgNIgcxOW-6PhVuJ5tYvYBJ7dM2yM4MBECft2Yf40EUBC_BtjGLlw1FNgD_YVe7viBaFhhZxmWvKJOyoMopvVpgrpRnXkj03Gl1dnczif01Mg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "The green value of data: evidence on how open government data promote sustainable economic growth from a multi-period DID approach",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A88lP2_UGM7Wznq99fFYUq5vtslF8uIUlSTz8AbcQy1pXczyTJj5cE1MxthcDldPXlyTz0sKsjYEegrduNNUVyn2uGVf1CKyCle6bMmTy3W8uhPQugdx85KcZs50pta7DJ7MUjR5AP0pnC075ZIOosIR83Ctxhq7qnTw4h-LNjELvvQHH2FpR-Gz56rkL2288ayZkxFTyJ7w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "Government open data and corporate risk-taking: Evidence from China",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A2etadOaSpSs1n3q6xlp61BgBBEGTUanqJc5vI-kkDfPHrsDK2jo6V4Y8sc1pxRDL8b59wvIkQE_d6hV-kDexCWFVK4R8Ew9qZOwTM8LC-hRCp1WQyDeJ_j3XNs229KP9fetw8gNUChKlC-8Z70qLiUNij868zePbtFxGY1P7FTG0IH-lbxTP7-Tbdx8-e_Odx4Pp0aSqOKA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "How Open Government Data Enhances Public Service Delivery: A Quasi-Natural Experiment from Government Data Platforms",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Aoxw1g2M2umSxQTO7nArebV4_KHcBaD7vSz_rdyrAE8hKZ15KvAPAe-lD9MVie56bbr0r6UWN9fhgm1ML60i2StvXybkoDKP5ZDLL7RAAygKA8tXex0No5_RvAPi5nF_t3n3LvPrM9-UnR1Xxi0O9v8eNb5wi1qqbUQdds67V4AiUCjbKEweA25AeWI_dwcHUm50jA9LHgoQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "A path model for analyzing user experience with open government data: evidence from Qatar’s Ehteraz application",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A3WXI1nOUUXmiiHnVv0oA0ZVZ7hokflu_eU6k65MZc_tWVgzDhf7uo4IuIk9R-RGEVsaBVM0oeNeRH6hPsMF50OjfgdrA20LBc6TQgI1zwh_sAtaWwh9gSg4_ZoIvP6-Z4AjX15ZVdEOC7_zcGy6oUMO7a_eWkfzs-N8oE_TEZHqrTfm-V6YNy8cgkEmFDOnCzCFYnP8ZU4Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "Open government data as a driver of climate resilience and digital transformation in Tanzania agriculture",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A3WXI1nOUUXmiiHnVv0oA0ZVZ7hokflu8JERrhU0IuwimYCaHHHWpNsJmN8otEs2_tFwsyXpQklnL7RiZhppyL5A6R6pWPKiBMtqUvXun7DZkhe3WYVMOy4G51UBL3RAxxExKho4cJCJ9rT2u5vwkV908DiaBUrJEr_WvbvEI2tkWCF1PTTSPldIE7UtF3odQ81xzsvwSt9w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "开放政府数据"
+    },
+    {
+      "title": "“恰到好处”抑或“过犹不及”？——公共数据开放与企业投资效率",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DSPhi4Ft5SGt4QBj3jDozjYV10uiD-W22TxgxLf4ropO1QJiwefM9B7RIg99g2ySAJefjANVo6yJh77T7ug2BYJj7cPn6LDZsSPZwUTXCfP62QQsfQwV9cN2i6O6iT---PSu8AcAfJnMUtNXXHShQEDzIqPS414gRITCfdibvNfw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "公共数据开放的信息破茧效应：基于管理层预测的研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AVucg52RaJ2nob5AWmT2lZBK1TSfm26LzPccXmrJGFAYKbrbMUZJLqGxLaqNrhQDYBe_W8ZD4wSqSxe1DJU_Jnz_XOcV_5qpqPaHyxQMkWiH8y8KeBGgwYQS0cVlpkSLwy7mwFmNu-Kif93GQKJSx9EFaE_rcU1a3PGTjAf1GI5Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "论公共数据授权运营行政性垄断的识别和控制",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AVeXnVpJn2AQWpyT2AncBTs6e94RVri5Nv7kDZkW0ydcOqGe5yDaHHzAWkz9sgOinE93kI5BoqYOozulLARpPqIfciFfunxP4B4xqvkYPhOfnXmVybiLTuN8LVpxuTOJMPotdtCXPXGyA_FAIbcAyDOY1WbFcURz05D9zbMbZLqQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "公共数据开放对“四链”融合的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CX9nPe1MdYcvdVjSX6jGjUSTfd8C_Kyd5B-99U3lRvFCqzt8PjYmSH2t-exWoFu3PXeyXrALepRHRVfHkM7x2gSTEtFY3WB4090OO-hs0Xloz_TOdTQnZ1TOoGpoAKKx0nbTHptqLe-PwXZ4aYWw_QAj-o-k0NKIpjCu4QkboX1g==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "数据要素对链主企业关键核心技术突破的影响研究——基于供给侧与交易侧政策协同的视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Aimy74NG94E_gY8bZt7E7ktdfGmENw3OdVVwDYMJgYJhhpprsX6GWHaqSQr6c1UWEDDfOdPssJdtFuy5HF1lcmKsnm-F5kjz5jHMg8AiDMzcgjY4ocK10f0N9mOVTfsalkTRV9pPXOXp2s1V2zJtuco3z3luomn66dPybEkKNXbQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "数据政策协同如何驱动企业数字创新网络嵌入？——基于数据交易与数据开放双重视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Aimy74NG94E_gY8bZt7E7ktdfGmENw3OdDf-p_leuGP7FffAJPlWeJXCmqbzp_zxO1w_fQLzBu3URtPC2IQRXlhpHv0YMadW6JnoeRN9mwajV6i2L_gifaAdk7wtLhLAXqnb9wc6UPM3SP_eh1F69lPwbXIZQpi_r46fcsHOpZww==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "建设开放共享安全的全国一体化数据市场路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AnE_3JaaFHsYcxQVggwOs2KZ1meGVEEkyZEeRkNPFqG4dblcF5LFc0TeCacW2rlXdGH6t436-UGky82TTphC3gKBcswW8mZcqzZs5N2uvcWIrh78u5Ja5IHJTEX084jqHdn0teSdDnYStN4fQpfulIXFRbhOHDLD7Eralj35HBwg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "Public data openness and digital financial inclusion: Evidence from Chinese cities",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AnE_3JaaFHsYcxQVggwOs2rnzlItzWKGIDi4Uok6TsUm3P-C4pIQBPiE3t_7HDWQg_oVDvNaPg5v4t6F7WG0xGzU1lRgTPtEuNtU4MVtjMJSvHPCmxPbLko86HJY9zgqfAew2gX1DdaKsBKSps7lH8Z-RvWKKxBYcu9Uf5MnlDBMdy6Vj1LuSf7bohm-Yh1r8tKTxdSPTlWA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "Breaking data silos: How does public data open access influence enterprise collaborative innovation?",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CdHwSPaXWvxNF0QbjbOxJmRZM1De2B2EaNKOe8X0EBS_8PTY3NkMAFM9RTZf9TXeIK2rCOqBt_9EArbmdquk75BGoIlq_YXhJy-EGlIIpetlPVTD9jDwiP1MBxxiT1MQZt5Sr6uJ139MG2U6rjgbNHa2KIe5ZornowZthVNFgtseLrgwHuaOmPWApVB1lBZOdTC8uN01m1rw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "检验检测数据要素赋能智慧治理和产业发展路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CdHwSPaXWvxNF0QbjbOxJmGeRdxNMpH55t4ZXuZBgjGIuZ2lEgZFsQcyhpQBNnJHA4IFvFN_NbI9gUfSx20PRqp34QYnTYFb5w2uqZKL3YMFmT1FL5tQD6oOdlbG9SXR1Fc0ZWswchxXz5NiSroM40iASgMeDe6mNKFkNpId_VAA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "Public data openness and firm innovation strategies",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DNq5BXu7VbI7lW33wvPai9XOd9s08vJGh_fdkExqvzQlD2kO7Gy7wmQZ49mukS2MZuqeI1CcWo2V_Ot91CVfpfHOS6uZ2JuxGqyKB1ia9tl2zAe-Yl5GiK45VkD9y8Kp2MSANdxKqKwvk-ZCvq6E80M9Gm1lmS5VYZzPoflZ_iPHLVUZO5-IytR0tfy7Ra7HH8hhVAigtpgQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "公共数据开放平台需求牵引能力评价指标体系构建研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DNq5BXu7VbI7lW33wvPai9NyUMa7cNkGObiVT1Nn1gljxG82FVingjI1alk00lJxE-Q66AGGiwe9NaoESLM1FvnthZ-vxCf1NwFegbW3bbQsNObUtzu0eR-GuS82RkXO7f4rZwH-IhbDT9Y9utGtsrVj9QaTt-5Mqgn1QtC3sc4w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "论公共物品理论视角下的公共数据开放模式",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BZAwC-4Du6sYH39V_TBrp6LGoQ1SQ5HpPGSJrFX57l2GCp8ySyoZXBZE5L4Otaa3R2ek6njIsOIlQ27OBd_fUQeRbAW9F7EA8qJrWVb4Wf3iuz2rQEnDsQMeLvAX58uc_nxEOnovzp4u-CMMtAfT8a7SlB7IM8OPbOOsQgMe1G8A==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "档案数据开放中的隐私保护与公共利益平衡",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DGHDXg3JHbqQ8Y4JeB9Wp4aIP0b3LqYzeAMHDl0YMXKceY7dfMNge-FdtTuQPOwRHFr702wzw3ulJMGwdmTyxI7y2eptNG4m8oC9JGFDZLgSg-YBaOGXoiKCWuglA62UhraDrm7cwNyo0k0I7t_OpuXszw1JO9-cBgNA535Oq00w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "数字时代下公共数据资产化研究——基于共享、开放与授权运营三条路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Clgjv6lju24XNpagfTa6gIHyBRRp-_Ma3OGNs6LkoldH45AsBBYMo8D5ylQ3pzbANE-Q7gog6LFuCRmFh5QUv27V6FOmNoHgSIJx5UZ8F64V8qTd_2ru39gnvzmHyxTMNN5yeKoSo7rTp6Hbq1JdyYocF_Yojv9dInbILu5i7rjw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "公共数据开放与区域创新能力——基于多时点双重差分模型与机器学习合成控制法的反事实分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Clgjv6lju24XNpagfTa6gIGj07Frf8HufraFgh5ufEiZ5DDFZ5Bn1v7X_e-GERCVMuzG_R5izstDhqrVuh0O84MDxdTvOHq1tRR_Ot_pKk2yYH0gRR7TPaeko-bdyWUiOI73fDagUTUOvCPKu3oBfkSAJ9URtH56F6UKdPMIVJow==&uniplatform=NZKPT&language=CHS",
+      "keyword": "公共数据开放"
+    },
+    {
+      "title": "Orchestrating an open innovation ecosystem enabled by an AI–based platform: A case study of collaboration between NTT DATA and start-ups",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Dka1QbnjL4CbdRu0rRhDLHxzaYNf6LdPvgRanNLGZNEkB32CnG7gdD_YNq4_tl0_grEfrFYQ2FjNpk99PhfbPBhqNgkPjs7cb--LbmWFzL0UHrOnb1hIukDvXbTIgm15ZGyBz2V0c8kssjgiCGmmTGbL7P02GS8fwWHFvMOaiG1amyXhqqXPm7U3sUUBHJjDTbxtWYnylbxw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "Same platform, different outcomes: Metadata practices and open data use",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AyorJKUpdKeKGtmm6jHlfQmK_UA8kqH3AZXxrCQDCAzzAwLKtHIBpbIXKAst-3PNp3lvoCmViy6XjLFpPplIYwXtcXX78lNDE7DVb-4eLUpZgC0_peYqyFazQxOjyNyaAsqWDQBYSTfMv3RS68JOPPDrJnY58BGvJ-njQch_YQKEiDPGgHHbE_iJeWm9EWXlZUy7qyUC8AzA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "公共数据开放何以提升城市经济韧性?",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DtnHrhByHowxqtXltFiUmHMnx5873z-HQGuEybSX8r5XLTtbpC0dc9r8c6Os6kE-Et6uA7gOwozWfT665OQR30hew5r6vmtf5QcEUJlB7sZhkOeoK6Tb2r4UF1dTp345P7UQ99dWKohzOUuMam8gFPWWyeME40szULmYjgX3YUBA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "Florach.Ar: An Open‐Access Data Platform and Novel Digital Methodology for Large‐Scale Biodiversity Assessment in the Patagonian Steppe",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B9JsMJ9Tv7vCB4uF8F1iXmwx33UAibJrBZBbKaEqa1zoGMArD_Gt08HbXBc3aEvIeZQRKFVA1HSNoDAAbtFS-qnj__OAHLNhit4v-EkBl1pp2VeeQE_Q8DNFd4PLeFjhtrBvUAJC1FTDjQqBs-Cw2H8MLltDsnr0n1FK1XqtG1GJDUp4MUvoA4m1HSGcMUstxVKKBTMOcxZg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "以“信息补偿”突破“普惠瓶颈”:公共数据开放对数字普惠金融发展的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AQVnhjEo3jjwPZTPlYUuF4Jg_NvBN__rNm07qh8DZjgH_JeVn69NduwXJV8TxVflnIOyn9EFAZ4Q-H1neNj6b4J3uYmBtyAvZG6TKT-lxgZiloYZ70ZH5B-z2rAUvIZtekq329VH2WsdOKaPbtOVaSZwkuZAHhXadwCucZA86Pdg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "面向大数据实验的通用开放平台构建与实践",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cftgw00uzS5w5tmKd1_YjylkNIRHzxtqCdFevezKDHUTtKCL05C67CltxvWg3e0imcpo3Eu8DtGCitJc533ofR2V9-CjXmWfV0gphspjo1IHo1N57qW_KAbVaaCTXKyQY5O9Ag4lC3g-6JwL9hcFBnxHi85fEHaB_uSZWyCCyPaw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "公共数据开放平台与数据交易平台开放对企业创新边界的协同效应",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CktGcUDIVkPIgMVeleVY59lKHR4Z9FhiBbXXiL0ChDrjgRqPdMxBuC75FP8SKvMZUxGL_BSs1W3D6gJLcdDCa8LA6LYvqQiRXGfrKewbDreCWYJ0_FAKpFVuDGLRRdnGUewpIS2I3Mv7ih3Ytu_rBseZn3cUJM7gF-DgMKi_745Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "Microbiome Datahub: an open-access platform integrating environmental metadata, taxonomy, and functional annotation for comprehensive metagenome-assembled genome datasets.",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AOzZzXrDm-Pf-IOVnCXjiXldjmuDzXfjS5GWpb_cETpD5_7_pN4Peu7WmREgglsuq1KzhbEmlwqx_SK4z2yXc5sudeWYXD2U6NvQ9RFJGPqA6KbCxW2Lj0pNCvcNbIcsiTpsIWRHlMQDLs5pZjLBugomziKZq4G3u5SklO1EtDKBM0GUua1TaCS6VdinGNdulukGGU1RRzrQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "基于开放平台的个人数据传播生态系统的评估方法建构与应用",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AOzZzXrDm-Pf-IOVnCXjiX5N5btVLRivvKSNcCwfYK4LlXV5_P9y0MRJRfl_7CKdFZIuf7pNmO9H2SwpWGbWTyBpcN5HKrArGoalXYlFBQ7-tK03FnsAXSFTG5OZeEQB7Ztsq2CQHsUmpTYweNXOEjtFurDwvngu6wNRIOpIJ6eA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "Making Data More Open and Green: A Study on the Pathways of Public Data Platform Opening to Enhance Urban Ecological Resilience",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BTWFc8aS6HBq1krHEbbDj_qanXkrudLGCPoyB6fmqygRbqSxh8WsQOjgoCIwR8x5yKZG5GDXjsA4tW_xo0fupZGju2HWX_CkzyZPgkRKSYTOrxXaWEMsvqaSgcWtD4bj1lUxqaq75gNpiwnpmLJFB0gjhLa9YlZhG4qoDcDTtyo5RJrq21cICKk6-rSzF__O3uZmBwHwMpXA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "基于聚典数据开放平台的中文事实性幻觉基准测试研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BTWFc8aS6HBq1krHEbbDj_tDzZvi4bmLpWt7Gpch9qMCg3ARRSx-unbtFQoaCEM72s9K4fTcApGAcWCW3KwTy3TmVX8u_QsJ51D3uPjnK3QZjEu-2A5ZE44rnbF8rA8ZA5IQtclXxqF0b2AJ5q_OTiTLxizpAbWpBAbrvlgur46w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "Wherever I Lay My Hat is Home?: A Complex Case Study of Crowd-Sourcing, Coordination, and Cross-Platform Integration for Hosting Open Humanities Data",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AifdKEpeYywKR3S1d_tPgrhVcLKyH2QGOr82E94I-FVhWhWz_TOdHi2hUR6zxZQdLIW5uwheuVvZpRN5fJCxmXvubjgOQ_LpvSSjw6E1Zh2zSMa_w_cVD5tMChHr3S_o9B9tdUagfAbj9rX66_BVvpzZHFHArSUd2Q1bTDGYOWoqRb6O5l9w5sxcS70gaL6UGUoKFJ2SGCmw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据开放平台"
+    },
+    {
+      "title": "什么影响了新型智慧城市的治理水平？——基于TOE理论框架下的fsQCA组态分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BuQ5tqEg_Vw8ZzH5J94hhrNZt6znJUj7Vd4rNBud8CX3dB1Z9U_g9b7Oj-Xaf7cFvameSPG4HYAEE0MPEHWEyHDdf3XhUTaKzsJVI1AuLuTqy47o0aGV-1ywgtMmqvaOWTRrCxGKdzROKw7n6mukSe4yz3pLRSfPCPqELRmKmuQg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "数据开放提升地方政府全民健身公共服务治理绩效的驱动因素与组态路径——基于全国31个省级政府的fsQCA分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BuQ5tqEg_Vw8ZzH5J94hhrNZt6znJUj7WQjb8Qnlky8jQR2yZbTzkqgfuGdxI2lxm3qIPWcVMcNstB6HhxVrMFaYuYahSBSCYX63w3k9VqIKwJix5MzQTJP9J9yItKaHmEGBygs2mUTlgRIU5zq6I127ui1IwnfXEwNOY6IpAQiw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "WSR视角下我国省级政府数据开放水平的影响因素研究——基于NCA与fsQCA的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BeSkdcW5y4tg4GB7fJqAMaVSz4QnN-XdH1RKA6_6_C9j9tBFqk4t_cQ6XPk0-KO8i7ztjhUZRE5Uz0ZB7bmweqf9yUO1B9s6pWOLQYBTPGTbGjPpdvkrhh8gq-clE87QQ0YIeOYqCrCgz-0PKl6g7eXolx8f80XYLoHua-oGnSvg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "公共数据开放平台数据安全保障水平的组态效应研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BeSkdcW5y4tg4GB7fJqAMaVSz4QnN-XdHam1KkS0FsHQCEvaCfnKF95MBnQjoR87aV8BMrUEI6MaF3x3eN8O6bBvO9TMMgkQcGGOl-v2nGZh70aK3U9KP5KPO70vPtXp_Ms8P5ICUnk6EgQEy50PfHCfa9rIaexG-Flu9RVcnGMQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "地方政府数据开放高水平的驱动因素与实现路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AGsVYmTIB2Jep9UKZ1-Qw0d8py9rprRChX_eXPInLxedxJpVnWd8wBgRqKndYOFvsc8FCSknOKNZ5NdEbFguJZV-qb6DiAFMqOUv3kCt_cHHqjUcm1O8OaSxFjEooN-dnG585ATq9bRj0OKLQmjnpPWQlGCugQdHAv1PEKtHU6IA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "公共数据授权运营政策制定的驱动因素与组态路径——基于fsQCA的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AGsVYmTIB2Jep9UKZ1-Qw0d8py9rprRCjEX7DTh_RvA3fwuc55O6L1lkRuCHL-8r6SDi3R0_rusz0EWnPZlGvJeaM9WhXubYHBFM2s90_UGHlZgwHCr-mCxyMAYZcXOzFwnAW_WD1xIos3JhWoKRXiMI0nm5th6hEjCz72r20Duw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "政府数据开放价值共创的影响因素及组态分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AJCUkQyWMAs5BPjbI3dV52pDSxqv0G8ADeQhJ61uQucZWZdidP6oetW8jq559dKd7-cdp5oP9hK7jhI0FQ8lbG5BxRlmEklmCRsYZ-iCVbvLVJhD3UsOLbq3quUG4YXVxqnR4WrV9Tq4MFykaWHq52Q3fTvTLZTR_gHgBwZAFcwg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "数智驱动下数字政府高质量建设影响因素识别及提升路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AJCUkQyWMAs5BPjbI3dV52fhQpzS65nFr80QmBIkvBprOByvLHDrgZvVkxfiO-fDkroTI2hftsO0oAmO_482-Bv-jGqikaVLFHR1Y1MGVEUJstyS024rbKeiG73yBPB7ZHAqK5KViJ-XttwcbHqTkYrUVo4i6jEaM5lIbrl2nAjQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "政府开放数据网站用户隐私政策阅读意愿研究——基于SEM-fsQCA的混合研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BSbT7arHFYKrZuB6SNnjImqgTKGAcw4hZDvLiVJMPvHgi7VhgCOD2GwcbkELttVPpFYhxN_K-fMXxK9IiisLvxuH5d5tCcl37c4QznWji71SrP4YOo9kzPmEjnUVBeSiZPpWn_abh-4-9UDmtSc3YmTnbfVLJE0LpXjj5KPSDPSg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "政府与市场如何协同激发数字经济活力?",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BqTw2yDYW8msCPx1jsdVwzyBG-F_hZrfaQji2kQ-XDtmdAE5y192uGM11tHejsVbNipcytd0I0dAmuwYaB2Il_SkNigU0us22FIFmu-Bh0njR8dYZ5x_i34Uakph61ObiYvTTUCFoDKYPHp6Qg9iLdjgvDjnJa9u8Ew4nxEyY8BQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "动态能力视角下政府数据开放绩效的影响因素分析：基于fsQCA与回归分析的双重证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BqTw2yDYW8msCPx1jsdVwzyBG-F_hZrfa9guTdm71_zzzWbcGjJomFy1qRL9RRA6y1ahhbbFx3zLDY6By5VUrgEKRQagSyUpeogeSPMSdv4VF6apM6_bE-Ze4H8p4fgZcEox5-dgI4rEC_bKTf-_EDhgJ9cfnNjZ3glh0QM_B89g==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "TOE框架下公众参与档案治理意愿的影响因素与提升路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BqTw2yDYW8msCPx1jsdVwzHs7DdgDsarzvJDZz5JCZ_FTJ2PRNhSVTzf0lDOehjHfmranqQE0I5NGbLX9uTpkKrl5bB8iMXmXPqJOtU72y9tYYvCRG0SShNaXDKVPGIgm3d-6PHSGUPKFA50vg0Tehma_89yyeVwjXbubIpDAjeQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "政府数字治理能力影响因素及提升路径研究——基于31省案例的fsQCA分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BKb72McBNgT0E4iKNdAE1XM431qhfbLDsTM-6zioU5WbCwvJdqEDrhklkxyPdUopAFoWAInxkHIGaWntTgx6chCrAm4ZMAf_j24SHMRS4LLPnyIpuyyvawcOAaVpCVUZ8BEEpvBFRv4CXhKTywjIqqZ8r1PKv-zMYWvkxaQeF8MxJXneC0pvmQ&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "数据治理政策有效性的生成机制及优化路径研究——基于23省模糊集定性比较分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BKb72McBNgT0E4iKNdAE1XM431qhfbLDsTM-6zioU5WaG2ZTtKARdVk7qxb-0s8eeiWrMqF6vIDbO0MCX-Ho5RwFV1idA953KYE2taZ0xVt2mBn22PjRgFNqgboKBf2zzEjtSE8uE6X_CcYpzJx3f0foUVhx2muCbOsEob9WLVZw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "地方公共数据开放绩效影响因素研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BKb72McBNgT0E4iKNdAE1XM431qhfbLDsTM-6zioU5WdwZRtrH08qLzVHDUieOFaNNV7zwgyOnkfyhfUoGuQngSBG1Unejae30fsziwGVKO3uDw8pP2QRXRRGAgozUcnPn81XQ6cweVYkLy_hIjXUBlcnOTxb8n5iIJf9R3fmPS9QQdKEKJtDP&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "基于TOE框架的地方政府政务服务“跨省通办”能力影响因素的组态研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DIOu5JbwShbqQ9sDBHI7zhv77Q6BpHaE5xQYNcqT4rs5yr3anV-iCS_yMZhszMV1q1iXWX-V7MdhE2-BGqeICO8Lye39KCk7Glgkn23NB3ILOlG4dqXflDRaoIKV8nO2PyJGLBXYr3HKk4UZuNIQ0pZIgz-oaD6u5T1UtaqavQdAtKB4Dj_okE&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "党领智制：高效能社会治理的要素和路径——对43个食品安全案例的fsQCA分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DIOu5JbwShbqQ9sDBHI7zh_ELVa-5r663UI-Wu57Z2ksjKUEg20n2FBK-mHNbl0y5QowcLTKGyWI12zb8bbCtutemde8n4mn_f_xWdYoW7Xi1hFrl0RoPgCDhG5PJo9rSGe47-dYTQrrrKqn2M2Dt9T784Hpg-wEl2WocUlb958w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "地方政府数字化转型的影响因素与组态模式研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CFAvuQGJ2zMcnes5BNEXNXAjRWbcIj2wtFpzqsIIaL_VT0oY9dlyw5RNQ7hQtQGkvMv_UCUi8G4yy-du32896zapXdBCsxTb5lK79MYI-EiMcQrITqnfycCmqKTBZx_FZIfzeSmivzIp4aw1Fabf315RO0-pE5qhDul7mlTkC2lP4gCXnZx0il&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "国内数据交易所高质量发展动因、成效及实践路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CFAvuQGJ2zMcnes5BNEXNXAjRWbcIj2wtFpzqsIIaL_dsSQ9bRvQqAjM4htkFqVBbsYHVubcuAWEK1uAL4XhKeYo-XZnODqjXoqretUDgupIo5gW8SYsyxoOK8DP0wyyKB5EoLIjQ6ytlwbobaCV5brDVDsHP-ZPhNKy2D5wGJL6MgDAmkC9cY&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 fsQCA"
+    },
+    {
+      "title": "制度压力与地方政府的债务融资行为——来自市级面板数据的经验证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DEn-F2OQBujPl8_pVu8t0moHKPSM0NTW3JsDUo0SfC03vzZjqYrN3C5frlomIxd3ai8Q9Vu_zK9fZBZNDHkVekSfW5hwQMth6p2sdAP-sWhpzPHIaG2aNAifu_1f41a10-gB87RPKGWVosTYOrIZtIru_xFzampxmqKUW8EnSaUQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 制度同形"
+    },
+    {
+      "title": "数据要素配置对农村消费市场潜力的影响——兼论城乡融合发展和创新活跃度的中介效应",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AhmqKxjoS9M95sy3_iPop32YLyuVgW9to0yRJQIOE-IgCAZlqfoUszEzM3n4WA_eu6WvDwtDQEPzc72CSOXDrRbnosxWxj6C3RmLpMEL3xFYZ3KApPN19DoP2msLTPXpKW1jNYctzV3XtYC60RaveA4xCZuA9DRd-y4R2WcODsrw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据要素市场化配置的优化路径——基于全国统一大市场视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C03EFN-Jd1cBv4xF5wiWSmrfii1NtcJ1rxJQtf64Aa1QKJLJri8fpBbCcvCaNqMRycUWkdIwTJfJdmayj_DNFi0QznWxpkhl_JJcFo-ItnYgTTJF-giOVwoJzlyGzIxsXwufeCYXWR-Wjw3ZZwMjcN3483WNdAnMpLYLjCMih6uA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "新质生产力视阈下数据要素的协同机制与治理创新：综述及展望",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A1LBtWyrMAOPyMMxhqnfoFyHLGPEf980CMuFnHPfTZVi3-Oo2knSXXzLiNyGQu-BeCzLMRYDAjSdV_1QOH3fK6SsEh0a3cHuJ2KpxhnjxBIbKyyHVr6phaXMIyXKJ8nK_2BKdpz-YrsQC2Epbh_rbyvBVQ-OlYG8s3POF9AXOWRA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "聚向与动向：我国数据要素政策主题挖掘与时序演化分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DOYtBWT3OGOvmCAfvRvfuPSVyfpxEek114KjaWJVOy5CazIyNYDlYifeDbltu7xMpLJ4DYKtn_eYjcEdD_2JEYU6cfbgI3wqmT8lHoM57ECqsCKofIW3Y46bmzs2iDqfx1-KcMNyTVkppe1jMd7K5ahBVv5eDBrNJMFmKLFAdUsg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据产权相互性理论研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B_LumGDTrfTnJddweqp6K2pJ6akY_zt1A2n4-TbTtzY-XYvy4XNnAqzcVlAo4HQ4ohpPhUcrOPfl3r5M8SfLP8r0QKkK_-JarMSmOihpnGc7lMp6PCQvAnMqeUVaUIr9as2t4X3cFP0WtPo6Sfiw8oZ9il0HOSJNe1bpKex4W8B1PFkRHA_n-d&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "Research on Collaborative Mechanism of E-commerce Industry Chain Driven by Market Allocation of Data Elements",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C0IUKdSEoFD8hmGs9KVcXl_HRU89XYq3Msp0Ql2VCjSc77j_ZUQ-KHXKSsVwKMMHGOLl675Cb6hIv984TqRuiOkpcUs2KAW6oPKMkR7ZnborjFH-XTfOVnqvppbmL3aR4e1L-N6Mh27xyTotx_yhBn_OF8pLQH_1L2flJjqinBBcTg42qcMHtusA6-n61SuxEF4OKLTmaEng==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "全国统一大市场视域下数据要素市场化配置改革的现实困境与破局方向",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6D_iw8tDmsLMMFJJnzG18vQblKR817bKtFB8nMRYP18yC8ylalqhDMTjanuJlnBx6N36McFwkTFM_05QPrUotOknMPfw0m0z7cRNlGqWv0Wpy5J0E3wP6z-wDQXduMKSf2UkJH3ozMnUR-rkZIwZNCNkbZhaBsPfMVwAeCDKcwIMw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "市场化配置视角下出版社内容数据资本化困境——基于多类市场经营主体的访谈分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CkRbSXJsGcSRyPQJJL5hLe75r5RBNaDPa8DE5PpHXLBV9dqKIYkYscc0eAMWKTJEiwgvO5uSwvDfB2x0v9qmUsQ7yE7PQWT_Cs09ivhShR4gnnK5LHE9V-oq2pt0zK2_KPG3Z71QykUkBEFCEXXmt2-ziK_A8TgYTBVuZQVAruyg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "企业社会责任跨境协同治理研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CkRbSXJsGcSRyPQJJL5hLeq0MSInyQ8adnYlVO3-1auqbbMiWmXWYshOjN7bqWMHmYRROpgmN-w07yURay6XogeMGJ5R8L12ErWa3xtTd5a_CPMmWj4nMg-1a9jKch9foDolPNIhN0fVXbyn27lkte3rU0LNa-NMw=&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "分布式合作共享是数据要素市场化配置的重要方式",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AmtPXS3_b7jzhDih6VdXDcVSsoBuOWBtDm0kn2WaYm99YUKJuRa-ad4KeuE4uwZAx4DhoUFxVZXrPi9TaAzRExzeiELWZzWBZ2fTJ3XtvFIbLbRXJ7kJ5A_Zu-mvVGSDU873zlU6a6RL8gVpEejB_TNAAxNy6NiSgHyYUIl8-2YA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "以有为政府促进数据要素的市场化配置",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C22L_fODHFg91IkOKT6ZUSsXZrlMjTLbg5QBxwTN3_9wxLSEzSMEubT2127sb12N2KrN7FTwEsOW__G9QlFm0tfpByQfwEcRoRPjf8t0eRpA6fgfq-y-vOAowxQd5xnlb5tI3tyjEsKf0fT87ZP6s6U41MmBZr65Y1QuUSyYwaZQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据要素集聚对产业链韧性的影响研究——基于国家大数据综合试验区政策的证据",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DYTec9ONRmQV2LSTagH_TyY_R21VTo2VJVJ-EcFSddnZdeDQ0dgiploGu6ZAn6c5Kcf5cn5pKVYwkKdRu-ezuIBJ-H7rXj-uY3X-AC7KSRrEgx2sDIGCWkBMEyfd5NatA37hoTMQHd-xCmX71po1xnupqPzvtAqeTYVWDwKsCkdg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "新质生产力赋能黄河流域生态保护和高质量发展研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Avi1dKyka-kiBKz8Lodah6MMToFL7bO0Dd8QNmGdbS0sVXiCdd-MWFhmFvMoDHnHVQCSkf7fJEU84hHVd-ueB99BqZBZIZD_TYBep3gb4NMYFgdjR248tB2cuWjrsSfHFLW4PEg9XI_qI7HnKfvDgxOl0XRhxk_nYt8eAPKK-uVA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "基于多场景的南通数据要素市场化配置机制与实践研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AMmM3c24RJ0U9MYPzD7y6LDnSZCQDjhcLm5_vL25CteuU480ppaqKm98TIfogiN00K42DGK1HpQd-Xjr3RLzC4lGg4C1I_tn4z0WPLJnSyWPGYSod0MPsL5YDPE19m0fd4DNqZiItmI4Lk202qaXtzZl6DP05K-FErNr4kTGu4Og==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "完善数据要素制度体系赋能人工智能高质量发展",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DEdGnyvQuWjxzqoPu7FIXIrEI2t9zGdCVMpA-XeYuO1KYqxXksYcwnht4jpR4BNwA3-0mNgw4dzcudnAOb1emOtmeB-jLuWZ8sP0emHDn6wWISMYFW4K4nfAyuTETOTh6i8ECcJdd01PYxOW4yjx_GWtXox5TpSYSoxbdkn5a8rQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据要素利用对企业资源配置结构的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B2awUn-oZbJaGlXpIHfkqKJeWTkWTbputabn_OCR8Dsh5kldVOvJW0pQQ6LPMWpsAi7g47a2FHPCrET9veJnyq5hL6T3xQbRe4XUVSlKOcxOUE4BCgElfz4-vSTMSGRLxYhAK3p2tt_UNwcuULgBS2a_Nr42sqYGJMHCjpOTQdxQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "南通市推进数据要素市场化配置改革路径探究与实践",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Bg3WLTt1mxzjWQe-SncO1Vz3po8GWwCq17Gu_U4c-6tTxHVPT3CiEYBqgHnxs28RYwNFDZcdikO4nz2d2KoT_LqyVE-2GmWggnbf5EJ7hU6_-WmzAPaukyJLIdBAzk7St-zccn96poVYSeObGQdmewezxPLKRcuqYutrjigrS4Lg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据要素乘数效应下信用数据产品化的法律规制",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CCBNByFsyuBvZ579l0wRxtOEuZOO55tX_f1dXrfQhFRznXNJfIUDqviNcAS_Ri98L7IQCK41Lu2xKK9v-bHbYEZZVPlVg5IG9CqpRfnHSEJ0T6aXRgRoNCrWSTSPuwsrBu__LizihEW11481FuGOr61uuAzf8ImU9omZGa3CJQUg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "全国一体化数据市场培育的逻辑理路与实践进路",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BvfmbghV6kOztlG0-SmSiPWjfcz5_GYJgjANotTLAhEtiAxFH6TDAH1lJFBHJ_562f27H7m3us7DEmNoLVObVf8181s3RMyjNq8a_cbmnMRsAyHkbhnvmaiN3q-cCXAvgGYpKCM14KWi44XoYMrkV_ieQ_vFFmYVaU2wxmg-ZcAw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "数据要素市场化对企业资源配置机制的影响",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DWcPCf2priXGeShNezE7pi3SrJJINYKVFOJxzdKPokUryH1Vr8ZikWsA_GLvM_7zeeV5xl5GTaZ5dEeiw4fPcCxaN4gA1X0-hBROGLvPPOjR__9qUEqeeor-cSNc2ljCZsMjOWGXonhKTm9ZZetFIiMKSwk1jxryauNVKRA8mqjQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "数据要素 市场配置"
+    },
+    {
+      "title": "政府数据治理何以影响劳动力高质量充分就业——基于地区创业活跃度的中介效应分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CUvUfceekuzH0r_sd47QXk05UQe8dtiW5mJ24SHCSg7Yo6YucUukHIwLzgZ4BD8td0kgsa1OMKhwrq5buigtONdG41il_QbSDvrwtQk_V0cF-P-vlnoUSU5_-AwfrpY_2Y3J-GVQ32Z5WDkmLgnNtN7BfwCOQlpbw1Vx849_D74Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "合作治理中政府数据利用的法律规制",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CUvUfceekuzH0r_sd47QXk05UQe8dtiW4gV7YqG-B5bcsmtozFSr8EXXLlOqdQ5ZfFwXq7KYIaxz8eHzTNMylhmNCVZ5bjWkIZOvTvFPjkkSZgmBfE3Z3dbYKEbZSV3mqxeCJqx_j6iDfVujZc4sBbs4ATnu2drOjt7aLCV5U7yA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "基于信息熵与风险厌恶视角的政府数据隐私计量与分级模型",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ASUre0FX6hmngG5r9FbG4fTKfvN484SH9Ij6IMwjx1-DzCROGAoSBoKNOz96R5-1va9_UoIUTaCSJxECvxxGzyZzyHUvKQz3sMUpPI1ukxTgyF2q21mftseGzJJFMH623DKUQYnHIsw0_SY1nwYsc2sHHOsLZOj71x2YCUOJSARg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "AI赋能政府数据治理的内在逻辑、现实困境与路径探析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ASUre0FX6hmngG5r9FbG4f7Yf3AAwk6y66Zh1_ETEYgWVIpXXm1k25ylIr4bHal1HV7QiCPv8kgT08XZMZUMSkNxgkXzORrkH60b9x7GAurt8O7JsDsSZsdMv91OFCE9ftR3uPBL5MFFPxvTHzrhHX-dpX7gmk1PuXi9lbmdILsQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "The impact of government data disclosure on corporate green innovation: a quasi-natural experiment of public data openness",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Aa-7OsS-SZP64-c4Dd4qKXmZuqzYj80ty7DOcZZEEbQlOLN7-v8VvHu3P4kJaMDSQxi8nflzwp7GCaFmh2R20t_NYAItT6GKS5Frgzm0NYOarppOMnSm4-owpNk27YeovFP3SW34w3kmadycvd277LsNHt55ooIAXPwGyoH4WKy53P4O36nH4ZGIavWXFLRvUjV4j7Bd5A6Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "中共广东省委办公厅  广东省人民政府办公厅关于加快公共数据资源开发利用的实施意见",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Aa-7OsS-SZP64-c4Dd4qKXgmN7Hxu5rFERmtOyCIlfJVc_rYE8jQ9otDSOMl2PIbsgd1x9RcnZfw2jf3_U6rurf4bLtt4ldwYyP1lbyOGbCG_6bwL01zEB7-te8JkdonHu9CEso01eqd79hWZsC33hU4TNQy2U3AKhmos8FQYZ0yoYq3vScYxs&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 利用"
+    },
+    {
+      "title": "政企数据共享影响因素及收益分配机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CFCxSWDAH5WT4uRn5LTinxiLYzV654R6mDbmI6Ay9I-bZ3B_6Z_8V7Jucz4OHQKSKR2hTjzHZMrETzgXZv_DALe2KJiJxFL-_ZwNDHfKIiogJHE6ABKLr3aFi_wPi-eWJX2HCgH5iptxy5nu0JY-8RKI3hMgNE_eDqsjyMQ-obp6DUzprivI4H&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "产业链韧性 基于中国制造业的统计测度",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CFCxSWDAH5WT4uRn5LTinxEjKNGCcTxwPkfpkXLD48fs1-Gz2bhr64Ugo1PLfP4gRkoZ4NAtOteh1r4FjG9sEGeW6ODEbdTkVza1ePm0Y6PeZ1KKHJWJqOIjK73yn5tY_bXGy1vH5YwiDrUT1dUap1X6n9HdcqAD8=&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "区县级政府统计监督职能提升的对策研究——以M市A区为例",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A2RgMYBUJiCp_Qq40TrRdlw93MkTY8V4TTCPQzDNXFZifX1JVF1oGMoT49rnui9glZZz_mNW2QGvpWS7y5Svgdot9Dju_L6N6h3FHXSa-kFoejPmnxBvuq1aN0Ia-AhhI-D8w2Hlvkx14Hb4N--MsAp5l4ugQt-eJdwiWKtnqpcDmD1nsazRxQ&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "基于熵权TOPSIS法的公共数据开放平台服务质量评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DYZM00Yn20CphoUxbRF-TdI4B08StJb9mo5BSrg3pHljqdVlwXUe_4OD3tjK-CjS0s_-EnsM5RUforLa1EA5QMI7q6vIksN8YRg8oGk9bWzvxRc940y_GGOO7QKoA3K6_DnR9eerW-dR6Ssq2iDDmeUjUmN9umRshW-GyTpadaV_3ngYg0VWi6&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "数字化转型视域下政府开放数据价值实现路径及共创机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A8FCKwGjYh-1WUotxmqt8KQkQW_p52vrTWjC8VNDhY1m4ZAqQ-xONAfRKOZQqF9VIxB0AgKE5I5iaModTDdkqeog4aNOvRCsaU3tw_VxeIybXFDvlZAJflY50BdqvvSWKJ79lhLK3y8SVD_bmZEwZeEURoIG2seM-ABbHs4AmH2_Cd84mUW-1w&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "地方政府开放数据效率与治理效能耦合协调度的评估与时空特征分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DYktjCkV2lgXT2SErX_Uo2Q5KKtYPNFrEYB9UuplJyrWhXLITxw1JPrNlSdtmqw238lrn2evd14gQi_pvTNb0UaOsy5GqwHo1MyI2G6Xmk6YB364LfpuZxV7_LNr-qVW-hVxXObKTTuuO31kj3B335e6_SOAR_yFF9bXIvrKMmJcE8j0p45FDe&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "地方政府开放数据治理效能评估分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AzK-KKn9NDirtz7sPL6stS70dbchflNy8MaMF2d5mzA5JV86_shD0KiI_opZsplxDKcSpr1UvAgz-xn-5Bvcpl9A1Q_uvcMG4Ru7_sqGGupttPn6i_bqNODKNd_LPJZgCngVvtCw6cj6uyiE122Z6O_jTyhE-PG4XP5V0yp3ArJw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "共享经济赋能农业供给体系质量提升 理论与实证",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AzK-KKn9NDirtz7sPL6stSc4EdhYDZagCW8hRsei7KiHJtRXpbmZea9zBnF_T2_TQbDUfZfkj23iCbgrOiwj7hzZPEhx_l10A1xiASIxhjl6rL0X7LxXwING2P36oqP7l_6wHwkagJW3MNnaHr5QDGq3EWJFFaZPM=&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "广东省地市级政府数据开放平台运行能力评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AzK-KKn9NDirtz7sPL6stS4KBbTQTdheDaGOptOKCf2ewYBImeMNQvJZpxO6SThpTIeN89NDHPF8mdvqAnEZ3wwksGjSq2XS8QvhNn1f0rjzo0-Bc2cS1jTceR_2Kko7a5ShotLPGOM3ArkxTh25rbUq-Jcmfv-QzA68Te0pvDr04XFMeQzIn9&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "中国政府数字治理能力指标体系构建与测度研究——基于熵权TOPSIS方法的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BfEd0XDVFsHpqEyFNDg3ShIsJ4LfQ7VLVf6DNLssQdMOIWqpEmuHgHmlttOqZk4Fg1pJk9jnNzVLEECaj3A97Ov5B05TADRxgaqIOOQjerYyr1W8vWxsR5SAYfKonwLEMgUCsMBdLaWyU8OkuXMC4lloqAaf88tM5jV0enJ0N7zw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "面向产业转型升级的政府数据价值评估模型研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B9exFo76BKxiOKlRf1A_NdhQlMBVWI8cdNe54rZs3UL3bEklMhEGsXID6P0FxscYn2BQBvVsbfhcOmJ5jgfnQ72EOq0VyofNOO9-_KbGnIt9mj2bCPflMEwLwyl_6xLOyP4oRjQeSVVyiQ1CHq5qZUrzS_yQPGGkNOp9hH3-MtmA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "中国地方政府政务数据跨部门协同共享机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CGWqH8AFGdTMsHnhEEFcOdA-MJYRYTqcjPwOGxMWfKhUY90SyBWhRNXyX69GhAY8L7xeIcS0sM8EcJpOqyFyAHqPtoPVXioNICHQeBxH5uyTw8L7jpVhiWOQjClupw7bqjFaQDoGm9JgOfUg_Njrm_0lAklxNTEA74XscaR4FD8Ov5TjB7DNFt&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "基于价值共创视角的市级政府数据开放平台评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DzxCnv1Y1FNoPOYvg9YiIe0EDoQMJWVCUBl1iD_MgdwvUTzeet5quQmC4fTRIyfaiOLu4ZltlfsBA29E6VZrhW4qMwY-qgXqnhbZUy46OQ945f6UUD_GQBJkAQ90Dl1b52wW8jogHT7Hz4JTnTWCWj_SOhTMtBetlieOWVnqFc7wnu5822KnCK&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "Construction of the Evaluation Model of Open Government Data Platform: From the Perspective of Citizens’ Sustainable Use",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DzxCnv1Y1FNoPOYvg9YiIedtSkmCqCEVS2ARB_LkLciiqQH4PTiX9thIeL2wm-tUuZElPOtJ014thPCj5uhsuZFQ4stCw303tHUlTLAJcjHnMTEn9Uu4CFwuT3mKddRfRXFCn8DXHCfs0wEjnsHQmsmb-oAvZiDc9PHBTmSXu-XuooyyXGX3Hg37ttyaQc6sifz3pIi-M1QA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "地方政府数据开放平台服务质量评价研究——基于群AHP-熵权法组合权重的TOPSIS实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BFiDOBwEEIJSGjrFC9J9d_1OAc33kFSEayTTe3xiEstlm9lUt4-IBSOjZTsY-gluA-WmCHJT0NuQHHb2GTcwUS-k-qCT-ELqBGFfrfafxxE7GaaBIX2zjCJRfuc7S0rEgE5W88bfuJM-KrIWPG6k2l6sSzHyY_KJUN6H7MsP_YpQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "地方政府数据开放平台的互动性评价及提升策略",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DLtegSIKqdUmF88Xk6K_Mjyc1Dz3H4YgCmnhHkFZqES0h749LaNutH4SOt2CgcPmOwDmtAArFnoi_z6n7ojcIBfeGUck47eacMoFYXdoc_tfFbCHP4_rVKH5sYl7LEqFKqXBdRG3vGoSocWKFvJYqRZnKrnphbI1bvtqStGfgiiw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "中国政府数据开放平台服务质量评价——基于熵权TOPSIS的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DLtegSIKqdUmF88Xk6K_Mjyc1Dz3H4YgCm8yxeCdNs3r-dU3ZwTadUOx9Ey3S-t42n7Qt0kZD1odX9YHpL1eK0D2_e221AVum2CoSbbh6Sq-9VSDRRO-YvECBj0y4MyOHR-8iT4k8-lBel4tdfqyp01vPoYCLNuCc7DBESmObdLg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "政府干预对中国经济高质量发展的影响研究——基于面板数据的空间计量模型",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DmSwulA_xunxcSAZ9MJC3hNduBMOL9xpiZ24zuy-gy7I-GNZqykNCzbrkWD00zBz_jg6bB0t-DjsnklxOG0TOviCtln2AMrCB5RzezPiQtr5JD-c70tYwMzZf9GcKQ-aKBWEr9RaXj9cAUa-1APTGt3wR2sM59I3ppCtb-VMIgGA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "基于数据挖掘的政府经济信息公开水平的提升对策研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C76e_ZBqlltSqG1tev8cwxf6UHgldm62azz99baflImXkTjY6JWRNACwV6TG6W-X430isp5BRXQEeQ43Ry7Bf5XvMEHn8ptT-K-LNUIzKeHaN-mxeR48yUPkxWqfD3dxncPSBd6SvdNwr_pnhAsyfycQprXGlEw6y4NV9CsbwSrc-pHc6-6rP-&uniplatform=NZKPT&language=CHS",
+      "keyword": "TOPSIS 政府数据"
+    },
+    {
+      "title": "基于DEA+QCA方法的省级公共数据开放效率评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Acr9zCXGan6hv498rXcv2LYUDPecmKqwBblO7nYl-pfQ7Si2TtIHWF13a9ZnZlIRWw1Z0wURG92sfZgRIHaeaPPU99oTe0KbouVZlldgpTeGGWHdXZzHE7mBIojFFkr0XYMO6D905CFZYZPvsXqx7yYIT8hliMlhatFXf29y372LLM7ZgMSmIq&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "开放政府数据对全要素生产率的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cen0sgWE_27omU2bcOL5CFDXQjPaE5xAu0RcyECQPaevlkJOzMHr_8KM_23CnH3EXfbazXzzDhfHtBcz5rzM2-vFUPnss-NlG1adSUagoAQgpZShFhA3e9poG8-DoFHPq-Uy3kUCpNY48DDzr13tYH7XbdAQKtssDyE8qDo2mbCg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "政府数据开放平台数据资源利用效率评估",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cen0sgWE_27omU2bcOL5CFDXQjPaE5xAtiAWkIv_qOGNJQi9IiX1DaNydl-6Ce9xEyLAoLyBBOKu-MLxx5VIcNA5vo21jD8Khn8_cGTQ5pU5KWpkz4a8OnVpzqk3Jy87wbgkoKBrumtjK5hZ8rRZ_Nj7vHyA-Kk2sh9GIDwXN59w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "政府属研究机构科技资源配置效率的测度与提升路径——基于三阶段数据包络分析（DEA）的研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DqFH4VYwqe7nwcGX9sGgbhSdxcfA7zsVVTKKCdSLllpDUVdPmH0Ixs934YywXIK1i8EpmNJIIfdKZAZHKooFHNdNq1ue7QjN1hO1QdeMH4LX9Hbn-jYWH9C2U5UUQgqYsBhJXpHv31rxlMNeV4FFrcHq8JlsiwRIP9e5OH7GhcNQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "基于DEA的通航产业政府补贴政策绩效评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DqFH4VYwqe7nwcGX9sGgbhSdxcfA7zsVV1KGyR5GNuOfkjMOhzAdLKM8j7wIeDh3f0UVY4PKtdXnLeS1_FJ2kwTiRtUGTC8qupAcy8Y98dkWgJMPnS14-tgMPls4vKXa6Ri9e2YVRMZmqWX26lsoG25zFmbqFJUpAXqE22YziiFw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "大数据技术对突发公共卫生事件治理效率的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ApYB6inXx6Ci6-U2bJ_mJJB1h0q73h00YDOx4fOTgYkUNsK3wKHXmkihqDWGSW5K6NrZPRplNeqt4JYSE8lySkm-AkC14rQrSnoa3Dijk5PhabdaPtHJox4V3VBO2prmABiZRptfclH1BqQBN3E9wv2rL-Y3vi6zed7gIfkKtZQw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "我国省级政府数据开放绩效评估及提升策略研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ApYB6inXx6Ci6-U2bJ_mJJsKHq_g8K0a644P6JFYwcGYaDdDp6pxzzYrP-LHpV8seJaF3jqurxCDu_PdJuWDabYeW5av9GTN4yFB7amFlUxBbObB8WECwCYKTG_Z_Bf2RkOVfkMAxIXGPvVpSTsfTaSgps64C5uFN7eQlWJ_YeEdh_t9t8Fgd-&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "基于DEA模型的省域卫生资源配置效率研究——以安徽省为例",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CXIoNjh1akI1lw7ULxFu5ImlcAHva_p9A77LBU3EmcUP6fzWV99V6HNolQFHwJdHTQ-LGEP9AC9ef3pS3-XobfSHun991dPr8zLFY27kMtjYgVoePDX_HI4woPXKVv3j4hwO7l1C45b_dkhP6pZ4nB9bEy1mBH1GYMkE_-FDpB_xkCd3G5kHpv&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "基于DEA的东软集团政府补助绩效评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CXIoNjh1akI1lw7ULxFu5ImlcAHva_p9A77LBU3EmcUKlTvTmJX4TxtgXaxWV5GPP4T0yL1i_ktjKqoBwpTYZCJaTuro7RDLTL1-G9JjGcjmKVS77wxA_yt9ZwcaGk-ffBto94Rb_DRzGe8hQpzeQiWvtlSX7FkV4QrBM5R5LsKzRhqDvpgQko&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "数据应用与价值释放导向的政府数据供应链建设路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DK5qhWWym_enxhbN-oo12FlEbcG0bGNQs49ngWc7j3MaaLujMqX2vKK91npWesoD6-kvzS2GBde9RROYIglokir9T-2_TiT2Q8_fU-vnxU11i39upuzC54gW26d0oEPW41t4bFoSO5jhtpVU8NhI9hA0_TB5Xe-Mv-HZzUraoyIQI3buPClWkE&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "师范生数据素养影响因素与培养策略研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DK5qhWWym_enxhbN-oo12FlEbcG0bGNQs49ngWc7j3MZWYTa39y5T-HujrmDPSA4R5Fxq1BS3Vo3hbXdgIk3cFYNy-U9ujmZmI3xJFYGpfLhghHAq7pJMLT_I0LzSybAzRN6yBcGGoIGa6ivo5wHnYVXTL7haaabWPflR_Fm3iMNWBbNAI1u01&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "政府数据开放平台效率评估及影响因素实证研究——基于无导向SBM-Malmquist-Tobit模型",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B4kxuLDOI4JOzscr2Gu-6frPccl9EFef1QM7hI8BsRCVNfPlw9FE9cbcmD-oYMAx_4HwpmqPbtbQHwaBeXXyaSAI-bBHj2vT8Njuda62m1XFH4VmLz3entLw0Kx9VeefjEBrZFItSie0hsM8r8TqzMDToWnVI0W4bH4bAjzkn9ZQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "我国一流大学办学效率会更高吗?——基于政府财政投入视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B4kxuLDOI4JOzscr2Gu-6frPccl9EFef34C8v8_uTcuYjs27RibS-wFYND_GhR92Vu77eXP1tQJ1B3q6jcAIQX4rxE7eugX3D2xupmbu0yP16pj5gqsRC-ogkF3aectF0eFTuR9LufAWR9NSIf57JpsmOgJbaY_6tqw5liHHCbSA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "基于DEA的公共数据开放效率研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B4kxuLDOI4JOzscr2Gu-6fdvHjcdtsd9qmrbhhgak78UuFvA9Ewt38uvXMwn4iwkWAh3S1Ik1PTskNBWQvE_0_CVwKijorGlBeE629xP9WUPu1o9be7DoeepuTp0yWcSK6PTGKzBlmyjRLwYeTBUK8PIjEWoqVnLvkP3_vLy9JNb3lO2MkjkJs&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "县级政府机构编制资源配置效率评价与提升研究——以福建省柘荣县为例",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C5FpCsPvADJdxIPXHPQmDkWZwtPfcIHVps6igj-ZGuPOgdc3bajiGdGJebX7mxwEVAMQl7idAM-_JSy_tacGfOy8_daICJMsOFVLhG9Dlj4zBXAeylEonQm-ZueBtwzVfJOFWAYPshaM9fTX7cBVkUBmtkK0N73aV52IsUD9-2Tbv6-MpgHTNo&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "地方政府数据开放平台效率评估研究——基于三阶段DEA模型的分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C5FpCsPvADJdxIPXHPQmDkWZwtPfcIHVps6igj-ZGuPN2h5WYQbRmgx_ih_JJsOgSTCoHyNT4qCAD1Q-LfwNfb5setrF_AGQ-cMDC3MzkW3uv-G4IUt5Bf0vOR2LILG8UDfTttR4i_L9ayTkvxo_fepPfacKLTtC2nvH4n-r-0_Vhnwh_jxmin&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "政府开放数据资源利用与创新应用效能评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6C5FpCsPvADJdxIPXHPQmDkR-UWRY1La-o6L3DZow4lv9jeVcqA90BI19HHIdqUT-8llqYnGJQeBlKqnF8iYmJXsHaLDHLHDfHD7KtVm6kl64BSyV8ufaPQItkgSH14smKpyRt95YWo1_sJpBd-TtJZALA8Dud8ExNA7C1u8GMbXA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "基于超效率SBM-fsQCA的政府数据开放有效路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AYiy7VZfNIhMRi3Q0G1a-2Xp6HUCZnfbPs6z0uXTbaZPNhLbmN3au_O4L4WYUg0uIisMC3nEmoX5wMN1gqR-8LyFzrCvcAqzOixgfkY5d7ZwAoN_643knRwBUsTHaOiyQR0I7JsOKRLGD4S0WZkyU1lXrRO0Sku4bddf3tN_hR1Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "DEA 政府数据"
+    },
+    {
+      "title": "政务数据要素驱动新质生产力发展的演进特征、运作机理与创新路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BjEy5eJpHq6BjXaEMiqYJDOe5_qWyBAxGofrP82Pl0ZQmN75cZOOQHw9t-a4ihwlaOySzGNyq2e-mVw8KuxyswgJy-ey7zUGf_SZw1pbQvDBCOR_UkKVGqG8uTBZjNuJZSbd_1OOfJTCuwA1Hx_IiGsLowEyBMFRjDaRPkSZli6w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 价值"
+    },
+    {
+      "title": "数字化转型赋能江苏省实验动物管理高质量发展路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CAPB676b7ylCI1mWVCs4v3242-6tm9I4MZR8z-_PkK6RWoaBN1313imAXhovK7hXj_6weLhinKQaHnE2jy9hZPHsuxU2Ucuju7WOQJpoXqjAVeUDRu-Lf-riPdUlijl5d3GAa2Ta2snqxmwIAHMcN4lBJKTIhh7vt-5wAidV_I1Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "数智时代国家治理的实践形态与运行逻辑（笔谈）",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DsOuGKSXsqLICof8yqyttRKfUxqH7ToYVtY-6MjA1yyUCSZ6wSg33cFQhcZCyLoxKGop7yYZ8zUS_Qt9UHlkXSrVrgj_zSEnDNtv9BwUbr1uo2Fm37n2hbKYv1q9gz59NhVIrTFyvEp4nFvc9PcdxPgOveZ4NRG19GPu7Vw55QMg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "河北省国民经济和社会发展第十五个五年规划纲要",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DsOuGKSXsqLICof8yqyttRguuXo6lutkQ8vossFdIeEgtQ3z2LZY5LFGs7Kmmu1wreaEUd2u74eirQbKpy8pcSqIzgI9rBeP9KfKkrhKl_mRb_BK3pKvaX_6W2cFpr_imldtB9YKaIMxFUf8u4BdQXTym-z3O0HxHds_zyQSBW-w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "甘肃省国民经济和社会发展第十五个五年规划纲要",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DsOuGKSXsqLICof8yqyttRguuXo6lutkQMnebXnGuCvjbrvIK-gdlxIR4BVY7TyqY3vvmRWko7Y-a5xXhqzRsTm8RYeRKw6sLrLGlzzddxmes02yimbq2953HK3Y_BjgQNyBL9zHTGnnIZyEfNG5rKuTrM_NcGINcyNilwd4gyWg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "统筹管理政务信息化项目建设路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DZSWwKf_WvglTVgiZlW3umXbihPl6PHWRcOkvT0NeCfhGQoPAVQdL2QdG06-CgGbIR-vqzb0AR3k6DR0_TLmfOWH8rh9rsHyVsWyUl0L_nmB78Ti51Y1Q9A3qY8hx0GoisAq1NzPCRXiheiJjDknmAsRZDCfMwFh8YqGgfFRkHWA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "民权县：“智慧治理”点亮民生底色",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DZSWwKf_WvglTVgiZlW3um1xvUngSWRz3TpWDjtolp3MqzRTPySkVinZpfkbHDenvikPxcZzsAzUNq54llONscw4Gjd_cGbhsmaFE53BY8zgh7E84JAbwMnSj_79gEueREELUs7mht0vaN-Niy2DYsOaEd2Ao_k4ZM8FyriJBS6Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "我国地方政务数据分类分级标准对比分析与优化策略",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A-d1NpJIMQ2rgJ_jnKqdLpSeGjN3UJxQEyAxaYJbKuuYzSqaRM8LsQRtr5l2IyqMUnSd3HfVajW2h7AXP0b2tqvqXaBRLGrIQGYUQPKO5bJxhWMSr6XLjIkFos-UHxwCr5BSCBwi-1dbcf95Jd0zlhha-jGL1HFn_VMCgMv61C6A==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "热线工单响应压缩到“小时”",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6A-d1NpJIMQ2rgJ_jnKqdLpPZTfJAm5-mmxG0yU9RtVw_8f6R2pIOHB2TZCNThYcFxUrZh2hxXaq5p5H3Yud29lzYzHF3URNl8JtRl4I-oBFGK5aL0WIq-EZNvY1gZixxFoH3u8h8z-5ErTfTmSy-OPnB3luVtzy8W1HxA4aG54ZQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "数字治理视域下应用型本科公共管理人才数字素养培养路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CV-wwv71_10Jq8VgXzXh3ZuK8U2iH35L4Nqas5KaenVFYWguI21OIeO4JJMz4cnTr51FKi-1uvR8HpSRxARbw81P-8eEXZ0vuIy8wlRp4dC6ZheRY_lVHSOPI9aYbYMpsigrOL3XD_yDPYLVyqvSvkDVX-dOFe7lsAzW78OLuA0Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "现代科技与治理实践的同频共振",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CV-wwv71_10Jq8VgXzXh3Zeqpdbo40OkhdXccXIzRT01HAWGLzvRO1RkCOXEZF2lv1o5sZz92ufrAgjn_DnpEmxgP1TFEVkBnh2jx03iwo48iq4wIIzF61JAaLVUnTO-l_VJpkBMyqgEEdaJaf1HZerPqnaA0lkVgW9yY9VNFWf6QTUTwOuo-s&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "打破创新藩篱：数字治理能否推动区域协同创新",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AWNhwHNLkODWX7PtL6-izSOPdOxOqaUpZLSPjIMeBXfXOvJgNdZwOGj4oE_vfD7_1lPpQMmlol7uVp7D-ZhJQsgRlhpX_qEZsKfyh26gqyjBuB8vOCOhBKdS2GYpM30uBa_YQR71sH3goFwfzyYjyu9yCfWYeFT9yMJmmLj-3Pxw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "智慧化政务服务何以优化城市营商环境？",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CNjU98scvszQb9C1bcFEV59FBhBpmqpdZ-Dn6a32w936hf4sFVH8YAioa6EXrECQjyyjW_5SHf7WeGi6tL61z4y7d03Dm1xIBMruSUo4bjPh9EVhqa791B25kgfKZq3Er4dObuChpke3X_4GNNNv0be8n6xIv9u2U-lHPRK1D1oQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "新时代推动数字化治理有序有效的实践路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CNjU98scvszQb9C1bcFEV52SK4eP6gec44ZffRX3F5wBOx7P2BfCp6-iysYzxouEaQGXxLCDAu-NjMZ18pY3NFTxPLnqgAXiCcjYK4iV0zL1Zt4jRzd1zYS6TaVHrWCYEdlZGwssvrPlhZGIfBevHbdKGzSLR_mXpdbVTkJ06E9w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "基层数智化治理的困境与法治纾解——基于人机共生的视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CNjU98scvszQb9C1bcFEV59FBhBpmqpdYI2vbBpuEx2Ij7jW3e3U_-0c73ZyaV9meIrD77IjEEbkmG15nt2QA1FqR7lw1GepfFH71Co6z18Cn_ECkxmT5tvyupxI5FT_H8bbKSTdRDr0bwa64KPHCZVtXqsQPl4xwoG29VcCgrFg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "基层政务人机交互的数据安全风险：生成机理与治理路径",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B0v98CdbKmVC_7Nkh_7ryPb9W0LrL68ofB4vYxcgDj96nKnHPEisPZ05UTyS7iVBmwmmZOb4sLw3mHBD71jbPja64G3FYwqhrUyID0TfPJVTAqzFolwFyiGrFi_myAyT57pdNwcnMPo8768K2Y7fIm9V4wXHAkHRzj8VcD157X3Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "数字时代的政府信息公开边界研究：隐私权与知情权的动态平衡",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B0v98CdbKmVC_7Nkh_7ryP4uLEWA6uQGXaCrrPxmLMWw9qyCKevC5yt1qS4YPanUSAqoNnFcHm6AFQbgYHiQa8X2SVBE0xABz5v5dY8c5LihqIxK7nhpdySYphugY7KekCI4rAMuonMLWTUMf6yGxCHSt9FUNzoEn5MstOEFZAMQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政务数据 治理"
+    },
+    {
+      "title": "政策扩散视角下我国省级政府数据开放政策量化评估研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AkWc9AmN0PG7gSaB97J8GY0sWAMk01Au-8MDDJBg9UQO_1sXLosnxXT0W_GCdmv_o7JZWRZoFFj8XF4Z_N6m1Z-wQxmxvyzN0rXho0m6ndP66KTZ8j-LWYTZvI8wfzNQxNG4V8GG9SGxAB9yXP6q9V7egbaLEv1h8Y0F9VIYF1q8C6_44mDpMo&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "三维分析框架下我国政府数据开放政策研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CiLiSEkXZVye9zZwHrqzodlujoCdFb-T9-Do9Ld0xKDMJpH9BtWNo8kL0cuPJVOVpSvhZD3Y-GNizqdRPsWQtpVQDTIKwNS82ahGuS3H5gUP9F4EoejUA8nukPD-fgaVJBIVFZojoZDjRLIva7gZmzoV1XFIWnbaGu6EIVslSwyg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "我国地方政府数据开放政策的注意力配置问题研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Av7E7bAtQwswA7xFmgf7UP9E3zDK-6HZpDaKo59UyS0QAWuQS34ttDIvzgOfl8QLuer5yT5c2N7xtf1TQU7XG3hF0av_aYFwFd2GvbDYBYexFLFEStGjOH__8dpa5hm2v26L9Cx2_yPbweWmZS_1NqgQFhyEYoBl2snqcW7K9sBHmKG3d9oEzb&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "地方政府数据开放、首席数据官制度对企业的经济后果研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DtA4IZgI89S99wcS2gRy-h14KANtJniuH36JGbpm9tJKvecZlee0xKlZl5zrYBwwhX_6DPFNGzQ2BIGNdM8fXSUdtsEgfqfxo7satS70mR2IjYn1M9HRAO00C8eup0iygizWBgBEY0dM4BK8mWNQ30WlW-Z8G-domaa9pmBegJrsLv9xkjAPQk&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "“数据二十条”前后我国央地数据基础制度政策比较与评估研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BeNBIFlGRLGr49kON68jnARw-TtCP4AgC8LFSDGFVrog85c9ATl6BSdYc52rffIkasnCB_Ld0V543lksUak8eU_cPzPgBzgKjN0YtRJk1FzRHwzXU19FsQIJNDlr8MbIZE9EVEmevMcUQO-MWcrOPKEY4W_PQtsmy_Ov3aC24HUQ==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "政府首席数据官制度试点的效果评估与作用机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CyqCEPbgWUJov2JE6aaFkWbuV92jdLlqJvpyefVrNvDGPXNUDmvei8jYZF1egyQaKEoDU9AHxxEfZlFGPTsb94G8ARX3qAbO-qug-i-Z8e5g7VeGBgJYgro6GvdV6p-g-th-MRPgUeO2K6fU7vp2mb6o1Yd9SN0gHd7kW1yRBEPgRLbdp3Vppc&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "我国地级市政府数据开放平台隐私政策评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ARaKE4r_sNhP4ox6o8iB_iIiRR4UIUPwBKMr56n3ajOcUsMihd1tEwn3ak09YZ_tKN-CPdZfkgD-3vDP1Dt4I1CVHnrtsltj0lY8GwL8RcMhlCnBDdJyL-e7kgl31P0Sm48mT40Yp8jkQuUQ7buEyi-CQ8-66yzqhh-6X5V81xq8_VfPrtT5nv&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "中美政府数据开放政策比较研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CfiosiHW0yIV9t1pewDVgDg2pOQveU4DPNpe07rfYcB7htBYG9hYHd3odbrhyIUgKrSi873P_njJ_yWlhpjnVXELSiyS_wjAYx4DEyw46e0lMHptcQ7PxD0Ec0kXqngwrHconc0BjAFSJ9GRu3Dm7MrcUYtDbV3HSaVkcak4nW2tbFMes-5U8w&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "面向智慧城市建设的政府数据开放政策评价研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BKUvxBqsOUiC8Dg0AVYtpHvpciAQaI7LZdl8iZp6DDBKDMMQ6oKv7-aPnCfNuJVmsg5BXPtq0y8mBp8mbYbjZ_9_p6mw-PNVHcf1gWk5J8g-hIYzZRG1CsiCbkCY28Vltbx2wLfuV719E1f78pPw2fVj1AFXhI3NYZcx8o9JIhftCDVop3sL-V&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "大数据治理真的改善了政府公共服务吗？——基于国家级大数据综合试验区的合成控制法检验",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6ANyyuj05JSO5MP4-kBhAQdOhFxWJb4So4ZQnaFdH9lN06qdo9ZQdtckzxRmG9I8lnUBnUBsE9Wr1Cfh-fugOujnH8NHB7qsLIQUQN5wzI-MkbUD0klfj7BP8Tsdn1sIz48ZGw0bpLs1XbgPIuliytfKqsGMAQTx55soLOl3B2Djmls1igs-9QA&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "中国政策执行中政府数据开放研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CZEwbb-FfMiv8q1h8xJYZfe0FfuFdKAXSURqNd_MgVeEIwqOVm8ogmMN4rovlSyDRMv96VBl5LgkIDBFXtto0r3qXRmDyQlt_cEfsWoazQ9gZNYoP1XZ_su4vNhKTAwSIQJ1aMr6KCdM1UGRDqmaw80eJxbjvLBpot5crV6C8GCwhHW8bHyVL_&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "政策信息学视角下新一代信息技术产业政策对数字经济发展的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cj_6q81jo0lUfQfGtA8efvZ-xD9vCEuUFsATI71WnKqIcshHVi6ZclNWKThd7_SUEg0RCbyvoNwrTqkz6GCs36YYeckD5vOtozKIGqFpEtpecj8mifBg-D_Qn5vnPOceppl-jHSW28lLaowO0jKaH8MAscj4iBMrOulClSiUZZ3eX1jaK0HtYb&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "公共数据开放的法律问题研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Bb2_KSe5jHy-72Iur-iy8aoJyWsL1fbI4P4wYLo8QOTCAjqVZ88EOWJxHuEd8UORg_w5pLer_fxDgm5DO2y9zb-9mSF9KXPXZEDsnmUBfbNVYSBCoSHfSccvJnMnhGIHjFe9zlYy3_nNexkau-GqfSYJw_e5-F-MM-u2tV5I9zQE1MIsXzL1eU&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "生态视角下我国政府数据开放共享政策体系的互动演化分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6CNFNlrtGVV9TucL6WcAM5ZISRTvyKBzMjY7dpKTkEU-Hk3m61jeTvHbjo5V-jPRfw_zyeCOrDY46APcPzZ9FGxAPQ4MzXULHDuNMI1hF4aE0YKC2OivC3jEYovofMontSyC035sawZJmJqs0-fgxfmci4DRXq1C8QxOwDGYo778w==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "政府与市场“双轮”何以驱动中小科技企业创新?——基于微观企业数据的“促进科技和金融结合试点”政策评估",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BxdWsBb2BpzBFMvL-FwBQn5ZCTRninPeYH4rl8BOG95QhIPcDmLOEiFX8dDscKu7AiF2sbYuKe-ntm3A89H3bQSD1CHSz7Nvgf5IlDmxgH_KQ74MD0O16fMs8x4Ns1TwPTJuIKBabYgpD-yVIHxmwYDRfy_OIismxSwSK79oaP8A==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "系统视角下政府开放数据的耦合机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BIKVlWxwW8-_SWLQ1vY-MzQ_j3OW1cdTvvYXT17GEqjxmrrJM0UZ8_o2PszlVzejVLPP9kpV7S-Dd_FlZNnjYFVra7WwIRBHfiDU1VGyQPtPUOygArZSwHt-051aeN-WHwOTTYqnaS9TmQ4lG5VWFwt_4GZMYoNeNAmn7eyOkUAI9vvCegdnEf&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "基于压电式理论的政府数据安全治理体系构建及实现路径研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BsQyZukoVYbNfmkqK8g7f8Ktj9v23ULdXovz5IdkIEmYZd-b8wXL-a1LuM53q4RBj4kEd__7_KUSJuT9ycFb4-9kpEJR7w-05TzleMxXiqKELd9zAxYw_lZgK1ABtobtCJX9TMFjowKBm9HPghiz0sEMitP1PUqgLlel8W9DVacA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "基于文本分析的我国开放政府数据政策协同研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Bowsn2yDr2d2wGngIpnk9eqWCl1MNc9dIA_SUjpKce1q3zgJo7dSdl6YUwVkI2zGIYbJF62JBQOUTUVdxAZOnZpTbm6YjUU5-xxrAmxyhBdS9PE84V-SHw_JngkHL--MNbNcqg5qIEZw0-qyK5uO792eD63j9YQgUTF_SVfrMp7_ZBuuuA6NOv&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "政府数据治理的概念、应用场域及多重困境：研究综述与展望",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Dl7nfa4uBSfYURTiRxha1C4GFTixSDjpP64RatnwxS_lItmWJrh9XdST-6QkRV0Gk7XAoq9XBmbKYChmUFTZf_UCgFYNN7JZ1PnFJ8S5GgQA_emces1W4dLfdmf4w14yFOBDeB85O453Fjp5ig7pePqBzNaOLCp-nzkH3uOcRhGw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "援藏政策对西藏县域社会经济发展的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Dl7nfa4uBSfYURTiRxha1C4GFTixSDjpMb68Xe5q3zG4DfKt0cDr0VK22x0cXlItkSUISBjLm6eQDt3z572n1JdMvuRIkQFB-toJVUqAGxysrZxTI2NMyKhrctk6AYyA5kXa0HMpGCofBO1LYcbOgi4OEX-cEnI7iPspKlXNiZEw==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 政策评估"
+    },
+    {
+      "title": "我国数据要素流通水平测度：理论逻辑、区域差异与动态演进",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BnPb1Pq6PZQ3nvtHrQ3bnKE_cvECltx5STu3yWEIyLLu5JEztAbJVOTcZac9ej9QMVxDy7I9ZNecsOfeU19m_kVRAzWtkqAd3xQVSb9A-B1Y0Ze7kC8EITdmYMtGkksWJayO6Ym8SFfTOTJTh9taL11FmhQjDb1uoki32QD0jYoA==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "政府数据开放对产业结构升级影响的实证分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BnPb1Pq6PZQ3nvtHrQ3bnKHw2dJ3d0DvtbXXU0v-7cnMZpMxzRDmxokThH6kgIQvaP5nXGqU7VlKGGyWfrGpdL8bpBKwzYk0r_P9NfYNLUAfMAdilUET-PMt4bkP9sS8LmtU7Z1Z5uUR9Webd4OUDMt3OfQZ_BHYLv4V4EdH9XFg==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "公共数据开放对城市创业活跃度的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BlU27HfSeS-h2vq8Fe8HsyxpU7dPbKB78BsmfdsqUbAXu3tXqC5TW2vfNb9Vz_ky20_LZ6E0xX-btvPyHZv3y1h31zrzxDWxq_zlK3_dBBpg63uKWr8jCGUamuliIDwiUEqjp_3bq4q1Ds31gmKUOnSAdHPtDhthSt6sYcoUqXB3NGF8LGFmP0&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "政府注意力、平台建设与政府数据治理创新扩散研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6BlU27HfSeS-h2vq8Fe8HsyxpU7dPbKB78BsmfdsqUbAYLswGb3WJsSBVItGzZ5wNqKr0OmjL-WmKthORxSnjQ0S8SgEYMEfik1CqnXBsXbWyjlLNmiByAvUEPcZ5gTWTc0yGa4EJXiYnFi4Sdh7msliedu08lefHm-OBPqzbYcfW_yDLnMzDFv&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "数字赋能视角下农户绿色技术采纳的影响机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AtBj3ChtTugLBpfw3GY3RRnM0H71Y4NIDBX4_UfZO9Yjenta3q2209RotjzOnlALzjKjKAYLxi5pWCtdyUiSdhVJN40f_AULUfnA4PGEW0jtBGF1W6RRgBKAqgUwdwKGe5SWAWsWWu-35GJ9gNP1gXzhE11cyNxmQ=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "商业模式创新",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AtBj3ChtTugLBpfw3GY3RRnM0H71Y4NIDBX4_UfZO9Yjvgiws8kFvHthkeUnZ8499K9G97OflNZPp9agX0UAoWrriOJygQUGZ5g11Pl5Hq_M4scLFJLiqwhast_YRC-91-hlTX2_KzOkGmeY1CBgO1-GJfkLdlo5Y=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "中国区域环境规制与节能绩效",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AtBj3ChtTugLBpfw3GY3RRnM0H71Y4NIDBX4_UfZO9YlMAYXlqxGHMBIqQYkT-HSncUrJ7rhgcW_gnesqpXpozYPh0B-ydnTMMoswrcfHyeqTs0yBcu9mzMK44_kgNwnPwAWcFhKjXFGa46SKIFK91rhalSPKItyk=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "基于大数据的地方金融风险治理",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AtBj3ChtTugLBpfw3GY3RRnM0H71Y4NIDBX4_UfZO9Yl-hw24oFl2qqG5rjidtP9HXaE4p0sWRnOLHoPd2LQVIvQ4cTK7god4nMHEnBZpO269zbugpsrAn9sjwU2775LQRizMf1ENbFnh5fCimwxh3HYfVg0js9_A=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "差别化耕地生态补偿机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AkAopn0Z9qfWib0PsMzOheqd7JQJ-ShW0RbJhAJB8PzBqND1IY7enp2jD7QTs7is1mZhWPlQEH5X_7WOExGC3OqrP_Zlmc-BGsN7htD1zRg9OArjk04Z73LUg-OWWJ1Ij2LwHjHpEG1XQVRmoTdZz20Ltx6nlO55o=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "政府数据开放水平测度、区域差异分解及动态演进——基于21个省份的面板数据分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6AkAopn0Z9qfWib0PsMzOheUOig-eYSgmbxJ1igj1kmcJMgkuuFgqqjAWANeoTz3r5zmKWFGf9cqBTCdLCgCuLOWvolnf7h1yB1L-f7JzFOw1FJxglXd5GJbIQ7ku9RQ1nhQVYhldWarPpJUDOj_0I2SaP034wHudTGNOBVp3kg2Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "政府数据开放对数字经济发展的影响研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DDL6wBtcC1VmXH0vkY3-p3ggRmuKAkam1_9A3Lw-kJ7I9iXk-H4IuIFFBIzjIsoaNpOew0EkBkE3HO1d_sDihgaKr6TitlXb25SxOA2FUEa3X48jN3L0ha1zvEaooKKWhPYtB_jodiU7YoYsPv_NfG6UYS5NPZdb9LuIItmsK-_houP5OWreYV&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "农业经济发展方式转变能力成长研究 基于创新驱动视角",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DSqtqAvxZD2TNjB8mpLsrd8B3e-YICB7Xnr5Ip971QQkDny4BDrVx0OQfFlyCaMNCC9kkw5a2xuT-MQ-y0u7-V94NTtduUMXQB4frr9TuppxctpJfQidiMbARoMOdu8ZJzZSrBMdfrTqFtsoKlqryFhImgsleEZII=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "基于链接分析法的省级政府数据开放平台影响力比较研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6DSqtqAvxZD2TNjB8mpLsrdEK-Jn6MbeIwIeN0MpPrT2Phow4HAn0E8IvVcUH8FDi8uDXvycxOA_rBGWIbFvmT6vUG4nhuYRxrYflp766spPvcubpAHzE_Xb65hHh06cbg2ITTRi5_3--fz0ItB8a21gaLdDM1E2oR3vxmekmOz2Q==&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "中国政府卫生支出风险研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cy6DG4w0zgVqgvyhmJCbNBVnSPzR-OHVo9bBWzmYAcvE4p7hamsIf2m6GXWVwYo-P-EyXrSKsJH13RIM2UtZLoRPHs0mT_vpkXFZjRgXVzsWRgZTiqReJ2-a76a7rMQ92ZQ-1gCON9S4SeL1gr6TgVTJo33w1-qvo=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "世界湾区发展指数研究报告 2023",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cy6DG4w0zgVqgvyhmJCbNBVnSPzR-OHVo9bBWzmYAcvHwtM9JzkCwmJ4adFIb6sRqEnkqn35ynpdxY9JDgDzyywB0-Y8mI1xqkSFisNdVxD2VK5RpFA-EQEs3QNgWCDFDwRGKRs-pPgZ--Ze9TtUxFeF1KexVKn5U=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "演旅融合的经济效应分析",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cy6DG4w0zgVqgvyhmJCbNBVnSPzR-OHVo9bBWzmYAcvGUZ2mvWp0Rwn5ArT9C8TKWUauwyG7Ptf_0gyFfT7GLrfx7wYvijJHjbnDgcz5O9_mGqEwtiOgm0W1eGtfR7sPK3kq2dJBLoqzIbBeqLBE8WeAApNH0T-ak=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "社交媒体环境下助残社会组织赋能机制研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6Cy6DG4w0zgVqgvyhmJCbNBVnSPzR-OHVo9bBWzmYAcvPAS32EoqACfIEChwa2ZLbiIClAuFc33Kkmqff3Od4qU_x0lX4SrMknMSpBfjHJlu8AQs4dRDUZdOTQludpoZ3COnTFL8kT4Ec2VSPyu1542_9Jsl3e2Hto=&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    },
+    {
+      "title": "公共价值视角下政府互联网服务效能提升研究——基于全国233个地级市的实证研究",
+      "link": "https://kns.cnki.net/kcms2/article/abstract?v=CIt6vfrkg6B64xamiFIPOAaxxJY91yx0-Dqtm2p1_ZRO_N8vOS1ijoaqNf0_zTMOjoUk4nv_IyvQ7eqV5QDixN6YQ4-PqTpPKmkOFD4JVeEhrus7BzI9w6BbGfWJZ0hiPyFNQG7KSRRIcwF1OM84d9_3jGrc9hpOCU7r2ql190-PG2ZPTi5QqQfAsgMUpieF&uniplatform=NZKPT&language=CHS",
+      "keyword": "政府数据 区域差异"
+    }
+  ]
+}
