@@ -32,8 +32,33 @@
 .research-card:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,0.15)}
 .research-card .r-icon{font-size:2em;margin-bottom:8px}.research-card .r-title{font-weight:700;font-size:14px}.research-card .r-desc{font-size:12px;opacity:0.9;margin-top:4px}
 </style>{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">采集规模</a><a href="#platforms88">88平台全景</a><a href="#provenance">23省详情</a><a href="#downloads">数据下载</a><a href="#charts">交互图表</a><a href="#strategy">采集策略</a><a href="#collection-process">采集归集</a><a href="#reCollect">重新采集</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#live-dashboard" class="active">实时看板</a><a href="#overview">采集规模</a><a href="#platforms88">88平台全景</a><a href="#provenance">23省详情</a><a href="#downloads">数据下载</a><a href="#charts">交互图表</a><a href="#strategy">采集策略</a><a href="#collection-process">采集归集</a><a href="#reCollect">重新采集</a></div>{% endblock %}
 {% block content %}
+
+<div id="live-dashboard" class="scroll-section">
+  <div class="card-header"><div class="card-title"><span class="icon"></span>实时采集看板</div><div style="font-size:12px;color:#64748b">自动刷新 · 数据异常报警 · 采集历史追踪</div></div>
+  <div class="stats-grid">
+    <div class="stat-card" style="border-left:3px solid #2563eb"><div class="stat-value" id="live-total">-</div><div class="stat-label">系统支持平台</div><div style="font-size:11px;color:#64748b;margin-top:2px" id="live-total-sub">加载中...</div></div>
+    <div class="stat-card" style="border-left:3px solid #059669"><div class="stat-value" id="live-success">-</div><div class="stat-label">采集成功</div><div style="font-size:11px;color:#059669;margin-top:2px" id="live-success-sub">-</div></div>
+    <div class="stat-card" style="border-left:3px solid #dc2626"><div class="stat-value" id="live-alerts">0</div><div class="stat-label">异常报警</div><div style="font-size:11px;color:#64748b;margin-top:2px" id="live-alerts-sub">✓ 无异常</div></div>
+    <div class="stat-card" style="border-left:3px solid #d97706"><div class="stat-value" id="live-last-time">-</div><div class="stat-label">最近采集</div><div style="font-size:11px;color:#64748b;margin-top:2px" id="live-last-sub">-</div></div>
+  </div>
+  <div id="alert-banner" style="display:none;margin:12px 0;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px">
+    <div style="font-weight:700;color:#991b1b;font-size:13px;margin-bottom:8px">⚠️ 数据异常报警</div>
+    <div id="alert-list" style="font-size:12px;color:#7f1d1d"></div>
+  </div>
+  <div style="margin-top:16px">
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px">采集历史时间线</div>
+    <div id="timeline-container" style="max-height:200px;overflow-y:auto">
+      <div style="text-align:center;color:#94a3b8;font-size:13px;padding:20px">加载中...</div>
+    </div>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:6px">
+    <span id="refresh-indicator" style="width:8px;height:8px;border-radius:50%;background:#059669;display:inline-block;animation:pulse 2s infinite"></span>
+    自动刷新（30秒） · 上次刷新 <span id="last-refresh-time">-</span>
+  </div>
+  <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}</style>
+</div>
 
 <div class="position-hint">
   <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。系统已扩展支持<strong>全国88+个主要政府数据开放平台</strong>（含省级、地市级、中央部委级），采集方式涵盖静态爬取🟢、动态渲染🟣、官方报告🟠、API接口🔵四种核心技术。
@@ -929,6 +954,80 @@ fetch('/api/collection-batches').then(function(r){return r.json();}).then(functi
   document.getElementById('recentBatches').innerHTML = '加载失败：' + e.message;
   document.getElementById('batchTimeline').innerHTML = '加载失败：' + e.message;
 });
+
+// ===== 实时采集看板 =====
+var LIVE_REFRESH_INTERVAL = 30000;
+
+function fetchLiveData() {
+  Promise.all([
+    fetch('/api/collection/status').then(function(r){return r.json();}),
+    fetch('/api/collection/health').then(function(r){return r.json();}),
+    fetch('/api/collection/timeline').then(function(r){return r.json();})
+  ]).then(function(data) {
+    var status = data[0], health = data[1], timeline = data[2];
+
+    document.getElementById('live-total').textContent = status.platforms_total;
+    document.getElementById('live-total-sub').textContent = status.platforms_success + '成功 / ' + status.platforms_failed + '待采';
+    document.getElementById('live-success').textContent = status.platforms_success;
+    document.getElementById('live-success-sub').textContent = (status.platforms_success/status.platforms_total*100).toFixed(1) + '% 成功率';
+    document.getElementById('live-alerts').textContent = health.alert_count;
+    document.getElementById('live-alerts-sub').textContent = health.alert_count > 0 ? '⚠ 需关注' : '✓ 无异常';
+    if (health.alert_count > 0) {
+      document.getElementById('live-alerts').style.color = '#dc2626';
+    }
+
+    if (status.last_collection) {
+      var dt = new Date(status.last_collection);
+      document.getElementById('live-last-time').textContent = dt.toLocaleDateString('zh-CN');
+      document.getElementById('live-last-sub').textContent = dt.toLocaleTimeString('zh-CN');
+    }
+
+    if (health.alert_count > 0) {
+      document.getElementById('alert-banner').style.display = 'block';
+      var alertHtml = '';
+      for (var i = 0; i < health.alerts.length; i++) {
+        var a = health.alerts[i];
+        alertHtml += '<div style="padding:4px 0;border-bottom:1px solid #fecaca">' + a.name + ': ' + a.message + '</div>';
+      }
+      document.getElementById('alert-list').innerHTML = alertHtml;
+    } else {
+      document.getElementById('alert-banner').style.display = 'none';
+    }
+
+    if (timeline.timeline && timeline.timeline.length > 0) {
+      var tlHtml = '';
+      for (var i = 0; i < timeline.timeline.length; i++) {
+        var t = timeline.timeline[i];
+        var statusBadge = t.status === 'completed' ? '<span style="color:#059669">✓ 完成</span>' :
+                          t.status === 'failed' ? '<span style="color:#dc2626">✗ 失败</span>' :
+                          t.status === 'running' ? '<span style="color:#d97706">⟳ 运行中</span>' :
+                          '<span style="color:#64748b">○ 待执行</span>';
+        var duration = '-';
+        if (t.started_at && t.completed_at) {
+          duration = ((new Date(t.completed_at) - new Date(t.started_at))/1000/60).toFixed(1) + '分钟';
+        }
+        tlHtml += '<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;align-items:center">'
+          + '<div style="min-width:140px;font-size:12px;color:#64748b">' + (t.started_at ? new Date(t.started_at).toLocaleString('zh-CN') : '-') + '</div>'
+          + '<div style="font-size:13px;font-weight:600">' + (t.task_name || 'Task#'+t.id) + '</div>'
+          + '<div>' + statusBadge + '</div>'
+          + '<div style="font-size:12px;color:#64748b">' + (t.success_count||0) + '成功/' + (t.fail_count||0) + '失败</div>'
+          + '<div style="font-size:11px;color:#94a3b8">耗时' + duration + '</div>'
+          + '</div>';
+      }
+      document.getElementById('timeline-container').innerHTML = tlHtml;
+    } else {
+      document.getElementById('timeline-container').innerHTML = '<div style="text-align:center;color:#94a3b8;font-size:13px;padding:20px">暂无采集历史记录</div>';
+    }
+
+    document.getElementById('last-refresh-time').textContent = new Date().toLocaleTimeString('zh-CN');
+  }).catch(function(e) {
+    console.error('Live dashboard error:', e);
+    document.getElementById('refresh-indicator').style.background = '#dc2626';
+  });
+}
+
+fetchLiveData();
+setInterval(fetchLiveData, LIVE_REFRESH_INTERVAL);
 </script>
 {% endblock %}
 

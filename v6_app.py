@@ -355,6 +355,182 @@ def api_thesis_claims():
         claims = {}
     return jsonify(claims)
 
+# ========== 采集状态实时API ==========
+@app.route('/api/collection/status')
+def api_collection_status():
+    """采集状态API - 前端定时轮询"""
+    try:
+        with open('data/v3_collection_results.json', 'r', encoding='utf-8') as f:
+            results = json.load(f)
+    except FileNotFoundError:
+        results = []
+
+    # 从collection_tasks表获取最近5次任务
+    tasks = []
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, task_name, status, total_count, success_count, fail_count, started_at, completed_at FROM collection_tasks ORDER BY id DESC LIMIT 5')
+        tasks = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+    except Exception:
+        pass
+
+    total = len(PLATFORMS)
+    success = sum(1 for r in results if r.get('status') == 'success')
+
+    return jsonify({
+        'platforms_total': total,
+        'platforms_success': success,
+        'platforms_failed': total - success,
+        'last_collection': results[0].get('collected_at', '') if results else '',
+        'recent_tasks': tasks,
+        'timestamp': datetime.now().isoformat()
+    })
+
+@app.route('/api/collection/health')
+def api_collection_health():
+    """平台健康检查API - 异常报警"""
+    try:
+        with open('data/v3_collection_results.json', 'r', encoding='utf-8') as f:
+            results = json.load(f)
+    except FileNotFoundError:
+        results = []
+
+    alerts = []
+    for r in results:
+        code = r.get('code', '')
+        count = r.get('dataset_count', 0)
+        baseline = PLATFORMS.get(code, {}).get('dataset_count', {}).get('value', 0)
+        if baseline and count:
+            change = abs(count - baseline) / baseline
+            if change > 0.5:
+                alerts.append({
+                    'code': code,
+                    'name': r.get('name', code),
+                    'type': 'data_anomaly',
+                    'severity': 'high' if change > 0.8 else 'medium',
+                    'message': f'数据量突变{change:.0%}（基线{baseline:,}→当前{count:,}）'
+                })
+
+    return jsonify({
+        'alert_count': len(alerts),
+        'alerts': alerts,
+        'timestamp': datetime.now().isoformat()
+    })
+
+@app.route('/api/collection/timeline')
+def api_collection_timeline():
+    """采集时间线API - 最近采集记录"""
+    timeline = []
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, task_name, status, started_at, completed_at, total_count, success_count, fail_count FROM collection_tasks ORDER BY id DESC LIMIT 10')
+        timeline = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+    except Exception:
+        pass
+
+    return jsonify({
+        'timeline': timeline,
+        'timestamp': datetime.now().isoformat()
+    })
+
+# ========== 数据-论文互锁API ==========
+@app.route('/api/interlock/map')
+def api_interlock_map():
+    """数据-论文互锁映射API"""
+    try:
+        with open('data/data_thesis_interlock.json', 'r', encoding='utf-8') as f:
+            interlock = json.load(f)
+        return jsonify(interlock)
+    except FileNotFoundError:
+        return jsonify({'error': '互锁映射文件未找到'}), 404
+
+@app.route('/api/interlock/check')
+def api_interlock_check():
+    """互锁校验API - 检查数据文件修改时间是否晚于论文生成时间"""
+    import os
+    changes = []
+    try:
+        with open('data/data_thesis_interlock.json', 'r', encoding='utf-8') as f:
+            interlock = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'status': 'error', 'message': '互锁映射文件未找到'})
+
+    for src_id, src_info in interlock.get('data_sources', {}).items():
+        for filepath in src_info.get('files', []):
+            if os.path.exists(filepath):
+                mtime = os.path.getmtime(filepath)
+                changes.append({
+                    'source': src_id,
+                    'name': src_info['name'],
+                    'file': filepath,
+                    'modified': datetime.fromtimestamp(mtime).isoformat(),
+                    'affects_chapters': src_info.get('affects_chapters', []),
+                    'affects_tables': src_info.get('affects_tables', []),
+                    'affects_figures': src_info.get('affects_figures', [])
+                })
+
+    return jsonify({
+        'status': 'ok',
+        'total_sources': len(interlock.get('data_sources', {})),
+        'data_changes': changes,
+        'timestamp': datetime.now().isoformat()
+    })
+
+# ========== 参考文献去重校验API ==========
+@app.route('/api/literature/dedup')
+def api_literature_dedup():
+    """参考文献去重校验API"""
+    try:
+        with open('data/literature_db.json', 'r', encoding='utf-8-sig') as f:
+            lit_db = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'error': '文献库未找到'}), 404
+
+    # 按作者+年份+标题去重检测
+    seen = {}
+    duplicates = []
+    missing_fields = []
+
+    for item in lit_db:
+        key = (item.get('a', ''), item.get('y', ''), item.get('t', '')[:20] if item.get('t') else '')
+        if key in seen:
+            duplicates.append({
+                'entry_1': seen[key],
+                'entry_2': {'n': item.get('n'), 'a': item.get('a'), 't': item.get('t'), 'y': item.get('y')},
+                'reason': 'same_author_year_title'
+            })
+        else:
+            seen[key] = {'n': item.get('n'), 'a': item.get('a'), 't': item.get('t'), 'y': item.get('y')}
+
+        # 缺失字段检查
+        missing = []
+        for field, label in [('a', '作者'), ('t', '标题'), ('j', '期刊'), ('y', '年份')]:
+            if not item.get(field):
+                missing.append(label)
+        if missing:
+            missing_fields.append({'n': item.get('n'), 't': item.get('t'), 'missing': missing})
+
+    # 统计
+    cn_count = sum(1 for i in lit_db if i.get('c') == 'cn')
+    en_count = sum(1 for i in lit_db if i.get('c') == 'en')
+    other = len(lit_db) - cn_count - en_count
+
+    return jsonify({
+        'total': len(lit_db),
+        'cn_count': cn_count,
+        'en_count': en_count,
+        'other_count': other,
+        'duplicate_count': len(duplicates),
+        'duplicates': duplicates[:20],
+        'missing_field_count': len(missing_fields),
+        'missing_fields': missing_fields[:20],
+        'timestamp': datetime.now().isoformat()
+    })
+
 # ========== 核心页面路由 ==========
 @app.route('/collection')
 def collection():

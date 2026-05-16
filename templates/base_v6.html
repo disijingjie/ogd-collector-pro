@@ -105,11 +105,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .quick-link:hover{background:var(--primary);color:#fff}
 .position-hint{padding:12px 16px;background:linear-gradient(90deg,#eff6ff,#f8fafc);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;font-size:13px;color:var(--text-light);margin-bottom:20px}
 .position-hint strong{color:var(--primary)}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main-content{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.journey-steps{gap:4px}.anchor-nav{padding:8px 16px;gap:4px}.anchor-nav a{font-size:11px;padding:4px 8px}.page-content{padding:16px 16px 32px}}
+.hamburger{display:none;position:fixed;top:12px;left:12px;z-index:200;width:40px;height:40px;border-radius:10px;background:#1e293b;border:none;cursor:pointer;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.hamburger span{display:block;width:20px;height:2px;background:#fff;margin:4px 0;transition:all .3s;border-radius:1px}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90}
+.sidebar-overlay.active{display:block}
+@media(max-width:1024px){.stats-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.page-content{padding:20px 24px 40px}}
+@media(max-width:768px){.hamburger{display:block}.sidebar{transform:translateX(-100%);transition:transform .3s ease;z-index:110}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.journey-steps{gap:4px}.journey-bar{padding:12px 16px}.anchor-nav{padding:8px 16px;gap:4px}.anchor-nav a{font-size:11px;padding:4px 8px}.page-content{padding:12px 16px 32px}.topbar{padding:12px 16px;padding-left:56px}.topbar h2{font-size:15px}.card{padding:14px;border-radius:10px}.stat-value{font-size:24px}.data-table{font-size:11px}.data-table th,.data-table td{padding:6px 8px}.chart-container,.chart-container.small{height:auto;min-height:280px}.position-hint{font-size:12px;padding:10px 12px}.journey-cards{grid-template-columns:1fr}}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.stat-card{padding:14px}.stat-value{font-size:22px}.page-nav{flex-direction:column;gap:12px}.page-nav a{text-align:center;width:100%}}
 </style>
 {% block extra_css %}{% endblock %}
 </head>
 <body>
+<button class="hamburger" id="hamburgerBtn" aria-label="菜单"><span></span><span></span><span></span></button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-header"><h1>OGD-Collector</h1><p>政府数据开放平台采集系统</p></div>
@@ -162,6 +173,21 @@ document.querySelectorAll('.tabs').forEach(function(tc){
   const panels=tc.parentElement.querySelectorAll('.tab-panel');
   btns.forEach(function(btn,idx){btn.addEventListener('click',function(){btns.forEach(function(b){b.classList.remove('active')});panels.forEach(function(p){p.classList.remove('active')});btn.classList.add('active');panels[idx].classList.add('active')})});
 });
+// 汉堡菜单
+(function(){
+  var btn=document.getElementById('hamburgerBtn');
+  var sidebar=document.querySelector('.sidebar');
+  var overlay=document.getElementById('sidebarOverlay');
+  if(!btn||!sidebar||!overlay)return;
+  function toggle(){
+    sidebar.classList.toggle('open');
+    btn.classList.toggle('active');
+    overlay.classList.toggle('active');
+  }
+  btn.addEventListener('click',toggle);
+  overlay.addEventListener('click',toggle);
+  sidebar.querySelectorAll('.nav-item').forEach(function(a){a.addEventListener('click',function(){if(window.innerWidth<=768)toggle()})});
+})();
 </script>
 {% block extra_js %}{% endblock %}
 

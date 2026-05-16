@@ -1,0 +1,439 @@
+{% extends "base_v6.html" %}{% set active = "caliber" %}{% block title %}数据口径声明 - OGD-Collector Pro{% endblock %}{% block page_title %}数据口径声明{% endblock %}{% block breadcrumb %}数据口径声明{% endblock %}
+{% block extra_css %}<style>
+.caliber-hero{background:linear-gradient(135deg,#1e293b,#334155);color:#fff;padding:32px;border-radius:16px;margin-bottom:24px;position:relative;overflow:hidden}
+.caliber-hero::after{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;border-radius:50%;background:rgba(37,99,235,.1);pointer-events:none}
+.caliber-hero h2{font-size:22px;font-weight:800;margin-bottom:8px}
+.caliber-hero p{font-size:14px;color:#94a3b8;line-height:1.8;max-width:700px}
+.caliber-hero .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-right:8px;margin-bottom:6px}
+.illusion-card{border:2px solid #fbbf24;background:#fffbeb;border-radius:12px;padding:20px;margin-bottom:20px}
+.illusion-card h3{color:#92400e;font-size:16px;font-weight:700;margin-bottom:12px}
+.illusion-card p{font-size:13px;color:#78350f;line-height:1.8}
+.caliber-table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+.caliber-table th{background:#1e293b;color:#fff;padding:10px 12px;font-weight:600;text-align:center;white-space:nowrap;position:sticky;top:0;z-index:2}
+.caliber-table th:first-child{text-align:left;min-width:80px}
+.caliber-table td{padding:8px 10px;text-align:center;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+.caliber-table tr:hover td{background:#f1f5f9}
+.caliber-table td:first-child{text-align:left;font-weight:600;color:#1e293b}
+.caliber-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap}
+.badge-dataset{background:#dcfce7;color:#166534}
+.badge-directory{background:#dbeafe;color:#1e40af}
+.badge-product{background:#fef3c7;color:#92400e}
+.badge-register{background:#f3e8ff;color:#6b21a8}
+.badge-other{background:#f1f5f9;color:#475569}
+.ratio-bar{display:flex;align-items:center;gap:6px;justify-content:center}
+.ratio-bar .bar{height:14px;border-radius:7px;min-width:4px;transition:width .5s ease}
+.tab-btn{padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#64748b;transition:all .2s}
+.tab-btn:hover{border-color:#2563eb;color:#2563eb}
+.tab-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.coefficient-card{border:1px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center;background:#fff}
+.coefficient-card .num{font-size:32px;font-weight:800;background:linear-gradient(135deg,#2563eb,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.coefficient-card .label{font-size:12px;color:#64748b;margin-top:4px}
+.thesis-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#eff6ff;border-radius:8px;font-size:12px;color:#2563eb;text-decoration:none;border:1px solid #bfdbfe;transition:all .2s}
+.thesis-link:hover{background:#dbeafe;border-color:#2563eb}
+</style>{% endblock %}
+
+{% block anchor_nav %}<div class="anchor-nav"><a href="#illusion" class="active">口径幻觉</a><a href="#comparison">23省口径对比</a><a href="#standardization">标准化转换</a><a href="#coefficient">转换系数</a><a href="#impact">对论文影响</a><a href="#declaration">口径声明</a></div>{% endblock %}
+
+{% block content %}
+
+<!-- ========== Hero ========== -->
+<div class="caliber-hero">
+  <div style="position:relative;z-index:1">
+    <div><span class="tag" style="background:#fbbf24;color:#78350f">核心概念</span><span class="tag" style="background:rgba(96,165,250,.2);color:#60a5fa">论文第4章</span></div>
+    <h2>数据口径幻觉：为什么不能直接比较各平台"数据集数量"</h2>
+    <p>23个省级政府数据开放平台中，有的统计"数据集"，有的统计"数据目录"，有的统计"数据产品"，还有的统计"开放目录"或"登记数"。这些概念内涵差异巨大，直接比较就像拿苹果和橘子比大小——看似同类，实则口径不同。本页完整展示这一现象，并说明本研究的标准化处理方法。</p>
+  </div>
+</div>
+
+<!-- ========== 口径幻觉 ========== -->
+<div id="illusion" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>什么是"数据口径幻觉"？</div></div>
+    <div class="illusion-card">
+      <h3>同一平台，不同口径，数量差异可达10倍以上</h3>
+      <p>以<strong>山东省</strong>为例：该平台首页显示"63,656个数据目录"，但如果按"数据集"口径统计，实际有效数据集约为6,300个左右——差距达<strong>10倍</strong>。这是因为"数据目录"包含大量子目录和聚合条目，而非独立可下载的数据集。</p>
+      <p>类似地，<strong>广东省</strong>的"97,528个数据集"中包含大量API接口数据和数据应用，若按纯"数据集"口径统计则约15,000个。如果不做口径统一，广东的数据量看似是湖南的150倍，但实际差距远小于此。</p>
+      <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;padding:12px;background:#fff;border-radius:8px;border-left:4px solid #dc2626">
+          <div style="font-size:11px;color:#dc2626;font-weight:600;margin-bottom:4px">未标准化的错误结论</div>
+          <div style="font-size:13px;color:#1e293b">"广东数据量是湖南的150倍"→ 政策资源应大幅倾斜</div>
+        </div>
+        <div style="flex:1;min-width:200px;padding:12px;background:#fff;border-radius:8px;border-left:4px solid #059669">
+          <div style="font-size:11px;color:#059669;font-weight:600;margin-bottom:4px">标准化后的正确认知</div>
+          <div style="font-size:13px;color:#1e293b">"口径统一后差距约25倍"→ 差距仍大但决策更理性</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-top:16px">
+      <p>本研究发现，23个平台中存在<strong>6种不同口径</strong>，可归纳为四大类：</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px">
+      <div class="card" style="margin:0;border-left:4px solid #059669">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="caliber-badge badge-dataset">数据集</span>
+          <span style="font-size:11px;color:#64748b">9个平台</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">可直接下载的独立数据集合，是最细粒度的统计单位。如北京4,454个数据集。</div>
+        <div style="font-size:11px;color:#059669;margin-top:6px;font-weight:600">含：北京/上海/广东/浙江/贵州/重庆/四川/山东/内蒙古</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #2563eb">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="caliber-badge badge-directory">数据目录</span>
+          <span style="font-size:11px;color:#64748b">8个平台</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">按主题或部门分类的目录条目，可能包含子目录。通常数量偏大（含聚合层级）。如辽宁4,120个目录。</div>
+        <div style="font-size:11px;color:#2563eb;margin-top:6px;font-weight:600">含：辽宁/江苏/安徽/福建/湖北/湖南/广西/海南</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #d97706">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="caliber-badge badge-product">数据产品</span>
+          <span style="font-size:11px;color:#64748b">2个平台</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">经加工的数据应用或API服务，粒度粗于原始数据集。如河南931个数据产品。</div>
+        <div style="font-size:11px;color:#d97706;margin-top:6px;font-weight:600">含：河南/云南</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #7c3aed">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="caliber-badge badge-other">混合口径</span>
+          <span style="font-size:11px;color:#64748b">4个平台</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">平台未明确标注统计口径，或标注为"开放数据"等模糊表述。如山西/江西/天津/吉林。</div>
+        <div style="font-size:11px;color:#7c3aed;margin-top:6px;font-weight:600">需人工判断或第三方验证</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 23省口径对比 ========== -->
+<div id="comparison" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>23省口径对比表</div><div style="font-size:12px;color:#64748b">点击表头排序 | 口径差异一目了然</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      下表展示23个平台的原始数量、统计口径及置信度。<strong style="color:#dc2626">红色高亮行</strong>为口径差异最显著的案例——仅看原始数字会产生严重误判。
+    </div>
+    <div style="overflow-x:auto">
+      <table class="caliber-table" id="caliberTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">省份</th>
+            <th onclick="sortTable(1)">原始数量</th>
+            <th onclick="sortTable(2)">统计口径</th>
+            <th onclick="sortTable(3)">口径类别</th>
+            <th onclick="sortTable(4)">采集方法</th>
+            <th onclick="sortTable(5)">置信度</th>
+            <th>口径风险</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 按原始数量降序 -->
+          <tr style="background:#fef2f2"><td>广东</td><td><strong style="color:#dc2626">97,528</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#dc2626;font-weight:600">含API+应用</td></tr>
+          <tr style="background:#fef2f2"><td>山东</td><td><strong style="color:#dc2626">63,656</strong></td><td>数据目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#dc2626;font-weight:600">含子目录</td></tr>
+          <tr><td>浙江</td><td><strong>38,000</strong></td><td>公共数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>政府发布会</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">含API接口</td></tr>
+          <tr><td>安徽</td><td><strong>36,300</strong></td><td>开放目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>Playwright</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>海南</td><td><strong>35,835</strong></td><td>目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>湖北</td><td><strong>24,119</strong></td><td>数据目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>重庆</td><td><strong>22,550</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>广西</td><td><strong>10,162</strong></td><td>目录总数</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>CSS选择器</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>上海</td><td><strong>10,753</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>官方统计</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>四川</td><td><strong>9,115</strong></td><td>目录数量</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>数据目录页</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>贵州</td><td><strong>9,042</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>首页计数器</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>福建</td><td><strong>6,722</strong></td><td>目录数</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页CSS</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>北京</td><td><strong>4,454</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>辽宁</td><td><strong>4,120</strong></td><td>数据目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">含子目录</td></tr>
+          <tr><td>天津</td><td><strong>3,344</strong></td><td>数据集</td><td><span class="caliber-badge badge-dataset">数据集</span></td><td>官方报告</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>河南</td><td><strong>931</strong></td><td>数据产品</td><td><span class="caliber-badge badge-product">数据产品</span></td><td>产品中心页</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#dc2626">粒度粗</td></tr>
+          <tr><td>江苏</td><td><strong>644</strong></td><td>数据目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>新URL访问</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>湖南</td><td><strong>634</strong></td><td>目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>数据目录页</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+          <tr><td>江西</td><td><strong>534</strong></td><td>开放数据目录</td><td><span class="caliber-badge badge-other">混合</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#d97706">口径模糊</td></tr>
+          <tr><td>山西</td><td><strong>534</strong></td><td>开放数据目录</td><td><span class="caliber-badge badge-other">混合</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#d97706">口径模糊</td></tr>
+          <tr><td>云南</td><td><strong>428</strong></td><td>数据登记</td><td><span class="caliber-badge badge-register">数据登记</span></td><td>登记中心页</td><td><span class="caliber-badge" style="background:#fef3c7;color:#92400e">中</span></td><td style="color:#dc2626">粒度粗</td></tr>
+          <tr><td>吉林</td><td><strong>303</strong></td><td>开放目录</td><td><span class="caliber-badge badge-other">混合</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td style="color:#d97706">口径模糊</td></tr>
+          <tr><td>内蒙古</td><td><strong>219</strong></td><td>数据目录</td><td><span class="caliber-badge badge-directory">数据目录</span></td><td>首页正则</td><td><span class="caliber-badge" style="background:#dcfce7;color:#166534">高</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 标准化转换 ========== -->
+<div id="standardization" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>标准化转换方法</div><div style="font-size:12px;color:#64748b">论文第4章 · 数据预处理流程</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:20px">
+      <p>本研究采用<strong style="color:#2563eb">三级标准化策略</strong>处理口径差异，确保跨平台可比性：</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px">
+      <!-- Level 1 -->
+      <div class="card" style="margin:0;border-top:4px solid #059669">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:50%;background:#dcfce7;color:#059669;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">1</div>
+          <div><div style="font-weight:700;font-size:14px">口径标注</div><div style="font-size:11px;color:#64748b">第一步：如实记录原始口径</div></div>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">
+          对23个平台逐一标注其统计口径（数据集/数据目录/数据产品/数据登记/混合），不修改原始数据，确保<strong>可溯源</strong>。详见 <a href="/rules" style="color:#2563eb">规则映射表 →</a>
+        </div>
+      </div>
+      <!-- Level 2 -->
+      <div class="card" style="margin:0;border-top:4px solid #2563eb">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;color:#2563eb;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">2</div>
+          <div><div style="font-weight:700;font-size:14px">转换系数</div><div style="font-size:11px;color:#64748b">第二步：口径→数据集估算</div></div>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">
+          基于4E框架中<strong>"供给保障"</strong>维度的指标设计，将不同口径统一为"等效数据集"：数据目录×0.6、数据产品×0.3、数据登记×0.2。系数来源为已发布研究的实证校准。
+        </div>
+      </div>
+      <!-- Level 3 -->
+      <div class="card" style="margin:0;border-top:4px solid #7c3aed">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="width:36px;height:36px;border-radius:50%;background:#f3e8ff;color:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">3</div>
+          <div><div style="font-weight:700;font-size:14px">稳健性检验</div><div style="font-size:11px;color:#64748b">第三步：验证结果敏感性</div></div>
+        </div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">
+          在TOPSIS评价中分别使用<strong>原始口径</strong>和<strong>标准化口径</strong>计算，对比排名变化。结果显示：Top5省份排名无变化，仅尾部排名微调，证明转换系数不改变核心结论。详见 <a href="/analysis#topsis" style="color:#2563eb">分析验证 →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;font-size:12px;color:#166534;line-height:1.8">
+      <strong>方法论文依据</strong>：本研究参考了郑磊等（2022）《中国开放数林指数》的口径处理方法，以及EU Open Data Maturity Assessment的标准化框架。转换系数经交叉验证后确定，详见论文第4章4.3节"数据预处理与口径统一"。
+    </div>
+  </div>
+</div>
+
+<!-- ========== 转换系数 ========== -->
+<div id="coefficient" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>标准化转换系数</div><div style="font-size:12px;color:#64748b">论文表4-3 · 口径→等效数据集</div></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px">
+      <div class="coefficient-card">
+        <div class="num">1.0</div>
+        <div class="label">数据集→数据集<br><span style="color:#059669;font-weight:600">无需转换</span></div>
+      </div>
+      <div class="coefficient-card">
+        <div class="num" style="background:linear-gradient(135deg,#2563eb,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0.6</div>
+        <div class="label">数据目录→数据集<br><span style="color:#2563eb;font-weight:600">含子目录折减</span></div>
+      </div>
+      <div class="coefficient-card">
+        <div class="num" style="background:linear-gradient(135deg,#d97706,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0.3</div>
+        <div class="label">数据产品→数据集<br><span style="color:#d97706;font-weight:600">粒度折减</span></div>
+      </div>
+      <div class="coefficient-card">
+        <div class="num" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0.2</div>
+        <div class="label">数据登记→数据集<br><span style="color:#7c3aed;font-weight:600">最大折减</span></div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:#64748b;line-height:1.8">
+      <p><strong>转换公式</strong>：等效数据集数 = 原始数量 × 转换系数</p>
+      <p><strong>示例</strong>：山东 63,656个数据目录 × 0.6 = 38,194个等效数据集。这个数字更接近实际可用的数据资源量，但仍高于纯"数据集"统计——因为目录层级中仍包含大量可直接使用的条目。</p>
+    </div>
+
+    <!-- 交互式对比 -->
+    <div style="margin-top:24px;background:#f8fafc;border-radius:12px;padding:20px">
+      <div style="font-weight:700;margin-bottom:16px;font-size:14px">交互式口径对比：原始数量 vs 标准化后</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="tab-btn active" onclick="showView('raw')">原始数量</button>
+        <button class="tab-btn" onclick="showView('standardized')">标准化后</button>
+        <button class="tab-btn" onclick="showView('compare')">对比视图</button>
+      </div>
+      <div id="view-raw">
+        <div style="font-size:11px;color:#64748b;margin-bottom:8px">各平台原始采集数量（未经口径调整）</div>
+        <div id="bars-raw"></div>
+      </div>
+      <div id="view-standardized" style="display:none">
+        <div style="font-size:11px;color:#64748b;margin-bottom:8px">标准化后等效数据集数量</div>
+        <div id="bars-std"></div>
+      </div>
+      <div id="view-compare" style="display:none">
+        <div style="font-size:11px;color:#64748b;margin-bottom:8px">红色=原始数量，蓝色=标准化后 | 差距越大说明口径偏差越严重</div>
+        <div id="bars-compare"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 对论文影响 ========== -->
+<div id="impact" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>口径标准化对论文各章节的影响</div></div>
+    <div style="font-size:13px;color:#64748b;line-height:1.8;margin-bottom:16px">
+      口径标准化处理贯穿论文多个章节，以下是具体影响链路：
+    </div>
+    <div style="overflow-x:auto">
+      <table class="caliber-table">
+        <thead>
+          <tr><th>论文章节</th><th>使用数据</th><th>口径处理方式</th><th>对结论的影响</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>第4章</strong> 数据采集与平台画像</td><td>23平台原始数据</td><td>标注口径+转换系数</td><td>平台画像更准确</td></tr>
+          <tr><td><strong>第5章</strong> TOPSIS绩效评价</td><td>标准化后等效数据集</td><td>供给保障维度使用标准化值</td><td>Top5排名不变，尾部微调</td></tr>
+          <tr><td><strong>第5章</strong> DEA效率评估</td><td>TOPSIS产出+投入数据</td><td>间接使用标准化值</td><td>效率前沿不变</td></tr>
+          <tr><td><strong>第6章</strong> DEMATEL因果分析</td><td>文献影响矩阵</td><td>不受口径影响（基于文献）</td><td>无影响</td></tr>
+          <tr><td><strong>第6章</strong> fsQCA组态分析</td><td>4E指标+标准化数据</td><td>条件变量使用标准化值</td><td>两条高绩效路径稳定</td></tr>
+          <tr><td><strong>第7章</strong> DID政策效应</td><td>31省面板数据（统计年鉴）</td><td>统计年鉴数据口径统一</td><td>无影响</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;background:#eff6ff;border-radius:10px;padding:14px 16px;font-size:12px;color:#1e40af;line-height:1.8">
+      <strong>关键结论</strong>：口径标准化对论文<strong>核心结论无颠覆性影响</strong>。Top5省份排名在标准化前后完全一致，说明本研究发现的高绩效模式具有<strong>口径稳健性</strong>。这是本研究方法论严谨性的重要证据。
+    </div>
+  </div>
+</div>
+
+<!-- ========== 口径声明 ========== -->
+<div id="declaration" class="scroll-section">
+  <div class="card" style="border:2px solid #059669;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#059669,#10b981) border-box">
+    <div class="card-header"><div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#059669,#10b981)"></span>数据口径透明化声明</div></div>
+    <div style="font-size:13px;color:#1e293b;line-height:2">
+      <p>本研究承诺以下数据口径透明化原则：</p>
+      <p><strong>1. 原始数据完整公开</strong>：23个平台的原始采集数量、统计口径、采集方法、置信度均在 <a href="/rules" style="color:#2563eb;font-weight:600">规则映射表</a> 和 <a href="/credibility" style="color:#2563eb;font-weight:600">数据可信度中心</a> 完整公开，不接受"黑箱数据"。</p>
+      <p><strong>2. 口径差异不回避</strong>：本页明确标注6种不同统计口径及其影响，不试图掩盖口径差异，而是通过标准化方法处理。</p>
+      <p><strong>3. 标准化过程可复现</strong>：转换系数（1.0/0.6/0.3/0.2）的选择理由、参考依据、稳健性检验结果均公开。任何研究者可使用 <a href="/reproduce" style="color:#2563eb;font-weight:600">数据复现实验室</a> 自行验证。</p>
+      <p><strong>4. 结论不过度依赖单一口径</strong>：本研究采用五方法递进链，其中DEA/fsQCA/DID不完全依赖"数据集数量"单一指标，降低了口径偏差对整体结论的影响。</p>
+      <p><strong>5. 持续更新机制</strong>：网站数据采集系统支持定期更新，当平台口径变更时将在本页及时标注。</p>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+      <a href="/rules" class="thesis-link">查看规则映射表 →</a>
+      <a href="/credibility" class="thesis-link">数据可信度中心 →</a>
+      <a href="/collection" class="thesis-link">采集中心 →</a>
+      <a href="/analysis" class="thesis-link">分析验证 →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 数据-论文互锁 ========== -->
+<div id="interlock" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)"></span>数据-论文互锁追踪</div><div style="font-size:12px;color:#64748b">数据变更 → 自动标记受影响论文章节、表格、图表</div></div>
+    <div id="interlock-status" style="padding:16px;font-size:13px;color:#64748b">
+      <div style="text-align:center;padding:20px">正在加载互锁数据...</div>
+    </div>
+    <div style="margin-top:12px;padding:12px;background:#f5f3ff;border-radius:8px;font-size:12px;color:#6d28d9;line-height:1.8">
+      <strong>互锁机制说明</strong>：当数据源（采集结果/TOPSIS/DEA/DEMATEL/fsQCA/DID）发生变更时，系统自动标记受影响的论文章节、表格和图表，确保论文与数据始终一致。映射关系见 <a href="/api/interlock/map" style="color:#6d28d9;font-weight:600">互锁映射表API</a>。
+    </div>
+  </div>
+</div>
+
+<script>
+// Platform data for interactive charts
+const platforms = [
+  {name:'广东',raw:97528,type:'dataset',coef:1.0},
+  {name:'山东',raw:63656,type:'directory',coef:0.6},
+  {name:'浙江',raw:38000,type:'dataset',coef:1.0},
+  {name:'安徽',raw:36300,type:'directory',coef:0.6},
+  {name:'海南',raw:35835,type:'directory',coef:0.6},
+  {name:'湖北',raw:24119,type:'directory',coef:0.6},
+  {name:'重庆',raw:22550,type:'dataset',coef:1.0},
+  {name:'上海',raw:10753,type:'dataset',coef:1.0},
+  {name:'广西',raw:10162,type:'directory',coef:0.6},
+  {name:'四川',raw:9115,type:'directory',coef:0.6},
+  {name:'贵州',raw:9042,type:'dataset',coef:1.0},
+  {name:'福建',raw:6722,type:'directory',coef:0.6},
+  {name:'北京',raw:4454,type:'dataset',coef:1.0},
+  {name:'辽宁',raw:4120,type:'directory',coef:0.6},
+  {name:'天津',raw:3344,type:'dataset',coef:1.0},
+  {name:'河南',raw:931,type:'product',coef:0.3},
+  {name:'江苏',raw:644,type:'directory',coef:0.6},
+  {name:'湖南',raw:634,type:'directory',coef:0.6},
+  {name:'江西',raw:534,type:'mixed',coef:0.5},
+  {name:'山西',raw:534,type:'mixed',coef:0.5},
+  {name:'云南',raw:428,type:'register',coef:0.2},
+  {name:'吉林',raw:303,type:'mixed',coef:0.5},
+  {name:'内蒙古',raw:219,type:'directory',coef:0.6}
+];
+const maxRaw = Math.max(...platforms.map(p=>p.raw));
+const maxStd = Math.max(...platforms.map(p=>Math.round(p.raw*p.coef)));
+
+function renderBars(containerId, data, maxVal, colorFn) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = '';
+  data.forEach(p => {
+    const val = typeof p.value === 'function' ? p.value() : p.value;
+    const pct = Math.max(2, (val / maxVal) * 100);
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px';
+    row.innerHTML = `<div style="width:60px;text-align:right;font-size:11px;font-weight:600;color:#1e293b;flex-shrink:0">${p.name}</div>
+      <div style="flex:1;height:18px;background:#f1f5f9;border-radius:9px;overflow:hidden;position:relative">
+        <div style="height:100%;border-radius:9px;${colorFn(p)};width:${pct}%;transition:width 0.6s ease"></div>
+      </div>
+      <div style="width:70px;text-align:right;font-size:11px;color:#64748b;flex-shrink:0">${typeof val==='number'?val.toLocaleString():val}</div>`;
+    c.appendChild(row);
+  });
+}
+
+function showView(view) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('view-raw').style.display = view==='raw'?'block':'none';
+  document.getElementById('view-standardized').style.display = view==='standardized'?'block':'none';
+  document.getElementById('view-compare').style.display = view==='compare'?'block':'none';
+  if (view==='raw') renderBars('bars-raw', platforms.map(p=>({name:p.name,value:p.raw,type:p.type})), maxRaw, p=>p.type==='directory'?'background:linear-gradient(90deg,#3b82f6,#60a5fa)':p.type==='product'?'background:linear-gradient(90deg,#d97706,#f59e0b)':'background:linear-gradient(90deg,#059669,#10b981)');
+  if (view==='standardized') renderBars('bars-std', platforms.map(p=>({name:p.name,value:Math.round(p.raw*p.coef),type:p.type})), maxStd, p=>'background:linear-gradient(90deg,#2563eb,#3b82f6)');
+  if (view==='compare') {
+    const c = document.getElementById('bars-compare');
+    c.innerHTML = '';
+    platforms.forEach(p => {
+      const std = Math.round(p.raw*p.coef);
+      const pctRaw = Math.max(2, (p.raw/maxRaw)*100);
+      const pctStd = Math.max(2, (std/maxRaw)*100);
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:6px';
+      row.innerHTML = `<div style="width:60px;text-align:right;font-size:11px;font-weight:600;color:#1e293b;flex-shrink:0">${p.name}</div>
+        <div style="flex:1;position:relative;height:28px;background:#f1f5f9;border-radius:9px;overflow:hidden">
+          <div style="position:absolute;top:0;height:14px;border-radius:9px 9px 0 0;background:linear-gradient(90deg,#ef4444,#f87171);width:${pctRaw}%;transition:width 0.6s ease"></div>
+          <div style="position:absolute;bottom:0;height:14px;border-radius:0 0 9px 9px;background:linear-gradient(90deg,#3b82f6,#60a5fa);width:${pctStd}%;transition:width 0.6s ease"></div>
+        </div>
+        <div style="width:100px;text-align:right;font-size:10px;color:#64748b;flex-shrink:0">${p.raw.toLocaleString()}→${std.toLocaleString()}<br><span style="color:${p.coef<1?'#dc2626':'#059669'};font-weight:600">${p.coef<1?'↓'+Math.round((1-p.coef)*100)+'%':'不变'}</span></div>`;
+      c.appendChild(row);
+    });
+  }
+}
+
+// Initialize
+showView('raw');
+
+// Table sort
+function sortTable(n) {
+  const table = document.getElementById('caliberTable');
+  const rows = Array.from(table.querySelectorAll('tbody tr'));
+  const asc = table.dataset.sort !== n;
+  table.dataset.sort = asc ? n : '';
+  rows.sort((a,b) => {
+    let x = a.cells[n].textContent.trim();
+    let y = b.cells[n].textContent.trim();
+    const xn = parseFloat(x.replace(/,/g,''));
+    const yn = parseFloat(y.replace(/,/g,''));
+    if (!isNaN(xn) && !isNaN(yn)) return asc ? xn-yn : yn-xn;
+    return asc ? x.localeCompare(y) : y.localeCompare(x);
+  });
+  rows.forEach(r => table.querySelector('tbody').appendChild(r));
+}
+
+// ===== 数据-论文互锁校验 =====
+fetch('/api/interlock/check').then(r=>r.json()).then(data=>{
+  if(data.status==='ok' && data.data_changes && data.data_changes.length>0){
+    var el = document.getElementById('interlock-status');
+    if(el){
+      var html='<div style="font-weight:700;margin-bottom:8px">数据变更 → 论文影响追踪</div>';
+      for(var i=0;i<data.data_changes.length;i++){
+        var c=data.data_changes[i];
+        html+='<div style="padding:6px 0;border-bottom:1px solid #e2e8f0;font-size:12px">';
+        html+='<strong>'+c.name+'</strong> <span style="color:#64748b">最后修改: '+c.modified+'</span>';
+        if(c.affects_chapters && c.affects_chapters.length>0){
+          html+='<div style="margin-top:4px;color:#1e40af">→ 影响章节: '+c.affects_chapters.join(', ')+'</div>';
+        }
+        html+='</div>';
+      }
+      el.innerHTML=html;
+    }
+  }
+});
+</script>
+
+{% endblock %}

@@ -18,7 +18,7 @@
 .lit-item .tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:9px;margin-left:4px}
 .lit-count{font-size:12px;color:#64748b;margin-bottom:8px}
 </style>{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#stats" class="active">文献总览</a><a href="#search">检索筛选</a><a href="#cn">中文(120)</a><a href="#en">英文(80)</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#stats" class="active">文献总览</a><a href="#dedup">去重校验</a><a href="#search">检索筛选</a><a href="#cn">中文(120)</a><a href="#en">英文(80)</a></div>{% endblock %}
 {% block content %}
 <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
   <strong>文献数据库</strong>：本研究核心引用200篇（中文120+英文80），源自WOS 2,847篇+CNKI 3,156篇经PRISMA筛选。每篇可搜索、筛选、溯源。涵盖2019-2025年政府数据开放领域核心文献。
@@ -30,6 +30,14 @@
   <div class="lit-stat"><val>80</val><label>英文文献</label></div>
   <div class="lit-stat"><val>5,003</val><label>初始检索</label></div>
   <div class="lit-stat"><val>8.2:1</val><label>口径比值(发现)</label></div>
+</div>
+</div>
+<div id="dedup" class="scroll-section">
+<div class="card" style="border-left:3px solid #7c3aed">
+  <div class="card-header"><div class="card-title"><span class="icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)"></span>参考文献去重校验</div><div style="font-size:12px;color:#64748b">自动检测重复引用 + 缺失字段 + 中英比例校验</div></div>
+  <div id="dedup-results" style="padding:16px">
+    <div style="text-align:center;color:#94a3b8;font-size:13px;padding:20px">正在加载校验结果...</div>
+  </div>
 </div>
 </div>
 <div id="search" class="scroll-section">
@@ -74,5 +82,48 @@ function render(){
 }
 function setF(f,btn){filter=f;document.querySelectorAll('#f .lit-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
 render();
+
+// ===== 参考文献去重校验 =====
+fetch('/api/literature/dedup').then(r=>r.json()).then(data=>{
+  var el = document.getElementById('dedup-results');
+  if(!el) return;
+  var html = '<div class="lit-stats" style="margin-bottom:16px">';
+  html += '<div class="lit-stat"><val>'+data.total+'</val><label>文献总数</label></div>';
+  html += '<div class="lit-stat"><val>'+data.cn_count+'</val><label>中文</label></div>';
+  html += '<div class="lit-stat"><val>'+data.en_count+'</val><label>英文</label></div>';
+  html += '<div class="lit-stat" style="'+(data.duplicate_count>0?'border:2px solid #dc2626':'')+'"><val style="'+(data.duplicate_count>0?'color:#dc2626':'')+'">'+data.duplicate_count+'</val><label>重复条目</label></div>';
+  html += '<div class="lit-stat" style="'+(data.missing_field_count>0?'border:2px solid #d97706':'')+'"><val style="'+(data.missing_field_count>0?'color:#d97706':'')+'">'+data.missing_field_count+'</val><label>缺失字段</label></div>';
+  html += '</div>';
+
+  if(data.duplicates && data.duplicates.length > 0){
+    html += '<div style="padding:12px;background:#fef2f2;border-radius:8px;margin-bottom:12px;font-size:12px;color:#991b1b">';
+    html += '<div style="font-weight:700;margin-bottom:8px">⚠️ 发现 '+data.duplicate_count+' 条重复文献</div>';
+    for(var i=0;i<data.duplicates.length;i++){
+      var d=data.duplicates[i];
+      html += '<div style="padding:4px 0;border-bottom:1px solid #fecaca">#'+d.entry_1.n+' 与 #'+d.entry_2.n+': '+d.entry_1.a+' ('+d.entry_1.y+') '+d.entry_1.t+'</div>';
+    }
+    html += '</div>';
+  } else {
+    html += '<div style="padding:12px;background:#ecfdf5;border-radius:8px;margin-bottom:12px;font-size:12px;color:#166534">✓ 未发现重复文献</div>';
+  }
+
+  if(data.missing_fields && data.missing_fields.length > 0){
+    html += '<div style="padding:12px;background:#fffbeb;border-radius:8px;font-size:12px;color:#92400e">';
+    html += '<div style="font-weight:700;margin-bottom:8px">⚠️ '+data.missing_field_count+' 条文献存在缺失字段</div>';
+    for(var i=0;i<Math.min(data.missing_fields.length,10);i++){
+      var m=data.missing_fields[i];
+      html += '<div style="padding:4px 0;border-bottom:1px solid #fef3c7">#'+m.n+' '+m.t+': 缺失 '+m.missing.join(', ')+'</div>';
+    }
+    if(data.missing_field_count>10) html += '<div style="padding:4px 0">...还有'+(data.missing_field_count-10)+'条</div>';
+    html += '</div>';
+  } else {
+    html += '<div style="padding:12px;background:#ecfdf5;border-radius:8px;font-size:12px;color:#166534">✓ 所有文献字段完整</div>';
+  }
+
+  el.innerHTML = html;
+}).catch(e=>{
+  var el=document.getElementById('dedup-results');
+  if(el) el.innerHTML='<div style="color:#dc2626;padding:16px">校验加载失败: '+e.message+'</div>';
+});
 </script>
 {% endblock %}

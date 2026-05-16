@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-OGD-Collector-Pro 一键部署脚本
-使用方法: python _one_click_deploy.py [可选：文件路径]
-不传参数 = git push + 服务器pull
-传参数 = 只上传指定文件到服务器
+OGD-Collector-Pro V6 一键部署脚本（增强版）
+用法:
+  python _one_click_deploy.py              # 完整部署：git push + 服务器pull + 校验
+  python _one_click_deploy.py file.html    # 上传单个文件
+  python _one_click_deploy.py --check      # 只做部署后校验
+  python _one_click_deploy.py --all        # 上传全部V6模板+app+data+校验
 
 前置条件：
 1. SSH免密已配置 (C:\\Users\\MI\\.ssh\\id_ed25519)
@@ -15,6 +17,8 @@ import subprocess
 import sys
 import os
 import time
+import json
+from datetime import datetime
 
 # 配置
 SSH_KEY = r"C:\Users\MI\.ssh\id_ed25519"
@@ -26,13 +30,35 @@ PROJECT_PATH = r"C:\Users\MI\WorkBuddy\newbbbb\ogd_collector_system"
 GIT_SSH = r"C:\Program Files\Git\usr\bin\ssh.exe"
 PYTHON = r"C:\Users\MI\AppData\Local\Programs\Python\Python315\python.exe"
 
+# 部署日志
+DEPLOY_LOG = os.path.join(PROJECT_PATH, "deploy_log.txt")
+
+# V6关键文件清单
+V6_KEY_FILES = [
+    "v6_app.py",
+    "v3_platform_rules.json",
+    "data/v3_collection_results.json",
+    "data/data_thesis_interlock.json",
+]
+
+def log(msg):
+    """记录部署日志"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{timestamp}] {msg}"
+    print(line)
+    try:
+        with open(DEPLOY_LOG, 'a', encoding='utf-8') as f:
+            f.write(line + '\n')
+    except:
+        pass
+
 def run_cmd(cmd, timeout=30):
     """执行命令并返回输出"""
-    print(f"执行: {cmd[:80]}...")
+    log(f"执行: {cmd[:80]}...")
     proc = subprocess.Popen(
-        cmd, 
-        shell=True, 
-        stdout=subprocess.PIPE, 
+        cmd,
+        shell=True,
+        stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
     try:
@@ -42,121 +68,183 @@ def run_cmd(cmd, timeout=30):
         proc.kill()
         return "", "Timeout", -1
 
-def git_push():
-    """推送到GitHub"""
-    print("\n=== 1. Git Push ===")
-    cmd = f'"{GIT_SSH}" push origin main'
-    stdout, stderr, code = run_cmd(cmd, 60)
-    if code == 0 and "Everything up-to-date" not in stdout and "up to date" not in stdout.lower():
-        print("✓ Git push 成功")
-        return True
-    elif "Everything up-to-date" in stdout or "up to date" in stdout.lower():
-        print("✓ 代码已是最新（无需push）")
-        return True
-    else:
-        print(f"✗ Git push 失败: {stderr[:200]}")
-        return False
-
 def ssh_exec(cmd):
     """在服务器执行命令"""
-    full_cmd = f'"{GIT_SSH}" -o StrictHostKeyChecking=no -i "{SSH_KEY}" {SERVER_USER}@{SERVER_IP} "{cmd}"'
-    proc = subprocess.Popen(
-        full_cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
+    full_cmd = [GIT_SSH, "-o", "StrictHostKeyChecking=no", "-i", SSH_KEY,
+                f"{SERVER_USER}@{SERVER_IP}", cmd]
+    proc = subprocess.Popen(full_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate(timeout=30)
     return stdout.decode('utf-8', errors='replace'), stderr.decode('utf-8', errors='replace'), proc.returncode
 
-def server_pull():
-    """服务器执行git pull"""
-    print("\n=== 2. 服务器 Pull & 重启 ===")
-    
-    # git pull
-    stdout, stderr, code = ssh_exec(f"cd {SERVER_PATH} && git pull origin main")
-    if code == 0:
-        print("✓ Git pull 成功")
-    else:
-        print(f"⚠ Git pull 结果: {stdout[:200]}")
-        if "up to date" in stdout.lower() or "already" in stdout.lower():
-            print("✓ 代码已是最新")
-        else:
-            print(f"⚠ Pull可能有警告: {stderr[:100]}")
-    
-    # 重启服务
-    print("\n=== 3. 重启服务 ===")
-    stdout, stderr, code = ssh_exec("sudo systemctl restart ogd-collector && sleep 2 && systemctl is-active ogd-collector")
-    if "active" in stdout:
-        print("✓ 服务已重启并运行中")
-    else:
-        print(f"⚠ 服务状态: {stdout}")
-    
-    return True
-
-def upload_single_file(file_path):
-    """上传单个文件到服务器（绕过Git）"""
-    print(f"\n=== 上传单个文件: {file_path} ===")
-    
-    if not os.path.exists(file_path):
-        print(f"✗ 文件不存在: {file_path}")
+def upload_file(local_path, server_path=None):
+    """上传单个文件到服务器"""
+    if not os.path.exists(local_path):
+        log(f"✗ 文件不存在: {local_path}")
         return False
-    
-    # 确定服务器目标路径
-    rel_path = os.path.relpath(file_path, PROJECT_PATH)
-    server_dest = f"{SERVER_PATH}/{rel_path}".replace("\\", "/")
-    
-    # 读取文件内容
-    with open(file_path, 'rb') as f:
+
+    if server_path is None:
+        rel_path = os.path.relpath(local_path, PROJECT_PATH)
+        server_path = f"{SERVER_PATH}/{rel_path}".replace("\\", "/")
+
+    with open(local_path, 'rb') as f:
         content = f.read()
-    
-    print(f"文件大小: {len(content)} bytes")
-    print(f"目标路径: {server_dest}")
-    
-    # 通过SSH stdin上传
-    ssh_cmd = [
-        GIT_SSH,
-        "-o", "StrictHostKeyChecking=no",
-        "-i", SSH_KEY,
-        f"{SERVER_USER}@{SERVER_IP}",
-        f"cat > {server_dest} && echo 'Upload OK: $(wc -c < {server_dest}) bytes'"
-    ]
-    
+
+    log(f"上传: {os.path.basename(local_path)} ({len(content)} bytes) → {server_path}")
+
+    ssh_cmd = [GIT_SSH, "-o", "StrictHostKeyChecking=no", "-i", SSH_KEY,
+               f"{SERVER_USER}@{SERVER_IP}",
+               f"cat > {server_path} && echo 'OK: $(wc -c < {server_path}) bytes'"]
+
     proc = subprocess.Popen(ssh_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate(input=content)
-    
+
     if proc.returncode == 0:
-        print(f"✓ 上传成功: {stdout.strip()}")
-        
-        # 如果是templates文件，需要重启服务
-        if 'templates' in server_dest:
-            print("\n=== 重启服务 ===")
-            ssh_exec("sudo systemctl restart ogd-collector && sleep 1")
-            print("✓ 服务已重启")
+        log(f"✓ 上传成功: {stdout.strip()}")
         return True
     else:
-        print(f"✗ 上传失败: {stderr}")
+        log(f"✗ 上传失败: {stderr.decode('utf-8', errors='replace')[:200]}")
         return False
 
-def main():
-    print("=" * 50)
-    print("OGD-Collector-Pro 一键部署")
-    print("=" * 50)
-    
-    if len(sys.argv) > 1:
-        # 单文件模式
-        file_path = sys.argv[1]
-        if not os.path.isabs(file_path):
-            file_path = os.path.join(PROJECT_PATH, file_path)
-        upload_single_file(file_path)
+def git_push():
+    """推送到GitHub"""
+    log("\n=== 1. Git Push ===")
+    cmd = f'cd /d "{PROJECT_PATH}" && "{GIT_SSH}" push origin main'
+    stdout, stderr, code = run_cmd(cmd, 60)
+    if code == 0:
+        log("✓ Git push 成功")
+        return True
+    elif "up to date" in stdout.lower() or "Everything up-to-date" in stdout:
+        log("✓ 代码已是最新")
+        return True
     else:
-        # 完整部署模式
+        log(f"⚠ Git push 结果: {stderr[:200]}")
+        return True  # 继续部署
+
+def server_pull_and_restart():
+    """服务器pull + 重启"""
+    log("\n=== 2. 服务器 Pull & 重启 ===")
+
+    stdout, stderr, code = ssh_exec(f"cd {SERVER_PATH} && git pull origin main 2>&1")
+    if "up to date" in stdout.lower() or "Already up" in stdout:
+        log("✓ 服务器代码已是最新")
+    elif code == 0:
+        log("✓ Git pull 成功")
+    else:
+        log(f"⚠ Pull结果: {stdout[:200]}")
+
+    log("\n=== 3. 重启服务 ===")
+    stdout, stderr, code = ssh_exec("sudo systemctl restart ogd-collector && sleep 3 && sudo systemctl is-active ogd-collector")
+    if "active" in stdout:
+        log("✓ 服务已重启并运行中")
+        return True
+    else:
+        log(f"⚠ 服务状态: {stdout}")
+        return False
+
+def deploy_check():
+    """部署后校验"""
+    log("\n=== 4. 部署后校验 ===")
+    errors = []
+
+    # 检查关键页面HTTP状态
+    pages = ['/', '/caliber', '/map', '/collection', '/analysis', '/thesis', '/literature',
+             '/api/collection/status', '/api/collection/health', '/api/interlock/check', '/api/literature/dedup']
+
+    for page in pages:
+        stdout, stderr, code = ssh_exec(f"curl -s -o /dev/null -w '%{{http_code}}' http://127.0.0.1:5000{page}")
+        status = stdout.strip().replace('\\n', '').replace(':', '')
+        if '200' in status:
+            log(f"✓ {page}: 200")
+        else:
+            log(f"✗ {page}: {status}")
+            errors.append(page)
+
+    # 检查模板数量
+    stdout, _, _ = ssh_exec(f"ls {SERVER_PATH}/templates/v6_*.html | wc -l")
+    template_count = stdout.strip()
+    local_count = len([f for f in os.listdir(os.path.join(PROJECT_PATH, 'templates')) if f.startswith('v6_') and f.endswith('.html')])
+    if template_count == str(local_count):
+        log(f"✓ 模板数一致: {local_count}")
+    else:
+        log(f"⚠ 模板数不一致: 本地{local_count} vs 服务器{template_count}")
+        errors.append('template_count')
+
+    # 检查数据文件
+    for data_file in ['data/v3_collection_results.json', 'data/data_thesis_interlock.json']:
+        stdout, _, code = ssh_exec(f"test -f {SERVER_PATH}/{data_file} && echo 'exists' || echo 'missing'")
+        if 'exists' in stdout:
+            log(f"✓ {data_file}: 存在")
+        else:
+            log(f"✗ {data_file}: 缺失")
+            errors.append(data_file)
+
+    if errors:
+        log(f"\n⚠ 校验发现 {len(errors)} 个问题: {errors}")
+        return False
+    else:
+        log("\n✓ 全部校验通过！")
+        return True
+
+def upload_all_v6():
+    """上传全部V6文件"""
+    log("\n=== 上传全部V6文件 ===")
+
+    # 1. 上传所有v6模板
+    templates_dir = os.path.join(PROJECT_PATH, 'templates')
+    v6_templates = [f for f in os.listdir(templates_dir) if f.startswith('v6_') and f.endswith('.html')]
+    log(f"发现 {len(v6_templates)} 个V6模板")
+
+    for t in v6_templates:
+        local = os.path.join(templates_dir, t)
+        server = f"{SERVER_PATH}/templates/{t}"
+        upload_file(local, server)
+
+    # 2. 上传v6_app.py
+    upload_file(os.path.join(PROJECT_PATH, 'v6_app.py'), f"{SERVER_PATH}/v6_app.py")
+
+    # 3. 上传关键数据文件
+    for df in V6_KEY_FILES:
+        local = os.path.join(PROJECT_PATH, df)
+        if os.path.exists(local):
+            server = f"{SERVER_PATH}/{df}"
+            upload_file(local, server)
+
+    # 4. 重启
+    log("\n=== 重启服务 ===")
+    stdout, stderr, code = ssh_exec("sudo systemctl restart ogd-collector && sleep 3 && sudo systemctl is-active ogd-collector")
+    if "active" in stdout:
+        log("✓ 服务已重启并运行中")
+    else:
+        log(f"⚠ 服务状态: {stdout}")
+
+def main():
+    print("=" * 60)
+    print("OGD-Collector-Pro V6 一键部署（增强版）")
+    print("=" * 60)
+
+    if len(sys.argv) > 1:
+        arg = sys.argv[1]
+        if arg == '--check':
+            deploy_check()
+        elif arg == '--all':
+            upload_all_v6()
+            deploy_check()
+        else:
+            # 单文件上传
+            file_path = arg
+            if not os.path.isabs(file_path):
+                file_path = os.path.join(PROJECT_PATH, file_path)
+            upload_file(file_path)
+            # 自动重启
+            ssh_exec("sudo systemctl restart ogd-collector && sleep 1")
+            log("✓ 服务已重启")
+    else:
+        # 完整部署
         git_push()
-        server_pull()
-    
-    print("\n" + "=" * 50)
-    print("部署完成!")
-    print(f"访问: http://{SERVER_IP}")
-    print("=" * 50)
+        server_pull_and_restart()
+        deploy_check()
+
+    print(f"\n访问: http://{SERVER_IP}")
 
 if __name__ == "__main__":
     main()

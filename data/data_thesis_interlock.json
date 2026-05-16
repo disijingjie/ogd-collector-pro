@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "description": "数据源-论文章节互锁映射表：数据变更时自动标记受影响章节",
+  "data_sources": {
+    "23_platform_collection": {
+      "name": "23平台采集数据",
+      "files": ["data/v3_collection_results.json", "data/v3_collection_log_utf8.txt"],
+      "affects_chapters": ["4.1 研究样本与数据来源", "4.2 数据采集方法", "4.3 数据口径与标准化", "5.1 TOPSIS绩效评估", "5.2 DEA效率分析", "5.3 DEMATEL影响因子", "6.1 fsQCA组态分析"],
+      "affects_tables": ["表4-1 23个省级平台采集结果", "表4-2 数据口径分类与换算系数", "表5-1 TOPSIS综合得分与排名"],
+      "affects_figures": ["图4-1 23省数据量分布", "图5-1 TOPSIS绩效热力图"],
+      "caliber_note": "核心数据源，6种口径（数据集/数据目录/数据产品/数据登记/混合），需口径换算系数校正"
+    },
+    "topsis_scores": {
+      "name": "TOPSIS绩效评分",
+      "files": ["data/table_topsis_4e_final.csv"],
+      "affects_chapters": ["5.1 TOPSIS绩效评估结果", "5.4 综合评估与比较", "6.1 条件组态与绩效关系"],
+      "affects_tables": ["表5-1 TOPSIS综合得分与排名", "表5-2 4E维度得分对比"],
+      "affects_figures": ["图5-1 TOPSIS雷达图", "图5-2 4E维度箱线图"]
+    },
+    "dea_results": {
+      "name": "DEA-BCC效率分析结果",
+      "files": ["data/table_dea_4e_final.csv"],
+      "affects_chapters": ["5.2 DEA效率分析", "5.4 综合评估与比较"],
+      "affects_tables": ["表5-3 DEA效率值与投影分析"],
+      "affects_figures": ["图5-3 DEA效率对比图"]
+    },
+    "dematel_results": {
+      "name": "DEMATEL影响因子分析",
+      "files": ["data/dematel_4e_final.json"],
+      "affects_chapters": ["5.3 DEMATEL影响因子关系分析", "6.1 条件组态分析"],
+      "affects_tables": ["表5-4 DEMATEL综合影响矩阵", "表5-5 中心度与原因度"],
+      "affects_figures": ["图5-4 DEMATEL因果图", "图5-5 影响关系网络图"]
+    },
+    "fsqca_results": {
+      "name": "fsQCA组态路径分析",
+      "files": ["data/fsqca_4e_final.json"],
+      "affects_chapters": ["6.1 fsQCA条件组态分析", "6.2 稳健性检验", "7.1 研究发现与理论贡献"],
+      "affects_tables": ["表6-1 真值表", "表6-2 充分性分析结果", "表6-3 稳健性检验"],
+      "affects_figures": ["图6-1 组态路径图", "图6-2 核心条件与边缘条件"]
+    },
+    "did_results": {
+      "name": "多期DID政策效应分析",
+      "files": ["data/thesis_content.json"],
+      "affects_chapters": ["7.2 政策效应评估", "7.3 异质性分析", "8.1 对策建议"],
+      "affects_tables": ["表7-1 基准回归结果", "表7-2 平行趋势检验", "表7-3 异质性分析"],
+      "affects_figures": ["图7-1 DID事件研究图", "图7-2 平行趋势检验图"]
+    },
+    "caliber_standardization": {
+      "name": "口径换算系数表",
+      "files": ["data/v3_collection_results.json"],
+      "affects_chapters": ["4.3 数据口径与标准化", "5.1 TOPSIS绩效评估", "8.4 局限性与展望"],
+      "affects_tables": ["表4-2 口径分类与换算系数", "表4-3 标准化前后对比"],
+      "affects_figures": ["图4-2 口径校正前后数据量对比"],
+      "caliber_note": "6种口径的换算系数：数据集1.0/数据目录0.6/数据产品0.3/数据登记0.2"
+    }
+  },
+  "chapter_data_map": {
+    "第4章": ["23_platform_collection", "caliber_standardization"],
+    "第5章": ["topsis_scores", "dea_results", "dematel_results", "23_platform_collection"],
+    "第6章": ["fsqca_results", "dematel_results"],
+    "第7章": ["did_results"],
+    "第8章": ["caliber_standardization", "did_results"]
+  }
+}
