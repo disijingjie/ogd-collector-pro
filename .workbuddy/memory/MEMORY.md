@@ -145,27 +145,42 @@ curl -s http://127.0.0.1:5000 | head -5
 - nginx：`location /` → `proxy_pass http://127.0.0.1:5000`
 - static文件：`/opt/ogd-collector-pro/static`（nginx直接服务，30天缓存）
 
-### V6完整路由表（2026-05-03更新）
+### V6完整路由表（2026-05-16更新）
 | 路径 | 模板 | 说明 |
 |:---|:---|:---|
 | `/` | v6_index.html | 首页·采集状态总览 |
-| `/collection`, `/dashboard` | v6_collection.html | 采集中心/数据看板 |
+| `/collection`, `/dashboard` | v6_collection.html | 采集中心/数据看板（含实时看板） |
 | `/platform/<code>` | v6_platform_detail.html | 平台详情 |
 | `/analysis` | v6_analysis.html | 分析看板 |
 | `/thesis` | v6_thesis.html | 论文成果 |
 | `/research` | v6_research.html | 研究拓展 |
-| `/literature` | v6_literature.html | 文献检索专题 |
+| `/literature` | v6_literature_db.html | 文献数据库（含去重校验） |
 | `/papers` | v6_papers.html | 小论文框架 |
 | `/paper-collection` | v6_papers_showcase.html | 小论文集 |
-| `/reproduce` | v6_reproduce.html | 数据复现 |
+| `/reproduce` → `/credibility` | v6_credibility.html | 数据可信度中心 |
 | `/provenance` | v6_provenance.html | 数据溯源 |
 | `/rules` | v6_rules.html | 规则映射表 |
 | `/charts/topsis` | v6_topsis_chart.html | TOPSIS图表 |
 | `/charts/dematel` | v6_dematel_chart.html | DEMATEL图表 |
 | `/charts/fsqa` | v6_fsqa_chart.html | fsQCA图表 |
+| `/caliber` | v6_caliber.html | 口径声明（含互锁追踪） |
+| `/map` | v6_map.html | D3中国地图热力图 |
 | `/chen-chuanfu` | v6_chen_chuanfu.html | 陈传夫专题 |
 | `/ran-congjing` | v6_ran_congjing.html | 冉从敬专题 |
 | `/v3/*` | 301重定向 | 旧版路径自动跳转V6 |
+
+### V6 API路由表（2026-05-16新增）
+| 路径 | 说明 |
+|:---|:---|
+| `/api/collection/status` | 采集状态实时轮询 |
+| `/api/collection/health` | 平台健康检查/异常报警 |
+| `/api/collection/timeline` | 采集历史时间线 |
+| `/api/interlock/map` | 数据-论文互锁映射 |
+| `/api/interlock/check` | 互锁校验（数据变更检测） |
+| `/api/literature/dedup` | 文献去重校验 |
+| `/api/platforms` | 全平台状态 |
+| `/api/stats` | 统计信息 |
+| `/api/csv` | CSV下载 |
 
 ### /v3/ 旧路径兼容方案（2026-05-03实现）
 - 在 `v6_app.py` 中添加 9 条 301 重定向路由（`/v3/` → `/`, `/v3/research` → `/research` 等）
@@ -222,6 +237,8 @@ curl -s http://127.0.0.1:5000 | head -5
 **注：安徽平台于2026-04-28首次使用Playwright动态渲染技术成功采集，解决了Vue.js单页应用的数据获取难题。**
 
 ## 更新记录
+- 2026-05-16: **6项全面优化部署完成**：P0实时采集看板（3API+30秒轮询+异常报警）、P0数据-论文互锁机制（7数据源映射+2API）、P1文献去重校验（API+可视化）、P1一键部署增强（--check/--all参数+校验）、P2移动端响应式（汉堡菜单+3级断点）、P2 Nginx优化（Gzip压缩+分层缓存）；34模板+10 API全部200OK；Git commit e7e5f93
+- 2026-05-15: **全面优化启动**：口径声明页/caliber上线、D3中国地图/map上线、代码瘦身316→49、DID事件研究图补入、Git版本控制快照（tag: v6-pre-optimization-20260515 + 服务器备份/opt/backup-20260515-pre-optimization）
 - 2026-05-09: **V14论文全面审读与修复**：完成P0/P1/P2三级问题修复（数据一致性、4E命名统一、数据溯源声明、脚注注入），构建最终版DOCX；建立论文与采集系统数据交叉验证机制
 - 2026-05-08: V14论文生成（64篇PDF文献注入9处），审读报告识别14项问题，V14完整版+脚注版DOCX产出
 - 2026-05-03: 全面改版（16页面200OK），文献五件套上线，方法论论文框架

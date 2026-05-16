@@ -1,0 +1,268 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}省域绩效地图 - OGD-Collector Pro{% endblock %}{% block page_title %}省域绩效地图{% endblock %}{% block breadcrumb %}分析验证 / 省域绩效地图{% endblock %}
+{% block extra_css %}<style>
+.map-container{background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.07);padding:24px;position:relative}
+.map-legend{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#f8fafc;border-radius:8px;margin-top:16px;font-size:12px}
+.map-legend .bar{height:12px;border-radius:6px;flex:1;max-width:300px}
+.map-tooltip{position:absolute;background:#1e293b;color:#fff;padding:12px 16px;border-radius:10px;font-size:12px;pointer-events:none;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.2);min-width:180px;opacity:0;transition:opacity .15s}
+.map-tooltip.visible{opacity:1}
+.map-tooltip h4{font-size:14px;font-weight:700;margin-bottom:6px;color:#60a5fa}
+.map-tooltip .row{display:flex;justify-content:space-between;padding:2px 0}
+.map-tooltip .label{color:#94a3b8}
+.map-tooltip .val{font-weight:600}
+.dim-selector{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.dim-btn{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#64748b;transition:all .2s}
+.dim-btn:hover{border-color:#2563eb;color:#2563eb}
+.dim-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.no-data-province{fill:#f1f5f9;stroke:#cbd5e1}
+</style>{% endblock %}
+
+{% block anchor_nav %}<div class="anchor-nav"><a href="#map" class="active">绩效地图</a><a href="#ranking">排名表</a><a href="#dimension">4E维度</a></div>{% endblock %}
+
+{% block content %}
+
+<div class="position-hint">
+  <strong>省域绩效地图</strong> — 23个省级政府数据开放平台TOPSIS综合绩效评价热力图。颜色越暖绩效越高，灰色为无独立平台省份。可切换4E各维度视图。
+</div>
+
+<div id="map" class="scroll-section">
+  <div class="map-container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:16px;font-weight:700">中国省域OGD平台绩效热力图</div>
+        <div style="font-size:12px;color:#64748b">点击省份查看详情 | 切换维度查看不同评价视角</div>
+      </div>
+      <div class="dim-selector">
+        <button class="dim-btn active" onclick="switchDimension('topsis')">综合绩效</button>
+        <button class="dim-btn" onclick="switchDimension('e1')">供给保障</button>
+        <button class="dim-btn" onclick="switchDimension('e2')">平台服务</button>
+        <button class="dim-btn" onclick="switchDimension('e3')">数据质量</button>
+        <button class="dim-btn" onclick="switchDimension('e4')">利用效果</button>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <div id="china-map" style="width:100%;max-width:800px;margin:0 auto"></div>
+      <div id="map-tooltip" class="map-tooltip"></div>
+    </div>
+
+    <div class="map-legend">
+      <span>低绩效</span>
+      <div class="bar" style="background:linear-gradient(90deg,#dbeafe,#3b82f6,#f59e0b,#dc2626)"></div>
+      <span>高绩效</span>
+      <span style="margin-left:16px;padding:4px 8px;background:#f1f5f9;border-radius:4px;font-size:11px">灰色=无独立平台</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 排名表 ========== -->
+<div id="ranking" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>23省TOPSIS综合绩效排名</div></div>
+    <div style="overflow-x:auto">
+      <table class="data-table">
+        <thead><tr><th>排名</th><th>省份</th><th>综合得分</th><th>供给保障</th><th>平台服务</th><th>数据质量</th><th>利用效果</th><th>口径</th></tr></thead>
+        <tbody id="ranking-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4E维度 ========== -->
+<div id="dimension" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>4E框架维度说明</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card" style="margin:0;border-left:4px solid #2563eb">
+        <div style="font-weight:700;color:#2563eb;margin-bottom:8px">E1 供给保障</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">衡量数据资源供给能力：数据集数量、API开放比例、数据更新频率、数据覆盖领域数。受口径差异影响最大。</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #059669">
+        <div style="font-weight:700;color:#059669;margin-bottom:8px">E2 平台服务</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">衡量平台功能完备度：数据检索能力、可视化工具、数据下载格式种类、用户交互功能。</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #d97706">
+        <div style="font-weight:700;color:#d97706;margin-bottom:8px">E3 数据质量</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">衡量数据可用性：元数据完整度、数据时效性、机器可读格式比例、开放授权协议合规率。</div>
+      </div>
+      <div class="card" style="margin:0;border-left:4px solid #7c3aed">
+        <div style="font-weight:700;color:#7c3aed;margin-bottom:8px">E4 利用效果</div>
+        <div style="font-size:12px;color:#64748b;line-height:1.7">衡量数据实际利用：下载量、应用数、开发者调用次数、社会经济效益指标。</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;background:#fef3c7;border-radius:10px;padding:14px 16px;font-size:12px;color:#92400e;line-height:1.8">
+      <strong>口径声明</strong>：E1（供给保障）维度受数据口径影响最大，已通过标准化转换处理。详见 <a href="/caliber" style="color:#92400e;font-weight:600">口径声明页 →</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+// Province data: TOPSIS scores and 4E dimension scores
+const provinceData = {
+  'Shandong':{cn:'山东',topsis:0.955,e1:0.92,e2:0.88,e3:0.85,e4:0.96,caliber:'数据目录'},
+  'Zhejiang':{cn:'浙江',topsis:0.892,e1:0.95,e2:0.90,e3:0.82,e4:0.88,caliber:'数据集'},
+  'Guangdong':{cn:'广东',topsis:0.876,e1:0.98,e2:0.85,e3:0.80,e4:0.86,caliber:'数据集'},
+  'Beijing':{cn:'北京',topsis:0.854,e1:0.78,e2:0.92,e3:0.90,e4:0.82,caliber:'数据集'},
+  'Shanghai':{cn:'上海',topsis:0.841,e1:0.80,e2:0.95,e3:0.88,e4:0.75,caliber:'数据集'},
+  'Guizhou':{cn:'贵州',topsis:0.823,e1:0.85,e2:0.82,e3:0.78,e4:0.84,caliber:'数据集'},
+  'Sichuan':{cn:'四川',topsis:0.812,e1:0.79,e2:0.84,e3:0.80,e4:0.82,caliber:'数据目录'},
+  'Fujian':{cn:'福建',topsis:0.798,e1:0.76,e2:0.83,e3:0.82,e4:0.78,caliber:'数据目录'},
+  'Jiangsu':{cn:'江苏',topsis:0.785,e1:0.72,e2:0.88,e3:0.85,e4:0.70,caliber:'数据目录'},
+  'Hubei':{cn:'湖北',topsis:0.772,e1:0.80,e2:0.78,e3:0.74,e4:0.76,caliber:'数据目录'},
+  'Tianjin':{cn:'天津',topsis:0.761,e1:0.68,e2:0.82,e3:0.85,e4:0.70,caliber:'数据集'},
+  'Chongqing':{cn:'重庆',topsis:0.754,e1:0.82,e2:0.75,e3:0.72,e4:0.73,caliber:'数据集'},
+  'Hunan':{cn:'湖南',topsis:0.743,e1:0.70,e2:0.78,e3:0.75,e4:0.74,caliber:'数据目录'},
+  'Hainan':{cn:'海南',topsis:0.735,e1:0.88,e2:0.68,e3:0.65,e4:0.72,caliber:'数据目录'},
+  'Anhui':{cn:'安徽',topsis:0.728,e1:0.86,e2:0.70,e3:0.64,e4:0.70,caliber:'数据目录'},
+  'Guangxi':{cn:'广西',topsis:0.715,e1:0.75,e2:0.72,e3:0.68,e4:0.71,caliber:'数据目录'},
+  'Liaoning':{cn:'辽宁',topsis:0.708,e1:0.72,e2:0.73,e3:0.66,e4:0.72,caliber:'数据目录'},
+  'Neimenggu':{cn:'内蒙古',topsis:0.685,e1:0.58,e2:0.72,e3:0.70,e4:0.73,caliber:'数据目录'},
+  'Shanxi':{cn:'山西',topsis:0.672,e1:0.62,e2:0.70,e3:0.68,e4:0.69,caliber:'混合'},
+  'Jiangxi':{cn:'江西',topsis:0.665,e1:0.60,e2:0.68,e3:0.70,e4:0.68,caliber:'混合'},
+  'Yunnan':{cn:'云南',topsis:0.648,e1:0.55,e2:0.68,e3:0.65,e4:0.70,caliber:'数据登记'},
+  'Jilin':{cn:'吉林',topsis:0.632,e1:0.52,e2:0.65,e3:0.66,e4:0.68,caliber:'混合'},
+  'Henan':{cn:'河南',topsis:0.625,e1:0.58,e2:0.62,e3:0.60,e4:0.68,caliber:'数据产品'}
+};
+
+// Map English names from TopoJSON to our data keys
+const nameMap = {
+  'Shandong':'Shandong','Zhejiang':'Zhejiang','Guangdong':'Guangdong',
+  'Beijing':'Beijing','Shanghai':'Shanghai','Guizhou':'Guizhou',
+  'Sichuan':'Sichuan','Fujian':'Fujian','Jiangsu':'Jiangsu',
+  'Hubei':'Hubei','Tianjin':'Tianjin','Chongqing':'Chongqing',
+  'Hunan':'Hunan','Hainan':'Hainan','Anhui':'Anhui',
+  'Guangxi':'Guangxi','Liaoning':'Liaoning',
+  'Inner Mongol':'Neimenggu','Shanxi':'Shanxi','Jiangxi':'Jiangxi',
+  'Yunnan':'Yunnan','Jilin':'Jilin','Henan':'Henan'
+};
+
+let currentDim = 'topsis';
+
+function getColor(score) {
+  if (score === null || score === undefined) return '#f1f5f9';
+  // Blue(low) → Yellow(mid) → Red(high)
+  const t = Math.max(0, Math.min(1, (score - 0.5) / 0.5));
+  if (t < 0.5) {
+    const r = Math.round(59 + (245 - 59) * (t * 2));
+    const g = Math.round(130 + (158 - 130) * (t * 2));
+    const b = Math.round(246 + (11 - 246) * (t * 2));
+    return `rgb(${r},${g},${b})`;
+  } else {
+    const s = (t - 0.5) * 2;
+    const r = Math.round(245 + (220 - 245) * s);
+    const g = Math.round(158 + (38 - 158) * s);
+    const b = Math.round(11 + (38 - 11) * s);
+    return `rgb(${r},${g},${b})`;
+  }
+}
+
+function getScore(d, dim) {
+  const mapped = nameMap[d.properties.name];
+  if (!mapped || !provinceData[mapped]) return null;
+  return provinceData[mapped][dim] || null;
+}
+
+function switchDimension(dim) {
+  currentDim = dim;
+  document.querySelectorAll('.dim-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Recolor
+  svg.selectAll('path.province')
+    .transition().duration(500)
+    .attr('fill', d => {
+      const score = getScore(d, dim);
+      return score !== null ? getColor(score) : '#f1f5f9';
+    });
+}
+
+// Build ranking table
+function buildRankingTable() {
+  const sorted = Object.entries(provinceData).sort((a,b) => b[1].topsis - a[1].topsis);
+  const tbody = document.getElementById('ranking-body');
+  sorted.forEach(([k,v],i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="font-weight:700;color:${i<5?'#2563eb':'#64748b'}">${i+1}</td>
+      <td><strong>${v.cn}</strong></td>
+      <td style="font-weight:700;color:${v.topsis>=0.8?'#059669':v.topsis>=0.7?'#d97706':'#dc2626'}">${v.topsis.toFixed(3)}</td>
+      <td>${v.e1.toFixed(2)}</td><td>${v.e2.toFixed(2)}</td><td>${v.e3.toFixed(2)}</td><td>${v.e4.toFixed(2)}</td>
+      <td><span class="badge" style="background:${v.caliber==='数据集'?'#dcfce7;color:#166534':v.caliber==='数据目录'?'#dbeafe;color:#1e40af':'#fef3c7;color:#92400e'}">${v.caliber}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+buildRankingTable();
+
+// Draw map
+let svg;
+const width = 800, height = 600;
+
+fetch('https://cdn.jsdelivr.net/npm/datamaps@0.5.10/src/js/data/chn.topo.json')
+  .then(r => r.json())
+  .then(topo => {
+    const features = topojson.feature(topo, topo.objects.chn);
+    
+    svg = d3.select('#china-map').append('svg')
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('width', '100%')
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const projection = d3.geoMercator()
+      .center([104, 35])
+      .scale(600)
+      .translate([width/2, height/2]);
+    const pathGen = d3.geoPath(projection);
+
+    const tooltip = document.getElementById('map-tooltip');
+
+    svg.selectAll('path.province')
+      .data(features.features)
+      .join('path')
+      .attr('d', pathGen)
+      .attr('class', 'province')
+      .attr('fill', d => {
+        const score = getScore(d, 'topsis');
+        return score !== null ? getColor(score) : '#f1f5f9';
+      })
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 0.8)
+      .style('cursor', d => nameMap[d.properties.name] && provinceData[nameMap[d.properties.name]] ? 'pointer' : 'default')
+      .on('mouseover', function(event, d) {
+        const mapped = nameMap[d.properties.name];
+        const data = mapped ? provinceData[mapped] : null;
+        if (!data) {
+          tooltip.innerHTML = `<h4>${d.properties.name}</h4><div class="row"><span class="label">状态</span><span class="val" style="color:#94a3b8">无独立数据开放平台</span></div>`;
+        } else {
+          tooltip.innerHTML = `<h4>${data.cn}</h4>
+            <div class="row"><span class="label">综合绩效</span><span class="val" style="color:${data.topsis>=0.8?'#4ade80':'#fbbf24'}">${data.topsis.toFixed(3)}</span></div>
+            <div class="row"><span class="label">供给保障</span><span class="val">${data.e1.toFixed(2)}</span></div>
+            <div class="row"><span class="label">平台服务</span><span class="val">${data.e2.toFixed(2)}</span></div>
+            <div class="row"><span class="label">数据质量</span><span class="val">${data.e3.toFixed(2)}</span></div>
+            <div class="row"><span class="label">利用效果</span><span class="val">${data.e4.toFixed(2)}</span></div>
+            <div class="row"><span class="label">统计口径</span><span class="val">${data.caliber}</span></div>`;
+        }
+        tooltip.classList.add('visible');
+        d3.select(this).attr('stroke-width', 2).attr('stroke', '#2563eb');
+      })
+      .on('mousemove', function(event) {
+        const container = document.getElementById('china-map').getBoundingClientRect();
+        const mapContainer = document.querySelector('.map-container').getBoundingClientRect();
+        tooltip.style.left = (event.clientX - mapContainer.left + 16) + 'px';
+        tooltip.style.top = (event.clientY - mapContainer.top - 10) + 'px';
+      })
+      .on('mouseout', function() {
+        tooltip.classList.remove('visible');
+        d3.select(this).attr('stroke-width', 0.8).attr('stroke', '#fff');
+      })
+      .on('click', function(event, d) {
+        const mapped = nameMap[d.properties.name];
+        if (mapped && provinceData[mapped]) {
+          window.location.href = '/analysis';
+        }
+      });
+  })
+  .catch(err => {
+    document.getElementById('china-map').innerHTML = '<div style="text-align:center;padding:60px;color:#64748b">地图数据加载失败，请刷新页面重试<br><small>' + err.message + '</small></div>';
+  });
+</script>
+
+{% endblock %}

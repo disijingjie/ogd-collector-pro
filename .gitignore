@@ -19,16 +19,158 @@ Thumbs.db
 *.swp
 *.swo
 *~
-_build_thesis*.py
-_check_data.py
-_fix_urls.py
-_test_playwright*.py
 cpolar.exe
 cpolar_stdout.txt
 cpolar_stderr.txt
+nul
 
 # Archive directories
 scripts/archive/
 static/archive/
 _archive_scripts/
 _archive_deploy/
+
+# Node.js
+node_modules/
+package.json
+package-lock.json
+
+# Temporary scripts not needed in repo
+check_and_*.py
+check_chen_file.py
+chen_april30_results.txt
+compare_thesis.py
+debug_v6.py
+deep_diagnose.py
+deploy.py
+deploy_all.py
+deploy_simple.py
+deploy_v8_literature.py
+enhance_v13.py
+extract_thesis.py
+fetch_server_chen.py
+fix_server_v2.py
+generate_did_event_study.py
+ogd_quick_deploy.py
+quick_fix_route.py
+remove_duplicates.py
+restart_server.py
+run_collection_now.py
+search_chen_april30.py
+search_server_chen.py
+send_emails_temp.py
+sftp_upload.py
+start_v6.py
+start_v6_daemon.py
+start_v6_v2.py
+task1_extract_pdf.py
+task2_unpack_v13.py
+task_a_temp.py
+test_ssh*.py
+git-commit.bat
+git_push.ps1
+git_*.txt
+local_navigator.html
+bash.exe.stackdump
+
+# Temp deploy/check scripts
+_check_server*.py
+_check_server_status.py
+_cleanup_*.py
+_verify_nginx.py
+_fix_nginx_gzip.py
+_fix_static_403.py
+_deep_nginx_check.py
+_deploy_cron*.py
+_check_data_integrity.py
+_check_templates_sync.py
+
+# Temp text/log outputs
+_*.txt
+chen_april30_results.txt
+
+# Temp documentation
+_WSL2_INSTALL_GUIDE.md
+_correction_list.md
+_email_chen_chuanfu_thesis_report.md
+Termius快速上手指南.md
+
+# Temp data
+data/temp_utf8.json
+data/thesis_generated.docx
+data/content_review_report.md
+data/cnki_cdp_endpoint.txt
+data/export/
+data/whu_export/
+data/papers/
+
+# Temp template files (old versions)
+templates/server_*.html
+templates/v3_*.html
+templates/local_*.html
+
+# Temp output directories
+output/
+tmp_*/
+temp_thesis_output/
+figures/
+papers/figures/
+
+# Chinese-named temp files
+KIMI_*.md
+README_部署工具包.md
+V6网站架构全面评价与细化改进方案.md
+小论文整理与打磨方案.md
+本地开发指南.md
+给陈传夫老师的工作汇报信.md
+部署指南_论文效用检测模块.md
+
+# Temp PS1/BAT
+_deploy_*.ps1
+_deploy_*.bat
+_fix_network.bat
+_git_ops.bat
+_run_check_thesis.bat
+run_*.ps1
+run_*.bat
+run_local.py
+run_ps_deploy.py
+test_result.txt
+v6_index_new.html
+
+# Papers temp build files
+papers/Cover_Letter_*.md
+papers/Cover_Letter_*.docx
+papers/_build_docx*.py
+papers/_email_*.md
+papers/_embed_charts.py
+papers/_final_*.py
+papers/_fix_*.py
+papers/_gen_charts*.py
+papers/_insert_charts*.py
+papers/_press_typeset.py
+papers/_reference_template.docx
+papers/_refs_footnote*.py
+papers/_refs_to_footnotes*.py
+papers/_rebuild_*.py
+papers/convert_*.txt
+papers/论文质量评估矩阵_*.md
+papers/投稿包_*.md
+papers/投稿包_K_*.md
+papers/致导师邮件.md
+papers/*.docx
+papers/paper_*_v2.md
+papers/paper_*_v3.md
+papers/paper_*_v3_fixed.md
+papers/paper_*_v3_md.md
+papers/paper_*_abstract_en.md
+papers/paper_*_humanized.md
+papers/paper_*_submission.md
+
+# Static temp
+static/fulltext/
+static/thesis_images/
+
+# Docs temp
+docs/_thesis_optimization_plan.md
+docs/_website_optimization_plan.md
