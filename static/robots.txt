@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /thesis-full
+Disallow: /data/
+
+Sitemap: http://106.53.188.187/sitemap.xml

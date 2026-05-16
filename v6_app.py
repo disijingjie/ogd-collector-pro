@@ -748,5 +748,23 @@ def api_generate_docx():
         )
     return jsonify({'error': '生成失败'}), 500
 
+# ========== Web基础文件 ==========
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_from_directory('static', 'robots.txt', mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    return send_from_directory('static', 'sitemap.xml', mimetype='application/xml')
+
+# ========== 404错误页 ==========
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('v6_404.html'), 404
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
