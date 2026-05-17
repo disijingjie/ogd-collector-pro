@@ -40,14 +40,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .page-nav a:hover{background:#f1f5f9;color:var(--primary)}
 .page-nav a strong{color:var(--text);font-size:14px}
 .page-nav .next{text-align:right}
-.anchor-nav{display:flex;gap:8px;padding:12px 32px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:40;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent}
-.anchor-nav::-webkit-scrollbar{height:4px}
-.anchor-nav::-webkit-scrollbar-track{background:transparent}
-.anchor-nav::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px}
-.anchor-nav::after{content:"";flex-shrink:0;width:1px}
-.anchor-nav a{color:var(--text-light);text-decoration:none;font-size:13px;padding:6px 14px;border-radius:20px;white-space:nowrap;transition:all .2s}
-.anchor-nav a:hover{color:var(--primary);background:#dbeafe}
-.anchor-nav a.active{color:#fff;background:var(--primary);font-weight:500}
+.anchor-nav,.sub-nav{display:flex;gap:12px;padding:12px 32px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:40;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent;align-items:center}
+.anchor-nav::-webkit-scrollbar,.sub-nav::-webkit-scrollbar{height:4px}
+.anchor-nav::-webkit-scrollbar-track,.sub-nav::-webkit-scrollbar-track{background:transparent}
+.anchor-nav::-webkit-scrollbar-thumb,.sub-nav::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px}
+.anchor-nav::after,.sub-nav::after{content:"";flex-shrink:0;width:1px}
+.anchor-nav a,.sub-nav a{color:var(--text-light);text-decoration:none;font-size:13px;padding:8px 18px;border-radius:20px;white-space:nowrap;transition:all .2s;background:#f8fafc}
+.anchor-nav a:hover,.sub-nav a:hover{color:var(--primary);background:#dbeafe}
+.anchor-nav a.active,.sub-nav a.active{color:#fff;background:linear-gradient(135deg,var(--primary),#3b82f6);font-weight:500;box-shadow:0 2px 8px rgba(37,99,235,.25)}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
 .card-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
@@ -159,11 +159,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <a href="/research" class="nav-item {% if active=='research' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>研究拓展</a>
       <a href="/methodology" class="nav-item {% if active=='methodology' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>研究方法论</a>
       <a href="/reproduce" class="nav-item {% if active=='reproduce' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>数据复现<span style="font-size:9px;color:#64748b">（可信度中心）</span></a>
-      <a href="/caliber" class="nav-item {% if active=='caliber' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/><circle cx="12" cy="7" r="2"/><circle cx="18" cy="4" r="2"/><circle cx="6" cy="13" r="2"/></svg>口径声明<span style="font-size:9px;color:#fbbf24;background:#78350f;padding:1px 4px;border-radius:4px;margin-left:4px">核心</span></a>
-      <a href="/maturity" class="nav-item {% if active=='maturity' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>成熟度模型</a>
-      <a href="/value-chain" class="nav-item {% if active=='value-chain' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><line x1="9" y1="12" x2="15" y2="12"/></svg>4E价值链</a>
-      <a href="/international" class="nav-item {% if active=='international' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>国际对比</a>
-      <a href="/en" class="nav-item" style="opacity:0.6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>English</a>
     </nav>
     <div class="sidebar-footer"><div>v6.0.0 | OGD-Collector Pro</div><div style="margin-top:4px">博士论文支撑系统</div></div>
   </aside>
@@ -216,7 +211,7 @@ document.querySelectorAll('.tabs').forEach(function(tc){
   }
   btn.addEventListener('click',toggle);
   overlay.addEventListener('click',toggle);
-  sidebar.querySelectorAll('.nav-item').forEach(function(a){a.addEventListener('click',function(){if(window.innerWidth<=768)toggle()})});
+  sidebar.querySelectorAll('.nav-item,.nav-sub-item').forEach(function(a){a.addEventListener('click',function(){if(window.innerWidth<=768)toggle()})});
 })();
 </script>
 {% block extra_js %}{% endblock %}

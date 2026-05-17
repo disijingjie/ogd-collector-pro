@@ -1,99 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OGD-Collector Pro | Open Government Data Platform Performance Evaluation</title>
+{% extends "base_v6.html" %}{% set section = "norm" %}{% block title %}OGD-Collector Pro | Open Government Data Platform Performance Evaluation{% endblock %}{% block page_title %}English Overview{% endblock %}{% block breadcrumb %}学术规范 / English{% endblock %}
+{% block extra_css %}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.7}
-.hero{min-height:90vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;position:relative;overflow:hidden}
+.page-content{background:#0f172a;color:#e2e8f0;min-height:100vh;font-family:'Inter',system-ui,sans-serif}
+.hero{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;margin:-24px -32px 0;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(59,130,246,0.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(139,92,246,0.06) 0%,transparent 50%);animation:bgPulse 10s ease-in-out infinite alternate}
 @keyframes bgPulse{0%{transform:scale(1) rotate(0)}100%{transform:scale(1.05) rotate(2deg)}}
-.hero h1{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative;line-height:1.2}
-.hero .subtitle{font-size:1.2rem;color:#94a3b8;margin-top:1rem;max-width:700px;position:relative}
-.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;margin:1rem 0.3rem;position:relative}
+.hero h1{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.hero .subtitle{font-size:1.2rem;color:#94a3b8;margin-top:1rem;max-width:700px}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;margin:1rem 0.3rem}
 .badge-blue{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
 .badge-purple{background:rgba(139,92,246,0.15);color:#a78bfa;border:1px solid rgba(139,92,246,0.3)}
 .badge-green{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3)}
-
 .content{max-width:900px;margin:0 auto;padding:0 2rem 4rem}
-.section{margin-top:3rem}
-.section h2{font-size:1.6rem;font-weight:900;margin-bottom:1rem;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section p{color:#94a3b8;font-size:0.95rem;margin-bottom:1rem}
-
+.section-wrapper{margin-top:3rem}
+.section-wrapper h2{font-size:1.6rem;font-weight:900;margin-bottom:1rem;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-wrapper p{color:#94a3b8;font-size:0.95rem;margin-bottom:1rem}
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.5rem 0}
 .stat-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.2rem;text-align:center;transition:all 0.3s}
 .stat-card:hover{border-color:#3b82f6;transform:translateY(-3px)}
 .stat-value{font-size:2rem;font-weight:900;color:#60a5fa}
 .stat-label{font-size:0.8rem;color:#94a3b8;margin-top:0.3rem}
-
 .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
 .method-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:1rem;transition:all 0.3s}
 .method-card:hover{border-color:#8b5cf6}
 .method-card .emoji{font-size:1.5rem;margin-bottom:0.5rem}
 .method-card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.3rem}
 .method-card p{font-size:0.8rem;color:#94a3b8}
-
 .findings{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1.5rem 0}
 .finding-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:1rem;border-left:3px solid}
 .finding-card.f1{border-left-color:#3b82f6}.finding-card.f2{border-left-color:#8b5cf6}
 .finding-card.f3{border-left-color:#10b981}.finding-card.f4{border-left-color:#f59e0b}
 .finding-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.3rem}
 .finding-card p{font-size:0.8rem;color:#94a3b8}
-
 .cta{text-align:center;margin-top:3rem;padding:2rem;background:#1e293b;border:1px solid #334155;border-radius:16px}
-.cta h2{font-size:1.4rem;font-weight:900;margin-bottom:0.5rem}
+.cta h2{font-size:1.4rem;font-weight:900;margin-bottom:0.5rem;-webkit-text-fill-color:#e2e8f0}
 .cta p{color:#94a3b8;font-size:0.9rem}
 .cta-links{margin-top:1rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
 .cta-links a{padding:10px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;transition:all 0.3s}
 .cta-primary{background:#3b82f6;color:white}.cta-primary:hover{background:#2563eb}
 .cta-secondary{background:transparent;color:#60a5fa;border:1px solid #334155}.cta-secondary:hover{border-color:#3b82f6}
-
-footer{text-align:center;padding:2rem;font-size:0.75rem;color:#475569;border-top:1px solid #1e293b}
+.en-footer{text-align:center;padding:2rem;font-size:0.75rem;color:#475569;border-top:1px solid #1e293b}
 .lang-switch{text-align:center;padding:1rem}
 .lang-switch a{color:#60a5fa;font-size:0.85rem;text-decoration:none}
-
-@media(max-width:768px){
-  .hero h1{font-size:2rem}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-  .method-grid{grid-template-columns:1fr}
-  .findings{grid-template-columns:1fr}
-}
+@media(max-width:768px){.hero h1{font-size:2rem}.stat-grid{grid-template-columns:repeat(2,1fr)}.method-grid{grid-template-columns:1fr}.findings{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
+{% endblock %}
 
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/reproduce">数据复现</a>
+  <a href="/en" class="active">English</a>
+</div>
+{% endblock %}
+
+{% block content %}
 <section class="hero">
   <h1>OGD-Collector Pro</h1>
   <p class="subtitle">Evaluating Open Government Data Platform Performance: A 4E Framework with TOPSIS-DEA-fsQCA Mixed Methods Approach across 30 Chinese Provincial Platforms</p>
-  <div>
-    <span class="badge badge-blue">4E Evaluation Framework</span>
-    <span class="badge badge-purple">30 Provincial Platforms</span>
-    <span class="badge badge-green">Mixed Methods</span>
-  </div>
+  <div><span class="badge badge-blue">4E Evaluation Framework</span><span class="badge badge-purple">30 Provincial Platforms</span><span class="badge badge-green">Mixed Methods</span></div>
 </section>
 
 <div class="lang-switch"><a href="/">中文版 →</a></div>
 
 <div class="content">
-  <!-- Stats -->
-  <div class="section">
+  <div class="section-wrapper">
     <h2>Research Overview</h2>
     <p>This doctoral research develops a comprehensive performance evaluation framework for open government data (OGD) platforms, addressing the critical gap between data supply and utilization effectiveness in China's rapidly evolving OGD ecosystem.</p>
     <div class="stat-grid">
-      <div class="stat-card"><div class="stat-value">30</div><div class="stat-label">Provincial Platforms Evaluated</div></div>
+      <div class="stat-card"><div class="stat-value">30</div><div class="stat-label">Provincial Platforms</div></div>
       <div class="stat-card"><div class="stat-value">4E</div><div class="stat-label">Evaluation Dimensions</div></div>
       <div class="stat-card"><div class="stat-value">28</div><div class="stat-label">Assessment Indicators</div></div>
       <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Mixed Methods Applied</div></div>
     </div>
   </div>
 
-  <!-- 4E Framework -->
-  <div class="section">
+  <div class="section-wrapper">
     <h2>The 4E Framework</h2>
-    <p>Our novel 4E framework extends the traditional 3E model (Economy-Efficiency-Effectiveness) by incorporating Equity as a critical fourth dimension, capturing the accessibility and fairness dimensions essential for OGD evaluation.</p>
+    <p>Our novel 4E framework extends the traditional 3E model (Economy-Efficiency-Effectiveness) by incorporating Equity as a critical fourth dimension.</p>
     <div class="method-grid">
       <div class="method-card"><div class="emoji">📦</div><h3>E1 Supply Assurance</h3><p>8 indicators measuring data availability, coverage, and update quality</p></div>
       <div class="method-card"><div class="emoji">🛠️</div><h3>E2 Platform Service</h3><p>7 indicators evaluating accessibility, functionality, and interaction support</p></div>
@@ -104,8 +88,7 @@ footer{text-align:center;padding:2rem;font-size:0.75rem;color:#475569;border-top
     </div>
   </div>
 
-  <!-- Methods -->
-  <div class="section">
+  <div class="section-wrapper">
     <h2>Methodology</h2>
     <p>A five-method mixed approach ensuring robustness and complementary insights:</p>
     <div class="method-grid">
@@ -117,30 +100,16 @@ footer{text-align:center;padding:2rem;font-size:0.75rem;color:#475569;border-top
     </div>
   </div>
 
-  <!-- Key Findings -->
-  <div class="section">
+  <div class="section-wrapper">
     <h2>Key Findings</h2>
     <div class="findings">
-      <div class="finding-card f1">
-        <h4>🎭 "Data Caliber Illusion"</h4>
-        <p>Raw dataset counts overstate supply by 15-40% due to inconsistent counting methodologies across platforms. CR (Caliber Ratio) adjustment reveals the true supply landscape.</p>
-      </div>
-      <div class="finding-card f2">
-        <h4>🔺 "Iron Triangle" Necessary Conditions</h4>
-        <p>fsQCA identifies E2 (Platform Service), E3 (Data Quality), and E4 (Utilization Effect) as necessary conditions (consistency=1.00) for high performance.</p>
-      </div>
-      <div class="finding-card f3">
-        <h4>📊 Quality-Effect Gap</h4>
-        <p>National average E3=0.832 but E4=0.268, revealing a critical "quality-effect gap" — high quality data fails to translate into utilization outcomes.</p>
-      </div>
-      <div class="finding-card f4">
-        <h4>📋 Policy Effect with Lag</h4>
-        <p>"Data 20 Articles" policy shows significant positive effect (β=0.043, p&lt;0.01) with 1-year lag, peaking at T+2.</p>
-      </div>
+      <div class="finding-card f1"><h4>Data Caliber Illusion</h4><p>Raw dataset counts overstate supply by 15-40% due to inconsistent counting methodologies across platforms.</p></div>
+      <div class="finding-card f2"><h4>"Iron Triangle" Necessary Conditions</h4><p>fsQCA identifies E2, E3, and E4 as necessary conditions (consistency=1.00) for high performance.</p></div>
+      <div class="finding-card f3"><h4>Quality-Effect Gap</h4><p>National average E3=0.832 but E4=0.268, revealing a critical quality-effect utilization gap.</p></div>
+      <div class="finding-card f4"><h4>Policy Effect with Lag</h4><p>"Data 20 Articles" policy shows significant positive effect (β=0.043, p&lt;0.01) with 1-year lag.</p></div>
     </div>
   </div>
 
-  <!-- CTA -->
   <div class="cta">
     <h2>Explore Interactive Visualizations</h2>
     <p>Dive into the data through our interactive dashboards</p>
@@ -153,9 +122,5 @@ footer{text-align:center;padding:2rem;font-size:0.75rem;color:#475569;border-top
   </div>
 </div>
 
-<footer>
-  OGD-Collector Pro · Doctoral Research · Wuhan University School of Information Management<br>
-  National Social Science Fund of China (21&ZD169) · PI: Prof. Chen Chuanfu & Prof. Ran Congjing
-</footer>
-</body>
-</html>
+<div class="en-footer">OGD-Collector Pro · Doctoral Research · Wuhan University School of Information Management<br>National Social Science Fund of China (21&ZD169) · PI: Prof. Chen Chuanfu &amp; Prof. Ran Congjing</div>
+{% endblock %}
