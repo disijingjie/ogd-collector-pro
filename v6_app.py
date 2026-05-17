@@ -193,6 +193,11 @@ def charts_topsis_dea():
     """TOPSIS vs DEA绩效-效率象限图"""
     return render_template('v6_topsis_dea_quadrant.html')
 
+@app.route('/charts/radar')
+def charts_radar():
+    """省级4E雷达对比器"""
+    return render_template('v6_radar_compare.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""

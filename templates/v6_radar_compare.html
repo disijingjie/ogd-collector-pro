@@ -1,0 +1,265 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}省级4E雷达对比器 - 交互式可视化{% endblock %}{% block page_title %}省级雷达对比器{% endblock %}{% block breadcrumb %}分析看板 / 省级雷达对比器{% endblock %}
+{% block extra_css %}
+<style>
+.chart-container { width: 100%; height: 480px; margin: 16px 0; }
+.chart-container.radar { height: 520px; }
+.controls { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label { font-size: 12px; color: var(--text-light); font-weight: 600; }
+.control-group select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; background: var(--card); min-width: 160px; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .compare-grid { grid-template-columns: 1fr; } }
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.stat-chip { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+.stat-chip .chip-label { color: var(--text-light); }
+.stat-chip .chip-value { font-weight: 700; font-size: 16px; }
+.dim-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px; }
+.dim-card { text-align: center; padding: 12px 8px; border-radius: 10px; border: 1px solid var(--border); }
+.dim-card .dim-name { font-size: 11px; color: var(--text-light); }
+.dim-card .dim-score { font-size: 22px; font-weight: 800; margin: 4px 0; }
+.dim-card .dim-bar { height: 4px; border-radius: 2px; background: #e2e8f0; margin-top: 4px; }
+.dim-card .dim-bar-fill { height: 100%; border-radius: 2px; }
+.compare-mode { display: flex; gap: 8px; margin-bottom: 16px; }
+.mode-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--text-light); cursor: pointer; transition: all .2s; }
+.mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.region-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.region-tag { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">省级4E雷达对比器</div>
+    <div style="font-size:14px;color:#99f6e4">选择省份 → 查看5维雷达图 + 全国均值对比 | 支持双省PK模式</div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="control-group">
+    <label>省份A</label>
+    <select id="provinceA" onchange="updateCharts()"></select>
+  </div>
+  <div class="control-group">
+    <label>省份B（对比）</label>
+    <select id="provinceB"><option value="">-- 不对比 --</option></select>
+  </div>
+  <div class="control-group">
+    <label>基准线</label>
+    <select id="baseline" onchange="updateCharts()">
+      <option value="avg">全国均值</option>
+      <option value="max">理论最优</option>
+      <option value="none">无基准</option>
+    </select>
+  </div>
+</div>
+
+<div class="stat-row" id="statRow">
+  <!-- Dynamic stats -->
+</div>
+
+<div class="dim-cards" id="dimCards">
+  <!-- Dynamic dimension cards -->
+</div>
+
+<div class="compare-grid">
+  <div class="card">
+    <div class="card-title"><div class="icon"></div>4E雷达图</div>
+    <div id="radarChart" class="chart-container radar"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon"></div>维度柱状对比</div>
+    <div id="barChart" class="chart-container"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>23省4E得分热力表</div>
+  <div style="overflow-x:auto">
+  <table class="data-table" id="heatTable">
+    <thead>
+      <tr><th>省份</th><th>区域</th><th>TOPSIS</th><th>E1供应保障</th><th>E2平台服务</th><th>E3数据质量</th><th>E4利用效果</th><th>E5公平性</th><th>分型</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+const data = [
+  {name:'山东',topsis:0.955,e1:0.881,e2:0.773,e3:1.000,e4:1.000,e5:1.000,dea:1.000,type:'标杆型',region:'east',rn:'东部'},
+  {name:'四川',topsis:0.570,e1:0.857,e2:0.800,e3:1.000,e4:0.420,e5:1.000,dea:0.831,type:'潜力型',region:'west',rn:'西部'},
+  {name:'辽宁',topsis:0.564,e1:0.762,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.884,type:'潜力型',region:'ne',rn:'东北'},
+  {name:'广西',topsis:0.558,e1:0.722,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.848,type:'潜力型',region:'west',rn:'西部'},
+  {name:'海南',topsis:0.553,e1:0.776,e2:0.745,e3:1.000,e4:0.420,e5:1.000,dea:0.843,type:'潜力型',region:'east',rn:'东部'},
+  {name:'北京',topsis:0.551,e1:0.746,e2:0.773,e3:1.000,e4:0.420,e5:1.000,dea:0.862,type:'潜力型',region:'east',rn:'东部'},
+  {name:'湖南',topsis:0.529,e1:0.548,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.887,type:'潜力型',region:'central',rn:'中部'},
+  {name:'河南',topsis:0.511,e1:0.604,e2:0.718,e3:0.880,e4:0.420,e5:0.700,dea:0.938,type:'潜力型',region:'central',rn:'中部'},
+  {name:'内蒙古',topsis:0.505,e1:0.419,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.882,type:'潜力型',region:'west',rn:'西部'},
+  {name:'天津',topsis:0.498,e1:0.593,e2:0.641,e3:0.880,e4:0.420,e5:0.700,dea:0.918,type:'追赶型',region:'east',rn:'东部'},
+  {name:'山西',topsis:0.491,e1:0.520,e2:0.668,e3:1.000,e4:0.420,e5:0.700,dea:0.924,type:'追赶型',region:'central',rn:'中部'},
+  {name:'广东',topsis:0.418,e1:0.820,e2:0.564,e3:0.880,e4:0.210,e5:0.700,dea:0.712,type:'追赶型',region:'east',rn:'东部'},
+  {name:'重庆',topsis:0.404,e1:0.756,e2:0.564,e3:0.880,e4:0.210,e5:0.700,dea:0.729,type:'追赶型',region:'west',rn:'西部'},
+  {name:'江苏',topsis:0.399,e1:0.551,e2:0.818,e3:0.880,e4:0.210,e5:0.700,dea:0.743,type:'追赶型',region:'east',rn:'东部'},
+  {name:'湖北',topsis:0.389,e1:0.659,e2:0.614,e3:0.880,e4:0.210,e5:0.700,dea:0.699,type:'滞后型',region:'central',rn:'中部'},
+  {name:'浙江',topsis:0.389,e1:0.659,e2:0.614,e3:0.880,e4:0.210,e5:0.700,dea:0.687,type:'滞后型',region:'east',rn:'东部'},
+  {name:'贵州',topsis:0.349,e1:0.636,e2:0.359,e3:0.880,e4:0.210,e5:0.700,dea:0.737,type:'滞后型',region:'west',rn:'西部'},
+  {name:'福建',topsis:0.325,e1:0.584,e2:0.259,e3:0.880,e4:0.210,e5:0.700,dea:0.696,type:'滞后型',region:'east',rn:'东部'},
+  {name:'江西',topsis:0.304,e1:0.400,e2:0.486,e3:0.880,e4:0.210,e5:0.700,dea:0.690,type:'滞后型',region:'central',rn:'中部'},
+  {name:'吉林',topsis:0.282,e1:0.309,e2:0.486,e3:0.880,e4:0.210,e5:0.700,dea:0.659,type:'滞后型',region:'ne',rn:'东北'},
+  {name:'云南',topsis:0.275,e1:0.349,e2:0.386,e3:0.880,e4:0.210,e5:0.700,dea:0.630,type:'滞后型',region:'west',rn:'西部'},
+  {name:'上海',topsis:0.268,e1:0.604,e2:0.332,e3:0.880,e4:0.000,e5:0.700,dea:0.599,type:'滞后型',region:'east',rn:'东部'},
+  {name:'安徽',topsis:0.095,e1:0.080,e2:0.255,e3:0.880,e4:0.000,e5:0.400,dea:0.450,type:'困境型',region:'central',rn:'中部'}
+];
+const typeColor = {'标杆型':'#059669','潜力型':'#d97706','追赶型':'#2563eb','滞后型':'#ea580c','困境型':'#dc2626'};
+const dimNames = ['E1供应保障','E2平台服务','E3数据质量','E4利用效果','E5公平性'];
+const avg = {
+  e1: data.reduce((s,d)=>s+d.e1,0)/data.length,
+  e2: data.reduce((s,d)=>s+d.e2,0)/data.length,
+  e3: data.reduce((s,d)=>s+d.e3,0)/data.length,
+  e4: data.reduce((s,d)=>s+d.e4,0)/data.length,
+  e5: data.reduce((s,d)=>s+d.e5,0)/data.length,
+};
+
+// Populate selects
+const selA = document.getElementById('provinceA');
+const selB = document.getElementById('provinceB');
+data.forEach((d,i) => {
+  const o1 = document.createElement('option'); o1.value = i; o1.textContent = `${d.name} (${d.type})`;
+  selA.appendChild(o1);
+  const o2 = document.createElement('option'); o2.value = i; o2.textContent = `${d.name} (${d.type})`;
+  selB.appendChild(o2);
+});
+selA.value = 0; // 山东
+selB.addEventListener('change', updateCharts);
+
+const radarChart = echarts.init(document.getElementById('radarChart'));
+const barChart = echarts.init(document.getElementById('barChart'));
+
+function updateCharts() {
+  const dA = data[selA.value];
+  const bIdx = selB.value;
+  const dB = bIdx !== '' ? data[bIdx] : null;
+  const baseline = document.getElementById('baseline').value;
+
+  // Stats row
+  const rank = [...data].sort((a,b)=>b.topsis-a.topsis).findIndex(d=>d.name===dA.name)+1;
+  document.getElementById('statRow').innerHTML = `
+    <div class="stat-chip"><span class="chip-label">省份</span><span class="chip-value" style="color:${typeColor[dA.type]}">${dA.name}</span></div>
+    <div class="stat-chip"><span class="chip-label">TOPSIS</span><span class="chip-value" style="color:#2563eb">${dA.topsis.toFixed(3)}</span></div>
+    <div class="stat-chip"><span class="chip-label">DEA效率</span><span class="chip-value" style="color:#0d9488">${dA.dea.toFixed(3)}</span></div>
+    <div class="stat-chip"><span class="chip-label">排名</span><span class="chip-value">#${rank}/23</span></div>
+    <div class="stat-chip"><span class="chip-label">分型</span><span class="chip-value" style="color:${typeColor[dA.type]}">${dA.type}</span></div>
+    <div class="stat-chip"><span class="chip-label">区域</span><span class="chip-value">${dA.rn}</span></div>
+  `;
+
+  // Dimension cards
+  const dims = [{n:'E1供应保障',v:dA.e1,c:'#2563eb'},{n:'E2平台服务',v:dA.e2,c:'#0d9488'},{n:'E3数据质量',v:dA.e3,c:'#059669'},{n:'E4利用效果',v:dA.e4,c:'#d97706'},{n:'E5公平性',v:dA.e5,c:'#7c3aed'}];
+  document.getElementById('dimCards').innerHTML = dims.map(d => `
+    <div class="dim-card"><div class="dim-name">${d.n}</div><div class="dim-score" style="color:${d.c}">${d.v.toFixed(3)}</div>
+    <div class="dim-bar"><div class="dim-bar-fill" style="width:${d.v*100}%;background:${d.c}"></div></div></div>
+  `).join('');
+
+  // Radar chart
+  const radarSeries = [];
+  radarSeries.push({
+    value: [dA.e1,dA.e2,dA.e3,dA.e4,dA.e5], name: dA.name,
+    areaStyle: { color: typeColor[dA.type]+'33' },
+    lineStyle: { color: typeColor[dA.type], width: 2.5 },
+    itemStyle: { color: typeColor[dA.type] }
+  });
+  if (dB) {
+    radarSeries.push({
+      value: [dB.e1,dB.e2,dB.e3,dB.e4,dB.e5], name: dB.name,
+      areaStyle: { color: typeColor[dB.type]+'20' },
+      lineStyle: { color: typeColor[dB.type], width: 2, type: 'dashed' },
+      itemStyle: { color: typeColor[dB.type] }
+    });
+  }
+  if (baseline === 'avg') {
+    radarSeries.push({
+      value: [avg.e1,avg.e2,avg.e3,avg.e4,avg.e5], name: '全国均值',
+      areaStyle: { color: 'rgba(148,163,184,0.06)' },
+      lineStyle: { color: '#94a3b8', width: 1, type: 'dotted' },
+      itemStyle: { color: '#94a3b8' }
+    });
+  } else if (baseline === 'max') {
+    radarSeries.push({
+      value: [1,1,1,1,1], name: '理论最优',
+      areaStyle: { color: 'rgba(5,150,105,0.04)' },
+      lineStyle: { color: '#059669', width: 1, type: 'dotted' },
+      itemStyle: { color: '#059669' }
+    });
+  }
+
+  radarChart.setOption({
+    tooltip: {},
+    legend: { data: radarSeries.map(s=>s.name), bottom: 0, textStyle: { fontSize: 11 } },
+    radar: {
+      indicator: dimNames.map(n => ({name:n, max:1})),
+      radius: '65%',
+      axisName: { fontSize: 12, color: '#475569' },
+      splitArea: { areaStyle: { color: ['#fff','#f8fafc','#fff','#f8fafc','#fff'] } }
+    },
+    series: [{ type: 'radar', data: radarSeries }]
+  }, true);
+
+  // Bar chart
+  const categories = dimNames;
+  const barDataA = [dA.e1, dA.e2, dA.e3, dA.e4, dA.e5];
+  const barDataB = dB ? [dB.e1, dB.e2, dB.e3, dB.e4, dB.e5] : null;
+  const barDataAvg = [avg.e1, avg.e2, avg.e3, avg.e4, avg.e5];
+
+  const barSeries = [{
+    name: dA.name, type: 'bar', data: barDataA,
+    itemStyle: { color: typeColor[dA.type], borderRadius: [4,4,0,0] },
+    barMaxWidth: 30
+  }];
+  if (barDataB) {
+    barSeries.push({
+      name: dB.name, type: 'bar', data: barDataB,
+      itemStyle: { color: typeColor[dB.type], borderRadius: [4,4,0,0], opacity: 0.7 },
+      barMaxWidth: 30
+    });
+  }
+  barSeries.push({
+    name: '全国均值', type: 'line', data: barDataAvg,
+    lineStyle: { color: '#94a3b8', type: 'dashed', width: 1.5 },
+    itemStyle: { color: '#94a3b8' }, symbol: 'diamond', symbolSize: 8
+  });
+
+  barChart.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: barSeries.map(s=>s.name), bottom: 0, textStyle: { fontSize: 11 } },
+    grid: { left: '3%', right: '4%', bottom: '12%', top: '8%', containLabel: true },
+    xAxis: { type: 'category', data: categories, axisLabel: { fontSize: 11 } },
+    yAxis: { type: 'value', min: 0, max: 1.1, axisLabel: { fontSize: 11 } },
+    series: barSeries
+  }, true);
+}
+
+updateCharts();
+
+// Heat table
+const tbody = document.querySelector('#heatTable tbody');
+data.forEach(d => {
+  const tr = document.createElement('tr');
+  const tc = typeColor[d.type];
+  const heatStyle = v => `background:rgba(37,99,235,${v*0.3});font-weight:${v>0.7?'700':'400'}`;
+  tr.innerHTML = `<td><strong>${d.name}</strong></td><td>${d.rn}</td>
+    <td style="${heatStyle(d.topsis)}">${d.topsis.toFixed(3)}</td>
+    <td style="${heatStyle(d.e1)}">${d.e1.toFixed(3)}</td>
+    <td style="${heatStyle(d.e2)}">${d.e2.toFixed(3)}</td>
+    <td style="${heatStyle(d.e3)}">${d.e3.toFixed(3)}</td>
+    <td style="${heatStyle(d.e4)}">${d.e4.toFixed(3)}</td>
+    <td style="${heatStyle(d.e5)}">${d.e5.toFixed(3)}</td>
+    <td><span style="background:${tc}20;color:${tc};padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">${d.type}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+window.addEventListener('resize', () => { radarChart.resize(); barChart.resize(); });
+</script>
+{% endblock %}
