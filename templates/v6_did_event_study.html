@@ -1,0 +1,165 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}DID事件研究可视化 - 政策效应分析{% endblock %}{% block page_title %}DID事件研究{% endblock %}{% block breadcrumb %}分析看板 / DID事件研究{% endblock %}
+{% block extra_css %}
+<style>
+.chart-container { width: 100%; height: 500px; margin: 16px 0; }
+.chart-container.small { height: 380px; }
+.dim-effect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .dim-effect-grid { grid-template-columns: 1fr; } }
+.effect-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+.effect-card .ec-label { font-size: 12px; color: var(--text-light); }
+.effect-card .ec-value { font-size: 28px; font-weight: 800; margin: 6px 0; }
+.effect-card .ec-signif { font-size: 11px; }
+.sig-star { color: #dc2626; }
+.timeline-steps { display: flex; gap: 0; margin: 20px 0; }
+.timeline-step { flex: 1; text-align: center; padding: 12px 8px; border-right: 2px solid var(--border); position: relative; }
+.timeline-step:last-child { border-right: none; }
+.timeline-step .ts-period { font-size: 12px; color: var(--text-light); font-weight: 600; }
+.timeline-step .ts-value { font-size: 16px; font-weight: 700; margin: 4px 0; }
+.timeline-step .ts-label { font-size: 10px; color: var(--text-light); }
+.robustness-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.robustness-table th { background: #1e293b; color: #fff; padding: 10px 14px; text-align: center; }
+.robustness-table td { padding: 8px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+.robustness-table td:first-child { text-align: left; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#9f1239,#be123c);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">DID事件研究：政策效应分析</div>
+    <div style="font-size:14px;color:#fecdd3">多期双重差分法 | "数据二十条"政策效应 | 维度异质性+时间滞后 | 论文表6-7/6-8</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>核心发现</div>
+  <div class="dim-effect-grid">
+    <div class="effect-card" style="background:#fff7ed">
+      <div class="ec-label">"数据二十条"政策总体效应</div>
+      <div class="ec-value" style="color:#ea580c">+0.043</div>
+      <div class="ec-signif"><span class="sig-star">***</span> p&lt;0.01 显著正效应</div>
+    </div>
+    <div class="effect-card" style="background:#f0fdf4">
+      <div class="ec-label">最强影响维度</div>
+      <div class="ec-value" style="color:#059669">E2 平台服务</div>
+      <div class="ec-signif">β=0.051 <span class="sig-star">***</span> 政策最大受益者</div>
+    </div>
+    <div class="effect-card" style="background:#eff6ff">
+      <div class="ec-label">时间滞后特征</div>
+      <div class="ec-value" style="color:#2563eb">1年</div>
+      <div class="ec-signif">政策效果在实施1年后显著显现</div>
+    </div>
+    <div class="effect-card" style="background:#fef2f2">
+      <div class="ec-label">无效维度</div>
+      <div class="ec-value" style="color:#dc2626">E1 供应保障</div>
+      <div class="ec-signif">β=0.018 不显著 — 数据量非政策直接目标</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>政策效应时序图（事件研究）</div>
+  <div id="eventStudyChart" class="chart-container"></div>
+  <div class="provenance-panel">
+    <h4>平行趋势检验解读</h4>
+    <div style="font-size:0.85em;color:#475569">
+      事件研究法(Event Study)验证DID的平行趋势假设：政策实施前(T-3至T-1)各期系数均不显著异于0，说明处理组和对照组在政策前趋势一致；政策后(T+1至T+3)系数显著上升，验证了政策因果效应。95%置信区间不包含0即为显著。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>维度异质性：政策效应的差异化传导</div>
+  <div id="dimEffectChart" class="chart-container"></div>
+  <div style="font-size:13px;color:var(--text-light);line-height:1.8;margin-top:12px">
+    <strong>核心洞察</strong>："数据二十条"对E2平台服务影响最大(β=0.051)，其次E3数据质量(β=0.046)和E4利用效果(β=0.039)，但E1供应保障不显著(β=0.018)。这说明政策主要推动<strong>服务优化和质量提升</strong>，而非简单增加数据数量。验证了"重质不重量"的政策效果方向。
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>政策效应时间线</div>
+  <div class="timeline-steps">
+    <div class="timeline-step"><div class="ts-period">T-3</div><div class="ts-value" style="color:#94a3b8">0.008</div><div class="ts-label">不显著</div></div>
+    <div class="timeline-step"><div class="ts-period">T-2</div><div class="ts-value" style="color:#94a3b8">-0.005</div><div class="ts-label">不显著</div></div>
+    <div class="timeline-step"><div class="ts-period">T-1</div><div class="ts-value" style="color:#94a3b8">0.012</div><div class="ts-label">不显著(基准期)</div></div>
+    <div class="timeline-step" style="background:#fef2f2"><div class="ts-period" style="color:#dc2626;font-weight:700">T 政策实施</div><div class="ts-value" style="color:#ea580c">+0.021</div><div class="ts-label">初步显现</div></div>
+    <div class="timeline-step" style="background:#fff7ed"><div class="ts-period">T+1</div><div class="ts-value" style="color:#ea580c">+0.043</div><div class="ts-label"><span class="sig-star">***</span> 显著</div></div>
+    <div class="timeline-step" style="background:#f0fdf4"><div class="ts-period">T+2</div><div class="ts-value" style="color:#059669">+0.058</div><div class="ts-label"><span class="sig-star">***</span> 持续增强</div></div>
+    <div class="timeline-step" style="background:#ecfdf5"><div class="ts-period">T+3</div><div class="ts-value" style="color:#059669">+0.067</div><div class="ts-label"><span class="sig-star">***</span> 效应扩大</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>稳健性检验</div>
+  <table class="robustness-table">
+    <thead><tr><th>检验方法</th><th>系数估计</th><th>标准误</th><th>显著性</th><th>结论</th></tr></thead>
+    <tbody>
+      <tr><td>基准DID</td><td>0.043</td><td>0.015</td><td><span class="sig-star">***</span></td><td>政策显著正效应</td></tr>
+      <tr><td>平行趋势检验</td><td>—</td><td>—</td><td>通过</td><td>政策前无显著差异</td></tr>
+      <tr><td>安慰剂检验</td><td>0.008</td><td>0.018</td><td>不显著</td><td>虚假政策无效应</td></tr>
+      <tr><td>PSM-DID</td><td>0.039</td><td>0.017</td><td><span class="sig-star">**</span></td><td>匹配后效应仍显著</td></tr>
+      <tr><td>更换控制变量</td><td>0.041</td><td>0.016</td><td><span class="sig-star">**</span></td><td>结果稳健</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+// Event study data - coefficients and 95% CI
+const periods = ['T-3','T-2','T-1','T','T+1','T+2','T+3'];
+const coefficients = [0.008, -0.005, 0.012, 0.021, 0.043, 0.058, 0.067];
+const ciUpper = [0.025, 0.018, 0.032, 0.042, 0.065, 0.082, 0.094];
+const ciLower = [-0.009, -0.028, -0.008, 0.000, 0.021, 0.034, 0.040];
+
+const esChart = echarts.init(document.getElementById('eventStudyChart'));
+esChart.setOption({
+  tooltip: { trigger: 'axis', formatter: function(params) {
+    const i = params[0].dataIndex;
+    const sig = (i >= 4) ? ' ***显著' : ' (不显著)';
+    return `<strong>${periods[i]}</strong><br/>系数: ${coefficients[i].toFixed(3)}<br/>95%CI: [${ciLower[i].toFixed(3)}, ${ciUpper[i].toFixed(3)}]${sig}`;
+  }},
+  grid: { left: '8%', right: '4%', bottom: '8%', top: '8%', containLabel: true },
+  xAxis: { type: 'category', data: periods, axisLabel: { fontSize: 12 } },
+  yAxis: { type: 'value', name: '系数估计值', nameLocation: 'middle', nameGap: 40 },
+  series: [
+    { name: '95%CI上界', type: 'line', data: ciUpper, lineStyle: { opacity: 0 }, areaStyle: { color: 'rgba(234,88,12,0.1)' }, stack: 'ci', symbol: 'none' },
+    { name: '95%CI下界', type: 'line', data: ciLower, lineStyle: { opacity: 0 }, areaStyle: { color: 'rgba(234,88,12,0.1)' }, stack: 'ci', symbol: 'none' },
+    { name: '系数估计', type: 'line', data: coefficients, lineStyle: { color: '#ea580c', width: 3 },
+      itemStyle: { color: function(p) { return p.dataIndex >= 4 ? '#ea580c' : '#94a3b8'; }, borderWidth: 2 },
+      symbolSize: 10,
+      markLine: { silent: true, lineStyle: { type: 'dashed', color: '#94a3b8' }, data: [{ yAxis: 0 }], label: { formatter: '零线', fontSize: 10 } }
+    }
+  ]
+});
+
+// Dimensional heterogeneity
+const dimChart = echarts.init(document.getElementById('dimEffectChart'));
+const dims = ['总体', 'E2平台服务', 'E3数据质量', 'E4利用效果', 'E5公平性', 'E1供应保障'];
+const betas = [0.043, 0.051, 0.046, 0.039, 0.028, 0.018];
+const dimSigs = ['***', '***', '***', '**', '*', 'n.s.'];
+const dimColors = ['#ea580c', '#059669', '#0d9488', '#2563eb', '#7c3aed', '#94a3b8'];
+
+dimChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: function(params) {
+    const i = params[0].dataIndex;
+    return `<strong>${dims[i]}</strong><br/>β = ${betas[i].toFixed(3)} (${dimSigs[i]})`;
+  }},
+  grid: { left: '3%', right: '8%', bottom: '3%', top: '8%', containLabel: true },
+  xAxis: { type: 'value', name: '政策效应系数(β)' },
+  yAxis: { type: 'category', data: dims.reverse(), axisLabel: { fontSize: 12 } },
+  series: [{
+    type: 'bar', data: betas.reverse().map((v,i) => ({
+      value: v,
+      itemStyle: { color: dimColors[dimColors.length-1-i], borderRadius: [0,4,4,0] }
+    })),
+    barMaxWidth: 30,
+    label: { show: true, position: 'right', formatter: function(p) { return p.value.toFixed(3) + ' ' + dimSigs[dimSigs.length-1-p.dataIndex]; }, fontSize: 11 },
+    markLine: { silent: true, lineStyle: { type: 'dashed', color: '#94a3b8' }, data: [{ xAxis: 0 }] }
+  }]
+});
+
+window.addEventListener('resize', () => { esChart.resize(); dimChart.resize(); });
+</script>
+{% endblock %}

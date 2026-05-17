@@ -208,6 +208,11 @@ def charts_dematel_force():
     """DEMATEL因果网络力导向图"""
     return render_template('v6_dematel_force.html')
 
+@app.route('/charts/did')
+def charts_did():
+    """DID事件研究可视化"""
+    return render_template('v6_did_event_study.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""
