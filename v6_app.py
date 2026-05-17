@@ -198,6 +198,11 @@ def charts_radar():
     """省级4E雷达对比器"""
     return render_template('v6_radar_compare.html')
 
+@app.route('/charts/fsqca-explorer')
+def charts_fsqca_explorer():
+    """fsQCA组态路径浏览器"""
+    return render_template('v6_fsqca_explorer.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""

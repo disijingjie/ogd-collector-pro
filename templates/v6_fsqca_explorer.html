@@ -1,0 +1,254 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}fsQCA组态路径浏览器 - 交互式可视化{% endblock %}{% block page_title %}fsQCA组态路径浏览器{% endblock %}{% block breadcrumb %}分析看板 / fsQCA组态路径{% endblock %}
+{% block extra_css %}
+<style>
+.chart-container { width: 100%; height: 480px; margin: 16px 0; }
+.chart-container.tall { height: 560px; }
+.path-card { border: 2px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: all .2s; cursor: pointer; }
+.path-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+.path-card.active { border-color: var(--primary); background: linear-gradient(135deg,#eff6ff,#dbeafe); }
+.path-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.path-name { font-size: 16px; font-weight: 700; }
+.path-stats { display: flex; gap: 16px; }
+.path-stat { text-align: center; }
+.path-stat .val { font-size: 20px; font-weight: 800; }
+.path-stat .lbl { font-size: 11px; color: var(--text-light); }
+.condition-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.condition { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.condition.present { background: #dcfce7; color: #166534; }
+.condition.absent { background: #fee2e2; color: #991b1b; text-decoration: line-through; opacity: 0.6; }
+.condition.core { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+.province-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.province-chip { padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.necessary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+.necessary-card { text-align: center; padding: 16px; border-radius: 10px; border: 1px solid var(--border); }
+.necessary-card .nc-label { font-size: 12px; color: var(--text-light); }
+.necessary-card .nc-value { font-size: 24px; font-weight: 800; color: #059669; }
+.necessary-card .nc-desc { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#4c1d95,#5b21b6);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">fsQCA组态路径浏览器</div>
+    <div style="font-size:14px;color:#c4b5fd">模糊集定性比较分析 | 高/低绩效组态路径 | 必要条件分析 | 论文表6-2/6-3/6-4</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>必要条件分析 — "铁三角"效应</div>
+  <div style="font-size:13px;color:var(--text-light);margin-bottom:16px;line-height:1.8">
+    fsQCA必要条件分析表明，<strong>E2平台服务、E3数据质量、E4利用效果</strong>是高绩效的必要条件（一致性=1.00），三者构成"铁三角"。E1供应保障<strong>非必要</strong>（一致性0.81），意味着没有充分的数据供给也能通过其他路径实现高绩效。
+  </div>
+  <div class="necessary-grid">
+    <div class="necessary-card" style="background:#f0fdf4">
+      <div class="nc-label">E2 平台服务</div>
+      <div class="nc-value">1.00</div>
+      <div class="nc-desc">一致性 / 必要条件</div>
+    </div>
+    <div class="necessary-card" style="background:#f0fdf4">
+      <div class="nc-label">E3 数据质量</div>
+      <div class="nc-value">1.00</div>
+      <div class="nc-desc">一致性 / 必要条件</div>
+    </div>
+    <div class="necessary-card" style="background:#f0fdf4">
+      <div class="nc-label">E4 利用效果</div>
+      <div class="nc-value">1.00</div>
+      <div class="nc-desc">一致性 / 必要条件</div>
+    </div>
+  </div>
+  <div class="necessary-grid" style="grid-template-columns: 1fr 1fr">
+    <div class="necessary-card">
+      <div class="nc-label">E1 供应保障</div>
+      <div class="nc-value" style="color:#d97706">0.81</div>
+      <div class="nc-desc">一致性 / 非必要条件</div>
+    </div>
+    <div class="necessary-card">
+      <div class="nc-label">E5 公平性</div>
+      <div class="nc-value" style="color:#d97706">0.78</div>
+      <div class="nc-desc">一致性 / 非必要条件</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>高绩效组态路径（论文表6-2）</div>
+  <div id="pathH1" class="path-card active" onclick="selectPath('h1')">
+    <div class="path-header">
+      <div><span class="path-name" style="color:#059669">H1: 全因子驱动路径</span> <span style="font-size:12px;color:var(--text-light)">E1·E2·E3·E4</span></div>
+      <div class="path-stats">
+        <div class="path-stat"><div class="val" style="color:#059669">1.00</div><div class="lbl">一致性</div></div>
+        <div class="path-stat"><div class="val" style="color:#2563eb">0.81</div><div class="lbl">覆盖度</div></div>
+        <div class="path-stat"><div class="val" style="color:#7c3aed">13</div><div class="lbl">省份数</div></div>
+      </div>
+    </div>
+    <div class="condition-row">
+      <span class="condition core">E1 供应保障 ✓</span>
+      <span class="condition core">E2 平台服务 ✓</span>
+      <span class="condition core">E3 数据质量 ✓</span>
+      <span class="condition core">E4 利用效果 ✓</span>
+      <span class="condition present">E5 公平性 ✓</span>
+    </div>
+    <div style="font-size:12px;color:var(--text-light);margin-top:8px">四维度同时高水平，是高绩效的充分条件组合。覆盖81%的高绩效案例。</div>
+    <div class="province-chips">
+      <span class="province-chip" style="background:#dcfce7;color:#166534">山东</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">四川</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">辽宁</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">广西</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">海南</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">北京</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">湖南</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">河南</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">内蒙古</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">天津</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">山西</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">广东</span>
+      <span class="province-chip" style="background:#dcfce7;color:#166534">重庆</span>
+    </div>
+  </div>
+
+  <div id="pathH2" class="path-card" onclick="selectPath('h2')">
+    <div class="path-header">
+      <div><span class="path-name" style="color:#2563eb">H2: 服务-质量-效应驱动路径</span> <span style="font-size:12px;color:var(--text-light)">~E1·E2·E3·E4</span></div>
+      <div class="path-stats">
+        <div class="path-stat"><div class="val" style="color:#059669">1.00</div><div class="lbl">一致性</div></div>
+        <div class="path-stat"><div class="val" style="color:#2563eb">0.19</div><div class="lbl">覆盖度</div></div>
+        <div class="path-stat"><div class="val" style="color:#7c3aed">3</div><div class="lbl">省份数</div></div>
+      </div>
+    </div>
+    <div class="condition-row">
+      <span class="condition absent">E1 供应保障 ✗</span>
+      <span class="condition core">E2 平台服务 ✓</span>
+      <span class="condition core">E3 数据质量 ✓</span>
+      <span class="condition core">E4 利用效果 ✓</span>
+      <span class="condition present">E5 公平性 ✓</span>
+    </div>
+    <div style="font-size:12px;color:var(--text-light);margin-top:8px"><strong>关键发现</strong>：不需要充分的数据供给(E1)，仅靠E2+E3+E4即可实现高绩效。说明"铁三角"已足够，数据少但质量高、服务好、应用广也能出成绩。</div>
+    <div class="province-chips">
+      <span class="province-chip" style="background:#dbeafe;color:#1e40af">江苏</span>
+      <span class="province-chip" style="background:#dbeafe;color:#1e40af">湖北</span>
+      <span class="province-chip" style="background:#dbeafe;color:#1e40af">浙江</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>低绩效组态路径（论文表6-3）</div>
+  <div style="display:grid;gap:12px">
+    <div class="path-card" style="padding:14px">
+      <div class="path-header"><div><span class="path-name" style="color:#dc2626;font-size:14px">L1: 全剥夺路径</span></div>
+      <div class="path-stats"><div class="path-stat"><div class="val" style="color:#dc2626;font-size:16px">0.53</div><div class="lbl">覆盖度</div></div></div></div>
+      <div class="condition-row"><span class="condition absent">E1 ✗</span><span class="condition absent">E2 ✗</span><span class="condition absent">E3 ✗</span><span class="condition absent">E4 ✗</span></div>
+      <div style="font-size:11px;color:var(--text-light)">所有维度均缺失 → 8个省份：上海/福建/江西/吉林/云南/安徽/贵州/山西部分</div>
+    </div>
+    <div class="path-card" style="padding:14px">
+      <div class="path-header"><div><span class="path-name" style="color:#ea580c;font-size:14px">L2: 平台服务缺失路径</span></div>
+      <div class="path-stats"><div class="path-stat"><div class="val" style="color:#ea580c;font-size:16px">0.33</div><div class="lbl">覆盖度</div></div></div></div>
+      <div class="condition-row"><span class="condition absent">E2 ✗</span></div>
+      <div style="font-size:11px;color:var(--text-light)">缺乏平台服务能力 → 5个省份</div>
+    </div>
+    <div class="path-card" style="padding:14px">
+      <div class="path-header"><div><span class="path-name" style="color:#d97706;font-size:14px">L3: 利用效果缺失路径</span></div>
+      <div class="path-stats"><div class="path-stat"><div class="val" style="color:#d97706;font-size:16px">0.13</div><div class="lbl">覆盖度</div></div></div></div>
+      <div class="condition-row"><span class="condition absent">E4 ✗</span></div>
+      <div style="font-size:11px;color:var(--text-light)">有数据但无应用效果 → 2个省份</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>省份组态归属图（交互式）</div>
+  <div id="sankeyChart" class="chart-container tall"></div>
+  <div class="provenance-panel">
+    <h4>数据复现信息</h4>
+    <div style="font-size:0.85em;color:#475569">
+      <strong>校准锚点</strong>：75th/50th/25th百分位 → 模糊集值1.0/0.5/0.0<br>
+      <strong>一致性阈值</strong>：≥0.90（高绩效），≥0.85（低绩效）<br>
+      <strong>频率阈值</strong>：≥1（至少1个案例）<br>
+      <strong>核心发现</strong>：E2+E3+E4为高绩效"铁三角"，E1非必要（支持H2路径）
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+function selectPath(path) {
+  document.querySelectorAll('.path-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('path' + path.toUpperCase()).classList.add('active');
+}
+
+// Sankey diagram showing province → path flow
+const skChart = echarts.init(document.getElementById('sankeyChart'));
+skChart.setOption({
+  tooltip: { trigger: 'item', triggerOn: 'mousemove' },
+  series: [{
+    type: 'sankey',
+    layoutIterations: 32,
+    nodeWidth: 20,
+    nodeGap: 8,
+    left: '5%',
+    right: '15%',
+    top: '5%',
+    bottom: '5%',
+    label: { fontSize: 11, color: '#1e293b' },
+    lineStyle: { color: 'gradient', curveness: 0.5, opacity: 0.4 },
+    emphasis: { lineStyle: { opacity: 0.8 } },
+    data: [
+      {name:'山东',itemStyle:{color:'#059669'}},{name:'四川',itemStyle:{color:'#059669'}},
+      {name:'辽宁',itemStyle:{color:'#059669'}},{name:'广西',itemStyle:{color:'#059669'}},
+      {name:'海南',itemStyle:{color:'#059669'}},{name:'北京',itemStyle:{color:'#059669'}},
+      {name:'湖南',itemStyle:{color:'#059669'}},{name:'河南',itemStyle:{color:'#059669'}},
+      {name:'内蒙古',itemStyle:{color:'#059669'}},{name:'天津',itemStyle:{color:'#2563eb'}},
+      {name:'山西',itemStyle:{color:'#2563eb'}},{name:'广东',itemStyle:{color:'#2563eb'}},
+      {name:'重庆',itemStyle:{color:'#2563eb'}},
+      {name:'江苏',itemStyle:{color:'#7c3aed'}},{name:'湖北',itemStyle:{color:'#7c3aed'}},{name:'浙江',itemStyle:{color:'#7c3aed'}},
+      {name:'上海',itemStyle:{color:'#dc2626'}},{name:'福建',itemStyle:{color:'#dc2626'}},
+      {name:'江西',itemStyle:{color:'#dc2626'}},{name:'吉林',itemStyle:{color:'#dc2626'}},
+      {name:'云南',itemStyle:{color:'#dc2626'}},{name:'安徽',itemStyle:{color:'#dc2626'}},
+      {name:'贵州',itemStyle:{color:'#ea580c'}},
+      // Path nodes
+      {name:'H1全因子驱动',itemStyle:{color:'#059669'}},
+      {name:'H2服务-质量-效应驱动',itemStyle:{color:'#7c3aed'}},
+      {name:'L1全剥夺',itemStyle:{color:'#dc2626'}},
+      {name:'L2平台服务缺失',itemStyle:{color:'#ea580c'}},
+      {name:'L3利用效果缺失',itemStyle:{color:'#d97706'}}
+    ],
+    links: [
+      // H1 provinces
+      {source:'山东',target:'H1全因子驱动',value:1},
+      {source:'四川',target:'H1全因子驱动',value:1},
+      {source:'辽宁',target:'H1全因子驱动',value:1},
+      {source:'广西',target:'H1全因子驱动',value:1},
+      {source:'海南',target:'H1全因子驱动',value:1},
+      {source:'北京',target:'H1全因子驱动',value:1},
+      {source:'湖南',target:'H1全因子驱动',value:1},
+      {source:'河南',target:'H1全因子驱动',value:1},
+      {source:'内蒙古',target:'H1全因子驱动',value:1},
+      {source:'天津',target:'H1全因子驱动',value:1},
+      {source:'山西',target:'H1全因子驱动',value:1},
+      {source:'广东',target:'H1全因子驱动',value:1},
+      {source:'重庆',target:'H1全因子驱动',value:1},
+      // H2 provinces
+      {source:'江苏',target:'H2服务-质量-效应驱动',value:1},
+      {source:'湖北',target:'H2服务-质量-效应驱动',value:1},
+      {source:'浙江',target:'H2服务-质量-效应驱动',value:1},
+      // L1 provinces
+      {source:'上海',target:'L1全剥夺',value:1},
+      {source:'福建',target:'L1全剥夺',value:1},
+      {source:'江西',target:'L1全剥夺',value:1},
+      {source:'吉林',target:'L1全剥夺',value:1},
+      {source:'云南',target:'L1全剥夺',value:1},
+      {source:'安徽',target:'L1全剥夺',value:1},
+      // L2
+      {source:'贵州',target:'L2平台服务缺失',value:1},
+    ]
+  }]
+});
+
+window.addEventListener('resize', () => { skChart.resize(); });
+</script>
+{% endblock %}
