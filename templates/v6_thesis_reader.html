@@ -85,9 +85,10 @@
     <h3>📑 论文章节目录</h3>
     <ul class="toc-list" id="tocList">
       {% for ch in thesis.chapters %}
-      <li class="toc-item chapter" data-target="ch{{ loop.index }}">{{ ch.title }}</li>
+      {% set ch_idx = loop.index %}
+      <li class="toc-item chapter" data-target="ch{{ ch_idx }}">{{ ch.title }}</li>
       {% for sec in ch.sections %}
-      <li class="toc-item section" data-target="ch{{ loop.parent.loop.index }}-s{{ loop.index }}">{{ sec.title }}</li>
+      <li class="toc-item section" data-target="ch{{ ch_idx }}-s{{ loop.index }}">{{ sec.title }}</li>
       {% endfor %}
       {% endfor %}
       <li class="toc-item chapter" data-target="references" style="margin-top:12px;color:var(--primary)">参考文献（191条）</li>
@@ -99,11 +100,12 @@
     <div class="reader-content">
       <div class="thesis-paper">
         {% for ch in thesis.chapters %}
+        {% set ch_idx = loop.index %}
         <!-- 章节标题 -->
-        <h1 id="ch{{ loop.index }}">{{ ch.title }}</h1>
+        <h1 id="ch{{ ch_idx }}">{{ ch.title }}</h1>
         
         {% for sec in ch.sections %}
-        <div id="ch{{ loop.parent.loop.index }}-s{{ loop.index }}">
+        <div id="ch{{ ch_idx }}-s{{ loop.index }}">
           <h3>{{ sec.title }}</h3>
           {{ sec.content_html|safe }}
         </div>
