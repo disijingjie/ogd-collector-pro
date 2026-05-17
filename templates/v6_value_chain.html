@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4E价值链动画 | OGD-Collector Pro</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;overflow-x:hidden}
+
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);padding:2.5rem 1.5rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#3b82f6,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#94a3b8;margin-top:0.3rem;font-size:0.9rem}
+
+/* Value Chain Animation */
+.chain-wrap{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.chain-container{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:2rem;position:relative;overflow:hidden;min-height:360px}
+.chain-flow{display:flex;align-items:center;justify-content:center;gap:0;padding:2rem 0;position:relative}
+.chain-node{flex:1;text-align:center;position:relative;z-index:2;cursor:pointer;transition:all 0.4s}
+.chain-node:hover{transform:scale(1.05)}
+.chain-node .icon{width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 0.8rem;position:relative;transition:all 0.4s}
+.chain-node .icon::after{content:'';position:absolute;inset:-4px;border-radius:24px;opacity:0;transition:opacity 0.4s}
+.chain-node:hover .icon::after{opacity:1}
+.chain-node .label{font-size:1rem;font-weight:700;margin-bottom:0.3rem}
+.chain-node .sublabel{font-size:0.75rem;color:#94a3b8}
+.chain-node .score{font-size:1.8rem;font-weight:900;margin:0.3rem 0}
+
+.node-e1 .icon{background:rgba(59,130,246,0.2);color:#3b82f6}.node-e1 .icon::after{border:2px solid rgba(59,130,246,0.3)}
+.node-e2 .icon{background:rgba(139,92,246,0.2);color:#8b5cf6}.node-e2 .icon::after{border:2px solid rgba(139,92,246,0.3)}
+.node-e3 .icon{background:rgba(16,185,129,0.2);color:#10b981}.node-e3 .icon::after{border:2px solid rgba(16,185,129,0.3)}
+.node-e4 .icon{background:rgba(245,158,11,0.2);color:#f59e0b}.node-e4 .icon::after{border:2px solid rgba(245,158,11,0.3)}
+
+.chain-arrow{flex:0 0 60px;text-align:center;position:relative;z-index:1}
+.chain-arrow .arrow-line{width:40px;height:3px;margin:0 auto;position:relative;border-radius:2px;overflow:hidden}
+.chain-arrow .arrow-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);animation:arrowFlow 2s infinite}
+@keyframes arrowFlow{0%{left:-100%}100%{left:100%}}
+.chain-arrow .arrow-text{font-size:0.65rem;color:#64748b;margin-top:4px}
+
+.arrow-a1 .arrow-line{background:linear-gradient(90deg,#3b82f6,#8b5cf6)}
+.arrow-a2 .arrow-line{background:linear-gradient(90deg,#8b5cf6,#10b981)}
+.arrow-a3 .arrow-line{background:linear-gradient(90deg,#10b981,#f59e0b)}
+
+/* Particles */
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;animation:particleFloat 3s ease-in-out infinite}
+@keyframes particleFloat{0%{opacity:0;transform:translateY(0)}50%{opacity:1}100%{opacity:0;transform:translateY(-60px)}}
+
+/* Province selector */
+.province-select{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.select-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.select-row label{font-size:0.9rem;font-weight:700;color:#94a3b8;white-space:nowrap}
+.select-row select{background:#1e293b;border:1px solid #334155;color:#e2e8f0;padding:8px 16px;border-radius:8px;font-size:0.9rem;cursor:pointer}
+.select-row select:focus{outline:none;border-color:#3b82f6}
+
+/* Detail charts */
+.detail-section{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.detail-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1rem}
+.detail-card h3{font-size:0.9rem;color:#94a3b8;margin-bottom:0.5rem}
+
+/* Transformation cards */
+.transform-section{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.transform-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.transform-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.2rem;position:relative;overflow:hidden;transition:all 0.3s}
+.transform-card:hover{transform:translateY(-3px);border-color:#3b82f6}
+.transform-card .step{font-size:0.7rem;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:0.5rem;font-weight:700}
+.transform-card h4{font-size:0.95rem;font-weight:700;margin-bottom:0.3rem}
+.transform-card p{font-size:0.8rem;color:#94a3b8}
+
+/* 4E indicators */
+.indicators-section{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.indicator-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.indicator-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:1rem;transition:all 0.3s;cursor:pointer}
+.indicator-card:hover{border-color:#3b82f6;transform:translateY(-2px)}
+.indicator-card.active{border-color:#3b82f6;box-shadow:0 0 20px rgba(59,130,246,0.1)}
+.indicator-title{font-size:0.9rem;font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.indicator-list{font-size:0.75rem;color:#94a3b8;line-height:1.8}
+.indicator-list li{list-style:none;padding-left:1rem;position:relative}
+.indicator-list li::before{content:'›';position:absolute;left:0;color:#3b82f6}
+
+footer{max-width:1100px;margin:2rem auto 0;padding:1rem;text-align:center;font-size:0.75rem;color:#475569;border-top:1px solid #1e293b}
+nav{text-align:center;padding:1rem}
+nav a{color:#60a5fa;font-size:0.85rem;text-decoration:none;margin:0 0.5rem}
+
+@media(max-width:768px){
+  .chain-flow{flex-direction:column;gap:0}
+  .chain-arrow{flex:0 0 auto;transform:rotate(90deg);margin:0.5rem 0}
+  .detail-grid{grid-template-columns:1fr}
+  .transform-cards{grid-template-columns:1fr}
+  .indicator-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>🔗 4E价值链动画</h1>
+  <p>开放数据从供应到效果的增值流转 · 对应论文第3章4E评估框架</p>
+</section>
+
+<!-- Value Chain Animation -->
+<div class="chain-wrap">
+  <div class="chain-container" id="chainContainer">
+    <div class="chain-flow">
+      <div class="chain-node node-e1" onclick="highlightE(1)">
+        <div class="icon">📦</div>
+        <div class="label">E1 供应保障</div>
+        <div class="sublabel">Economy</div>
+        <div class="score" id="scoreE1">0.554</div>
+      </div>
+      <div class="chain-arrow arrow-a1">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">数据可及</div>
+      </div>
+      <div class="chain-node node-e2" onclick="highlightE(2)">
+        <div class="icon">🛠️</div>
+        <div class="label">E2 平台服务</div>
+        <div class="sublabel">Efficiency</div>
+        <div class="score" id="scoreE2">0.592</div>
+      </div>
+      <div class="chain-arrow arrow-a2">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">质量提升</div>
+      </div>
+      <div class="chain-node node-e3" onclick="highlightE(3)">
+        <div class="icon">✅</div>
+        <div class="label">E3 数据质量</div>
+        <div class="sublabel">Effectiveness</div>
+        <div class="score" id="scoreE3">0.832</div>
+      </div>
+      <div class="chain-arrow arrow-a3">
+        <div class="arrow-line"></div>
+        <div class="arrow-text">价值实现</div>
+      </div>
+      <div class="chain-node node-e4" onclick="highlightE(4)">
+        <div class="icon">📊</div>
+        <div class="label">E4 利用效果</div>
+        <div class="sublabel">Equity</div>
+        <div class="score" id="scoreE4">0.268</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Province Selector -->
+<div class="province-select">
+  <div class="select-row">
+    <label>选择省份：</label>
+    <select id="provinceSelect" onchange="updateChain()">
+      <option value="avg">全国平均</option>
+    </select>
+    <span style="font-size:0.8rem;color:#64748b">点击4E节点或选择省份，查看价值链流动</span>
+  </div>
+</div>
+
+<!-- Detail Charts -->
+<div class="detail-section">
+  <div class="detail-grid">
+    <div class="detail-card">
+      <h3>📈 4E维度瀑布图</h3>
+      <div id="waterfallChart" style="height:300px"></div>
+    </div>
+    <div class="detail-card">
+      <h3>🔄 价值流转桑基图</h3>
+      <div id="sankeyChart" style="height:300px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Transformation -->
+<div class="transform-section">
+  <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem">🔄 4E价值链的三次增值转换</div>
+  <div class="transform-cards">
+    <div class="transform-card">
+      <span class="step" style="background:rgba(59,130,246,0.2);color:#3b82f6">转换1</span>
+      <h4>数据可及性转换</h4>
+      <p>E1→E2：原始数据通过平台服务转化为可发现、可获取、可理解的数据资源。关键指标：API可用率、目录完整度、搜索智能化。</p>
+    </div>
+    <div class="transform-card">
+      <span class="step" style="background:rgba(139,92,246,0.2);color:#8b5cf6">转换2</span>
+      <h4>质量提升转换</h4>
+      <p>E2→E3：平台服务能力推动数据质量升级。关键瓶颈：机器可读率（仅56%达标）、下载可用率（仅43%达标）。这是4E链最弱的环节。</p>
+    </div>
+    <div class="transform-card">
+      <span class="step" style="background:rgba(16,185,129,0.2);color:#10b981">转换3</span>
+      <h4>价值实现转换</h4>
+      <p>E3→E4：高质量数据最终转化为利用效果。当前瓶颈：E4利用效果全国均值仅0.268，远低于E3的0.832，存在"质量-效果鸿沟"。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4E Indicators -->
+<div class="indicators-section">
+  <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem">📋 4E维度指标体系（28项）</div>
+  <div class="indicator-grid" id="indicatorGrid">
+    <div class="indicator-card active" onclick="showIndicators(1)">
+      <div class="indicator-title"><span style="color:#3b82f6">📦</span> E1 供应保障</div>
+      <ul class="indicator-list">
+        <li>开放数据集数量</li><li>高价值数据集占比</li><li>动态数据集占比</li>
+        <li>领域覆盖度</li><li>部门覆盖度</li><li>地理覆盖度</li>
+        <li>更新频率</li><li>元数据完整率</li>
+      </ul>
+    </div>
+    <div class="indicator-card" onclick="showIndicators(2)">
+      <div class="indicator-title"><span style="color:#8b5cf6">🛠️</span> E2 平台服务</div>
+      <ul class="indicator-list">
+        <li>数据格式多样性</li><li>API接口状态</li><li>目录完整度</li>
+        <li>搜索智能化</li><li>可视化与工具</li><li>反馈渠道</li>
+        <li>帮助与文档</li>
+      </ul>
+    </div>
+    <div class="indicator-card" onclick="showIndicators(3)">
+      <div class="indicator-title"><span style="color:#10b981">✅</span> E3 数据质量</div>
+      <ul class="indicator-list">
+        <li>数据准确性</li><li>数据完整性</li><li>数据一致性</li>
+        <li>数据标准化</li><li>开放许可合规</li><li>机器可读率</li>
+        <li>下载可用率</li>
+      </ul>
+    </div>
+    <div class="indicator-card" onclick="showIndicators(4)">
+      <div class="indicator-title"><span style="color:#f59e0b">📊</span> E4 利用效果</div>
+      <ul class="indicator-list">
+        <li>平台访问量</li><li>数据下载量</li><li>应用成果</li>
+        <li>授权运营项目</li><li>开发者活跃度</li><li>无障碍支持</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="/">← 首页</a>
+  <a href="/analysis">分析中心</a>
+  <a href="/maturity">成熟度模型</a>
+  <a href="/charts/topsis-dea">TOPSIS象限</a>
+</nav>
+<footer>OGD-Collector Pro · 4E价值链动画 · 对应论文第3章评估框架与第5章实证发现</footer>
+
+<script>
+const provData = {
+  avg:{name:'全国平均',e1:0.554,e2:0.592,e3:0.832,e4:0.268,e5:0.642},
+  浙江:{e1:0.82,e2:0.78,e3:0.90,e4:0.85,e5:0.80},
+  广东:{e1:0.88,e2:0.56,e3:0.88,e4:0.21,e5:0.70},
+  上海:{e1:0.60,e2:0.33,e3:0.88,e4:0.00,e5:0.70},
+  北京:{e1:0.75,e2:0.77,e3:1.00,e4:0.42,e5:1.00},
+  山东:{e1:0.88,e2:0.77,e3:1.00,e4:1.00,e5:1.00},
+  四川:{e1:0.86,e2:0.80,e3:1.00,e4:0.42,e5:1.00},
+  江苏:{e1:0.55,e2:0.82,e3:0.88,e4:0.21,e5:0.70},
+  福建:{e1:0.58,e2:0.26,e3:0.88,e4:0.21,e5:0.70},
+  贵州:{e1:0.64,e2:0.36,e3:0.88,e4:0.21,e5:0.70},
+  湖南:{e1:0.55,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  湖北:{e1:0.66,e2:0.61,e3:0.88,e4:0.21,e5:0.70},
+  安徽:{e1:0.08,e2:0.26,e3:0.88,e4:0.00,e5:0.40},
+  河南:{e1:0.60,e2:0.72,e3:0.88,e4:0.42,e5:0.70},
+  江西:{e1:0.40,e2:0.49,e3:0.88,e4:0.21,e5:0.70},
+  重庆:{e1:0.76,e2:0.56,e3:0.88,e4:0.21,e5:0.70},
+  辽宁:{e1:0.76,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  海南:{e1:0.78,e2:0.75,e3:1.00,e4:0.42,e5:1.00},
+  天津:{e1:0.59,e2:0.64,e3:0.88,e4:0.42,e5:0.70},
+  广西:{e1:0.72,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  云南:{e1:0.35,e2:0.39,e3:0.88,e4:0.21,e5:0.70},
+  吉林:{e1:0.31,e2:0.49,e3:0.88,e4:0.21,e5:0.70},
+  内蒙古:{e1:0.42,e2:0.87,e3:1.00,e4:0.42,e5:1.00}
+};
+
+// Populate selector
+const sel = document.getElementById('provinceSelect');
+Object.keys(provData).forEach(k => {
+  if (k !== 'avg') {
+    const opt = document.createElement('option');
+    opt.value = k; opt.textContent = k;
+    sel.appendChild(opt);
+  }
+});
+
+let wfChart = echarts.init(document.getElementById('waterfallChart'));
+let skChart = echarts.init(document.getElementById('sankeyChart'));
+let currentProvince = 'avg';
+
+function updateChain() {
+  const p = provData[currentProvince] || provData.avg;
+  document.getElementById('scoreE1').textContent = p.e1.toFixed(3);
+  document.getElementById('scoreE2').textContent = p.e2.toFixed(3);
+  document.getElementById('scoreE3').textContent = p.e3.toFixed(3);
+  document.getElementById('scoreE4').textContent = p.e4.toFixed(3);
+  renderWaterfall(p);
+  renderSankey(p);
+}
+
+document.getElementById('provinceSelect').addEventListener('change', function() {
+  currentProvince = this.value;
+  updateChain();
+});
+
+function highlightE(dim) {
+  document.querySelectorAll('.indicator-card').forEach((c,i) => {
+    c.classList.toggle('active', i === dim - 1);
+  });
+}
+
+function showIndicators(dim) {
+  document.querySelectorAll('.indicator-card').forEach((c,i) => {
+    c.classList.toggle('active', i === dim - 1);
+  });
+}
+
+function renderWaterfall(p) {
+  const e1 = p.e1, e2 = p.e2, e3 = p.e3, e4 = p.e4;
+  const gap12 = e2 - e1, gap23 = e3 - e2, gap34 = e4 - e3;
+  wfChart.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:80,right:20,top:20,bottom:40},
+    xAxis:{type:'category',data:['E1供应','→E2增量','E2服务','→E3增量','E3质量','→E4增量','E4效果'],axisLabel:{color:'#94a3b8',fontSize:10,interval:0,rotate:30}},
+    yAxis:{type:'value',max:1.2,splitLine:{lineStyle:{color:'#1e293b'}},axisLabel:{color:'#64748b'}},
+    series:[{
+      type:'bar',barWidth:20,
+      data:[
+        {value:e1,itemStyle:{color:'#3b82f6'}},
+        {value:Math.max(0,gap12),itemStyle:{color:gap12>=0?'#22c55e':'#ef4444'}},
+        {value:e2,itemStyle:{color:'#8b5cf6'}},
+        {value:Math.max(0,gap23),itemStyle:{color:gap23>=0?'#22c55e':'#ef4444'}},
+        {value:e3,itemStyle:{color:'#10b981'}},
+        {value:gap34,itemStyle:{color:gap34>=0?'#22c55e':'#f43f5e'}},
+        {value:e4,itemStyle:{color:'#f59e0b'}}
+      ],
+      label:{show:true,position:'top',fontSize:10,color:'#94a3b8',formatter:function(p){return p.value.toFixed(3)}}
+    }]
+  });
+}
+
+function renderSankey(p) {
+  const t1 = (p.e1 * 0.6).toFixed(3), t1loss = (p.e1 * 0.4).toFixed(3);
+  const t2 = (p.e2 * 0.7).toFixed(3), t2loss = (p.e2 * 0.3).toFixed(3);
+  const t3 = (p.e3 * 0.3).toFixed(3), t3loss = (p.e3 * 0.7).toFixed(3);
+  skChart.setOption({
+    tooltip:{trigger:'item'},
+    series:[{
+      type:'sankey',
+      layout:'none',
+      emphasis:{focus:'adjacency'},
+      nodeAlign:'left',
+      data:[
+        {name:'原始供应',itemStyle:{color:'#3b82f6'}},
+        {name:'供应损耗',itemStyle:{color:'#475569'}},
+        {name:'平台可达',itemStyle:{color:'#8b5cf6'}},
+        {name:'服务损耗',itemStyle:{color:'#475569'}},
+        {name:'质量达标',itemStyle:{color:'#10b981'}},
+        {name:'质量损耗',itemStyle:{color:'#475569'}},
+        {name:'有效利用',itemStyle:{color:'#f59e0b'}}
+      ],
+      links:[
+        {source:'原始供应',target:'供应损耗',value:parseFloat(t1loss)},
+        {source:'原始供应',target:'平台可达',value:parseFloat(t1)},
+        {source:'平台可达',target:'服务损耗',value:parseFloat(t2loss)},
+        {source:'平台可达',target:'质量达标',value:parseFloat(t2)},
+        {source:'质量达标',target:'质量损耗',value:parseFloat(t3loss)},
+        {source:'质量达标',target:'有效利用',value:parseFloat(t3)}
+      ],
+      lineStyle:{color:'gradient',curveness:0.5},
+      label:{color:'#94a3b8',fontSize:11}
+    }]
+  });
+}
+
+// Init
+updateChain();
+
+// Particles
+function createParticles() {
+  const container = document.getElementById('chainContainer');
+  const colors = ['#3b82f6','#8b5cf6','#10b981','#f59e0b'];
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.background = colors[i % 4];
+    p.style.left = (10 + Math.random() * 80) + '%';
+    p.style.top = (20 + Math.random() * 60) + '%';
+    p.style.animationDelay = (Math.random() * 3) + 's';
+    p.style.animationDuration = (2 + Math.random() * 2) + 's';
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+window.addEventListener('resize', () => { wfChart.resize(); skChart.resize(); });
+</script>
+</body>
+</html>

@@ -213,6 +213,31 @@ def charts_did():
     """DID事件研究可视化"""
     return render_template('v6_did_event_study.html')
 
+@app.route('/maturity')
+def maturity_model():
+    """开放数据成熟度模型交互页"""
+    return render_template('v6_maturity_model.html')
+
+@app.route('/strategy')
+def strategy_recommender():
+    """策略推荐器 - 独立入口"""
+    return render_template('v6_maturity_model.html')
+
+@app.route('/value-chain')
+def value_chain():
+    """4E价值链动画"""
+    return render_template('v6_value_chain.html')
+
+@app.route('/international')
+def international():
+    """国际对比仪表盘"""
+    return render_template('v6_international.html')
+
+@app.route('/en')
+def en_landing():
+    """English Landing Page"""
+    return render_template('v6_en_landing.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""
@@ -269,6 +294,139 @@ def api_collection_batches():
     except FileNotFoundError:
         batches = []
     return jsonify(batches)
+
+# ========== 分析数据下载API ==========
+@app.route('/api/analysis/topsis')
+def api_analysis_topsis():
+    """API: TOPSIS综合绩效评估数据（JSON/CSV）"""
+    from flask import Response
+    topsis_data = [
+        {"rank":1,"province":"浙江","ci":0.778,"grade":"A","level":"优秀","region":"东部","e1":0.82,"e2":0.78,"e3":0.90,"e4":0.85,"e5":0.80,"type":"标杆型"},
+        {"rank":2,"province":"广东","ci":0.754,"grade":"A","level":"优秀","region":"东部","e1":0.88,"e2":0.56,"e3":0.88,"e4":0.21,"e5":0.70,"type":"追赶型"},
+        {"rank":3,"province":"上海","ci":0.726,"grade":"A","level":"优秀","region":"东部","e1":0.60,"e2":0.33,"e3":0.88,"e4":0.00,"e5":0.70,"type":"滞后型"},
+        {"rank":4,"province":"北京","ci":0.706,"grade":"A","level":"优秀","region":"东部","e1":0.75,"e2":0.77,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":5,"province":"山东","ci":0.658,"grade":"B+","level":"优秀","region":"东部","e1":0.88,"e2":0.77,"e3":1.00,"e4":1.00,"e5":1.00,"type":"标杆型"},
+        {"rank":6,"province":"四川","ci":0.607,"grade":"B+","level":"优秀","region":"西部","e1":0.86,"e2":0.80,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":7,"province":"江苏","ci":0.592,"grade":"B","level":"良好","region":"东部","e1":0.55,"e2":0.82,"e3":0.88,"e4":0.21,"e5":0.70,"type":"追赶型"},
+        {"rank":8,"province":"福建","ci":0.552,"grade":"B","level":"良好","region":"东部","e1":0.58,"e2":0.26,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":9,"province":"贵州","ci":0.539,"grade":"B","level":"良好","region":"西部","e1":0.64,"e2":0.36,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":10,"province":"陕西","ci":0.524,"grade":"B","level":"良好","region":"西部","e1":0.52,"e2":0.55,"e3":0.75,"e4":0.30,"e5":0.60,"type":"追赶型"},
+        {"rank":11,"province":"湖南","ci":0.505,"grade":"B","level":"良好","region":"中部","e1":0.55,"e2":0.87,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":12,"province":"湖北","ci":0.490,"grade":"B-","level":"良好","region":"中部","e1":0.66,"e2":0.61,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":13,"province":"安徽","ci":0.470,"grade":"B-","level":"良好","region":"中部","e1":0.08,"e2":0.26,"e3":0.88,"e4":0.00,"e5":0.40,"type":"困境型"},
+        {"rank":14,"province":"河南","ci":0.452,"grade":"B-","level":"良好","region":"中部","e1":0.60,"e2":0.72,"e3":0.88,"e4":0.42,"e5":0.70,"type":"潜力型"},
+        {"rank":15,"province":"江西","ci":0.432,"grade":"C+","level":"中等","region":"中部","e1":0.40,"e2":0.49,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":16,"province":"重庆","ci":0.412,"grade":"C+","level":"中等","region":"西部","e1":0.76,"e2":0.56,"e3":0.88,"e4":0.21,"e5":0.70,"type":"追赶型"},
+        {"rank":17,"province":"辽宁","ci":0.395,"grade":"C","level":"中等","region":"东北","e1":0.76,"e2":0.87,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":18,"province":"云南","ci":0.377,"grade":"C","level":"中等","region":"西部","e1":0.35,"e2":0.39,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":19,"province":"广西","ci":0.357,"grade":"C","level":"中等","region":"西部","e1":0.72,"e2":0.87,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":20,"province":"海南","ci":0.339,"grade":"C","level":"中等","region":"东部","e1":0.78,"e2":0.75,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":21,"province":"河北","ci":0.319,"grade":"C-","level":"中等","region":"东部","e1":0.45,"e2":0.38,"e3":0.70,"e4":0.15,"e5":0.55,"type":"追赶型"},
+        {"rank":22,"province":"天津","ci":0.301,"grade":"C-","level":"中等","region":"东部","e1":0.59,"e2":0.64,"e3":0.88,"e4":0.42,"e5":0.70,"type":"追赶型"},
+        {"rank":23,"province":"吉林","ci":0.284,"grade":"D+","level":"中等","region":"东北","e1":0.31,"e2":0.49,"e3":0.88,"e4":0.21,"e5":0.70,"type":"滞后型"},
+        {"rank":24,"province":"黑龙江","ci":0.264,"grade":"D+","level":"较差","region":"东北","e1":0.28,"e2":0.35,"e3":0.65,"e4":0.10,"e5":0.50,"type":"追赶型"},
+        {"rank":25,"province":"内蒙古","ci":0.244,"grade":"D","level":"较差","region":"西部","e1":0.42,"e2":0.87,"e3":1.00,"e4":0.42,"e5":1.00,"type":"潜力型"},
+        {"rank":26,"province":"新疆","ci":0.224,"grade":"D","level":"较差","region":"西部","e1":0.25,"e2":0.30,"e3":0.55,"e4":0.08,"e5":0.40,"type":"滞后型"},
+        {"rank":27,"province":"甘肃","ci":0.204,"grade":"D","level":"较差","region":"西部","e1":0.22,"e2":0.28,"e3":0.50,"e4":0.05,"e5":0.35,"type":"滞后型"},
+        {"rank":28,"province":"宁夏","ci":0.184,"grade":"D","level":"较差","region":"西部","e1":0.20,"e2":0.25,"e3":0.45,"e4":0.05,"e5":0.30,"type":"滞后型"},
+        {"rank":29,"province":"青海","ci":0.164,"grade":"D","level":"较差","region":"西部","e1":0.18,"e2":0.22,"e3":0.40,"e4":0.03,"e5":0.25,"type":"困境型"},
+        {"rank":30,"province":"西藏","ci":0.141,"grade":"D","level":"极差","region":"西部","e1":0.12,"e2":0.15,"e3":0.30,"e4":0.02,"e5":0.15,"type":"困境型"}
+    ]
+    fmt = request.args.get('format', 'json')
+    if fmt == 'csv':
+        import csv, io
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['排名','省份','TOPSIS Ci','等级','层级','区域','E1供应保障','E2平台服务','E3数据质量','E4利用效果','E5公平性','5类分型'])
+        for d in topsis_data:
+            writer.writerow([d['rank'],d['province'],d['ci'],d['grade'],d['level'],d['region'],d['e1'],d['e2'],d['e3'],d['e4'],d['e5'],d['type']])
+        output.seek(0)
+        return Response(output.getvalue(), mimetype='text/csv', headers={'Content-Disposition':'attachment; filename=topsis_evaluation.csv'})
+    return jsonify(topsis_data)
+
+@app.route('/api/analysis/fsqca')
+def api_analysis_fsqca():
+    """API: fsQCA组态分析数据"""
+    fsqca_data = {
+        "necessary_conditions": [
+            {"dimension":"E2平台服务","consistency":1.00,"coverage":0.82,"necessity":"必要"},
+            {"dimension":"E3数据质量","consistency":1.00,"coverage":0.79,"necessity":"必要"},
+            {"dimension":"E4利用效果","consistency":1.00,"coverage":0.76,"necessity":"必要"}
+        ],
+        "sufficient_configurations": [
+            {"id":"H1","name":"技术驱动型","conditions":"E1×E2×E3","raw_coverage":0.81,"raw_consistency":0.94,"unique_coverage":0.42,"provinces":["浙江","上海","北京","广东","山东","四川"]},
+            {"id":"H2","name":"效率-区域型","conditions":"E3×技术支撑×区域优势","raw_coverage":0.19,"raw_consistency":0.91,"unique_coverage":0.08,"provinces":["广东","山东","江苏"]},
+            {"id":"H3","name":"生态-协同型","conditions":"E1×E4×技术支撑","raw_coverage":0.15,"raw_consistency":0.89,"unique_coverage":0.05,"provinces":["江苏","福建","贵州"]}
+        ],
+        "solution_coverage": 0.88,
+        "solution_consistency": 0.92
+    }
+    return jsonify(fsqca_data)
+
+@app.route('/api/analysis/dematel')
+def api_analysis_dematel():
+    """API: DEMATEL因果分析数据"""
+    dematel_data = {
+        "factors": [
+            {"id":"PL","name":"政策法规","centrality":2.856,"causality":0.432,"type":"cause"},
+            {"id":"PC","name":"平台能力","centrality":3.142,"causality":0.287,"type":"cause"},
+            {"id":"E1","name":"供应保障","centrality":2.634,"causality":-0.156,"type":"effect"},
+            {"id":"E2","name":"平台服务","centrality":3.021,"causality":0.098,"type":"cause"},
+            {"id":"E3","name":"数据质量","centrality":2.945,"causality":-0.089,"type":"effect"},
+            {"id":"E4","name":"利用效果","centrality":2.789,"causality":-0.213,"type":"effect"},
+            {"id":"OP","name":"运营保障","centrality":2.567,"causality":0.178,"type":"cause"}
+        ],
+        "transmission_paths": [
+            {"path":"政策法规→平台能力→数据质量→利用效果","strength":0.856,"type":"政策驱动型"},
+            {"path":"平台服务→数据质量→利用效果","strength":0.723,"type":"服务提升型"},
+            {"path":"运营保障→供应保障→利用效果","strength":0.612,"type":"基础保障型"}
+        ],
+        "influence_matrix": {
+            "rows": ["PL","PC","E1","E2","E3","E4","OP"],
+            "columns": ["PL","PC","E1","E2","E3","E4","OP"],
+            "values": [
+                [0,0.456,0.234,0.189,0.156,0.089,0.312],
+                [0.123,0,0.378,0.267,0.312,0.145,0.189],
+                [0.089,0.145,0,0.123,0.267,0.334,0.078],
+                [0.067,0.234,0.189,0,0.423,0.156,0.112],
+                [0.045,0.089,0.312,0.145,0,0.278,0.067],
+                [0.034,0.056,0.123,0.089,0.234,0,0.045],
+                [0.189,0.156,0.289,0.134,0.178,0.112,0]
+            ]
+        }
+    }
+    return jsonify(dematel_data)
+
+@app.route('/api/analysis/did')
+def api_analysis_did():
+    """API: 多期DID政策效应数据"""
+    did_data = {
+        "baseline_effect": {"coefficient":0.043,"std_error":0.012,"t_value":3.58,"p_value":0.001,"significance":"***"},
+        "event_study": [
+            {"period":"T-3","coefficient":-0.008,"ci_lower":-0.024,"ci_upper":0.008,"significant":False},
+            {"period":"T-2","coefficient":-0.005,"ci_lower":-0.019,"ci_upper":0.009,"significant":False},
+            {"period":"T-1","coefficient":0.002,"ci_lower":-0.012,"ci_upper":0.016,"significant":False},
+            {"period":"T","coefficient":0.018,"ci_lower":0.003,"ci_upper":0.033,"significant":True},
+            {"period":"T+1","coefficient":0.043,"ci_lower":0.026,"ci_upper":0.060,"significant":True},
+            {"period":"T+2","coefficient":0.052,"ci_lower":0.032,"ci_upper":0.072,"significant":True},
+            {"period":"T+3","coefficient":0.048,"ci_lower":0.025,"ci_upper":0.071,"significant":True}
+        ],
+        "dimensional_heterogeneity": [
+            {"dimension":"E1供应保障","beta":0.038,"p":0.008,"significant":True},
+            {"dimension":"E2平台服务","beta":0.052,"p":0.003,"significant":True},
+            {"dimension":"E3数据质量","beta":0.029,"p":0.042,"significant":True},
+            {"dimension":"E4利用效果","beta":0.061,"p":0.001,"significant":True},
+            {"dimension":"E5公平性","beta":0.015,"p":0.234,"significant":False}
+        ],
+        "robustness": [
+            {"method":"PSM-DID","coefficient":0.039,"p":0.005},
+            {"method":"替换因变量","coefficient":0.041,"p":0.008},
+            {"method":"排除直辖市","coefficient":0.044,"p":0.003},
+            {"method":"控制省级特征","coefficient":0.037,"p":0.012},
+            {"method":"平行趋势检验","result":"通过","p":0.156}
+        ]
+    }
+    return jsonify(did_data)
 
 @app.route('/api/collection-results')
 def api_collection_results():

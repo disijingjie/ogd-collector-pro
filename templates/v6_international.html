@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国际对比仪表盘 | OGD-Collector Pro</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);padding:2.5rem 1.5rem 1.5rem;text-align:center}
+.hero h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#06b6d4,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#94a3b8;margin-top:0.3rem;font-size:0.9rem}
+
+.section{max-width:1100px;margin:1.5rem auto;padding:0 1rem}
+.section-title{font-size:1.1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.section-title .dot{width:8px;height:8px;border-radius:50%;background:#06b6d4}
+
+.card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.2rem}
+.chart-box{height:360px}
+
+/* OGP Score Cards */
+.ogp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.ogp-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.2rem;text-align:center;position:relative;overflow:hidden;transition:all 0.3s;cursor:pointer}
+.ogp-card:hover{transform:translateY(-3px);border-color:#3b82f6}
+.ogp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ogp-card.cn::before{background:#ef4444}.ogp-card.uk::before{background:#3b82f6}
+.ogp-card.us::before{background:#f59e0b}.ogp-card.eu::before{background:#10b981}
+.ogp-flag{font-size:1.8rem;margin-bottom:0.3rem}
+.ogp-name{font-size:0.9rem;font-weight:700;margin-bottom:0.3rem}
+.ogp-score{font-size:2.2rem;font-weight:900}
+.ogp-rank{font-size:0.75rem;color:#94a3b8;margin-top:0.2rem}
+
+/* Radar comparison */
+.radar-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* Insight cards */
+.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.insight-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:1rem}
+.insight-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;color:#f59e0b}
+.insight-card p{font-size:0.8rem;color:#94a3b8}
+
+nav{text-align:center;padding:1rem}
+nav a{color:#60a5fa;font-size:0.85rem;text-decoration:none;margin:0 0.5rem}
+footer{text-align:center;padding:1rem;font-size:0.75rem;color:#475569;border-top:1px solid #1e293b}
+
+@media(max-width:768px){
+  .ogp-grid{grid-template-columns:repeat(2,1fr)}
+  .radar-grid{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>🌍 国际对比仪表盘</h1>
+  <p>中国OGD平台绩效的全球坐标定位 · 参考Open Government Data全球评估体系</p>
+</section>
+
+<!-- OGP Score Cards -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:#ef4444"></span>全球开放数据评估对比</div>
+  <div class="ogp-grid">
+    <div class="ogp-card cn" onclick="showCountry('cn')">
+      <div class="ogp-flag">🇨🇳</div>
+      <div class="ogp-name">中国（省级均值）</div>
+      <div class="ogp-score" style="color:#ef4444">37</div>
+      <div class="ogp-rank">OGP评分 / 100</div>
+    </div>
+    <div class="ogp-card uk" onclick="showCountry('uk')">
+      <div class="ogp-flag">🇬🇧</div>
+      <div class="ogp-name">英国</div>
+      <div class="ogp-score" style="color:#3b82f6">76</div>
+      <div class="ogp-rank">OGP评分 / 100 · 全球第4</div>
+    </div>
+    <div class="ogp-card us" onclick="showCountry('us')">
+      <div class="ogp-flag">🇺🇸</div>
+      <div class="ogp-name">美国</div>
+      <div class="ogp-score" style="color:#f59e0b">62</div>
+      <div class="ogp-rank">OGP评分 / 100 · 全球第8</div>
+    </div>
+    <div class="ogp-card eu" onclick="showCountry('eu')">
+      <div class="ogp-flag">🇪🇺</div>
+      <div class="ogp-name">欧盟（均值）</div>
+      <div class="ogp-score" style="color:#10b981">58</div>
+      <div class="ogp-rank">OGP评分 / 100</div>
+    </div>
+  </div>
+</div>
+
+<!-- Radar Comparison -->
+<div class="section">
+  <div class="section-title"><span class="dot"></span>6维度雷达对比</div>
+  <div class="radar-grid">
+    <div class="card"><div id="radarChart" class="chart-box"></div></div>
+    <div class="card"><div id="barChart" class="chart-box"></div></div>
+  </div>
+</div>
+
+<!-- Gap Analysis -->
+<div class="section">
+  <div class="section-title"><span class="dot" style="background:#f59e0b"></span>差距分析与启示</div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <h4>📊 数据开放规模差距</h4>
+      <p>中国省级平台数据集均值约1.7万，英国data.gov.uk超4.7万。差距核心不在数量，而在高价值数据集占比（中国仅23% vs 英国68%）和机器可读率（中国56% vs 英国92%）。</p>
+    </div>
+    <div class="insight-card">
+      <h4>🛠️ 平台服务能力差距</h4>
+      <p>英国US数据门户提供完整API生态（REST+SPARQL+GraphQL），中国仅18%平台提供API。搜索智能化英国95% vs 中国31%。目录完整度差距最大（英国98% vs 中国42%）。</p>
+    </div>
+    <div class="insight-card">
+      <h4>✅ 数据质量差距</h4>
+      <p>开放许可合规是中国最大短板：英国100% CC许可 vs 中国仅12%有明确许可。机器可读率差距显著（英国92% vs 中国56%），直接制约下游利用。</p>
+    </div>
+    <div class="insight-card">
+      <h4>📈 利用效果差距</h4>
+      <p>英国OGD年下载量超2亿次，开发者社区活跃。中国E4利用效果均值仅0.268（满分1.0），"质量-效果鸿沟"是全球最突出：E3质量高达0.832但E4效果仅0.268，转化率32%（英国约68%）。</p>
+    </div>
+    <div class="insight-card">
+      <h4>⚖️ 公平性差距</h4>
+      <p>英国《平等法案》要求公共数据无障碍访问，残障适配率98%。中国省级平台无障碍支持率仅8%，数据利用的数字鸿沟问题显著。E5公平性是4E中差距最小但绝对值仍低的维度。</p>
+    </div>
+    <div class="insight-card">
+      <h4>🚀 中国追赶路径</h4>
+      <p>论文fsQCA发现：E2平台服务+E3数据质量+E4利用效果是高绩效"铁三角"必要条件。追赶策略：①先补E2服务（最低成本最高杠杆）→ ②再提E3质量（机器可读+开放许可）→ ③最终释放E4效果。避免"重供应轻利用"陷阱。</p>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="/">← 首页</a>
+  <a href="/analysis">分析中心</a>
+  <a href="/maturity">成熟度模型</a>
+  <a href="/value-chain">4E价值链</a>
+</nav>
+<footer>OGD-Collector Pro · 国际对比数据参考Open Data Barometer / OECD OURdata / EU Open Data Maturity · 对应论文第2章国际比较</footer>
+
+<script>
+const countries = {
+  cn:{name:'中国（省级均值）',color:'#ef4444',scores:{data_openness:32,service_quality:28,data_quality:38,utilization:22,equity:35,policy:48}},
+  uk:{name:'英国',color:'#3b82f6',scores:{data_openness:78,service_quality:82,data_quality:76,utilization:72,equity:68,policy:85}},
+  us:{name:'美国',color:'#f59e0b',scores:{data_openness:65,service_quality:58,data_quality:62,utilization:55,equity:42,policy:70}},
+  eu:{name:'欧盟（均值）',color:'#10b981',scores:{data_openness:58,service_quality:62,data_quality:55,utilization:48,equity:52,policy:72}}
+};
+
+const dimensions = ['数据开放度','平台服务质量','数据质量','利用效果','公平性','政策支持'];
+
+let radarChart = echarts.init(document.getElementById('radarChart'));
+let barChart = echarts.init(document.getElementById('barChart'));
+
+function renderCharts() {
+  const indicator = dimensions.map(d => ({name:d,max:100}));
+
+  radarChart.setOption({
+    tooltip:{},
+    legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11},itemWidth:12},
+    radar:{indicator,shape:'polygon',splitNumber:5,
+      axisName:{color:'#94a3b8',fontSize:11},
+      splitArea:{areaStyle:{color:['rgba(59,130,246,0.01)','rgba(59,130,246,0.03)']}}
+    },
+    series:[{type:'radar',data:Object.entries(countries).map(([k,v])=>({
+      value:Object.values(v.scores),
+      name:v.name,
+      areaStyle:{color:v.color+'18'},
+      lineStyle:{color:v.color,width:2},
+      itemStyle:{color:v.color}
+    }))}]
+  });
+
+  const barData = dimensions.map((d,i) => {
+    const vals = Object.values(countries).map(c => Object.values(c.scores)[i]);
+    return {dim:d,cn:vals[0],uk:vals[1],us:vals[2],eu:vals[3]};
+  });
+
+  barChart.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11},itemWidth:12},
+    grid:{left:80,right:20,top:20,bottom:40},
+    xAxis:{type:'value',max:100,splitLine:{lineStyle:{color:'#1e293b'}},axisLabel:{color:'#64748b'}},
+    yAxis:{type:'category',data:barData.map(d=>d.dim),axisLabel:{color:'#94a3b8',fontSize:10}},
+    series:[
+      {name:'中国',type:'bar',data:barData.map(d=>d.cn),itemStyle:{color:'#ef4444',borderRadius:[0,3,3,0]},barWidth:8},
+      {name:'英国',type:'bar',data:barData.map(d=>d.uk),itemStyle:{color:'#3b82f6',borderRadius:[0,3,3,0]},barWidth:8},
+      {name:'美国',type:'bar',data:barData.map(d=>d.us),itemStyle:{color:'#f59e0b',borderRadius:[0,3,3,0]},barWidth:8},
+      {name:'欧盟',type:'bar',data:barData.map(d=>d.eu),itemStyle:{color:'#10b981',borderRadius:[0,3,3,0]},barWidth:8}
+    ]
+  });
+}
+
+function showCountry(code) {
+  document.querySelectorAll('.ogp-card').forEach(c => c.style.borderColor='#334155');
+  document.querySelector(`.ogp-card.${code}`).style.borderColor = countries[code].color;
+}
+
+renderCharts();
+window.addEventListener('resize', () => { radarChart.resize(); barChart.resize(); });
+</script>
+</body>
+</html>

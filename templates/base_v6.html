@@ -115,6 +115,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 @media(max-width:1024px){.stats-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.page-content{padding:20px 24px 40px}}
 @media(max-width:768px){.hamburger{display:block}.sidebar{transform:translateX(-100%);transition:transform .3s ease;z-index:110}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.journey-steps{gap:4px}.journey-bar{padding:12px 16px}.anchor-nav{padding:8px 16px;gap:4px}.anchor-nav a{font-size:11px;padding:4px 8px}.page-content{padding:12px 16px 32px}.topbar{padding:12px 16px;padding-left:56px}.topbar h2{font-size:15px}.card{padding:14px;border-radius:10px}.stat-value{font-size:24px}.data-table{font-size:11px}.data-table th,.data-table td{padding:6px 8px}.chart-container,.chart-container.small{height:auto;min-height:280px}.position-hint{font-size:12px;padding:10px 12px}.journey-cards{grid-template-columns:1fr}}
 @media(max-width:480px){.stats-grid{grid-template-columns:1fr}.stat-card{padding:14px}.stat-value{font-size:22px}.page-nav{flex-direction:column;gap:12px}.page-nav a{text-align:center;width:100%}}
+/* === Enhanced Mobile Responsive === */
+@media(max-width:768px){
+  .card-grid,.grid-2,.grid-3,.grid-4,[class*="grid-cols"]{grid-template-columns:1fr!important}
+  .chart-container{height:auto!important;min-height:250px}
+  .data-table-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .data-table{min-width:600px}
+  .page-content h2{font-size:1.2rem}
+  .page-content h3{font-size:1rem}
+  .stat-card{padding:12px}
+  .btn-group{flex-direction:column;gap:6px}
+  .btn-group .btn{width:100%}
+  .hero-title{font-size:1.5rem!important}
+  .section-grid{grid-template-columns:1fr!important}
+  .two-col{grid-template-columns:1fr!important}
+  .three-col{grid-template-columns:1fr!important}
+  img{max-width:100%;height:auto}
+  .filter-bar{flex-wrap:wrap;gap:6px}
+  .filter-bar select,.filter-bar input{width:100%;min-width:0}
+}
+@media(max-width:480px){
+  .stat-value{font-size:18px}
+  .stat-label{font-size:10px}
+  .card{padding:10px}
+  .data-table{font-size:10px;min-width:500px}
+  .journey-bar{display:none}
+}
 </style>
 {% block extra_css %}{% endblock %}
 </head>
@@ -134,6 +160,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <a href="/methodology" class="nav-item {% if active=='methodology' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>研究方法论</a>
       <a href="/reproduce" class="nav-item {% if active=='reproduce' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>数据复现<span style="font-size:9px;color:#64748b">（可信度中心）</span></a>
       <a href="/caliber" class="nav-item {% if active=='caliber' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/><circle cx="12" cy="7" r="2"/><circle cx="18" cy="4" r="2"/><circle cx="6" cy="13" r="2"/></svg>口径声明<span style="font-size:9px;color:#fbbf24;background:#78350f;padding:1px 4px;border-radius:4px;margin-left:4px">核心</span></a>
+      <a href="/maturity" class="nav-item {% if active=='maturity' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>成熟度模型</a>
+      <a href="/value-chain" class="nav-item {% if active=='value-chain' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><line x1="9" y1="12" x2="15" y2="12"/></svg>4E价值链</a>
+      <a href="/international" class="nav-item {% if active=='international' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>国际对比</a>
+      <a href="/en" class="nav-item" style="opacity:0.6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>English</a>
     </nav>
     <div class="sidebar-footer"><div>v6.0.0 | OGD-Collector Pro</div><div style="margin-top:4px">博士论文支撑系统</div></div>
   </aside>

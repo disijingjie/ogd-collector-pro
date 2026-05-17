@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>开放数据成熟度模型 | OGD-Collector Pro</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+:root{--brand:#0f172a;--accent:#3b82f6;--gold:#f59e0b;--emerald:#10b981;--rose:#f43f5e;--violet:#8b5cf6;--cyan:#06b6d4;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);padding:3rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse,rgba(59,130,246,0.08) 0%,transparent 70%);animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.hero h1{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+.hero p{color:#94a3b8;margin-top:0.5rem;font-size:0.95rem;position:relative}
+
+/* Staircase */
+.staircase-wrap{padding:2rem 1rem;max-width:1100px;margin:0 auto}
+.stair-title{text-align:center;font-size:1.1rem;color:#94a3b8;margin-bottom:1.5rem;letter-spacing:0.05em}
+.staircase{display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:0 1rem}
+.stair{flex:1;min-width:0;cursor:pointer;position:relative;border-radius:10px 10px 0 0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);overflow:hidden}
+.stair:hover{transform:translateY(-8px) scale(1.03);z-index:10;box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.stair.active{transform:translateY(-6px) scale(1.02);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+.stair-l5{height:80px;background:linear-gradient(180deg,#1e293b,#334155)}.stair-l5 .stair-bar{background:#64748b}
+.stair-l4{height:140px;background:linear-gradient(180deg,#1e3a5f,#1e293b)}.stair-l4 .stair-bar{background:#3b82f6}
+.stair-l3{height:200px;background:linear-gradient(180deg,#1e3a5f,#172554)}.stair-l3 .stair-bar{background:#60a5fa}
+.stair-l2{height:270px;background:linear-gradient(180deg,#1e3a5f,#172554)}.stair-l2 .stair-bar{background:#818cf8}
+.stair-l1{height:340px;background:linear-gradient(180deg,#1a2e50,#0f172a)}.stair-l1 .stair-bar{background:#a78bfa}
+.stair-inner{padding:12px 8px;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.stair-label{font-weight:700;font-size:0.95rem;color:#e2e8f0;margin-bottom:4px}
+.stair-ci{font-size:0.7rem;color:#94a3b8}
+.stair-count{font-size:1.8rem;font-weight:900;margin:4px 0}
+.stair-bar{height:3px;border-radius:2px;width:60%;margin:6px auto 0;opacity:0.7}
+
+/* Level detail panel */
+.level-detail{max-width:1100px;margin:1.5rem auto;padding:0 1rem;display:none}
+.level-detail.show{display:block}
+.level-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.level-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.level-card.l1::before{background:#a78bfa}.level-card.l2::before{background:#818cf8}
+.level-card.l3::before{background:#60a5fa}.level-card.l4::before{background:#3b82f6}
+.level-card.l5::before{background:#64748b}
+.level-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.level-name{font-size:1.3rem;font-weight:700}
+.level-stats{display:flex;gap:1rem;font-size:0.85rem;color:#94a3b8}
+.province-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.5rem}
+.province-tag{padding:4px 10px;border-radius:6px;font-size:0.8rem;cursor:pointer;transition:all 0.2s;border:1px solid transparent}
+.province-tag:hover{transform:translateY(-2px)}
+.province-tag.east{background:rgba(59,130,246,0.15);color:#60a5fa;border-color:rgba(59,130,246,0.3)}
+.province-tag.central{background:rgba(16,185,129,0.15);color:#34d399;border-color:rgba(16,185,129,0.3)}
+.province-tag.west{background:rgba(245,158,11,0.15);color:#fbbf24;border-color:rgba(245,158,11,0.3)}
+.province-tag.northeast{background:rgba(139,92,246,0.15);color:#a78bfa;border-color:rgba(139,92,246,0.3)}
+
+/* Radar section */
+.radar-section{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.section-title{font-size:1.2rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.section-title .dot{width:8px;height:8px;border-radius:50%;background:#3b82f6}
+.radar-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.radar-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:1rem}
+.radar-card h3{font-size:0.95rem;color:#94a3b8;margin-bottom:0.5rem}
+
+/* Strategy selector */
+.strategy-section{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.strategy-selector{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+.strategy-btn{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;transition:all 0.2s;font-size:0.85rem}
+.strategy-btn:hover,.strategy-btn.active{background:#334155;color:#e2e8f0;border-color:#3b82f6}
+.strategy-result{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.5rem;display:none}
+.strategy-result.show{display:block}
+.strategy-level-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;margin-bottom:0.8rem}
+.strategy-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
+.s-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:1rem;transition:all 0.3s}
+.s-card:hover{border-color:#3b82f6;transform:translateY(-2px)}
+.s-card .priority{font-size:0.7rem;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:0.5rem}
+.s-card h4{font-size:0.95rem;font-weight:700;margin-bottom:0.3rem}
+.s-card p{font-size:0.8rem;color:#94a3b8}
+
+/* fsQCA paths */
+.paths-section{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.path-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.path-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1.2rem;position:relative;overflow:hidden;transition:all 0.3s}
+.path-card:hover{transform:translateY(-4px);border-color:#3b82f6}
+.path-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.path-card.h1::before{background:#a78bfa}.path-card.h2::before{background:#3b82f6}.path-card.h3::before{background:#10b981}
+.path-badge{font-size:0.75rem;padding:3px 10px;border-radius:12px;display:inline-block;margin-bottom:0.5rem;font-weight:700}
+.path-name{font-size:1.05rem;font-weight:700;margin-bottom:0.3rem}
+.path-conditions{font-size:0.8rem;color:#94a3b8;margin-bottom:0.5rem}
+.path-coverage{display:flex;gap:1rem;font-size:0.8rem;margin-bottom:0.5rem}
+.path-coverage span{color:#64748b}
+.path-coverage strong{color:#e2e8f0}
+.path-provinces{display:flex;flex-wrap:wrap;gap:4px;margin-top:0.5rem}
+.path-province{font-size:0.7rem;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,0.1);color:#60a5fa}
+
+/* Dimensional balance */
+.balance-section{max-width:1100px;margin:2rem auto;padding:0 1rem}
+.balance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.balance-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:1.2rem;text-align:center;transition:all 0.3s}
+.balance-card:hover{border-color:#3b82f6}
+.balance-icon{font-size:2rem;margin-bottom:0.5rem}
+.balance-name{font-size:0.95rem;font-weight:700;margin-bottom:0.3rem}
+.balance-desc{font-size:0.8rem;color:#94a3b8}
+.balance-count{font-size:1.5rem;font-weight:900;margin:0.3rem 0}
+
+/* Regional comparison */
+.regional-section{max-width:1100px;margin:2rem auto;padding:0 1rem}
+
+/* Back link */
+.back-link{display:inline-flex;align-items:center;gap:4px;color:#60a5fa;font-size:0.85rem;text-decoration:none;margin-bottom:1rem;padding:4px 0}
+.back-link:hover{color:#93bbfc}
+
+/* Responsive */
+@media(max-width:768px){
+  .staircase{flex-direction:column;align-items:stretch}
+  .stair{height:auto!important;min-height:60px;border-radius:8px!important}
+  .stair-l5{order:5}.stair-l4{order:4}.stair-l3{order:3}.stair-l2{order:2}.stair-l1{order:1}
+  .stair-inner{flex-direction:row;justify-content:space-between;align-items:center;padding:8px 12px}
+  .path-cards{grid-template-columns:1fr}
+  .radar-grid{grid-template-columns:1fr}
+  .balance-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>🏛️ 开放数据平台成熟度模型</h1>
+  <p>基于TOPSIS综合绩效的5级进阶体系 · 对应论文第5章绩效分类与第7章对策建议</p>
+</section>
+
+<!-- 5-Level Staircase -->
+<div class="staircase-wrap">
+  <div class="stair-title">▾ 点击任意层级，查看该层省份与提升策略 ▾</div>
+  <div class="staircase" id="staircase">
+    <div class="stair stair-l5" data-level="5" onclick="showLevel(5)">
+      <div class="stair-inner">
+        <div class="stair-count" style="color:#64748b">1</div>
+        <div class="stair-label">L5 极差</div>
+        <div class="stair-ci">Ci &lt; 0.15</div>
+        <div class="stair-bar"></div>
+      </div>
+    </div>
+    <div class="stair stair-l4" data-level="4" onclick="showLevel(4)">
+      <div class="stair-inner">
+        <div class="stair-count" style="color:#3b82f6">7</div>
+        <div class="stair-label">L4 较差</div>
+        <div class="stair-ci">0.15-0.25</div>
+        <div class="stair-bar"></div>
+      </div>
+    </div>
+    <div class="stair stair-l3" data-level="3" onclick="showLevel(3)">
+      <div class="stair-inner">
+        <div class="stair-count" style="color:#60a5fa">8</div>
+        <div class="stair-label">L3 中等</div>
+        <div class="stair-ci">0.25-0.40</div>
+        <div class="stair-bar"></div>
+      </div>
+    </div>
+    <div class="stair stair-l2" data-level="2" onclick="showLevel(2)">
+      <div class="stair-inner">
+        <div class="stair-count" style="color:#818cf8">8</div>
+        <div class="stair-label">L2 良好</div>
+        <div class="stair-ci">0.40-0.60</div>
+        <div class="stair-bar"></div>
+      </div>
+    </div>
+    <div class="stair stair-l1" data-level="1" onclick="showLevel(1)">
+      <div class="stair-inner">
+        <div class="stair-count" style="color:#a78bfa">6</div>
+        <div class="stair-label">L1 优秀</div>
+        <div class="stair-ci">Ci ≥ 0.60</div>
+        <div class="stair-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Level Detail Panel -->
+<div class="level-detail" id="levelDetail">
+  <div class="level-card" id="levelCard">
+    <div class="level-header">
+      <div>
+        <span class="level-name" id="levelName"></span>
+        <div class="level-stats" id="levelStats"></div>
+      </div>
+      <button onclick="closeLevel()" style="background:none;border:none;color:#94a3b8;font-size:1.2rem;cursor:pointer">✕</button>
+    </div>
+    <div style="margin-bottom:0.8rem;font-size:0.85rem;color:#cbd5e1" id="levelDesc"></div>
+    <div style="font-size:0.8rem;color:#64748b;margin-bottom:0.3rem">包含省份（点击查看4E雷达图）：</div>
+    <div class="province-tags" id="provinceTags"></div>
+  </div>
+</div>
+
+<!-- Radar Section -->
+<div class="radar-section">
+  <div class="section-title"><span class="dot"></span>省份4E雷达画像</div>
+  <div class="radar-grid">
+    <div class="radar-card">
+      <h3 id="radarTitle1">选择省份查看</h3>
+      <div id="radarChart1" style="height:320px"></div>
+    </div>
+    <div class="radar-card">
+      <h3 id="radarTitle2">与全国均值对比</h3>
+      <div id="radarChart2" style="height:320px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Strategy Recommender -->
+<div class="strategy-section">
+  <div class="section-title"><span class="dot" style="background:#f59e0b"></span>策略推荐器 —— 选择省份，获取差异化提升策略</div>
+  <div class="strategy-selector" id="strategySelector"></div>
+  <div class="strategy-result" id="strategyResult">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem">
+      <span style="font-size:1.2rem;font-weight:700" id="stratProvince"></span>
+      <span class="strategy-level-badge" id="stratBadge"></span>
+    </div>
+    <div style="font-size:0.85rem;color:#94a3b8;margin-bottom:0.3rem" id="stratInfo"></div>
+    <div style="font-size:0.9rem;font-weight:700;margin:0.8rem 0 0.5rem;color:#f59e0b">📋 提升策略</div>
+    <div class="strategy-cards" id="strategyCards"></div>
+  </div>
+</div>
+
+<!-- fsQCA Development Paths -->
+<div class="paths-section">
+  <div class="section-title"><span class="dot" style="background:#a78bfa"></span>fsQCA组态发展路径 —— 高绩效的三条等价路径</div>
+  <div class="path-cards">
+    <div class="path-card h1">
+      <span class="path-badge" style="background:rgba(167,139,250,0.2);color:#a78bfa">路径 H1</span>
+      <div class="path-name">技术驱动型</div>
+      <div class="path-conditions">核心条件：高供应×高服务×高质量</div>
+      <div class="path-coverage">
+        <span>覆盖度 <strong>81%</strong></span>
+        <span>一致性 <strong>0.94</strong></span>
+      </div>
+      <div style="font-size:0.8rem;color:#94a3b8">策略聚焦：深化应用场景；培育数据需求市场；完善开发者生态</div>
+      <div class="path-provinces">
+        <span class="path-province">浙江</span><span class="path-province">上海</span><span class="path-province">北京</span><span class="path-province">广东</span><span class="path-province">山东</span><span class="path-province">四川</span>
+      </div>
+    </div>
+    <div class="path-card h2">
+      <span class="path-badge" style="background:rgba(59,130,246,0.2);color:#3b82f6">路径 H2</span>
+      <div class="path-name">效率-区域型</div>
+      <div class="path-conditions">核心条件：高质量×技术支撑×区域优势</div>
+      <div class="path-coverage">
+        <span>覆盖度 <strong>19%</strong></span>
+        <span>一致性 <strong>0.91</strong></span>
+      </div>
+      <div style="font-size:0.8rem;color:#94a3b8">策略聚焦：扩大高价值数据开放；强化区域协作；填补供应缺口</div>
+      <div class="path-provinces">
+        <span class="path-province">广东</span><span class="path-province">山东</span><span class="path-province">江苏</span>
+      </div>
+    </div>
+    <div class="path-card h3">
+      <span class="path-badge" style="background:rgba(16,185,129,0.2);color:#10b981">路径 H3</span>
+      <div class="path-name">生态-协同型</div>
+      <div class="path-conditions">核心条件：高供应×高效果×技术支撑</div>
+      <div class="path-coverage">
+        <span>覆盖度 <strong>15%</strong></span>
+        <span>一致性 <strong>0.89</strong></span>
+      </div>
+      <div style="font-size:0.8rem;color:#94a3b8">策略聚焦：优化平台可用性；降低利用门槛；改善供需匹配</div>
+      <div class="path-provinces">
+        <span class="path-province">江苏</span><span class="path-province">福建</span><span class="path-province">贵州</span>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1rem;font-size:0.8rem;color:#64748b">
+    ⚠ 必要条件"铁三角"：E2平台服务、E3数据质量、E4利用效果的一致性均为1.00 —— 高绩效的必要非充分条件
+  </div>
+</div>
+
+<!-- Dimensional Balance -->
+<div class="balance-section">
+  <div class="section-title"><span class="dot" style="background:#10b981"></span>维度均衡度分析</div>
+  <div class="balance-grid">
+    <div class="balance-card">
+      <div class="balance-icon">⚖️</div>
+      <div class="balance-name">均衡型</div>
+      <div class="balance-count" style="color:#10b981">5</div>
+      <div class="balance-desc">4E维度极差 &lt; 0.15<br/>代表：浙江、北京</div>
+    </div>
+    <div class="balance-card">
+      <div class="balance-icon">📊</div>
+      <div class="balance-name">轻度失衡型</div>
+      <div class="balance-count" style="color:#f59e0b">15</div>
+      <div class="balance-desc">4E维度极差 0.15-0.35<br/>代表：山东（供应强/服务弱）、贵州（效果高/供应低）</div>
+    </div>
+    <div class="balance-card">
+      <div class="balance-icon">📉</div>
+      <div class="balance-name">重度失衡型</div>
+      <div class="balance-count" style="color:#f43f5e">10</div>
+      <div class="balance-desc">4E维度极差 &gt; 0.35<br/>"低水平锁定"状态，多维度严重不足</div>
+    </div>
+  </div>
+</div>
+
+<!-- Regional Comparison -->
+<div class="regional-section">
+  <div class="section-title"><span class="dot" style="background:#06b6d4"></span>区域绩效对比</div>
+  <div id="regionalChart" style="height:380px;background:#1e293b;border:1px solid #334155;border-radius:10px"></div>
+</div>
+
+<!-- Navigation -->
+<div style="max-width:1100px;margin:2rem auto;padding:0 1rem;text-align:center">
+  <a href="/" class="back-link">← 返回首页</a>
+  <span style="color:#334155;margin:0 0.5rem">|</span>
+  <a href="/charts/topsis-dea" class="back-link">TOPSIS象限图</a>
+  <span style="color:#334155;margin:0 0.5rem">|</span>
+  <a href="/charts/radar" class="back-link">雷达对比</a>
+  <span style="color:#334155;margin:0 0.5rem">|</span>
+  <a href="/analysis" class="back-link">分析中心</a>
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;font-size:0.75rem;color:#475569;border-top:1px solid #1e293b">
+  OGD-Collector Pro · 基于30个省级开放数据平台TOPSIS综合绩效评估 · 对应论文第5章-第7章
+</footer>
+
+<script>
+// ===== DATA =====
+const provinces = [
+  {name:'浙江',ci:0.778,grade:'A',level:1,region:'east',e1:0.82,e2:0.78,e3:0.90,e4:0.85,e5:0.80},
+  {name:'广东',ci:0.754,grade:'A',level:1,region:'east',e1:0.88,e2:0.56,e3:0.88,e4:0.21,e5:0.70},
+  {name:'上海',ci:0.726,grade:'A',level:1,region:'east',e1:0.60,e2:0.33,e3:0.88,e4:0.00,e5:0.70},
+  {name:'北京',ci:0.706,grade:'A',level:1,region:'east',e1:0.75,e2:0.77,e3:1.00,e4:0.42,e5:1.00},
+  {name:'山东',ci:0.658,grade:'B+',level:1,region:'east',e1:0.88,e2:0.77,e3:1.00,e4:1.00,e5:1.00},
+  {name:'四川',ci:0.607,grade:'B+',level:1,region:'west',e1:0.86,e2:0.80,e3:1.00,e4:0.42,e5:1.00},
+  {name:'江苏',ci:0.592,grade:'B',level:2,region:'east',e1:0.55,e2:0.82,e3:0.88,e4:0.21,e5:0.70},
+  {name:'福建',ci:0.552,grade:'B',level:2,region:'east',e1:0.58,e2:0.26,e3:0.88,e4:0.21,e5:0.70},
+  {name:'贵州',ci:0.539,grade:'B',level:2,region:'west',e1:0.64,e2:0.36,e3:0.88,e4:0.21,e5:0.70},
+  {name:'陕西',ci:0.524,grade:'B',level:2,region:'west',e1:0.52,e2:0.55,e3:0.75,e4:0.30,e5:0.60},
+  {name:'湖南',ci:0.505,grade:'B',level:2,region:'central',e1:0.55,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  {name:'湖北',ci:0.490,grade:'B-',level:2,region:'central',e1:0.66,e2:0.61,e3:0.88,e4:0.21,e5:0.70},
+  {name:'安徽',ci:0.470,grade:'B-',level:2,region:'central',e1:0.08,e2:0.26,e3:0.88,e4:0.00,e5:0.40},
+  {name:'河南',ci:0.452,grade:'B-',level:2,region:'central',e1:0.60,e2:0.72,e3:0.88,e4:0.42,e5:0.70},
+  {name:'江西',ci:0.432,grade:'C+',level:3,region:'central',e1:0.40,e2:0.49,e3:0.88,e4:0.21,e5:0.70},
+  {name:'重庆',ci:0.412,grade:'C+',level:3,region:'west',e1:0.76,e2:0.56,e3:0.88,e4:0.21,e5:0.70},
+  {name:'辽宁',ci:0.395,grade:'C',level:3,region:'northeast',e1:0.76,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  {name:'云南',ci:0.377,grade:'C',level:3,region:'west',e1:0.35,e2:0.39,e3:0.88,e4:0.21,e5:0.70},
+  {name:'广西',ci:0.357,grade:'C',level:3,region:'west',e1:0.72,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  {name:'海南',ci:0.339,grade:'C',level:3,region:'east',e1:0.78,e2:0.75,e3:1.00,e4:0.42,e5:1.00},
+  {name:'河北',ci:0.319,grade:'C-',level:3,region:'east',e1:0.45,e2:0.38,e3:0.70,e4:0.15,e5:0.55},
+  {name:'天津',ci:0.301,grade:'C-',level:3,region:'east',e1:0.59,e2:0.64,e3:0.88,e4:0.42,e5:0.70},
+  {name:'吉林',ci:0.284,grade:'D+',level:3,region:'northeast',e1:0.31,e2:0.49,e3:0.88,e4:0.21,e5:0.70},
+  {name:'黑龙江',ci:0.264,grade:'D+',level:4,region:'northeast',e1:0.28,e2:0.35,e3:0.65,e4:0.10,e5:0.50},
+  {name:'内蒙古',ci:0.244,grade:'D',level:4,region:'west',e1:0.42,e2:0.87,e3:1.00,e4:0.42,e5:1.00},
+  {name:'新疆',ci:0.224,grade:'D',level:4,region:'west',e1:0.25,e2:0.30,e3:0.55,e4:0.08,e5:0.40},
+  {name:'甘肃',ci:0.204,grade:'D',level:4,region:'west',e1:0.22,e2:0.28,e3:0.50,e4:0.05,e5:0.35},
+  {name:'宁夏',ci:0.184,grade:'D',level:4,region:'west',e1:0.20,e2:0.25,e3:0.45,e4:0.05,e5:0.30},
+  {name:'青海',ci:0.164,grade:'D',level:4,region:'west',e1:0.18,e2:0.22,e3:0.40,e4:0.03,e5:0.25},
+  {name:'西藏',ci:0.141,grade:'D',level:5,region:'west',e1:0.12,e2:0.15,e3:0.30,e4:0.02,e5:0.15}
+];
+
+const levelMeta = {
+  1:{name:'L1 优秀',ci:'Ci ≥ 0.60',color:'#a78bfa',desc:'4E维度全面领先，无明显短板。全部为东部省份或西部标杆，代表中国开放数据最高水平。升级方向：从"数量领先"转向"生态引领"，培育开发者社区和数据应用场景。',next:null},
+  2:{name:'L2 良好',ci:'0.40 ≤ Ci < 0.60',color:'#818cf8',desc:'1-2个维度存在短板，其余维度表现突出。是"潜力股"最集中的层级，补齐短板即可跃迁。升级方向：精准补弱——识别最低维度，针对性提升。',next:'L1 优秀'},
+  3:{name:'L3 中等',ci:'0.25 ≤ Ci < 0.40',color:'#60a5fa',desc:'4E得分参差不齐，多数维度低于0.5。是全国中位数所在层级，平台数量最多。升级方向：重点突破——选择1-2个维度做"引爆点"，以点带面。',next:'L2 良好'},
+  4:{name:'L4 较差',ci:'0.15 ≤ Ci < 0.25',color:'#3b82f6',desc:'多维度薄弱，4E得分普遍低于0.3。存在"低水平锁定"风险，需要外部政策冲击。升级方向：政策驱动——以"数据二十条"等政策为契机，外部推力破局。',next:'L3 中等'},
+  5:{name:'L5 极差',ci:'Ci < 0.15',color:'#64748b',desc:'严重多维度缺失，4E全面低于0.2。需要从零到一的基础建设，优先保障数据供应和平台可用性。升级方向：基础先行——先解决"有无"问题，再谈"好坏"。',next:'L4 较差'}
+};
+
+const regionNames = {east:'东部',central:'中部',west:'西部',northeast:'东北'};
+const regionColors = {east:'#3b82f6',central:'#10b981',west:'#f59e0b',northeast:'#8b5cf6'};
+
+// Strategy data by level
+const strategies = {
+  1:[
+    {title:'深化应用场景',desc:'从数据开放转向场景驱动，打造标杆应用案例',priority:'核心',pColor:'#a78bfa'},
+    {title:'培育数据需求市场',desc:'建立数据交易机制，激发社会力量参与数据开发利用',priority:'核心',pColor:'#a78bfa'},
+    {title:'完善开发者生态',desc:'提供SDK/API工具包，举办数据创新大赛，降低开发门槛',priority:'支撑',pColor:'#3b82f6'},
+    {title:'引领标准制定',desc:'将自身经验上升为行业标准，巩固先发优势',priority:'延伸',pColor:'#10b981'}
+  ],
+  2:[
+    {title:'精准补弱维度',desc:'识别4E中最低维度，集中资源突破瓶颈',priority:'核心',pColor:'#a78bfa'},
+    {title:'强化数据质量',desc:'E3数据质量是高绩效必要条件，优先提升机器可读率和下载可用率',priority:'核心',pColor:'#a78bfa'},
+    {title:'提升利用效果',desc:'E4利用效果是另一必要条件，扩大下载量和应用成果',priority:'核心',pColor:'#a78bfa'},
+    {title:'借鉴标杆经验',desc:'参考同区域L1省份路径，复制已验证的组态模式',priority:'支撑',pColor:'#3b82f6'}
+  ],
+  3:[
+    {title:'选择引爆点维度',desc:'不求全面突破，选1-2个维度做到区域前列',priority:'核心',pColor:'#a78bfa'},
+    {title:'借力政策东风',desc:'"数据二十条"政策效应显著(β=0.043,p<0.01)，但存在1年滞后期',priority:'核心',pColor:'#a78bfa'},
+    {title:'构建服务能力',desc:'E2平台服务是必要条件，先让平台"好用"再谈"有用"',priority:'核心',pColor:'#a78bfa'},
+    {title:'区域协作借力',desc:'与邻近高绩效省份共建数据专区，共享基础设施',priority:'支撑',pColor:'#3b82f6'}
+  ],
+  4:[
+    {title:'基础建设先行',desc:'先解决数据"有无"问题：保障基础数据集开放和平台可用',priority:'核心',pColor:'#a78bfa'},
+    {title:'政策强力介入',desc:'低水平锁定需外部冲击，争取省级数据开放专项政策',priority:'核心',pColor:'#a78bfa'},
+    {title:'目录体系搭建',desc:'建立完整的数据目录和元数据标准，为后续提升打基础',priority:'核心',pColor:'#a78bfa'},
+    {title:'对口帮扶机制',desc:'借助东西部协作机制，引入东部省份技术和经验',priority:'支撑',pColor:'#3b82f6'}
+  ],
+  5:[
+    {title:'从零到一突破',desc:'优先实现数据开放平台上线，即使少量数据集也胜于无',priority:'核心',pColor:'#a78bfa'},
+    {title:'保障基础供应',desc:'E1供应保障是起点，至少开放100个高质量数据集',priority:'核心',pColor:'#a78bfa'},
+    {title:'平台可用性底线',desc:'确保平台可访问、可搜索、可下载，满足基本可用性',priority:'核心',pColor:'#a78bfa'},
+    {title:'争取外部支持',desc:'中央转移支付和技术援助是破局关键',priority:'支撑',pColor:'#3b82f6'}
+  ]
+};
+
+// ===== INIT =====
+let radar1 = null, radar2 = null;
+const avgE1 = provinces.reduce((s,p)=>s+p.e1,0)/provinces.length;
+const avgE2 = provinces.reduce((s,p)=>s+p.e2,0)/provinces.length;
+const avgE3 = provinces.reduce((s,p)=>s+p.e3,0)/provinces.length;
+const avgE4 = provinces.reduce((s,p)=>s+p.e4,0)/provinces.length;
+const avgE5 = provinces.reduce((s,p)=>s+p.e5,0)/provinces.length;
+
+// Build strategy selector
+const selector = document.getElementById('strategySelector');
+provinces.forEach(p => {
+  const btn = document.createElement('button');
+  btn.className = 'strategy-btn';
+  btn.textContent = p.name;
+  btn.onclick = () => selectProvince(p.name);
+  selector.appendChild(btn);
+});
+
+// Init charts
+radar1 = echarts.init(document.getElementById('radarChart1'));
+radar2 = echarts.init(document.getElementById('radarChart2'));
+renderRegionalChart();
+
+// ===== STAIRCASE INTERACTION =====
+function showLevel(level) {
+  // Highlight stair
+  document.querySelectorAll('.stair').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.stair[data-level="${level}"]`).classList.add('active');
+
+  const meta = levelMeta[level];
+  const levelProvinces = provinces.filter(p => p.level === level);
+
+  document.getElementById('levelDetail').classList.add('show');
+  const card = document.getElementById('levelCard');
+  card.className = `level-card l${level}`;
+  document.getElementById('levelName').textContent = meta.name;
+  document.getElementById('levelStats').innerHTML = `<span>${meta.ci}</span><span>共 ${levelProvinces.length} 个平台</span>`;
+  document.getElementById('levelDesc').textContent = meta.desc;
+
+  const tags = document.getElementById('provinceTags');
+  tags.innerHTML = '';
+  levelProvinces.forEach(p => {
+    const tag = document.createElement('span');
+    tag.className = `province-tag ${p.region}`;
+    tag.textContent = `${p.name} (${p.ci.toFixed(3)})`;
+    tag.onclick = () => showRadar(p.name);
+    tags.appendChild(tag);
+  });
+
+  // Auto-show first province radar
+  if (levelProvinces.length > 0) showRadar(levelProvinces[0].name);
+}
+
+function closeLevel() {
+  document.getElementById('levelDetail').classList.remove('show');
+  document.querySelectorAll('.stair').forEach(s => s.classList.remove('active'));
+}
+
+// ===== RADAR =====
+function showRadar(name) {
+  const p = provinces.find(x => x.name === name);
+  if (!p) return;
+
+  document.getElementById('radarTitle1').textContent = `${p.name} — 4E维度画像`;
+  document.getElementById('radarTitle2').textContent = `${p.name} vs 全国均值`;
+
+  const indicator = [
+    {name:'E1供应保障',max:1},{name:'E2平台服务',max:1},{name:'E3数据质量',max:1},{name:'E4利用效果',max:1},{name:'E5公平性',max:1}
+  ];
+
+  radar1.setOption({
+    tooltip:{},
+    legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+    radar:{indicator,shape:'polygon',splitNumber:4,axisName:{color:'#94a3b8',fontSize:11},splitArea:{areaStyle:{color:['rgba(59,130,246,0.02)','rgba(59,130,246,0.05)']}}},
+    series:[{type:'radar',data:[
+      {value:[p.e1,p.e2,p.e3,p.e4,p.e5],name:p.name,areaStyle:{color:'rgba(167,139,250,0.25)'},lineStyle:{color:'#a78bfa',width:2},itemStyle:{color:'#a78bfa'}},
+      {value:[avgE1,avgE2,avgE3,avgE4,avgE5],name:'全国均值',areaStyle:{color:'rgba(148,163,184,0.06)'},lineStyle:{color:'#64748b',width:1,type:'dashed'},itemStyle:{color:'#64748b'}}
+    ]}]
+  });
+
+  // Dimension bar chart
+  radar2.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+    grid:{left:80,right:20,top:20,bottom:40},
+    xAxis:{type:'value',max:1,splitLine:{lineStyle:{color:'#1e293b'}},axisLabel:{color:'#64748b'}},
+    yAxis:{type:'category',data:['E1供应','E2服务','E3质量','E4效果','E5公平'],axisLabel:{color:'#94a3b8',fontSize:11}},
+    series:[
+      {name:p.name,type:'bar',data:[p.e1,p.e2,p.e3,p.e4,p.e5],itemStyle:{color:'#a78bfa',borderRadius:[0,4,4,0]},barWidth:12},
+      {name:'均值',type:'bar',data:[avgE1,avgE2,avgE3,avgE4,avgE5],itemStyle:{color:'#334155',borderRadius:[0,4,4,0]},barWidth:12}
+    ]
+  });
+}
+
+// ===== STRATEGY SELECTOR =====
+function selectProvince(name) {
+  const p = provinces.find(x => x.name === name);
+  if (!p) return;
+
+  // Update button states
+  document.querySelectorAll('.strategy-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === name);
+  });
+
+  const result = document.getElementById('strategyResult');
+  result.classList.add('show');
+  document.getElementById('stratProvince').textContent = p.name;
+
+  const meta = levelMeta[p.level];
+  const badge = document.getElementById('stratBadge');
+  badge.textContent = `${meta.name} · Ci=${p.ci.toFixed(3)}`;
+  badge.style.background = meta.color + '22';
+  badge.style.color = meta.color;
+
+  document.getElementById('stratInfo').textContent = `当前位于${meta.name}层级（${meta.ci}），${meta.next ? '下一目标：' + meta.next : '已达最高层级'}`;
+
+  const cards = document.getElementById('strategyCards');
+  cards.innerHTML = '';
+  strategies[p.level].forEach(s => {
+    cards.innerHTML += `<div class="s-card"><span class="priority" style="background:${s.pColor}22;color:${s.pColor}">${s.priority}</span><h4>${s.title}</h4><p>${s.desc}</p></div>`;
+  });
+
+  // Also update radar
+  showRadar(name);
+}
+
+// ===== REGIONAL CHART =====
+function renderRegionalChart() {
+  const regions = {east:[],central:[],west:[],northeast:[]};
+  provinces.forEach(p => regions[p.region].push(p));
+
+  const chart = echarts.init(document.getElementById('regionalChart'));
+  const regionLabels = ['东部','中部','西部','东北'];
+  const regionKeys = ['east','central','west','northeast'];
+
+  chart.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{top:10,textStyle:{color:'#94a3b8',fontSize:11}},
+    grid:{left:60,right:20,top:50,bottom:40},
+    xAxis:{type:'category',data:regionLabels,axisLabel:{color:'#94a3b8'},axisLine:{lineStyle:{color:'#334155'}}},
+    yAxis:{type:'value',max:1,splitLine:{lineStyle:{color:'#1e293b'}},axisLabel:{color:'#64748b'}},
+    series:[
+      {name:'E1供应',type:'bar',stack:'4e',data:regionKeys.map(k=>regions[k].reduce((s,p)=>s+p.e1,0)/regions[k].length),itemStyle:{color:'#3b82f6'}},
+      {name:'E2服务',type:'bar',stack:'4e',data:regionKeys.map(k=>regions[k].reduce((s,p)=>s+p.e2,0)/regions[k].length),itemStyle:{color:'#8b5cf6'}},
+      {name:'E3质量',type:'bar',stack:'4e',data:regionKeys.map(k=>regions[k].reduce((s,p)=>s+p.e3,0)/regions[k].length),itemStyle:{color:'#10b981'}},
+      {name:'E4效果',type:'bar',stack:'4e',data:regionKeys.map(k=>regions[k].reduce((s,p)=>s+p.e4,0)/regions[k].length),itemStyle:{color:'#f59e0b'}},
+      {name:'E5公平',type:'bar',stack:'4e',data:regionKeys.map(k=>regions[k].reduce((s,p)=>s+p.e5,0)/regions[k].length),itemStyle:{color:'#06b6d4'}},
+      {name:'平均Ci',type:'line',yAxisIndex:0,data:regionKeys.map(k=>{const ps=regions[k];return +(ps.reduce((s,p)=>s+p.ci,0)/ps.length).toFixed(3))}),itemStyle:{color:'#f43f5e'},lineStyle:{width:3,type:'dashed'},symbol:'circle',symbolSize:8}
+    ]
+  });
+}
+
+// Resize
+window.addEventListener('resize', () => {
+  radar1 && radar1.resize();
+  radar2 && radar2.resize();
+  const rc = echarts.getInstanceByDom(document.getElementById('regionalChart'));
+  rc && rc.resize();
+});
+</script>
+</body>
+</html>
