@@ -1,0 +1,195 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}DEMATEL因果网络 - 交互式力导向图{% endblock %}{% block page_title %}DEMATEL因果网络{% endblock %}{% block breadcrumb %}分析看板 / DEMATEL因果网络{% endblock %}
+{% block extra_css %}
+<style>
+.force-container { width: 100%; height: 600px; border: 1px solid var(--border); border-radius: 12px; margin: 16px 0; background: #fafbfc; position: relative; overflow: hidden; }
+.force-container svg { width: 100%; height: 100%; }
+.node-info { position: absolute; top: 16px; right: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; min-width: 200px; box-shadow: var(--shadow); font-size: 13px; display: none; z-index: 10; }
+.node-info.show { display: block; }
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.legend-circle { width: 14px; height: 14px; border-radius: 50%; }
+.path-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media (max-width: 900px) { .path-cards { grid-template-columns: 1fr; } }
+.path-card { padding: 14px; border-radius: 10px; border: 1px solid var(--border); }
+.path-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.path-card p { font-size: 12px; color: var(--text-light); line-height: 1.7; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">DEMATEL因果网络分析</div>
+    <div style="font-size:14px;color:#99f6e4">6因素互因果网络 | 可拖拽力导向图 | 三条传导路径 | 论文图6-2</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><div class="icon"></div>因果网络力导向图（拖拽交互）</div>
+  </div>
+  <div class="legend-row">
+    <div class="legend-item"><div class="legend-circle" style="background:#dc2626"></div>原因因素（驱动者）</div>
+    <div class="legend-item"><div class="legend-circle" style="background:#2563eb"></div>结果因素（接受者）</div>
+    <div class="legend-item"><div style="width:30px;height:3px;background:#666"></div>影响关系</div>
+    <div class="legend-item"><div style="width:30px;height:6px;background:#666"></div>强影响</div>
+  </div>
+  <div class="force-container" id="forceContainer">
+    <svg id="forceSvg"></svg>
+    <div class="node-info" id="nodeInfo">
+      <div id="niName" style="font-size:16px;font-weight:700;margin-bottom:8px">—</div>
+      <div id="niType" style="font-size:12px;margin-bottom:4px">—</div>
+      <div id="niCentrality" style="font-size:12px">—</div>
+      <div id="niCausality" style="font-size:12px">—</div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--text-light);margin-top:8px">
+    <strong>操作</strong>：拖拽节点调整位置 | 悬停查看详情 | 连线粗细=影响强度 | 箭头方向=影响方向
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>核心发现</div>
+  <div style="font-size:13px;color:var(--text);line-height:1.8">
+    <p><strong style="color:#dc2626">所有4E维度均为"结果因素"</strong>：DEMATEL分析显示，E1-E5四个维度的原因度均接近0或为负值，意味着它们是被驱动者而非驱动者。政策法规(PL)和平台建设(PC)是真正的<strong style="color:#059669">原因因素</strong>（驱动者），通过因果链影响4E绩效表现。</p>
+    <p style="margin-top:8px"><strong>E3数据质量中心度最高(71.29)</strong>：在因果网络中，数据质量是最核心的"枢纽"，几乎所有传导路径都经过E3，验证了fsQCA中E3作为"铁三角"必要条件的地位。</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>三条因果传导路径</div>
+  <div class="path-cards">
+    <div class="path-card" style="border-left:4px solid #dc2626">
+      <h4 style="color:#dc2626">路径1: 政策→平台→质量→应用</h4>
+      <p>PL → PC → E3 → E4<br>政策法规驱动平台建设，提升数据质量，最终改善利用效果。这是最主要的传导链。</p>
+    </div>
+    <div class="path-card" style="border-left:4px solid #2563eb">
+      <h4 style="color:#2563eb">路径2: 政策→数据量→应用</h4>
+      <p>PL → E1 → E4<br>政策直接推动数据供给增长，但数据量增加不必然带来高质量利用。</p>
+    </div>
+    <div class="path-card" style="border-left:4px solid #059669">
+      <h4 style="color:#059669">路径3: 平台→运营→应用</h4>
+      <p>PC → OP → E4<br>平台能力通过运营保障传导至应用效果，说明"建好平台"还需"运营好"。</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>DEMATEL因素详情表</div>
+  <table class="data-table">
+    <thead><tr><th>因素</th><th>缩写</th><th>中心度</th><th>原因度</th><th>类型</th><th>角色</th></tr></thead>
+    <tbody>
+      <tr><td>政策法规</td><td>PL</td><td style="font-weight:700">30.52</td><td style="color:#dc2626;font-weight:700">+8.21</td><td><span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">原因因素</span></td><td>核心驱动者</td></tr>
+      <tr><td>平台建设</td><td>PC</td><td style="font-weight:700">29.82</td><td style="color:#dc2626;font-weight:700">+6.53</td><td><span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">原因因素</span></td><td>核心驱动者</td></tr>
+      <tr><td>供应保障</td><td>E1</td><td>25.34</td><td style="color:#2563eb">-2.15</td><td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">结果因素</span></td><td>被驱动者</td></tr>
+      <tr><td>平台服务</td><td>E2</td><td>27.68</td><td style="color:#2563eb">-3.42</td><td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">结果因素</span></td><td>被驱动者</td></tr>
+      <tr><td>数据质量</td><td>E3</td><td style="font-weight:700;color:#059669">71.29</td><td style="color:#2563eb">-4.31</td><td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">结果因素</span></td><td>核心枢纽</td></tr>
+      <tr><td>利用效果</td><td>E4</td><td>28.15</td><td style="color:#2563eb">-5.82</td><td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">结果因素</span></td><td>被驱动者</td></tr>
+      <tr><td>运营保障</td><td>OP</td><td>23.56</td><td style="color:#2563eb">-1.53</td><td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">结果因素</span></td><td>被驱动者</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+// DEMATEL 6-factor network data from thesis
+const nodes = [
+  {id:'PL',name:'政策法规',centrality:30.52,causality:8.21,type:'cause',color:'#dc2626'},
+  {id:'PC',name:'平台建设',centrality:29.82,causality:6.53,type:'cause',color:'#dc2626'},
+  {id:'E1',name:'供应保障',centrality:25.34,causality:-2.15,type:'effect',color:'#2563eb'},
+  {id:'E2',name:'平台服务',centrality:27.68,causality:-3.42,type:'effect',color:'#2563eb'},
+  {id:'E3',name:'数据质量',centrality:71.29,causality:-4.31,type:'effect',color:'#059669'},
+  {id:'E4',name:'利用效果',centrality:28.15,causality:-5.82,type:'effect',color:'#2563eb'},
+  {id:'OP',name:'运营保障',centrality:23.56,causality:-1.53,type:'effect',color:'#2563eb'}
+];
+const links = [
+  {source:'PL',target:'PC',value:4},{source:'PL',target:'E1',value:3},{source:'PL',target:'E3',value:2},{source:'PL',target:'E4',value:3},
+  {source:'PC',target:'E2',value:4},{source:'PC',target:'E3',value:3},{source:'PC',target:'OP',value:3},{source:'PC',target:'E4',value:3},
+  {source:'E1',target:'E3',value:2},{source:'E1',target:'E4',value:2},
+  {source:'E2',target:'E4',value:3},{source:'E2',target:'E3',value:2},
+  {source:'E3',target:'E4',value:4},
+  {source:'OP',target:'E4',value:2}
+];
+
+const container = document.getElementById('forceContainer');
+const svg = d3.select('#forceSvg');
+const width = container.clientWidth;
+const height = container.clientHeight;
+
+svg.attr('viewBox', `0 0 ${width} ${height}`);
+
+// Arrow marker
+svg.append('defs').append('marker')
+  .attr('id','arrowhead')
+  .attr('viewBox','0 -5 10 10')
+  .attr('refX',30).attr('refY',0)
+  .attr('markerWidth',6).attr('markerHeight',6)
+  .attr('orient','auto')
+  .append('path').attr('d','M0,-5L10,0L0,5').attr('fill','#94a3b8');
+
+const simulation = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id).distance(120))
+  .force('charge', d3.forceManyBody().strength(-400))
+  .force('center', d3.forceCenter(width/2, height/2))
+  .force('collision', d3.forceCollide().radius(50));
+
+const link = svg.append('g').selectAll('line')
+  .data(links).join('line')
+  .attr('stroke','#94a3b8')
+  .attr('stroke-width', d => d.value * 1.2)
+  .attr('marker-end','url(#arrowhead)')
+  .attr('opacity', 0.5);
+
+const linkLabel = svg.append('g').selectAll('text')
+  .data(links).join('text')
+  .attr('font-size',10).attr('fill','#94a3b8').attr('text-anchor','middle')
+  .text(d=>d.value);
+
+const node = svg.append('g').selectAll('g')
+  .data(nodes).join('g')
+  .call(d3.drag()
+    .on('start',(e,d)=>{if(!e.active)simulation.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;})
+    .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
+    .on('end',(e,d)=>{if(!e.active)simulation.alphaTarget(0);d.fx=null;d.fy=null;})
+  );
+
+node.append('circle')
+  .attr('r', d => 18 + d.centrality/8)
+  .attr('fill', d => d.color)
+  .attr('fill-opacity', 0.15)
+  .attr('stroke', d => d.color)
+  .attr('stroke-width', 2.5)
+  .attr('cursor','grab')
+  .on('mouseover', function(e,d) {
+    d3.select(this).attr('fill-opacity',0.3).attr('stroke-width',4);
+    const ni = document.getElementById('nodeInfo');
+    document.getElementById('niName').textContent = d.name + ' (' + d.id + ')';
+    document.getElementById('niType').innerHTML = d.type==='cause'?'<span style="color:#dc2626">原因因素（驱动者）</span>':'<span style="color:#2563eb">结果因素（接受者）</span>';
+    document.getElementById('niCentrality').textContent = '中心度: ' + d.centrality.toFixed(2);
+    document.getElementById('niCausality').textContent = '原因度: ' + (d.causality>0?'+':'') + d.causality.toFixed(2);
+    ni.classList.add('show');
+  })
+  .on('mouseout', function() {
+    d3.select(this).attr('fill-opacity',0.15).attr('stroke-width',2.5);
+    document.getElementById('nodeInfo').classList.remove('show');
+  });
+
+node.append('text')
+  .attr('text-anchor','middle').attr('dy','0.35em')
+  .attr('font-size',12).attr('font-weight',700).attr('fill','#1e293b')
+  .text(d=>d.id);
+
+node.append('text')
+  .attr('text-anchor','middle').attr('dy','2.2em')
+  .attr('font-size',9).attr('fill','#64748b')
+  .text(d=>d.name);
+
+simulation.on('tick', () => {
+  link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+  linkLabel.attr('x',d=>(d.source.x+d.target.x)/2).attr('y',d=>(d.source.y+d.target.y)/2-6);
+  node.attr('transform',d=>`translate(${d.x},${d.y})`);
+});
+</script>
+{% endblock %}

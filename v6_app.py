@@ -203,6 +203,11 @@ def charts_fsqca_explorer():
     """fsQCA组态路径浏览器"""
     return render_template('v6_fsqca_explorer.html')
 
+@app.route('/charts/dematel-force')
+def charts_dematel_force():
+    """DEMATEL因果网络力导向图"""
+    return render_template('v6_dematel_force.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""
