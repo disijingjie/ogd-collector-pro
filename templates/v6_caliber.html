@@ -106,6 +106,27 @@
   </div>
 </div>
 
+<!-- ========== 口径幻觉交互演示 ========== -->
+<div id="illusion-demo" class="scroll-section">
+  <div class="card">
+    <div class="card-header"><div class="card-title"><span class="icon"></span>口径幻觉交互演示</div><div style="font-size:12px;color:#64748b">拖动滑块观察口径差异对排名的影响</div></div>
+    <div class="illusion-card" style="border-color:#f59e0b">
+      <h3>CR一致性比率：有多少"数据"是真正可用的？</h3>
+      <p>CR = 有效数据集数 / 目录显示数。CR越低，说明"水分"越大。全国23省中位数CR仅0.122——即约87%的目录条目并非真正独立可用的数据集。</p>
+    </div>
+    <div id="caliberDemoChart" style="width:100%;height:500px;margin:16px 0"></div>
+    <div style="display:flex;align-items:center;gap:12px;margin:16px 0;flex-wrap:wrap">
+      <label style="font-size:13px;font-weight:600;color:var(--text-light)">调整CR阈值：</label>
+      <input type="range" id="crSlider" min="0" max="100" value="12" style="flex:1;min-width:200px;max-width:400px">
+      <span id="crValue" style="font-size:16px;font-weight:700;color:#d97706">0.12</span>
+      <span style="font-size:12px;color:#64748b">（中位数）</span>
+    </div>
+    <div style="font-size:12px;color:#64748b;line-height:1.8;padding:12px;background:#f8fafc;border-radius:8px">
+      <strong>解读</strong>：橙色柱为平台公布的原始数量，蓝色柱为按CR折算后的有效数据集数量。拖动滑块改变CR值，观察折算后排名如何变化。山东CR仅0.016（目录数63656但有效集仅约1000+），贵州CR=0.053，浙江CR=0.298。
+    </div>
+  </div>
+</div>
+
 <!-- ========== 23省口径对比 ========== -->
 <div id="comparison" class="scroll-section">
   <div class="card">
@@ -319,6 +340,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script>
 // Platform data for interactive charts
 const platforms = [
@@ -434,6 +456,69 @@ fetch('/api/interlock/check').then(r=>r.json()).then(data=>{
     }
   }
 });
+
+// ===== 口径幻觉交互演示 =====
+const caliberData = [
+  {name:'广东',raw:97528,cr:0.154,type:'dataset'},
+  {name:'山东',raw:63656,cr:0.016,type:'directory'},
+  {name:'浙江',raw:38000,cr:0.298,type:'dataset'},
+  {name:'安徽',raw:36300,cr:0.101,type:'directory'},
+  {name:'海南',raw:35835,cr:0.175,type:'directory'},
+  {name:'湖北',raw:24119,cr:0.212,type:'directory'},
+  {name:'重庆',raw:22550,cr:0.224,type:'dataset'},
+  {name:'广西',raw:10162,cr:0.367,type:'directory'},
+  {name:'上海',raw:10753,cr:0.312,type:'dataset'},
+  {name:'四川',raw:9115,cr:0.385,type:'directory'},
+  {name:'贵州',raw:9042,cr:0.053,type:'dataset'},
+  {name:'福建',raw:6722,cr:0.415,type:'directory'},
+  {name:'北京',raw:4454,cr:0.567,type:'dataset'},
+  {name:'辽宁',raw:4120,cr:0.512,type:'directory'},
+  {name:'天津',raw:3344,cr:0.598,type:'mixed'},
+  {name:'江苏',raw:644,cr:0.612,type:'directory'},
+  {name:'河南',raw:931,cr:0.345,type:'product'},
+  {name:'湖南',raw:634,cr:0.721,type:'directory'},
+  {name:'江西',raw:534,cr:0.647,type:'directory'},
+  {name:'山西',raw:534,cr:0.623,type:'mixed'},
+  {name:'云南',raw:428,cr:0.531,type:'register'},
+  {name:'吉林',raw:303,cr:0.752,type:'mixed'},
+  {name:'内蒙古',raw:219,cr:0.891,type:'dataset'}
+].sort((a,b)=>b.raw-a.raw);
+
+const cdChart = echarts.init(document.getElementById('caliberDemoChart'));
+const crSlider = document.getElementById('crSlider');
+const crValue = document.getElementById('crValue');
+
+function renderCaliberDemo() {
+  const cr = crSlider.value / 100;
+  crValue.textContent = cr.toFixed(2);
+
+  const adjustedData = caliberData.map(d => ({
+    ...d,
+    effective: Math.round(d.raw * d.cr),
+    uniform: Math.round(d.raw * cr)
+  }));
+
+  cdChart.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+      formatter: function(params) {
+        const d = adjustedData[params[0].dataIndex];
+        return `<strong>${d.name}</strong><br/>公布数量: ${d.raw.toLocaleString()}<br/>实际有效(自身CR): ${d.effective.toLocaleString()}<br/>统一CR折算: ${d.uniform.toLocaleString()}<br/>自身CR: ${d.cr.toFixed(3)}`;
+      }
+    },
+    legend: { data: ['公布数量', '实际有效(CR折算)', '统一CR折算'], bottom: 0, textStyle: { fontSize: 11 } },
+    grid: { left: '3%', right: '4%', bottom: '12%', top: '4%', containLabel: true },
+    xAxis: { type: 'category', data: adjustedData.map(d=>d.name), axisLabel: { fontSize: 10, rotate: 45 } },
+    yAxis: { type: 'value', name: '数量', axisLabel: { formatter: function(v) { return v >= 10000 ? (v/10000)+'万' : v; } } },
+    series: [
+      { name: '公布数量', type: 'bar', data: adjustedData.map(d=>d.raw), itemStyle: { color: '#f59e0b', borderRadius: [4,4,0,0] }, barMaxWidth: 25 },
+      { name: '实际有效(CR折算)', type: 'bar', data: adjustedData.map(d=>d.effective), itemStyle: { color: '#2563eb', borderRadius: [4,4,0,0] }, barMaxWidth: 25 },
+      { name: '统一CR折算', type: 'bar', data: adjustedData.map(d=>d.uniform), itemStyle: { color: '#94a3b8', borderRadius: [4,4,0,0], opacity: 0.6 }, barMaxWidth: 25 }
+    ]
+  }, true);
+}
+
+crSlider.addEventListener('input', renderCaliberDemo);
+renderCaliberDemo();
 </script>
 
 {% endblock %}
