@@ -956,14 +956,35 @@ def page_not_found(e):
 # 论文MD解析器
 THESIS_MD_PATH = 'docs/博士论文_最终定稿版_v23.md'
 
+def _extract_summary(content):
+    """从章节内容中提取首段摘要"""
+    paragraphs = []
+    current_p = []
+    for line in content.split('\n'):
+        s = line.strip()
+        if not s or s.startswith('#') or s.startswith('![') or s.startswith('*数据') or s.startswith('*来源') or s.startswith('**图') or s.startswith('**表'):
+            if current_p:
+                paragraphs.append(' '.join(current_p))
+                current_p = []
+            continue
+        current_p.append(s)
+    if current_p:
+        paragraphs.append(' '.join(current_p))
+    if paragraphs:
+        summary = re.sub(r'\[\^\d+\]', '', paragraphs[0])
+        if len(summary) > 260:
+            summary = summary[:257] + '...'
+        return summary
+    return ''
+
 def parse_thesis_md():
-    """解析论文MD，返回结构化数据"""
+    """增强版论文MD解析器：章节摘要、图表索引、引用统计、外部链接"""
     if not os.path.exists(THESIS_MD_PATH):
         return None
-    
+
     with open(THESIS_MD_PATH, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    
+
     chapters = []
     current_chapter = None
     current_section = None
@@ -972,42 +993,37 @@ def parse_thesis_md():
     in_references = False
     ref_buffer = []
     ref_id = None
-    
+
+    ref_counts = {}
+    figures_index = []
+    tables_index = []
+    fig_counter = 0
+    tab_counter = 0
+
+    def _flush_chapter():
+        nonlocal current_chapter
+        if not current_chapter:
+            return
+        if current_section and current_content:
+            current_chapter['sections'].append({
+                'title': current_section,
+                'content': ''.join(current_content)
+            })
+        # Build full content for summary extraction
+        full = current_chapter['content'] if current_chapter.get('content') else ''
+        for sec in current_chapter['sections']:
+            full += sec['content']
+        current_chapter['summary'] = _extract_summary(full)
+        chapters.append(current_chapter)
+        current_chapter = None
+
     for line in lines:
-        # 检测章节标题 # 第X章
-        if re.match(r'^# 第.+章', line):
-            if current_chapter:
-                current_chapter['sections'].append({
-                    'title': current_section or current_chapter['title'],
-                    'content': ''.join(current_content)
-                })
-            current_chapter = {
-                'title': line.strip('#').strip(),
-                'level': 1,
-                'sections': [],
-                'content': ''
-            }
-            current_section = line.strip('#').strip()
-            current_content = []
-            continue
-        
-        # 检测二级标题 ###
-        if re.match(r'^### ', line) and current_chapter:
-            if current_section and current_content:
-                current_chapter['sections'].append({
-                    'title': current_section,
-                    'content': ''.join(current_content)
-                })
-            current_section = line.strip('#').strip()
-            current_content = [line]
-            continue
-        
-        # 检测参考文献/附录区域
+        # 参考文献区域
         if re.match(r'^## (中文文献|英文文献|附录)', line) or re.match(r'^# 参考文献', line):
             in_references = True
+            _flush_chapter()
             continue
-        
-        # 收集参考文献 [N] 格式
+
         if in_references:
             m = re.match(r'^\[(\d+)\]\s+(.*)', line)
             if m:
@@ -1019,31 +1035,119 @@ def parse_thesis_md():
                 if line.strip():
                     ref_buffer.append(line)
             continue
-        
+
+        # 章节标题
+        ch_match = re.match(r'^# (第.+章.*)', line)
+        if ch_match:
+            _flush_chapter()
+            current_chapter = {
+                'title': ch_match.group(1).strip(),
+                'level': 1,
+                'sections': [],
+                'content': '',
+                'summary': '',
+                'figures': [],
+                'tables': []
+            }
+            current_section = current_chapter['title']
+            current_content = []
+            continue
+
+        # H3 节标题
+        h3_match = re.match(r'^### (.+)', line)
+        if h3_match and current_chapter:
+            if current_section and current_content:
+                current_chapter['sections'].append({
+                    'title': current_section,
+                    'content': ''.join(current_content)
+                })
+            current_section = h3_match.group(1).strip()
+            current_content = [line]
+            continue
+
         if current_chapter:
+            # 统计引用
+            for m in re.finditer(r'\[\^(\d+)\]', line):
+                rid = m.group(1)
+                ref_counts[rid] = ref_counts.get(rid, 0) + 1
+
+            # 收集图片
+            img_match = re.search(r'!\[([^\]]*)\]\(([^)]+)\)', line)
+            if img_match:
+                fig_counter += 1
+                cap = img_match.group(1).strip()
+                path = img_match.group(2).strip()
+                fig_id = f'fig-{fig_counter}'
+                fig_info = {'id': fig_id, 'caption': cap, 'path': path, 'global_idx': fig_counter}
+                current_chapter['figures'].append(fig_info)
+                figures_index.append({
+                    'ch_idx': len(chapters),
+                    'ch_title': current_chapter['title'],
+                    'id': fig_id,
+                    'caption': cap,
+                    'global_idx': fig_counter
+                })
+
+            # 收集表格标题
+            tbl_match = re.search(r'\*\*(表\d+-\d+[^\*]*)\*\*', line)
+            if tbl_match:
+                tab_counter += 1
+                cap = tbl_match.group(1).strip()
+                tab_id = f'tab-{tab_counter}'
+                tab_info = {'id': tab_id, 'caption': cap, 'global_idx': tab_counter}
+                current_chapter['tables'].append(tab_info)
+                tables_index.append({
+                    'ch_idx': len(chapters),
+                    'ch_title': current_chapter['title'],
+                    'id': tab_id,
+                    'caption': cap,
+                    'global_idx': tab_counter
+                })
+
             current_content.append(line)
-    
-    # 最后章节
-    if current_chapter:
-        if current_section and current_content:
-            current_chapter['sections'].append({
-                'title': current_section,
-                'content': ''.join(current_content)
-            })
-        chapters.append(current_chapter)
-    
+
+    _flush_chapter()
+
+    if ref_id and ref_buffer:
+        footnotes[ref_id] = ''.join(ref_buffer).strip()
+
+    # 提取外部链接
+    ref_external = {}
+    for rid, text in footnotes.items():
+        links = {}
+        doi_match = re.search(r'10\.\d{4,}/[^\s,;]+', text)
+        if doi_match:
+            links['doi'] = f'https://doi.org/{doi_match.group(0)}'
+        # CNKI search link for Chinese refs
+        if any(k in text for k in ['《', '学报', '研究', '管理', '科学', '图书情报', '情报', '档案', '大学']):
+            title_match = re.search(r'《([^》]+)》', text)
+            if title_match:
+                links['cnki'] = f'https://kns.cnki.net/kns8/defaultresult/index?kw={title_match.group(1)}'
+        if '万方' in text:
+            links['wanfang'] = 'https://www.wanfangdata.com.cn/'
+        if links:
+            ref_external[rid] = links
+
     return {
         'chapters': chapters,
         'references': footnotes,
+        'ref_counts': ref_counts,
+        'ref_external': ref_external,
+        'figures_index': figures_index,
+        'tables_index': tables_index,
         'total_chapters': len(chapters),
-        'total_references': len(footnotes)
+        'total_references': len(footnotes),
+        'total_figures': len(figures_index),
+        'total_tables': len(tables_index)
     }
 
-def md_to_html(text, references=None):
-    """将论文MD文本转为HTML，处理脚注、图片、表格"""
+def md_to_html(text, references=None, ctx=None):
+    """将论文MD文本转为HTML，处理脚注、图片（带锚点）、表格、表格标题"""
     if references is None:
         references = {}
-    
+    if ctx is None:
+        ctx = {'fig_counter': [0], 'tab_counter': [0]}
+
     # 处理引用 [^N] → 上标链接
     def fn_link(m):
         n = m.group(1)
@@ -1051,31 +1155,41 @@ def md_to_html(text, references=None):
         short_ref = ref_text[:80] + '...' if len(ref_text) > 80 else ref_text
         return f'<sup class="fn-ref"><a href="#ref-{n}" id="fn-{n}" title="{short_ref}" onclick="showFootnote(event,\'{n}\')">[{n}]</a></sup>'
     text = re.sub(r'\[\^(\d+)\]', fn_link, text)
-    
-    # 处理图片 ![alt](path)
+
+    # 处理图片 ![alt](path) → 带全局ID锚点
     def img_tag(m):
+        ctx['fig_counter'][0] += 1
+        idx = ctx['fig_counter'][0]
         alt = m.group(1)
         path = m.group(2)
         if not path.startswith('/static/'):
             path = '/static/' + path.replace('static/', '')
-        return f'<figure class="thesis-figure"><img src="{path}" alt="{alt}" loading="lazy"><figcaption>{alt}</figcaption></figure>'
+        return f'<figure class="thesis-figure" id="fig-{idx}"><img src="{path}" alt="{alt}" loading="lazy"><figcaption>{alt}</figcaption></figure>'
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', img_tag, text)
-    
-    # 处理粗体 **text**
+
+    # 处理表格标题 **表X-Y ...** → 带锚点
+    def tab_caption(m):
+        ctx['tab_counter'][0] += 1
+        idx = ctx['tab_counter'][0]
+        cap = m.group(1)
+        return f'<div class="table-caption" id="tab-{idx}"><strong>{cap}</strong></div>'
+    text = re.sub(r'\*\*(表\d+-\d+[^\*]*)\*\*', tab_caption, text)
+
+    # 处理粗体 **text**（排除已处理的表格标题）
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
-    
+
     # 处理标题
     text = re.sub(r'^#### (.+)$', r'<h4>\1</h4>', text, flags=re.MULTILINE)
     text = re.sub(r'^### (.+)$', r'<h3>\1</h3>', text, flags=re.MULTILINE)
     text = re.sub(r'^## (.+)$', r'<h2>\1</h2>', text, flags=re.MULTILINE)
     text = re.sub(r'^# (.+)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
-    
+
     # 处理表格 (简单pipe表格)
     lines = text.split('\n')
     result = []
     in_table = False
     table_lines = []
-    
+
     for line in lines:
         if '|' in line and line.strip().startswith('|'):
             if not in_table:
@@ -1088,19 +1202,20 @@ def md_to_html(text, references=None):
                 table_lines = []
                 in_table = False
             result.append(line)
-    
+
     if in_table and table_lines:
         result.append(render_table(table_lines))
-    
+
     text = '\n'.join(result)
-    
+
     # 段落处理
     text = re.sub(r'\n\n+', '</p><p>', text)
     text = '<p>' + text + '</p>'
     text = text.replace('<p><h', '<h').replace('</h></p>', '</h>')
     text = text.replace('<p><figure', '<figure').replace('</figure></p>', '</figure>')
     text = text.replace('<p><table', '<table').replace('</table></p>', '</table>')
-    
+    text = text.replace('<p><div', '<div').replace('</div></p>', '</div>')
+
     return text
 
 def render_table(lines):
@@ -1123,35 +1238,72 @@ def render_table(lines):
 
 @app.route('/reader')
 def thesis_reader():
-    """论文细读页"""
+    """论文细读页——增强版：章节摘要、图表索引、引用追溯"""
     thesis = parse_thesis_md()
     if not thesis:
         return "论文文件未找到", 404
-    
-    # 预处理：转换章节内容为HTML
+
+    # 预处理：转换章节内容为HTML（共享全局图/表计数器）
+    ctx = {'fig_counter': [0], 'tab_counter': [0]}
     for ch in thesis['chapters']:
-        ch['content_html'] = md_to_html(ch['content'], thesis['references'])
+        ch['content_html'] = md_to_html(ch['content'], thesis['references'], ctx)
         for sec in ch['sections']:
-            sec['content_html'] = md_to_html(sec['content'], thesis['references'])
-    
+            sec['content_html'] = md_to_html(sec['content'], thesis['references'], ctx)
+
     return render_template('v6_thesis_reader.html', thesis=thesis)
 
 @app.route('/api/thesis/structure')
 def api_thesis_structure():
-    """返回论文结构"""
+    """返回论文结构（含摘要、图表统计）"""
     thesis = parse_thesis_md()
     if not thesis:
         return jsonify({'error': 'not found'}), 404
-    structure = [{'title': ch['title'], 'sections': [s['title'] for s in ch['sections']]} for ch in thesis['chapters']]
-    return jsonify({'chapters': structure, 'total': len(structure)})
+    structure = []
+    for ch in thesis['chapters']:
+        structure.append({
+            'title': ch['title'],
+            'summary': ch.get('summary', ''),
+            'figures': len(ch.get('figures', [])),
+            'tables': len(ch.get('tables', [])),
+            'sections': [s['title'] for s in ch['sections']]
+        })
+    return jsonify({
+        'chapters': structure,
+        'total': len(structure),
+        'total_figures': thesis.get('total_figures', 0),
+        'total_tables': thesis.get('total_tables', 0)
+    })
 
 @app.route('/api/thesis/references')
 def api_thesis_references():
-    """返回引用列表"""
+    """返回引用列表（含被引次数、外部链接）"""
     thesis = parse_thesis_md()
     if not thesis:
         return jsonify({'error': 'not found'}), 404
-    return jsonify({'references': thesis['references'], 'total': len(thesis['references'])})
+    refs = []
+    for rid in sorted(thesis['references'].keys(), key=int):
+        refs.append({
+            'id': rid,
+            'text': thesis['references'][rid],
+            'cited_count': thesis.get('ref_counts', {}).get(rid, 0),
+            'external_links': thesis.get('ref_external', {}).get(rid, {})
+        })
+    return jsonify({
+        'references': refs,
+        'total': len(refs),
+        'total_citations': sum(thesis.get('ref_counts', {}).values())
+    })
+
+@app.route('/api/thesis/figures')
+def api_thesis_figures():
+    """返回图表索引"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return jsonify({'error': 'not found'}), 404
+    return jsonify({
+        'figures': thesis.get('figures_index', []),
+        'tables': thesis.get('tables_index', [])
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
