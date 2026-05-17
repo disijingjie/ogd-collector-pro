@@ -5,6 +5,8 @@ OGD-Collector Pro V6 - 统一版本Flask应用
 
 import json
 import sqlite3
+import re
+import os
 from datetime import datetime
 from flask import Flask, render_template, jsonify, request, send_from_directory, redirect, url_for
 
@@ -743,8 +745,8 @@ def external_sources():
 @app.route('/reproduce')
 @app.route('/reproduce.html')
 def reproduce():
-    """数据复现 → 重定向到数据可信度中心"""
-    return redirect('/credibility', code=301)
+    """数据复现"""
+    return render_template('v6_reproduce.html')
 
 @app.route('/credibility')
 def credibility():
@@ -948,6 +950,208 @@ def sitemap_xml():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('v6_404.html'), 404
+
+# ========== 论文细读系统 ==========
+
+# 论文MD解析器
+THESIS_MD_PATH = 'docs/博士论文_最终定稿版_v23.md'
+
+def parse_thesis_md():
+    """解析论文MD，返回结构化数据"""
+    if not os.path.exists(THESIS_MD_PATH):
+        return None
+    
+    with open(THESIS_MD_PATH, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    
+    chapters = []
+    current_chapter = None
+    current_section = None
+    current_content = []
+    footnotes = {}
+    in_references = False
+    ref_buffer = []
+    ref_id = None
+    
+    for line in lines:
+        # 检测章节标题 # 第X章
+        if re.match(r'^# 第.+章', line):
+            if current_chapter:
+                current_chapter['sections'].append({
+                    'title': current_section or current_chapter['title'],
+                    'content': ''.join(current_content)
+                })
+            current_chapter = {
+                'title': line.strip('#').strip(),
+                'level': 1,
+                'sections': [],
+                'content': ''
+            }
+            current_section = line.strip('#').strip()
+            current_content = []
+            continue
+        
+        # 检测二级标题 ###
+        if re.match(r'^### ', line) and current_chapter:
+            if current_section and current_content:
+                current_chapter['sections'].append({
+                    'title': current_section,
+                    'content': ''.join(current_content)
+                })
+            current_section = line.strip('#').strip()
+            current_content = [line]
+            continue
+        
+        # 检测参考文献/附录区域
+        if re.match(r'^## (中文文献|英文文献|附录)', line) or re.match(r'^# 参考文献', line):
+            in_references = True
+            continue
+        
+        # 收集参考文献 [N] 格式
+        if in_references:
+            m = re.match(r'^\[(\d+)\]\s+(.*)', line)
+            if m:
+                if ref_id and ref_buffer:
+                    footnotes[ref_id] = ''.join(ref_buffer).strip()
+                ref_id = m.group(1)
+                ref_buffer = [m.group(2)]
+            elif ref_id:
+                if line.strip():
+                    ref_buffer.append(line)
+            continue
+        
+        if current_chapter:
+            current_content.append(line)
+    
+    # 最后章节
+    if current_chapter:
+        if current_section and current_content:
+            current_chapter['sections'].append({
+                'title': current_section,
+                'content': ''.join(current_content)
+            })
+        chapters.append(current_chapter)
+    
+    return {
+        'chapters': chapters,
+        'references': footnotes,
+        'total_chapters': len(chapters),
+        'total_references': len(footnotes)
+    }
+
+def md_to_html(text, references=None):
+    """将论文MD文本转为HTML，处理脚注、图片、表格"""
+    if references is None:
+        references = {}
+    
+    # 处理引用 [^N] → 上标链接
+    def fn_link(m):
+        n = m.group(1)
+        ref_text = references.get(n, '')
+        short_ref = ref_text[:80] + '...' if len(ref_text) > 80 else ref_text
+        return f'<sup class="fn-ref"><a href="#ref-{n}" id="fn-{n}" title="{short_ref}" onclick="showFootnote(event,\'{n}\')">[{n}]</a></sup>'
+    text = re.sub(r'\[\^(\d+)\]', fn_link, text)
+    
+    # 处理图片 ![alt](path)
+    def img_tag(m):
+        alt = m.group(1)
+        path = m.group(2)
+        if not path.startswith('/static/'):
+            path = '/static/' + path.replace('static/', '')
+        return f'<figure class="thesis-figure"><img src="{path}" alt="{alt}" loading="lazy"><figcaption>{alt}</figcaption></figure>'
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', img_tag, text)
+    
+    # 处理粗体 **text**
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    
+    # 处理标题
+    text = re.sub(r'^#### (.+)$', r'<h4>\1</h4>', text, flags=re.MULTILINE)
+    text = re.sub(r'^### (.+)$', r'<h3>\1</h3>', text, flags=re.MULTILINE)
+    text = re.sub(r'^## (.+)$', r'<h2>\1</h2>', text, flags=re.MULTILINE)
+    text = re.sub(r'^# (.+)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
+    
+    # 处理表格 (简单pipe表格)
+    lines = text.split('\n')
+    result = []
+    in_table = False
+    table_lines = []
+    
+    for line in lines:
+        if '|' in line and line.strip().startswith('|'):
+            if not in_table:
+                in_table = True
+                table_lines = []
+            table_lines.append(line.strip())
+        else:
+            if in_table and table_lines:
+                result.append(render_table(table_lines))
+                table_lines = []
+                in_table = False
+            result.append(line)
+    
+    if in_table and table_lines:
+        result.append(render_table(table_lines))
+    
+    text = '\n'.join(result)
+    
+    # 段落处理
+    text = re.sub(r'\n\n+', '</p><p>', text)
+    text = '<p>' + text + '</p>'
+    text = text.replace('<p><h', '<h').replace('</h></p>', '</h>')
+    text = text.replace('<p><figure', '<figure').replace('</figure></p>', '</figure>')
+    text = text.replace('<p><table', '<table').replace('</table></p>', '</table>')
+    
+    return text
+
+def render_table(lines):
+    """渲染markdown表格为HTML"""
+    if len(lines) < 2:
+        return ''.join(lines)
+    
+    # 跳过分隔行
+    data_lines = [l for l in lines if not re.match(r'^\|[\s\-:|]+\|$', l)]
+    if not data_lines:
+        return '<table>' + ''.join([f'<tr>{l}</tr>' for l in lines]) + '</table>'
+    
+    html = '<div class="data-table-wrapper"><table class="data-table">'
+    for i, line in enumerate(data_lines):
+        cells = [c.strip() for c in line.split('|')[1:-1]]
+        tag = 'th' if i == 0 else 'td'
+        html += '<tr>' + ''.join([f'<{tag}>{c}</{tag}>' for c in cells]) + '</tr>'
+    html += '</table></div>'
+    return html
+
+@app.route('/reader')
+def thesis_reader():
+    """论文细读页"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return "论文文件未找到", 404
+    
+    # 预处理：转换章节内容为HTML
+    for ch in thesis['chapters']:
+        ch['content_html'] = md_to_html(ch['content'], thesis['references'])
+        for sec in ch['sections']:
+            sec['content_html'] = md_to_html(sec['content'], thesis['references'])
+    
+    return render_template('v6_thesis_reader.html', thesis=thesis)
+
+@app.route('/api/thesis/structure')
+def api_thesis_structure():
+    """返回论文结构"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return jsonify({'error': 'not found'}), 404
+    structure = [{'title': ch['title'], 'sections': [s['title'] for s in ch['sections']]} for ch in thesis['chapters']]
+    return jsonify({'chapters': structure, 'total': len(structure)})
+
+@app.route('/api/thesis/references')
+def api_thesis_references():
+    """返回引用列表"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return jsonify({'error': 'not found'}), 404
+    return jsonify({'references': thesis['references'], 'total': len(thesis['references'])})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

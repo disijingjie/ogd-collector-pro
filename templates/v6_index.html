@@ -1,5 +1,5 @@
 {% extends "base_v6.html" %}{% set section = "overview" %}{% block title %}系统概览 - OGD-Collector Pro{% endblock %}{% block page_title %}系统概览{% endblock %}{% block breadcrumb %}系统概览{% endblock %}
-{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#methodology">研究方法论</a><a href="#roadmap">技术路线</a><a href="#products">学术成果</a><a href="#advisors">导师思想</a><a href="#findings">核心发现</a><a href="#tools">数据与工具</a></div>{% endblock %}
+{% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">数据规模</a><a href="#journey">研究旅程</a><a href="#methodology">研究方法论</a><a href="#roadmap">技术路线</a><a href="#products">学术成果</a><a href="#advisors">导师思想</a><a href="#map">绩效地图</a><a href="#findings">核心发现</a><a href="#tools">数据与工具</a></div>{% endblock %}
 {% block content %}
 
 <div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
@@ -283,6 +283,23 @@
         <div style="font-size:12px;color:#64748b;line-height:1.7">数据产权结构性分置 · 数据主权安全 · 匿名化标准 → 3篇小论文从研究方向中衍生</div>
         <div style="margin-top:8px;font-size:11px;color:#2563eb;font-weight:600">进入专题 →</div></a>
     </div></div></div>
+
+<div id="map" class="scroll-section">
+  <div class="card" style="background:linear-gradient(135deg,#f8fafc,#f0f9ff);border:2px solid #bae6fd">
+    <div class="card-header"><div class="card-title"><span class="icon" style="background:#0ea5e9"></span>23省绩效地图</div><a href="/map" style="font-size:12px;color:var(--primary);text-decoration:none">查看完整地图 →</a></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:center">
+      <div style="min-height:280px;background:#f8fafc;border-radius:8px;overflow:hidden">
+        <iframe src="/map" style="width:100%;height:320px;border:none" title="省级平台绩效地图"></iframe>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="stat-card" style="padding:14px"><div class="stat-value" style="font-size:22px">23</div><div class="stat-label">覆盖省份</div></div>
+        <div class="stat-card" style="padding:14px"><div class="stat-value" style="font-size:22px">0.52</div><div class="stat-label">东部平均Ci</div></div>
+        <div class="stat-card" style="padding:14px"><div class="stat-value" style="font-size:22px">0.38</div><div class="stat-label">中部平均Ci</div></div>
+        <div class="stat-card" style="padding:14px"><div class="stat-value" style="font-size:22px">0.27</div><div class="stat-label">西部平均Ci</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="findings" class="scroll-section">
   <div class="card"><div class="card-header"><div class="card-title"><span class="icon"></span>核心研究发现</div><div style="font-size:12px;color:#64748b">博士论文四大核心发现，点击卡片进入论文成果页查看完整分析</div></div>

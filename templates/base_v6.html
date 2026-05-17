@@ -149,38 +149,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="layout">
   <aside class="sidebar">
-    <div class="sidebar-header"><h1>OGD-Collector</h1><p>政府数据开放平台采集系统</p></div>
+    <div class="sidebar-header">
+      <h1>OGD-Collector</h1>
+      <p>政府数据开放平台绩效评估</p>
+      <span class="thesis-tag" style="display:inline-block;margin-top:8px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(37,99,235,.2);color:#60a5fa;border:1px solid rgba(37,99,235,.3)">博士论文支撑系统</span>
+    </div>
     <nav class="sidebar-nav">
-      <a href="/" class="nav-item {% if active=='dashboard' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>系统概览</a>
-      <a href="/collection" class="nav-item {% if active=='collection' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>采集中心</a>
-      <a href="/analysis" class="nav-item {% if active=='analysis' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>分析看板</a>
-      <a href="/map" class="nav-item {% if active=='map' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>绩效地图</a>
-      <a href="/thesis" class="nav-item {% if active=='thesis' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>论文成果</a>
-      <a href="/research" class="nav-item {% if active=='research' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>研究拓展</a>
-      <a href="/methodology" class="nav-item {% if active=='methodology' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>研究方法论</a>
-      <a href="/reproduce" class="nav-item {% if active=='reproduce' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>数据复现<span style="font-size:9px;color:#64748b">（可信度中心）</span></a>
+      <div class="nav-section" style="padding:6px 20px 2px;font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:4px">论文叙事</div>
+      <a href="/" class="nav-item {% if section=='overview' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/><path d="M8 12h8"/></svg>研究全景<span class="nav-badge" style="margin-left:auto;font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(37,99,235,.2);color:#60a5fa">Ch1-3</span></a>
+      <a href="/collection" class="nav-item {% if section=='data' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>数据与采集<span class="nav-badge" style="margin-left:auto;font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(37,99,235,.2);color:#60a5fa">Ch4</span></a>
+      <a href="/analysis" class="nav-item {% if section=='evaluation' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>绩效评估<span class="nav-badge" style="margin-left:auto;font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(37,99,235,.2);color:#60a5fa">Ch5-6</span></a>
+      <a href="/research" class="nav-item {% if section=='contribution' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>研究贡献<span class="nav-badge" style="margin-left:auto;font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(37,99,235,.2);color:#60a5fa">Ch7-8</span></a>
+      <a href="/reader" class="nav-item {% if section=='reader' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h6"/></svg>论文细读<span class="nav-badge" style="margin-left:auto;font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(16,185,129,.15);color:#10b981">全文</span></a>
+      <div class="nav-section" style="padding:6px 20px 2px;font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-top:8px">学术规范</div>
+      <a href="/reproduce" class="nav-item {% if section=='norm' %}active{% endif %}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>数据复现</a>
     </nav>
-    <div class="sidebar-footer"><div>v6.0.0 | OGD-Collector Pro</div><div style="margin-top:4px">博士论文支撑系统</div></div>
+    <div class="sidebar-footer"><div>v6.2.0 | OGD-Collector Pro</div><div style="margin-top:4px">国家社科基金 21&ZD169</div></div>
   </aside>
   <main class="main-content">
     <div class="journey-bar">
       <div class="journey-steps">
-        <a href="/" class="journey-step {% if active=='dashboard' %}active{% endif %}"><span class="num">1</span>系统概览</a>
+        <a href="/" class="journey-step {% if section=='overview' %}active{% endif %}"><span class="num">1</span>研究全景</a>
         <span class="journey-arrow">→</span>
-        <a href="/collection" class="journey-step {% if active=='collection' %}active{% endif %}"><span class="num">2</span>数据来源</a>
+        <a href="/collection" class="journey-step {% if section=='data' %}active{% endif %}"><span class="num">2</span>数据与采集</a>
         <span class="journey-arrow">→</span>
-        <a href="/analysis" class="journey-step {% if active=='analysis' %}active{% endif %}"><span class="num">3</span>分析验证</a>
+        <a href="/analysis" class="journey-step {% if section=='evaluation' %}active{% endif %}"><span class="num">3</span>绩效评估</a>
         <span class="journey-arrow">→</span>
-        <a href="/thesis" class="journey-step {% if active=='thesis' %}active{% endif %}"><span class="num">4</span>论文成果</a>
+        <a href="/research" class="journey-step {% if section=='contribution' %}active{% endif %}"><span class="num">4</span>研究贡献</a>
         <span class="journey-arrow">→</span>
-        <a href="/research" class="journey-step {% if active=='research' %}active{% endif %}"><span class="num">5</span>研究拓展</a>
-        <span class="journey-arrow" style="color:#cbd5e1">|</span>
-        <a href="/reproduce" class="journey-step {% if active=='reproduce' %}active{% endif %}" style="background:#fef3c7;color:#92400e"><span class="num" style="background:#fde68a;color:#92400e">★</span>数据复现</a>
-        <span class="journey-arrow" style="color:#cbd5e1">|</span>
-        <a href="/caliber" class="journey-step {% if active=='caliber' %}active{% endif %}" style="background:#fef3c7;color:#78350f"><span class="num" style="background:#fbbf24;color:#78350f">◆</span>口径声明</a>
+        <a href="/reader" class="journey-step {% if section=='reader' %}active{% endif %}"><span class="num">5</span>论文细读</a>
+        <a href="/reproduce" class="journey-cross {% if section=='norm' %}active{% endif %}" style="margin-left:12px;font-size:10px;color:#f59e0b;padding:4px 10px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;text-decoration:none;font-weight:600">★ 学术规范</a>
       </div>
     </div>
     <div class="topbar"><h2>{% block page_title %}系统概览{% endblock %}</h2><div class="breadcrumb">OGD-Collector Pro / {% block breadcrumb %}系统概览{% endblock %}</div></div>
+    {% block sub_nav %}{% endblock %}
     {% block anchor_nav %}{% endblock %}
     <div class="page-content">{% block content %}{% endblock %}</div>
   </main>
