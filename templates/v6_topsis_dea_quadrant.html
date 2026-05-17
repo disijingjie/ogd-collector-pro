@@ -1,0 +1,325 @@
+{% extends "base_v6.html" %}{% set active = "analysis" %}{% block title %}TOPSIS vs DEA绩效-效率象限图 - 交互式可视化{% endblock %}{% block page_title %}绩效-效率象限分析{% endblock %}{% block breadcrumb %}分析看板 / 绩效-效率象限图{% endblock %}
+{% block extra_css %}
+<style>
+.chart-container { width: 100%; height: 520px; margin: 16px 0; }
+.chart-container.tall { height: 620px; }
+.chart-container.small { height: 380px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+.type-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.type-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.type-dot { width: 12px; height: 12px; border-radius: 50%; }
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.info-card { background: var(--card); border-radius: 10px; padding: 16px; text-align: center; border: 1px solid var(--border); }
+.info-card .num { font-size: 28px; font-weight: 800; }
+.info-card .label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+.quadrant-desc { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.quadrant-desc .qd-item { padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
+.provenance-panel { background: #f8fafc; border-left: 4px solid #2563eb; padding: 15px 20px; margin-top: 15px; border-radius: 0 8px 8px 0; }
+.provenance-panel h4 { color: #1e293b; margin-bottom: 10px; font-size: 0.95em; }
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--text-light); cursor: pointer; transition: all .2s; }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.filter-btn .count { margin-left: 4px; font-weight: 400; opacity: 0.7; }
+.detail-panel { background: var(--card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); display: none; }
+.detail-panel.show { display: block; }
+.detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.detail-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-light); }
+.detail-scores { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.detail-score-item { text-align: center; padding: 10px; border-radius: 8px; background: #f8fafc; }
+.detail-score-item .dim-label { font-size: 11px; color: var(--text-light); }
+.detail-score-item .dim-value { font-size: 18px; font-weight: 700; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">
+  <div style="text-align:center;padding:20px">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">绩效-效率象限分析</div>
+    <div style="font-size:14px;color:#94a3b8">TOPSIS综合绩效 × DEA-BCC效率 | 23个省级平台五类分型 | 论文图5-3数据复现</div>
+  </div>
+</div>
+
+<div class="info-grid">
+  <div class="info-card"><div class="num" style="color:#059669">1</div><div class="label">标杆型平台</div></div>
+  <div class="info-card"><div class="num" style="color:#d97706">8</div><div class="label">潜力型平台</div></div>
+  <div class="info-card"><div class="num" style="color:#2563eb">5</div><div class="label">追赶型平台</div></div>
+  <div class="info-card"><div class="num" style="color:#ea580c">8</div><div class="label">滞后型平台</div></div>
+  <div class="info-card"><div class="num" style="color:#dc2626">1</div><div class="label">困境型平台</div></div>
+</div>
+
+<div class="type-legend">
+  <div class="type-legend-item"><div class="type-dot" style="background:#059669"></div>标杆型 — 高绩效+高效率</div>
+  <div class="type-legend-item"><div class="type-dot" style="background:#d97706"></div>潜力型 — 高绩效+中效率</div>
+  <div class="type-legend-item"><div class="type-dot" style="background:#2563eb"></div>追赶型 — 中绩效+中效率</div>
+  <div class="type-legend-item"><div class="type-dot" style="background:#ea580c"></div>滞后型 — 低绩效+中低效率</div>
+  <div class="type-legend-item"><div class="type-dot" style="background:#dc2626"></div>困境型 — 低绩效+低效率</div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><div class="icon"></div>绩效-效率象限散点图（交互式）</div>
+    <div class="filter-bar" id="regionFilter">
+      <button class="filter-btn active" data-region="all">全部 <span class="count">(23)</span></button>
+      <button class="filter-btn" data-region="east">东部 <span class="count">(10)</span></button>
+      <button class="filter-btn" data-region="central">中部 <span class="count">(6)</span></button>
+      <button class="filter-btn" data-region="west">西部 <span class="count">(6)</span></button>
+      <button class="filter-btn" data-region="northeast">东北 <span class="count">(2)</span></button>
+    </div>
+  </div>
+  <div id="quadrantChart" class="chart-container tall"></div>
+  <div class="quadrant-desc">
+    <div class="qd-item" style="background:#ecfdf5"><strong style="color:#059669">标杆型（右上）</strong>：绩效和效率双高，可输出经验模式。仅山东达标，头部效应显著。</div>
+    <div class="qd-item" style="background:#fffbeb"><strong style="color:#d97706">潜力型（右中）</strong>：绩效较高但效率有提升空间，优化资源配置可向标杆型演进。</div>
+    <div class="qd-item" style="background:#eff6ff"><strong style="color:#2563eb">追赶型（中部）</strong>：绩效和效率处于中间态，需系统性提升以突破瓶颈。</div>
+    <div class="qd-item" style="background:#fff7ed"><strong style="color:#ea580c">滞后型（左中）</strong>：绩效偏低，需从供给保障和利用效果两端发力。</div>
+  </div>
+  <div class="provenance-panel">
+    <h4>数据复现信息</h4>
+    <div style="font-size:0.85em;color:#475569">
+      <strong>X轴</strong>：TOPSIS综合得分（0-1），基于4E框架五维度AHP-熵权组合赋权<br>
+      <strong>Y轴</strong>：DEA-BCC效率值（0-1），投入为人员编制+资金投入，产出为数据集数量+下载量<br>
+      <strong>分型标准</strong>：TOPSIS≥0.5且DEA≥0.8=标杆，TOPSIS≥0.5且DEA 0.6-0.8=潜力，TOPSIS 0.35-0.5且DEA 0.6-0.8=追赶，其余按分布判定<br>
+      <strong>核心发现</strong>：仅1个平台(山东)达DEA有效，高绩效≠高效率，"头部悬崖"现象显著
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>省份详情（点击散点查看）</div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-header">
+      <h3 id="detailName" style="font-size:18px;font-weight:700">—</h3>
+      <button class="detail-close" onclick="document.getElementById('detailPanel').classList.remove('show')">&times;</button>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:16px">
+      <div><span style="font-size:12px;color:var(--text-light)">TOPSIS得分</span><br><span id="detailTopsis" style="font-size:24px;font-weight:800;color:#2563eb">—</span></div>
+      <div><span style="font-size:12px;color:var(--text-light)">DEA效率</span><br><span id="detailDea" style="font-size:24px;font-weight:800;color:#0d9488">—</span></div>
+      <div><span style="font-size:12px;color:var(--text-light)">分型</span><br><span id="detailType" style="font-size:16px;font-weight:700">—</span></div>
+      <div><span style="font-size:12px;color:var(--text-light)">区域</span><br><span id="detailRegion" style="font-size:16px;font-weight:500">—</span></div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div id="detailRadar" style="width:100%;height:300px"></div>
+    </div>
+    <div class="detail-scores">
+      <div class="detail-score-item"><div class="dim-label">E1 供应保障</div><div class="dim-value" id="detailE1">—</div></div>
+      <div class="detail-score-item"><div class="dim-label">E2 平台服务</div><div class="dim-value" id="detailE2">—</div></div>
+      <div class="detail-score-item"><div class="dim-label">E3 数据质量</div><div class="dim-value" id="detailE3">—</div></div>
+      <div class="detail-score-item"><div class="dim-label">E4 利用效果</div><div class="dim-value" id="detailE4">—</div></div>
+      <div class="detail-score-item"><div class="dim-label">E5 公平性</div><div class="dim-value" id="detailE5">—</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <div class="card-title"><div class="icon"></div>TOPSIS综合排名</div>
+    <div id="rankingChart" class="chart-container"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><div class="icon"></div>DEA效率排名</div>
+    <div id="deaChart" class="chart-container"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><div class="icon"></div>23个省级平台完整数据表</div>
+  <table class="data-table" id="fullTable">
+    <thead>
+      <tr><th>排名</th><th>省份</th><th>区域</th><th>TOPSIS</th><th>DEA效率</th><th>E1供应</th><th>E2服务</th><th>E3质量</th><th>E4效果</th><th>E5公平</th><th>分型</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+// 论文真实数据（表4-1a/4-1b/5-1/5-2）
+const data = [
+  {name:'山东',topsis:0.955,e1:0.881,e2:0.773,e3:1.000,e4:1.000,e5:1.000,dea:1.000,type:'标杆型',region:'east',regionName:'东部'},
+  {name:'四川',topsis:0.570,e1:0.857,e2:0.800,e3:1.000,e4:0.420,e5:1.000,dea:0.831,type:'潜力型',region:'west',regionName:'西部'},
+  {name:'辽宁',topsis:0.564,e1:0.762,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.884,type:'潜力型',region:'northeast',regionName:'东北'},
+  {name:'广西',topsis:0.558,e1:0.722,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.848,type:'潜力型',region:'west',regionName:'西部'},
+  {name:'海南',topsis:0.553,e1:0.776,e2:0.745,e3:1.000,e4:0.420,e5:1.000,dea:0.843,type:'潜力型',region:'east',regionName:'东部'},
+  {name:'北京',topsis:0.551,e1:0.746,e2:0.773,e3:1.000,e4:0.420,e5:1.000,dea:0.862,type:'潜力型',region:'east',regionName:'东部'},
+  {name:'湖南',topsis:0.529,e1:0.548,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.887,type:'潜力型',region:'central',regionName:'中部'},
+  {name:'河南',topsis:0.511,e1:0.604,e2:0.718,e3:0.880,e4:0.420,e5:0.700,dea:0.938,type:'潜力型',region:'central',regionName:'中部'},
+  {name:'内蒙古',topsis:0.505,e1:0.419,e2:0.873,e3:1.000,e4:0.420,e5:1.000,dea:0.882,type:'潜力型',region:'west',regionName:'西部'},
+  {name:'天津',topsis:0.498,e1:0.593,e2:0.641,e3:0.880,e4:0.420,e5:0.700,dea:0.918,type:'追赶型',region:'east',regionName:'东部'},
+  {name:'山西',topsis:0.491,e1:0.520,e2:0.668,e3:1.000,e4:0.420,e5:0.700,dea:0.924,type:'追赶型',region:'central',regionName:'中部'},
+  {name:'广东',topsis:0.418,e1:0.820,e2:0.564,e3:0.880,e4:0.210,e5:0.700,dea:0.712,type:'追赶型',region:'east',regionName:'东部'},
+  {name:'重庆',topsis:0.404,e1:0.756,e2:0.564,e3:0.880,e4:0.210,e5:0.700,dea:0.729,type:'追赶型',region:'west',regionName:'西部'},
+  {name:'江苏',topsis:0.399,e1:0.551,e2:0.818,e3:0.880,e4:0.210,e5:0.700,dea:0.743,type:'追赶型',region:'east',regionName:'东部'},
+  {name:'湖北',topsis:0.389,e1:0.659,e2:0.614,e3:0.880,e4:0.210,e5:0.700,dea:0.699,type:'滞后型',region:'central',regionName:'中部'},
+  {name:'浙江',topsis:0.389,e1:0.659,e2:0.614,e3:0.880,e4:0.210,e5:0.700,dea:0.687,type:'滞后型',region:'east',regionName:'东部'},
+  {name:'贵州',topsis:0.349,e1:0.636,e2:0.359,e3:0.880,e4:0.210,e5:0.700,dea:0.737,type:'滞后型',region:'west',regionName:'西部'},
+  {name:'福建',topsis:0.325,e1:0.584,e2:0.259,e3:0.880,e4:0.210,e5:0.700,dea:0.696,type:'滞后型',region:'east',regionName:'东部'},
+  {name:'江西',topsis:0.304,e1:0.400,e2:0.486,e3:0.880,e4:0.210,e5:0.700,dea:0.690,type:'滞后型',region:'central',regionName:'中部'},
+  {name:'吉林',topsis:0.282,e1:0.309,e2:0.486,e3:0.880,e4:0.210,e5:0.700,dea:0.659,type:'滞后型',region:'northeast',regionName:'东北'},
+  {name:'云南',topsis:0.275,e1:0.349,e2:0.386,e3:0.880,e4:0.210,e5:0.700,dea:0.630,type:'滞后型',region:'west',regionName:'西部'},
+  {name:'上海',topsis:0.268,e1:0.604,e2:0.332,e3:0.880,e4:0.000,e5:0.700,dea:0.599,type:'滞后型',region:'east',regionName:'东部'},
+  {name:'安徽',topsis:0.095,e1:0.080,e2:0.255,e3:0.880,e4:0.000,e5:0.400,dea:0.450,type:'困境型',region:'central',regionName:'中部'}
+];
+
+const typeColor = {'标杆型':'#059669','潜力型':'#d97706','追赶型':'#2563eb','滞后型':'#ea580c','困境型':'#dc2626'};
+const regionColor = {'east':'#2563eb','central':'#059669','west':'#d97706','northeast':'#7c3aed'};
+let currentRegion = 'all';
+let detailRadarChart = null;
+
+// ====== 象限散点图 ======
+const qChart = echarts.init(document.getElementById('quadrantChart'));
+function renderQuadrant(region) {
+  const filtered = region === 'all' ? data : data.filter(d => d.region === region);
+  const avgT = data.reduce((s,d)=>s+d.topsis,0)/data.length;
+  const avgD = data.reduce((s,d)=>s+d.dea,0)/data.length;
+
+  qChart.setOption({
+    tooltip: { trigger: 'item', formatter: function(p) {
+      const d = p.data;
+      return `<strong>${d.name}</strong> (${d.type})<br/>TOPSIS: ${d.topsis.toFixed(3)}<br/>DEA效率: ${d.dea.toFixed(3)}<br/>区域: ${d.regionName}<br/><span style="color:#64748b;font-size:11px">点击查看详情</span>`;
+    }},
+    grid: { left: '8%', right: '4%', bottom: '8%', top: '4%' },
+    xAxis: { name: 'TOPSIS综合绩效得分', nameLocation: 'middle', nameGap: 30, min: 0, max: 1.05, splitLine: { show: true, lineStyle: { color: '#f1f5f9' }},
+      axisLine: { lineStyle: { color: '#e2e8f0' }},
+      nameTextStyle: { fontSize: 13, color: '#64748b', fontWeight: 600 }
+    },
+    yAxis: { name: 'DEA-BCC效率值', nameLocation: 'middle', nameGap: 40, min: 0, max: 1.1, splitLine: { show: true, lineStyle: { color: '#f1f5f9' }},
+      axisLine: { lineStyle: { color: '#e2e8f0' }},
+      nameTextStyle: { fontSize: 13, color: '#64748b', fontWeight: 600 }
+    },
+    series: [{
+      type: 'scatter',
+      data: filtered.map(d => ({
+        name: d.name, value: [d.topsis, d.dea],
+        type: d.type, region: d.region, regionName: d.regionName,
+        e1: d.e1, e2: d.e2, e3: d.e3, e4: d.e4, e5: d.e5,
+        topsisScore: d.topsis, deaScore: d.dea,
+        itemStyle: { color: typeColor[d.type], opacity: region==='all' ? 0.85 : 1 }
+      })),
+      symbolSize: function(val) { return 14 + val[0] * 18; },
+      label: { show: true, formatter: '{b}', position: 'top', fontSize: 11, color: '#334155', fontWeight: 500 },
+      emphasis: { scale: 1.6, itemStyle: { shadowBlur: 12, shadowColor: 'rgba(0,0,0,0.2)' } },
+      markLine: {
+        silent: true,
+        lineStyle: { type: 'dashed', color: '#94a3b8', width: 1 },
+        label: { fontSize: 10, color: '#94a3b8' },
+        data: [
+          { xAxis: avgT, label: { formatter: 'TOPSIS均值 '+avgT.toFixed(3), position: 'insideEndTop' } },
+          { yAxis: avgD, label: { formatter: 'DEA均值 '+avgD.toFixed(3), position: 'insideEndTop' } }
+        ]
+      },
+      markArea: {
+        silent: true,
+        data: [
+          [{ xAxis: 0.5, yAxis: 0.8, itemStyle: { color: 'rgba(5,150,105,0.04)' }}, { xAxis: 1.05, yAxis: 1.1 }],
+          [{ xAxis: 0.35, yAxis: 0.6, itemStyle: { color: 'rgba(217,119,6,0.04)' }}, { xAxis: 0.5, yAxis: 0.8 }],
+          [{ xAxis: 0.35, yAxis: 0.6, itemStyle: { color: 'rgba(37,99,235,0.04)' }}, { xAxis: 0.5, yAxis: 0.8 }],
+        ]
+      }
+    }]
+  }, true);
+}
+renderQuadrant('all');
+
+// 点击散点显示详情
+qChart.on('click', function(params) {
+  if (!params.data || !params.data.name) return;
+  const d = params.data;
+  const panel = document.getElementById('detailPanel');
+  document.getElementById('detailName').textContent = d.name;
+  document.getElementById('detailTopsis').textContent = d.topsisScore.toFixed(3);
+  document.getElementById('detailDea').textContent = d.deaScore.toFixed(3);
+  document.getElementById('detailType').innerHTML = `<span style="color:${typeColor[d.type]}">${d.type}</span>`;
+  document.getElementById('detailRegion').textContent = d.regionName;
+  document.getElementById('detailE1').textContent = d.e1.toFixed(3);
+  document.getElementById('detailE2').textContent = d.e2.toFixed(3);
+  document.getElementById('detailE3').textContent = d.e3.toFixed(3);
+  document.getElementById('detailE4').textContent = d.e4.toFixed(3);
+  document.getElementById('detailE5').textContent = d.e5.toFixed(3);
+  panel.classList.add('show');
+
+  // 详情雷达图
+  if (!detailRadarChart) {
+    detailRadarChart = echarts.init(document.getElementById('detailRadar'));
+  }
+  const avgE1 = data.reduce((s,p)=>s+p.e1,0)/data.length;
+  const avgE2 = data.reduce((s,p)=>s+p.e2,0)/data.length;
+  const avgE3 = data.reduce((s,p)=>s+p.e3,0)/data.length;
+  const avgE4 = data.reduce((s,p)=>s+p.e4,0)/data.length;
+  const avgE5 = data.reduce((s,p)=>s+p.e5,0)/data.length;
+  detailRadarChart.setOption({
+    tooltip: {},
+    legend: { data: [d.name, '全国均值'], bottom: 0, textStyle: { fontSize: 11 } },
+    radar: { indicator: [
+      {name:'E1供应保障',max:1},{name:'E2平台服务',max:1},{name:'E3数据质量',max:1},{name:'E4利用效果',max:1},{name:'E5公平性',max:1}
+    ], radius: '65%' },
+    series: [{ type:'radar', data: [
+      { value:[d.e1,d.e2,d.e3,d.e4,d.e5], name:d.name, areaStyle:{color:typeColor[d.type]+'33'}, lineStyle:{color:typeColor[d.type],width:2}, itemStyle:{color:typeColor[d.type]} },
+      { value:[avgE1,avgE2,avgE3,avgE4,avgE5], name:'全国均值', areaStyle:{color:'rgba(148,163,184,0.08)'}, lineStyle:{color:'#94a3b8',width:1,type:'dashed'}, itemStyle:{color:'#94a3b8'} }
+    ]}]
+  }, true);
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+// 区域筛选
+document.getElementById('regionFilter').addEventListener('click', function(e) {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  this.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentRegion = btn.dataset.region;
+  renderQuadrant(currentRegion);
+});
+
+// ====== TOPSIS排名柱状图 ======
+const rChart = echarts.init(document.getElementById('rankingChart'));
+const sorted = [...data].sort((a,b) => a.topsis - b.topsis);
+rChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }},
+  grid: { left: '3%', right: '8%', bottom: '3%', containLabel: true },
+  xAxis: { type: 'value', min: 0, max: 1 },
+  yAxis: { type: 'category', data: sorted.map(d => d.name), axisLabel: { fontSize: 11 } },
+  series: [{ type: 'bar', data: sorted.map(d => ({
+    value: d.topsis,
+    itemStyle: { color: typeColor[d.type], borderRadius: [0,4,4,0] }
+  })), label: { show: true, position: 'right', formatter: p => p.value.toFixed(3), fontSize: 10 } }]
+});
+
+// ====== DEA效率排名柱状图 ======
+const dChart = echarts.init(document.getElementById('deaChart'));
+const sortedDea = [...data].sort((a,b) => a.dea - b.dea);
+dChart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }},
+  grid: { left: '3%', right: '8%', bottom: '3%', containLabel: true },
+  xAxis: { type: 'value', min: 0, max: 1.1 },
+  yAxis: { type: 'category', data: sortedDea.map(d => d.name), axisLabel: { fontSize: 11 } },
+  series: [{ type: 'bar', data: sortedDea.map(d => ({
+    value: d.dea,
+    itemStyle: { color: d.dea >= 1.0 ? '#059669' : d.dea >= 0.8 ? '#0d9488' : d.dea >= 0.6 ? '#d97706' : '#dc2626', borderRadius: [0,4,4,0] }
+  })), label: { show: true, position: 'right', formatter: p => p.value.toFixed(3), fontSize: 10 },
+    markLine: { silent: true, lineStyle: { type: 'dashed', color: '#059669' }, data: [{ xAxis: 1.0, label: { formatter: 'DEA有效线', fontSize: 10 } }] }
+  }]
+});
+
+// ====== 完整数据表 ======
+const tbody = document.querySelector('#fullTable tbody');
+data.forEach((d, i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${i+1}</td><td><strong>${d.name}</strong></td><td>${d.regionName}</td>
+    <td><strong style="color:${d.topsis>=0.5?'#059669':'#dc2626'}">${d.topsis.toFixed(3)}</strong></td>
+    <td><strong style="color:${d.dea>=1.0?'#059669':d.dea>=0.8?'#0d9488':'#dc2626'}">${d.dea.toFixed(3)}</strong></td>
+    <td>${d.e1.toFixed(3)}</td><td>${d.e2.toFixed(3)}</td><td>${d.e3.toFixed(3)}</td><td>${d.e4.toFixed(3)}</td><td>${d.e5.toFixed(3)}</td>
+    <td><span style="background:${typeColor[d.type]}20;color:${typeColor[d.type]};padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">${d.type}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+// ====== 响应式 ======
+window.addEventListener('resize', () => {
+  qChart.resize(); rChart.resize(); dChart.resize();
+  if (detailRadarChart) detailRadarChart.resize();
+});
+</script>
+{% endblock %}

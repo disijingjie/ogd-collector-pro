@@ -188,6 +188,11 @@ def charts_fsqa():
     """fsQCA组态路径分析"""
     return render_template('v6_fsqa_chart.html')
 
+@app.route('/charts/topsis-dea')
+def charts_topsis_dea():
+    """TOPSIS vs DEA绩效-效率象限图"""
+    return render_template('v6_topsis_dea_quadrant.html')
+
 @app.route('/provenance')
 def provenance():
     """数据溯源中心"""
