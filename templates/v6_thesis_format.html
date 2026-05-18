@@ -1,0 +1,209 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}格式规范 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 格式规范{% endblock %}{% block breadcrumb %}论文工坊 / 格式规范{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format" class="active">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="width:48px;height:48px;border-radius:12px;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;font-size:24px">📐</div>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:4px">武汉大学博士论文格式规范</h3>
+      <p style="font-size:12px;color:#94a3b8">基于《武汉大学研究生学位论文撰写规范》整理，用于导出前逐项核对</p>
+    </div>
+  </div>
+</div>
+
+<!-- 页面设置 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#3b82f6"></span>页面设置</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>项目</th><th>规范要求</th><th>检查要点</th></tr></thead>
+    <tbody>
+      <tr><td>纸张</td><td>A4（210mm × 297mm）</td><td>页面设置→纸张→A4</td></tr>
+      <tr><td>页边距</td><td>上2.54cm / 下2.54cm / 左3.17cm / 右3.17cm</td><td>装订侧（左）留宽</td></tr>
+      <tr><td>页眉</td><td>论文题目 + 页码</td><td>奇偶页相同或不同</td></tr>
+      <tr><td>页脚</td><td>脚注（圈码①②③）</td><td>六号字、每页重新编号</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 字体字号 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#f59e0b"></span>字体字号</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>层级</th><th>字体</th><th>字号</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>论文题目</td><td>黑体</td><td>二号（22pt）</td><td>封面居中</td></tr>
+      <tr><td>一级标题（章）</td><td>黑体</td><td>三号（16pt）</td><td>居中</td></tr>
+      <tr><td>二级标题（节）</td><td>黑体</td><td>四号（14pt）</td><td>左对齐</td></tr>
+      <tr><td>三级标题</td><td>黑体</td><td>小四（12pt）</td><td>左对齐</td></tr>
+      <tr><td>正文</td><td>宋体</td><td>小四（12pt）</td><td>首行缩进2字符</td></tr>
+      <tr><td>脚注</td><td>宋体</td><td>六号（7.5pt）</td><td>圈码编号</td></tr>
+      <tr><td>参考文献</td><td>宋体</td><td>五号（10.5pt）</td><td>悬挂缩进</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 行距与段落 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#8b5cf6"></span>行距与段落</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>项目</th><th>规范要求</th><th>检查要点</th></tr></thead>
+    <tbody>
+      <tr><td>正文行距</td><td>1.5倍行距</td><td>段落→行距→1.5倍</td></tr>
+      <tr><td>首行缩进</td><td>2字符</td><td>段落→特殊格式→首行缩进</td></tr>
+      <tr><td>段前段后</td><td>0行</td><td>段落→间距→段前/段后0</td></tr>
+      <tr><td>标题行距</td><td>单倍行距</td><td>标题段落单独设置</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 封面与前置页 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#10b981"></span>封面与前置页</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>页面</th><th>规范要求</th><th>检查要点</th></tr></thead>
+    <tbody>
+      <tr><td>封面</td><td>分类号、UDC、密级、编号、题目、作者、导师、学科、日期</td><td>所有字段完整无遗漏</td></tr>
+      <tr><td>原创性声明</td><td>本人签名 + 日期</td><td>手写签名扫描</td></tr>
+      <tr><td>授权使用协议</td><td>本人签名 + 导师签名 + 日期</td><td>双签名</td></tr>
+      <tr><td>摘要（中文）</td><td>800-1000字，关键词3-5个</td><td>页码用罗马数字</td></tr>
+      <tr><td>Abstract（英文）</td><td>与中文摘要对应</td><td>Times New Roman</td></tr>
+      <tr><td>目录</td><td>自动生成，含页码</td><td>右键更新域</td></tr>
+      <tr><td>图目录</td><td>列出所有图表标题和页码</td><td>单独成页</td></tr>
+      <tr><td>表目录</td><td>列出所有表格标题和页码</td><td>单独成页</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 脚注规范 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#ef4444"></span>脚注规范</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>项目</th><th>规范要求</th><th>检查要点</th></tr></thead>
+    <tbody>
+      <tr><td>编号</td><td>圈码 ①②③④⑤...</td><td>插入→符号→带圈数字</td></tr>
+      <tr><td>位置</td><td>页面底端</td><td>引用→脚注→页面底端</td></tr>
+      <tr><td>编号规则</td><td>每页重新编号</td><td>引用→脚注→编号→每页重新开始</td></tr>
+      <tr><td>字体</td><td>六号宋体</td><td>选中脚注文本修改</td></tr>
+      <tr><td>格式</td><td>作者. 标题[文献类型]. 来源, 年份.</td><td>GB/T 7714标准</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 参考文献 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#6366f1"></span>参考文献格式</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>类型</th><th>格式示例</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>期刊论文</td>
+        <td><code style="background:#f1f5f9;padding:4px 8px;border-radius:4px;font-size:12px">[1] 张三, 李四. 政府数据开放研究进展[J]. 情报学报, 2023, 42(5): 120-135.</code></td>
+      </tr>
+      <tr>
+        <td>专著</td>
+        <td><code style="background:#f1f5f9;padding:4px 8px;border-radius:4px;font-size:12px">[2] 王五. 数据治理概论[M]. 北京: 科学出版社, 2022: 45-50.</code></td>
+      </tr>
+      <tr>
+        <td>学位论文</td>
+        <td><code style="background:#f1f5f9;padding:4px 8px;border-radius:4px;font-size:12px">[3] 赵六. 开放政府数据利用评估研究[D]. 武汉: 武汉大学, 2024.</code></td>
+      </tr>
+      <tr>
+        <td>英文期刊</td>
+        <td><code style="background:#f1f5f9;padding:4px 8px;border-radius:4px;font-size:12px">[4] Smith J, Brown K. Open data evaluation[J]. Information Research, 2023, 28(3): 1-15.</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px;font-size:12px;color:var(--text-light);line-height:1.8">
+    <strong>悬挂缩进：</strong>参考文献列表需设置悬挂缩进（首行不缩进，后续行缩进0.74cm）。<br>
+    <strong>排序规则：</strong>按正文中出现顺序编号，中文文献在前、英文文献在后（或混排）。<br>
+    <strong>编号连续性：</strong>正文引用编号与参考文献列表编号一一对应，无跳号、无空壳。
+  </div>
+</div>
+
+<!-- 页眉页脚 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#06b6d4"></span>页眉页脚设置</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>页面范围</th><th>页眉</th><th>页码</th></tr></thead>
+    <tbody>
+      <tr><td>封面</td><td>无</td><td>无</td></tr>
+      <tr><td>原创性声明</td><td>无</td><td>无</td></tr>
+      <tr><td>中文摘要</td><td>无</td><td>罗马数字（I, II, III）</td></tr>
+      <tr><td>英文摘要</td><td>无</td><td>罗马数字续前</td></tr>
+      <tr><td>目录</td><td>无</td><td>罗马数字续前</td></tr>
+      <tr><td>正文</td><td>论文题目（居中或左对齐）</td><td>阿拉伯数字（1, 2, 3）</td></tr>
+      <tr><td>参考文献</td><td>论文题目</td><td>阿拉伯数字续前</td></tr>
+      <tr><td>附录</td><td>论文题目</td><td>阿拉伯数字续前</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 图表规范 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#ec4899"></span>图表规范</div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>项目</th><th>规范要求</th><th>检查要点</th></tr></thead>
+    <tbody>
+      <tr><td>图标题</td><td>图X-Y 标题（五号宋体，居中）</td><td>编号连续，与正文引用一致</td></tr>
+      <tr><td>表标题</td><td>表X-Y 标题（五号宋体，居中）</td><td>表题在表上方</td></tr>
+      <tr><td>图位置</td><td>紧随引用段落之后</td><td>不要跨页断开</td></tr>
+      <tr><td>表格式</td><td>三线表（顶线、栏目线、底线）</td><td>去除竖线和多余横线</td></tr>
+      <tr><td>图片来源</td><td>*数据来源：XXX</td><td>注明原始出处</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 操作提示 -->
+<div class="card" style="background:linear-gradient(135deg,#fef3c7,#fef9c3)">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#f59e0b"></span>导出前必做清单</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+    <div style="background:#fff;border-radius:8px;padding:14px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:8px">WPS精修步骤</div>
+      <div style="font-size:12px;color:var(--text-light);line-height:2">
+        1. 更新目录域（右键→更新域）<br>
+        2. 更新图目录/表目录<br>
+        3. 检查页码连续性<br>
+        4. 设置页眉（论文题目）<br>
+        5. 设置脚注格式（圈码+六号字）
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:8px;padding:14px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:8px">打印前检查</div>
+      <div style="font-size:12px;color:var(--text-light);line-height:2">
+        1. 封面无页眉页码<br>
+        2. 目录页码与实际一致<br>
+        3. 图片清晰无模糊<br>
+        4. 表格边框完整<br>
+        5. 双面打印时奇偶页正确
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

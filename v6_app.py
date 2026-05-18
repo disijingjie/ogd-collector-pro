@@ -954,7 +954,7 @@ def page_not_found(e):
 # ========== 论文细读系统 ==========
 
 # 论文MD解析器
-THESIS_MD_PATH = 'docs/博士论文_最终定稿版_v23.md'
+THESIS_MD_PATH = 'docs/博士论文_最终定稿版_v24.md'
 
 def _extract_summary(content):
     """从章节内容中提取首段摘要"""
@@ -1356,6 +1356,189 @@ def api_thesis_figures():
         'figures': thesis.get('figures_index', []),
         'tables': thesis.get('tables_index', [])
     })
+
+# ========== 论文工坊：健康度仪表盘 ==========
+
+def analyze_thesis_health():
+    """分析论文健康度，返回结构化数据"""
+    import os
+    if not os.path.exists(THESIS_MD_PATH):
+        return None
+
+    with open(THESIS_MD_PATH, 'r', encoding='utf-8') as f:
+        content = f.read()
+        lines = content.split('\n')
+
+    thesis = parse_thesis_md()
+    if not thesis:
+        return None
+
+    # 基础统计
+    total_chars = len(content)
+    total_lines = len(lines)
+
+    # 章节检查
+    chapter_titles = [ch['title'] for ch in thesis['chapters']]
+    expected_chapters = ['第一章', '第二章', '第三章', '第四章', '第五章', '第六章', '第七章', '第八章']
+    chapter_check = []
+    for exp in expected_chapters:
+        found = any(exp in t for t in chapter_titles)
+        chapter_check.append({'expected': exp, 'found': found})
+
+    # 参考文献编号连续性检查
+    ref_ids = sorted([int(k) for k in thesis['references'].keys()], key=int)
+    ref_gaps = []
+    if ref_ids:
+        expected_set = set(range(1, max(ref_ids) + 1))
+        actual_set = set(ref_ids)
+        missing = sorted(expected_set - actual_set)
+        ref_gaps = missing
+
+    # 正文引用但无对应文献的检查
+    all_ref_cites = set(re.findall(r'\[\^(\d+)\]', content))
+    missing_refs = sorted([int(r) for r in all_ref_cites if r not in thesis['references']])
+
+    # 中英文文献比例
+    cn_refs = []
+    en_refs = []
+    for rid, text in thesis['references'].items():
+        if re.search(r'[\u4e00-\u9fff]', text):
+            cn_refs.append(rid)
+        else:
+            en_refs.append(rid)
+
+    # 图片路径检查
+    img_paths = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', content)
+    missing_imgs = []
+    for p in img_paths:
+        full_path = os.path.join(os.path.dirname(THESIS_MD_PATH), p)
+        if not os.path.exists(full_path):
+            missing_imgs.append(p)
+
+    # 脚注空壳检查（只有编号无内容）
+    empty_refs = []
+    for rid, text in thesis['references'].items():
+        clean = text.strip()
+        if not clean or clean == f'[^{rid}]':
+            empty_refs.append(rid)
+
+    # 健康度评分（100分制）
+    score = 100
+    if len(thesis['chapters']) < 8:
+        score -= (8 - len(thesis['chapters'])) * 5
+    if ref_gaps:
+        score -= min(len(ref_gaps) * 2, 20)
+    if missing_refs:
+        score -= min(len(missing_refs) * 3, 15)
+    if missing_imgs:
+        score -= min(len(missing_imgs) * 2, 10)
+    if empty_refs:
+        score -= min(len(empty_refs) * 2, 15)
+    score = max(0, min(100, score))
+
+    # 章节字数统计
+    ch_stats = []
+    for ch in thesis['chapters']:
+        ch_text = ch.get('content', '')
+        for sec in ch.get('sections', []):
+            ch_text += sec.get('content', '')
+        ch_chars = len(ch_text.replace(' ', '').replace('\n', ''))
+        ch_stats.append({
+            'title': ch['title'],
+            'chars': ch_chars,
+            'figures': len(ch.get('figures', [])),
+            'tables': len(ch.get('tables', [])),
+            'sections': len(ch.get('sections', []))
+        })
+
+    return {
+        'score': score,
+        'total_chars': total_chars,
+        'total_lines': total_lines,
+        'chapters': {
+            'count': len(thesis['chapters']),
+            'expected': 8,
+            'check': chapter_check,
+            'stats': ch_stats
+        },
+        'references': {
+            'count': len(thesis['references']),
+            'gaps': ref_gaps,
+            'missing_in_list': missing_refs,
+            'empty': empty_refs,
+            'cn_count': len(cn_refs),
+            'en_count': len(en_refs),
+            'cn_ratio': round(len(cn_refs) / len(thesis['references']) * 100, 1) if thesis['references'] else 0
+        },
+        'figures': {
+            'count': thesis.get('total_figures', 0),
+            'missing_files': missing_imgs
+        },
+        'tables': {
+            'count': thesis.get('total_tables', 0)
+        },
+        'citations': {
+            'unique_cited': len(all_ref_cites),
+            'total_citations': sum(thesis.get('ref_counts', {}).values())
+        },
+        'md_path': THESIS_MD_PATH,
+        'md_mtime': datetime.fromtimestamp(os.path.getmtime(THESIS_MD_PATH)).strftime('%Y-%m-%d %H:%M:%S'),
+        'md_size': os.path.getsize(THESIS_MD_PATH)
+    }
+
+@app.route('/thesis/health')
+def thesis_health():
+    """论文健康度仪表盘"""
+    health = analyze_thesis_health()
+    return render_template('v6_thesis_health.html', health=health)
+
+@app.route('/api/thesis/health')
+def api_thesis_health():
+    """论文健康度API"""
+    health = analyze_thesis_health()
+    if not health:
+        return jsonify({'error': 'not found'}), 404
+    return jsonify(health)
+
+@app.route('/thesis/export')
+def thesis_export():
+    """论文导出工坊"""
+    import os
+    health = analyze_thesis_health()
+    scripts = []
+    script_dir = os.path.dirname(__file__)
+    for fname in ['_md_to_whu_docx.py', '_stage2_whu_refine.py', '_reorder_references.py']:
+        fpath = os.path.join(script_dir, fname)
+        if os.path.exists(fpath):
+            scripts.append({
+                'name': fname,
+                'size': os.path.getsize(fpath),
+                'mtime': datetime.fromtimestamp(os.path.getmtime(fpath)).strftime('%Y-%m-%d %H:%M:%S')
+            })
+    return render_template('v6_thesis_export.html', health=health, scripts=scripts)
+
+@app.route('/defense')
+def defense():
+    """答辩辅助页面"""
+    return render_template('v6_defense.html')
+
+@app.route('/thesis/format')
+def thesis_format_guide():
+    """武大格式规范参考"""
+    return render_template('v6_thesis_format.html')
+
+@app.route('/api/thesis/download-md')
+def api_download_md():
+    """下载当前MD源文件"""
+    import os
+    if not os.path.exists(THESIS_MD_PATH):
+        return jsonify({'error': 'not found'}), 404
+    return send_from_directory(
+        os.path.dirname(THESIS_MD_PATH),
+        os.path.basename(THESIS_MD_PATH),
+        as_attachment=True,
+        download_name='博士论文_最终定稿版.md'
+    )
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

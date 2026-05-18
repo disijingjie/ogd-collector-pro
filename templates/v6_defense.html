@@ -1,0 +1,346 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}答辩辅助 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 答辩辅助{% endblock %}{% block breadcrumb %}论文工坊 / 答辩辅助{% endblock %}
+{% block extra_css %}
+<style>
+.defense-timer{position:sticky;top:53px;background:#fff;border-bottom:1px solid var(--border);padding:16px 32px;z-index:40;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.defense-timer .timer-display{font-size:36px;font-weight:800;font-family:monospace;letter-spacing:2px}
+.defense-timer .timer-display.warning{color:#f59e0b}
+.defense-timer .timer-display.danger{color:#ef4444}
+.defense-timer .timer-display.ok{color:#10b981}
+.defense-timer .progress-track{flex:1;min-width:200px;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.defense-timer .progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#10b981,#3b82f6);transition:width .5s,width .5s}
+.defense-timer .progress-fill.warning{background:linear-gradient(90deg,#f59e0b,#f97316)}
+.defense-timer .progress-fill.danger{background:linear-gradient(90deg,#ef4444,#dc2626)}
+.defense-controls{display:flex;gap:8px}
+.defense-controls button{padding:8px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.defense-controls .btn-start{background:#10b981;color:#fff}
+.defense-controls .btn-pause{background:#f59e0b;color:#fff}
+.defense-controls .btn-reset{background:#e2e8f0;color:var(--text)}
+.defense-controls button:hover{opacity:.9;transform:translateY(-1px)}
+.defense-section{margin-bottom:16px;border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:all .2s}
+.defense-section.active{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.defense-section-header{padding:14px 20px;background:#f8fafc;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s}
+.defense-section.active .defense-section-header{background:linear-gradient(135deg,#eff6ff,#dbeafe)}
+.defense-section-num{width:32px;height:32px;border-radius:8px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.defense-section-title{font-weight:700;font-size:14px;flex:1}
+.defense-section-time{font-size:12px;color:var(--text-light);background:#fff;padding:4px 10px;border-radius:20px}
+.defense-section-body{padding:20px 24px;background:#fff;font-size:14px;line-height:1.9;color:#334155;display:none}
+.defense-section.active .defense-section-body{display:block}
+.defense-section-body blockquote{border-left:3px solid var(--primary);padding-left:16px;margin:12px 0;color:#475569;font-style:normal}
+.defense-section-body blockquote p{margin:8px 0}
+.defense-section-body strong{color:#1e293b}
+.defense-section-body h4{font-size:14px;font-weight:700;margin:16px 0 8px;color:#1e293b}
+</style>
+{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/defense" class="active">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<!-- 计时器 -->
+<div class="defense-timer" id="defenseTimer">
+  <div class="timer-display ok" id="timerDisplay">15:00</div>
+  <div class="progress-track">
+    <div class="progress-fill" id="timerProgress" style="width:0%"></div>
+  </div>
+  <div style="font-size:12px;color:var(--text-light);white-space:nowrap">
+    <span id="currentSection">准备就绪</span>
+  </div>
+  <div class="defense-controls">
+    <button class="btn-start" id="btnStart" onclick="startTimer()">▶ 开始</button>
+    <button class="btn-pause" id="btnPause" onclick="pauseTimer()" style="display:none">⏸ 暂停</button>
+    <button class="btn-reset" onclick="resetTimer()">↺ 重置</button>
+  </div>
+</div>
+
+<div style="margin-top:20px">
+  <div class="position-hint" style="margin-bottom:20px">
+    <strong>使用说明：</strong>点击"开始"启动15分钟倒计时。当前环节自动高亮。建议语速120字/分钟，总计约1800字。
+  </div>
+
+  <!-- 环节一 -->
+  <div class="defense-section active" id="sec-0" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(0)">
+      <div class="defense-section-num">1</div>
+      <div class="defense-section-title">开场：为什么研究这个？</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>各位老师好。我是文明，论文题目是《中国省级政府数据开放平台数据利用绩效评估与优化路径研究》。</p>
+        <p>我的研究起点是一个<strong>"反常现象"</strong>：我国已建成200多个政府数据开放平台、累计开放超30万个数据集，但超过60%的数据集下载量不足100次——<strong>数据开放了，但没人用</strong>。现有评估体系过度关注"开放了多少"，忽视"利用了多少"，形成了<strong>"数据口径幻觉"</strong>——标称数据集数量与实际可用数据之间的巨大鸿沟。这就是本研究要回答的核心问题。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 环节二 -->
+  <div class="defense-section" id="sec-1" data-duration="90">
+    <div class="defense-section-header" onclick="toggleSection(1)">
+      <div class="defense-section-num">2</div>
+      <div class="defense-section-title">理论框架：4E评估框架</div>
+      <div class="defense-section-time">1:30</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>针对这一痛点，我构建了<strong>4E评估框架</strong>：供给保障(Enabling)、平台服务(Engaging)、数据质量(Ensuring)、利用效果(Effecting)、公平性(Equity)。前四个维度对应数据利用的"全链条"，第五个维度关注"谁在用"。</p>
+        <p>在理论层面，我将<strong>制度同形理论</strong>引入数据开放领域，揭示了三重机制——政策驱动的强制性同形、标杆学习的模仿性同形、专业标准的规范性同形——如何塑造平台的趋同化。同时，我提出<strong>"数据口径幻觉"</strong>概念，将标称数据与实际可用数据的差异系统化，填补了测量偏差研究的理论空白。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 环节三 -->
+  <div class="defense-section" id="sec-2" data-duration="90">
+    <div class="defense-section-header" onclick="toggleSection(2)">
+      <div class="defense-section-num">3</div>
+      <div class="defense-section-title">研究设计：23平台×5种方法</div>
+      <div class="defense-section-time">1:30</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>数据层面，我自主开发了OGD-Collector Pro采集系统，对全国23个省级平台的真实运营数据进行了系统采集，涵盖数据集数量、更新频率、格式标准、API开放度、应用孵化数等24项指标。</p>
+        <p>方法层面，采用<strong>多方法融合</strong>的技术路线：</p>
+        <p>• <strong>AHP-熵权组合赋权</strong>确定指标权重<br>
+        • <strong>TOPSIS</strong>综合评估23个平台绩效<br>
+        • <strong>DEA-BCC</strong>评估资源配置效率<br>
+        • <strong>DEMATEL</strong>识别关键影响因素及其因果关系<br>
+        • <strong>fsQCA</strong>揭示高绩效平台的多重等效组态路径<br>
+        • <strong>多期DID</strong>评估"数据二十条"政策的实施效应</p>
+        <p>五种方法互为补充，形成"评估—诊断—归因—路径—验证"的完整证据链。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 发现一 -->
+  <div class="defense-section" id="sec-3" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(3)">
+      <div class="defense-section-num">4</div>
+      <div class="defense-section-title">发现一：绩效差异显著，"头部集中"</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>TOPSIS评估结果显示，23个平台绩效差异显著。山东以0.955分遥遥领先，与第二名四川（0.570）之间存在0.385分的巨大鸿沟。第一梯队（≥0.7）仅山东1个；第二梯队（0.4-0.7）有12个；第三梯队（<0.4）有10个。这种"一超多强"的分布格局表明，我国省级平台的数据利用绩效提升仍面临较大挑战。</p>
+        <p>区域差异呈现<strong>"东部分化、中部跟随、西部赶超、东北不均"</strong>的特征。传统"东强西弱"格局已被打破——四川、广西等西部平台绩效已超越江苏、浙江、上海等东部经济大省，表明制度创新可以弥补经济基础的不足。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 发现二 -->
+  <div class="defense-section" id="sec-4" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(4)">
+      <div class="defense-section-num">5</div>
+      <div class="defense-section-title">发现二：高绩效≠高效率</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>DEA效率分析显示，仅<strong>山东1个平台</strong>同时实现高绩效与高效率。高得分与高排名之间并非简单对应——部分平台通过资源过度投入获得高绩效，但资源配置效率极低。这一发现打破了"投入多=绩效好"的线性假设。</p>
+        <p>绩效-效率四象限分析将23个平台分为四类：<strong>卓越型</strong>（高绩效高效率，仅山东）、<strong>资源消耗型</strong>（高绩效低效率）、<strong>潜力型</strong>（低绩效高效率）、<strong>滞后型</strong>（低绩效低效率）。不同类型的平台需要差异化的优化策略。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 发现三 -->
+  <div class="defense-section" id="sec-5" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(5)">
+      <div class="defense-section-num">6</div>
+      <div class="defense-section-title">发现三：影响因素网络化，无单一主因</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>DEMATEL分析揭示，四个维度呈<strong>网络化结构</strong>，互为因果，不存在"一因一果"的简单链条。政策法规(PL)和平台建设(OG)是核心原因因素，应用效果(AE)是核心结果因素，数据质量(E3)和平台服务(PS)是中介传导因素。</p>
+        <p>这意味着，提升平台绩效不能"头痛医头"，而需要系统性优化——政策制度、平台功能、数据质量、利用效果之间形成了复杂的因果反馈回路。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 发现四 -->
+  <div class="defense-section" id="sec-6" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(6)">
+      <div class="defense-section-num">7</div>
+      <div class="defense-section-title">发现四：两条核心组态路径</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>fsQCA分析揭示了两条高绩效组态路径：</p>
+        <p>• <strong>"全要素驱动型"</strong>（覆盖率81%）：适合资源丰富的省份，需要同时优化所有维度。<br>
+        • <strong>"服务-质量-效果驱动型"</strong>（覆盖率19%）：适合资源约束型省份，通过聚焦平台服务、数据质量和利用效果实现"以少胜多"。</p>
+        <p>这一发现的核心启示是：<strong>没有放之四海而皆准的最优方案</strong>。不同类型平台需要匹配不同的组态路径，盲目模仿标杆可能适得其反。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 发现五 -->
+  <div class="defense-section" id="sec-7" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(7)">
+      <div class="defense-section-num">8</div>
+      <div class="defense-section-title">发现五：政策效应显著但存在时滞</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>多期DID分析显示，"数据二十条"政策使综合绩效提升0.043（p<0.01），但效应存在显著的维度差异和时滞特征：数据质量维度效应最强，公平性维度效应最弱；政策效应在政策实施后6个月才开始显现，12个月达到峰值。</p>
+        <p>这一发现的政策含义是：<strong>政策干预需要耐心</strong>，不能期望立竿见影；同时要注重公平性维度的配套建设，避免"效率优先、公平滞后"的结构性失衡。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 贡献 -->
+  <div class="defense-section" id="sec-8" data-duration="120">
+    <div class="defense-section-header" onclick="toggleSection(8)">
+      <div class="defense-section-num">9</div>
+      <div class="defense-section-title">研究贡献</div>
+      <div class="defense-section-time">2:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p><strong>理论贡献</strong></p>
+        <p>第一，将制度同形理论拓展到中国数据要素市场化语境，揭示了三种同形机制对平台趋同化的塑造作用，为理解中国数据开放平台的"千台一面"现象提供了理论解释。</p>
+        <p>第二，提出<strong>"数据口径幻觉"</strong>概念，系统化了标称数据与实际可用数据之间的测量偏差，填补了评估研究中的理论空白。</p>
+        <p>第三，构建了涵盖"供给—服务—质量—效果—公平"五维度的4E评估框架，为数据利用绩效评估提供了系统化的理论工具。</p>
+        <p><strong>实践价值</strong></p>
+        <p>为不同类型平台提供了差异化的<strong>"组态路径—优化策略"匹配方案</strong>：资源丰富型省份走"全要素驱动"路径；资源约束型省份走"聚焦突破"路径；效率低下型省份重点优化投入产出比。</p>
+        <p>研究成果可直接转化为国家数据局的政策参考，为省级平台的分类施策提供决策支持。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 不足 -->
+  <div class="defense-section" id="sec-9" data-duration="60">
+    <div class="defense-section-header" onclick="toggleSection(9)">
+      <div class="defense-section-num">10</div>
+      <div class="defense-section-title">不足与展望</div>
+      <div class="defense-section-time">1:00</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>本研究存在三点局限：</p>
+        <p>1. <strong>截面数据限制</strong>：无法捕捉平台绩效的动态演化趋势。<br>
+        2. <strong>样本量限制</strong>：23个平台对fsQCA分析而言偏小，可能导致边缘路径识别不够稳健。<br>
+        3. <strong>指标测量限制</strong>：部分指标（如财政投入）依赖估算和间接数据。</p>
+        <p>未来研究可通过纵向追踪和实验方法进一步验证，并将评估框架拓展到地级市层级，推动数据开放绩效评估的体系化发展。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 结语 -->
+  <div class="defense-section" id="sec-10" data-duration="30">
+    <div class="defense-section-header" onclick="toggleSection(10)">
+      <div class="defense-section-num">11</div>
+      <div class="defense-section-title">结语</div>
+      <div class="defense-section-time">0:30</div>
+    </div>
+    <div class="defense-section-body">
+      <blockquote>
+        <p>各位老师，本研究的核心命题可以概括为一句话：<strong>数据开放的价值不在于"开放了多少"，而在于"利用了多少"</strong>。当评估体系从"供给导向"转向"效果导向"，平台建设才能真正回应"数据要素价值释放"的时代命题。</p>
+        <p>以上是我的汇报，恳请各位老师批评指正。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- 时间分配速查 -->
+  <div class="card" style="margin-top:24px">
+    <div class="card-header">
+      <div class="card-title"><span class="icon" style="background:#3b82f6"></span>时间分配速查表</div>
+      <span class="badge" style="background:#dbeafe;color:#1e40af">总计14:00 + 1分钟弹性</span>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>环节</th><th>时长</th><th>核心关键词</th></tr></thead>
+      <tbody>
+        <tr><td>开场</td><td>1:00</td><td>数据口径幻觉</td></tr>
+        <tr><td>理论框架</td><td>1:30</td><td>4E框架、制度同形</td></tr>
+        <tr><td>研究设计</td><td>1:30</td><td>23平台×5种方法</td></tr>
+        <tr><td>发现一~五</td><td>5:00</td><td>头部集中、四象限、网络化因果、组态路径、政策时滞</td></tr>
+        <tr><td>研究贡献</td><td>2:00</td><td>理论+实践双贡献</td></tr>
+        <tr><td>不足展望</td><td>1:00</td><td>三点局限</td></tr>
+        <tr><td>结语</td><td>0:30</td><td>核心命题</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let totalSeconds = 900; // 15 minutes
+let elapsedSeconds = 0;
+let timerInterval = null;
+let isRunning = false;
+
+const sectionDurations = [60, 90, 90, 60, 60, 60, 60, 60, 120, 60, 30];
+const sectionNames = ['开场', '理论框架', '研究设计', '发现一', '发现二', '发现三', '发现四', '发现五', '研究贡献', '不足展望', '结语'];
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+
+function updateTimerDisplay() {
+  const remaining = totalSeconds - elapsedSeconds;
+  const display = document.getElementById('timerDisplay');
+  const progress = document.getElementById('timerProgress');
+  const pct = (elapsedSeconds / totalSeconds) * 100;
+
+  display.textContent = formatTime(remaining);
+  progress.style.width = pct + '%';
+
+  display.classList.remove('ok', 'warning', 'danger');
+  progress.classList.remove('ok', 'warning', 'danger');
+  if (remaining <= 60) { display.classList.add('danger'); progress.classList.add('danger'); }
+  else if (remaining <= 180) { display.classList.add('warning'); progress.classList.add('warning'); }
+  else { display.classList.add('ok'); progress.classList.add('ok'); }
+
+  // Auto-highlight current section
+  let acc = 0;
+  let currentIdx = 0;
+  for (let i = 0; i < sectionDurations.length; i++) {
+    acc += sectionDurations[i];
+    if (elapsedSeconds < acc) { currentIdx = i; break; }
+    currentIdx = sectionDurations.length - 1;
+  }
+  document.querySelectorAll('.defense-section').forEach((el, i) => {
+    el.classList.toggle('active', i === currentIdx);
+  });
+  document.getElementById('currentSection').textContent = sectionNames[currentIdx] + ' (' + formatTime(remaining) + ')';
+}
+
+function startTimer() {
+  if (isRunning) return;
+  isRunning = true;
+  document.getElementById('btnStart').style.display = 'none';
+  document.getElementById('btnPause').style.display = 'inline-block';
+  timerInterval = setInterval(() => {
+    elapsedSeconds++;
+    updateTimerDisplay();
+    if (elapsedSeconds >= totalSeconds) { pauseTimer(); }
+  }, 1000);
+}
+
+function pauseTimer() {
+  isRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('btnStart').style.display = 'inline-block';
+  document.getElementById('btnPause').style.display = 'none';
+}
+
+function resetTimer() {
+  pauseTimer();
+  elapsedSeconds = 0;
+  updateTimerDisplay();
+  document.getElementById('currentSection').textContent = '准备就绪';
+}
+
+function toggleSection(idx) {
+  const el = document.getElementById('sec-' + idx);
+  el.classList.toggle('active');
+}
+
+updateTimerDisplay();
+</script>
+
+{% endblock %}

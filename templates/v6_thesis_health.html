@@ -1,0 +1,175 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}论文健康度 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 健康度检查{% endblock %}{% block breadcrumb %}论文工坊 / 健康度检查{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health" class="active">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+{% if not health %}
+<div class="card" style="text-align:center;padding:60px 20px">
+  <div style="font-size:48px;margin-bottom:16px">📄</div>
+  <h3 style="margin-bottom:8px">论文源文件未找到</h3>
+  <p style="color:var(--text-light)">路径：{{ health.md_path if health else 'docs/博士论文_最终定稿版_v24.md' }}</p>
+</div>
+{% else %}
+
+<!-- 健康度总分 -->
+<div class="card" style="text-align:center;padding:32px 20px">
+  <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap">
+    <div>
+      <div style="position:relative;width:140px;height:140px;margin:0 auto">
+        <svg viewBox="0 0 140 140" style="width:100%;height:100%;transform:rotate(-90deg)">
+          <circle cx="70" cy="70" r="60" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+          <circle cx="70" cy="70" r="60" fill="none" stroke="{% if health.score >= 90 %}#10b981{% elif health.score >= 70 %}#f59e0b{% else %}#ef4444{% endif %}" stroke-width="10" stroke-dasharray="{{ (health.score/100*377)|round }} 377" stroke-linecap="round"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
+          <span style="font-size:36px;font-weight:800">{{ health.score }}</span>
+          <span style="font-size:11px;color:var(--text-light)">健康度</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:left">
+      <div style="font-size:13px;color:var(--text-light);margin-bottom:4px">论文状态</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px">
+        {% if health.score >= 90 %}<span style="color:#10b981">✓ 优秀</span>
+        {% elif health.score >= 70 %}<span style="color:#f59e0b">⚠ 良好</span>
+        {% else %}<span style="color:#ef4444">✗ 需修复</span>{% endif %}
+      </div>
+      <div style="font-size:12px;color:var(--text-light);line-height:1.8">
+        {{ health.total_chars|default(0) // 10000 }}万字符 · {{ health.chapters.count }}章 · {{ health.references.count }}条参考文献<br>
+        {{ health.figures.count }}幅图 · {{ health.tables.count }}个表 · {{ health.citations.unique_cited }}条引用<br>
+        最后修改：{{ health.md_mtime }} · {{ (health.md_size / 1024)|round }} KB
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 快速统计 -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ health.chapters.count }}</div>
+    <div class="stat-label">章节数 / 8</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ health.references.count }}</div>
+    <div class="stat-label">参考文献</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ health.figures.count }}</div>
+    <div class="stat-label">图表数</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ health.tables.count }}</div>
+    <div class="stat-label">表格数</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ health.citations.unique_cited }}</div>
+    <div class="stat-label">被引文献数</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ health.references.cn_ratio|default(0) }}%</div>
+    <div class="stat-label">中文文献占比</div>
+  </div>
+</div>
+
+<!-- 章节结构检查 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#3b82f6"></span>章节结构检查</div>
+    <span class="badge" style="background:{% if health.chapters.count >= 8 %}#dcfce7;color:#166534{% else %}#fee2e2;color:#991b1b{% endif %}">{{ health.chapters.count }}/8 章</span>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>章节</th><th>字数</th><th>图</th><th>表</th><th>节</th><th>状态</th></tr></thead>
+    <tbody>
+    {% for ch in health.chapters.stats %}
+    <tr>
+      <td><strong>{{ ch.title[:20] }}{% if ch.title|length > 20 %}...{% endif %}</strong></td>
+      <td>{{ ch.chars }}</td>
+      <td>{{ ch.figures }}</td>
+      <td>{{ ch.tables }}</td>
+      <td>{{ ch.sections }}</td>
+      <td><span class="badge" style="background:#dcfce7;color:#166534">✓</span></td>
+    </tr>
+    {% endfor %}
+    {% for ck in health.chapters.check %}
+    {% if not ck.found %}
+    <tr style="background:#fef2f2">
+      <td colspan="5"><strong style="color:#991b1b">{{ ck.expected }} — 缺失</strong></td>
+      <td><span class="badge" style="background:#fee2e2;color:#991b1b">✗</span></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- 参考文献检查 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#f59e0b"></span>参考文献检查</div>
+    <span class="badge" style="background:#dbeafe;color:#1e40af">{{ health.references.count }}条 · 中{{ health.references.cn_count }} · 英{{ health.references.en_count }}</span>
+  </div>
+
+  {% if health.references.gaps %}
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;margin-bottom:16px">
+    <div style="font-weight:700;color:#991b1b;font-size:13px;margin-bottom:6px">⚠ 编号不连续（{{ health.references.gaps|length }}处缺失）</div>
+    <div style="font-size:12px;color:#b91c1c">缺失编号：{{ health.references.gaps[:20]|join(', ') }}{% if health.references.gaps|length > 20 %} ... 等{{ health.references.gaps|length }}处{% endif %}</div>
+    <div style="font-size:11px;color:#ef4444;margin-top:6px">建议运行 _reorder_references.py 重新编号</div>
+  </div>
+  {% else %}
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px;margin-bottom:16px">
+    <div style="font-weight:700;color:#166534;font-size:13px">✓ 参考文献编号连续</div>
+  </div>
+  {% endif %}
+
+  {% if health.references.missing_in_list %}
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;margin-bottom:16px">
+    <div style="font-weight:700;color:#991b1b;font-size:13px;margin-bottom:6px">⚠ 正文引用但未定义（{{ health.references.missing_in_list|length }}条）</div>
+    <div style="font-size:12px;color:#b91c1c">编号：{{ health.references.missing_in_list[:20]|join(', ') }}</div>
+  </div>
+  {% endif %}
+
+  {% if health.references.empty %}
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;margin-bottom:16px">
+    <div style="font-weight:700;color:#991b1b;font-size:13px;margin-bottom:6px">⚠ 空壳参考文献（{{ health.references.empty|length }}条）</div>
+    <div style="font-size:12px;color:#b91c1c">编号：{{ health.references.empty[:20]|join(', ') }}</div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- 图片检查 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#8b5cf6"></span>图片完整性检查</div>
+    <span class="badge" style="background:#dbeafe;color:#1e40af">{{ health.figures.count }}幅</span>
+  </div>
+  {% if health.figures.missing_files %}
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px">
+    <div style="font-weight:700;color:#991b1b;font-size:13px;margin-bottom:6px">⚠ 缺失图片文件（{{ health.figures.missing_files|length }}个）</div>
+    <div style="font-size:11px;color:#b91c1c;font-family:monospace;line-height:1.8">
+      {% for img in health.figures.missing_files %}
+      <div>{{ img }}</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px 16px">
+    <div style="font-weight:700;color:#166534;font-size:13px">✓ 所有图片文件存在</div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- 操作栏 -->
+<div class="card" style="background:linear-gradient(135deg,#eff6ff,#f0f9ff)">
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+    <a href="/api/thesis/download-md" class="quick-link" style="background:var(--primary);color:#fff;padding:10px 20px;font-size:13px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载当前MD源</a>
+    <a href="/thesis/export" class="quick-link" style="padding:10px 20px;font-size:13px;font-weight:600">前往导出工坊 →</a>
+    <a href="/reader" class="quick-link" style="padding:10px 20px;font-size:13px;font-weight:600">论文细读 →</a>
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}
