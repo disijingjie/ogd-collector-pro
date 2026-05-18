@@ -1,0 +1,214 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}文献矩阵 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 文献矩阵{% endblock %}{% block breadcrumb %}论文工坊 / 文献矩阵{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/thesis/lit-matrix" class="active">文献矩阵</a>
+  <a href="/thesis/citation-network">引用网络</a>
+  <a href="/thesis/diff">版本对比</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="width:48px;height:48px;border-radius:12px;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;font-size:24px">📊</div>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:4px">文献矩阵生成器</h3>
+      <p style="font-size:12px;color:#94a3b8">从200篇精读文献库生成交互式对比矩阵，支持多维度筛选与导出</p>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <a href="/api/export/ne-advanced" class="quick-link" style="background:rgba(255,255,255,.1);color:#fff;border:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 导出NE</a>
+      <button onclick="exportCSV()" class="quick-link" style="background:rgba(255,255,255,.1);color:#fff;border:none;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 导出CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- 筛选栏 -->
+<div class="card" style="padding:16px 20px">
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+    <input type="text" id="searchInput" placeholder="搜索标题/作者/关键词..." style="flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px" oninput="filterMatrix()">
+    <select id="chapterFilter" onchange="filterMatrix()" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff">
+      <option value="">所有章节</option>
+      <option value="ch1">Ch1 绪论</option>
+      <option value="ch2">Ch2 文献综述</option>
+      <option value="ch3">Ch3 理论框架</option>
+      <option value="ch4">Ch4 研究设计</option>
+      <option value="ch5">Ch5 绩效评估</option>
+      <option value="ch6">Ch6 影响因素</option>
+      <option value="ch7">Ch7 对策建议</option>
+      <option value="ch8">Ch8 结论</option>
+    </select>
+    <select id="langFilter" onchange="filterMatrix()" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff">
+      <option value="">所有语言</option>
+      <option value="cn">中文</option>
+      <option value="en">英文</option>
+    </select>
+    <select id="priorityFilter" onchange="filterMatrix()" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff">
+      <option value="">所有优先级</option>
+      <option value="1">P1 核心</option>
+      <option value="2">P2 重要</option>
+      <option value="3">P3 参考</option>
+    </select>
+    <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-light);cursor:pointer">
+      <input type="checkbox" id="compactToggle" onchange="renderMatrix()"> 紧凑模式
+    </label>
+  </div>
+</div>
+
+<!-- 统计条 -->
+<div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+  <div class="stat-card" style="flex:1;min-width:120px;padding:14px">
+    <div class="stat-value" id="statTotal" style="font-size:24px">-</div>
+    <div class="stat-label">显示文献</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:120px;padding:14px">
+    <div class="stat-value" id="statCN" style="font-size:24px">-</div>
+    <div class="stat-label">中文</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:120px;padding:14px">
+    <div class="stat-value" id="statEN" style="font-size:24px">-</div>
+    <div class="stat-label">英文</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:120px;padding:14px">
+    <div class="stat-value" id="statP1" style="font-size:24px">-</div>
+    <div class="stat-label">核心文献</div>
+  </div>
+</div>
+
+<!-- 矩阵表格 -->
+<div class="card" style="padding:0;overflow:hidden">
+  <div style="overflow-x:auto">
+    <table class="data-table" id="matrixTable" style="font-size:12px;min-width:900px">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th style="width:120px">作者</th>
+          <th style="min-width:200px">标题</th>
+          <th style="width:80px">年份</th>
+          <th style="width:120px">期刊</th>
+          <th style="min-width:180px">研究问题</th>
+          <th style="min-width:140px">方法</th>
+          <th style="min-width:140px">核心发现</th>
+          <th style="width:80px">章节</th>
+          <th style="width:60px">优先级</th>
+        </tr>
+      </thead>
+      <tbody id="matrixBody"></tbody>
+    </table>
+  </div>
+  <div id="emptyState" style="display:none;text-align:center;padding:60px 20px;color:var(--text-light)">
+    <div style="font-size:48px;margin-bottom:16px">🔍</div>
+    <p>没有找到匹配的文献</p>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+let allItems = [];
+let filteredItems = [];
+
+fetch('/api/literature/matrix')
+  .then(r => r.json())
+  .then(data => {
+    allItems = data.items || [];
+    filteredItems = allItems;
+    renderMatrix();
+    updateStats();
+  });
+
+function filterMatrix() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const ch = document.getElementById('chapterFilter').value;
+  const lang = document.getElementById('langFilter').value;
+  const pri = document.getElementById('priorityFilter').value;
+
+  filteredItems = allItems.filter(item => {
+    if (q && !item.title.toLowerCase().includes(q) && !item.author.toLowerCase().includes(q) && !item.keywords.some(k => k.toLowerCase().includes(q))) return false;
+    if (ch && !item.chapter_tags.includes(ch)) return false;
+    if (lang && item.lang !== lang) return false;
+    if (pri && String(item.priority) !== pri) return false;
+    return true;
+  });
+  renderMatrix();
+  updateStats();
+}
+
+function renderMatrix() {
+  const compact = document.getElementById('compactToggle').checked;
+  const tbody = document.getElementById('matrixBody');
+  const empty = document.getElementById('emptyState');
+  const table = document.getElementById('matrixTable');
+
+  if (filteredItems.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    table.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  table.style.display = 'table';
+
+  tbody.innerHTML = filteredItems.map(item => {
+    const priBadge = item.priority === 1 ? '<span class="badge" style="background:#fee2e2;color:#dc2626">P1</span>' :
+                     item.priority === 2 ? '<span class="badge" style="background:#fef3c7;color:#d97706">P2</span>' :
+                     '<span class="badge" style="background:#e2e8f0;color:#64748b">P3</span>';
+    const langBadge = item.lang === 'cn' ? '<span class="badge" style="background:#dbeafe;color:#2563eb">中</span>' : '<span class="badge" style="background:#dcfce7;color:#16a34a">英</span>';
+    const chTags = item.chapter_tags.map(c => '<span class="badge" style="background:#f3e8ff;color:#7c3aed;font-size:10px">' + c.replace('ch','Ch') + '</span>').join(' ');
+
+    if (compact) {
+      return `<tr>
+        <td>${item.n}</td>
+        <td>${item.author}</td>
+        <td><strong>${item.title}</strong> ${langBadge}</td>
+        <td>${item.year}</td>
+        <td>${item.journal}</td>
+        <td colspan="3" style="color:var(--text-light)">${item.research_question.slice(0,60)}${item.research_question.length>60?'...':''}</td>
+        <td>${chTags}</td>
+        <td>${priBadge}</td>
+      </tr>`;
+    }
+
+    return `<tr>
+      <td>${item.n}</td>
+      <td>${item.author}</td>
+      <td><strong>${item.title}</strong> ${langBadge}</td>
+      <td>${item.year}</td>
+      <td>${item.journal}</td>
+      <td style="max-width:200px;white-space:normal;line-height:1.5">${item.research_question || '-'}</td>
+      <td style="max-width:160px;white-space:normal;line-height:1.5">${item.method || '-'}</td>
+      <td style="max-width:160px;white-space:normal;line-height:1.5">${item.findings || '-'}</td>
+      <td>${chTags}</td>
+      <td>${priBadge}</td>
+    </tr>`;
+  }).join('');
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = filteredItems.length;
+  document.getElementById('statCN').textContent = filteredItems.filter(i => i.lang === 'cn').length;
+  document.getElementById('statEN').textContent = filteredItems.filter(i => i.lang === 'en').length;
+  document.getElementById('statP1').textContent = filteredItems.filter(i => i.priority === 1).length;
+}
+
+function exportCSV() {
+  const headers = ['编号','作者','标题','期刊','年份','语言','研究问题','方法','数据','核心发现','相关性','关键词','章节标签','优先级'];
+  const rows = filteredItems.map(item => [
+    item.n, item.author, item.title, item.journal, item.year, item.lang,
+    item.research_question, item.method, item.data, item.findings, item.relevance,
+    item.keywords.join(';'), item.chapter_tags.join(';'), item.priority
+  ]);
+  const csv = [headers.join(','), ...rows.map(r => r.map(cell => '"' + String(cell || '').replace(/"/g, '""') + '"').join(','))].join('\n');
+  const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'OGD_Literature_Matrix.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+{% endblock %}

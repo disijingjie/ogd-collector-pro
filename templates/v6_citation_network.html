@@ -1,0 +1,148 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}引用网络 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 引用网络{% endblock %}{% block breadcrumb %}论文工坊 / 引用网络{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/thesis/lit-matrix">文献矩阵</a>
+  <a href="/thesis/citation-network" class="active">引用网络</a>
+  <a href="/thesis/diff">版本对比</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="width:48px;height:48px;border-radius:12px;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;font-size:24px">🕸️</div>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:4px">引用网络可视化</h3>
+      <p style="font-size:12px;color:#94a3b8">章节与文献的关联网络图，揭示知识结构与引用模式</p>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:12px;font-size:12px">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:50%;background:#3b82f6;display:inline-block"></span> 章节</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:50%;background:#f59e0b;display:inline-block"></span> 中文文献</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:50%;background:#10b981;display:inline-block"></span> 英文文献</span>
+    </div>
+  </div>
+</div>
+
+<!-- 统计 -->
+<div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+  <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+    <div class="stat-value" id="statChapters" style="font-size:24px">-</div>
+    <div class="stat-label">章节节点</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+    <div class="stat-value" id="statRefs" style="font-size:24px">-</div>
+    <div class="stat-label">引用文献</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+    <div class="stat-value" id="statTotalCite" style="font-size:24px">-</div>
+    <div class="stat-label">总引用次数</div>
+  </div>
+  <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+    <div class="stat-value" id="statCoCite" style="font-size:24px">-</div>
+    <div class="stat-label">共引关联</div>
+  </div>
+</div>
+
+<!-- 网络图容器 -->
+<div class="card" style="padding:0">
+  <div id="networkChart" style="width:100%;height:600px"></div>
+</div>
+
+<!-- 高频引用文献 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#f59e0b"></span>高频引用文献 Top 10</div>
+  </div>
+  <div id="topRefs"></div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+let chart;
+
+fetch('/api/thesis/citation-network-data')
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById('networkChart').innerHTML = '<div style="text-align:center;padding:80px 20px;color:var(--text-light)"><div style="font-size:48px;margin-bottom:16px">📄</div><p>论文数据未找到</p></div>';
+      return;
+    }
+    document.getElementById('statChapters').textContent = data.stats.chapter_count;
+    document.getElementById('statRefs').textContent = data.stats.cited_ref_count;
+    document.getElementById('statTotalCite').textContent = data.stats.total_citations;
+    document.getElementById('statCoCite').textContent = data.stats.co_citation_pairs;
+
+    // 渲染网络图
+    chart = echarts.init(document.getElementById('networkChart'));
+    const option = {
+      tooltip: {
+        formatter: function(p) {
+          if (p.data.type === 'chapter') {
+            return '<b>' + p.data.name + '</b><br/>引用文献数: ' + (p.data.value - 1);
+          }
+          return '<b>' + p.data.name + '</b><br/>被引次数: ' + p.data.value;
+        }
+      },
+      legend: {
+        data: ['章节', '中文文献', '英文文献'],
+        bottom: 10
+      },
+      series: [{
+        type: 'graph',
+        layout: 'force',
+        roam: true,
+        label: {
+          show: true,
+          fontSize: 11,
+          formatter: function(p) {
+            if (p.data.type === 'chapter') return p.data.name;
+            return p.data.name.length > 12 ? p.data.name.slice(0, 10) + '..' : p.data.name;
+          }
+        },
+        edgeSymbol: ['none', 'arrow'],
+        edgeSymbolSize: 4,
+        data: data.nodes.map(n => ({
+          ...n,
+          symbolSize: n.type === 'chapter' ? Math.sqrt(n.value) * 8 + 20 : Math.sqrt(n.value) * 5 + 8,
+          itemStyle: {
+            color: n.type === 'chapter' ? '#3b82f6' : n.group === 2 ? '#f59e0b' : '#10b981'
+          }
+        })),
+        links: data.edges.map(e => ({
+          source: e.source,
+          target: e.target,
+          lineStyle: {
+            width: e.type === 'co-citation' ? Math.min(e.value * 0.5, 3) : 1,
+            type: e.type === 'co-citation' ? 'dashed' : 'solid',
+            color: e.type === 'co-citation' ? '#94a3b8' : '#cbd5e1',
+            opacity: 0.6
+          }
+        })),
+        force: {
+          repulsion: 300,
+          edgeLength: [60, 150],
+          gravity: 0.1
+        },
+        emphasis: {
+          focus: 'adjacency',
+          lineStyle: { width: 3, opacity: 1 }
+        }
+      }]
+    };
+    chart.setOption(option);
+    window.addEventListener('resize', () => chart.resize());
+
+    // 渲染高频引用
+    const refNodes = data.nodes.filter(n => n.type === 'reference').sort((a, b) => b.value - a.value).slice(0, 10);
+    document.getElementById('topRefs').innerHTML = '<table class="data-table"><thead><tr><th>排名</th><th>文献</th><th>类型</th><th>被引次数</th></tr></thead><tbody>' +
+      refNodes.map((r, i) => '<tr><td>' + (i+1) + '</td><td>' + r.name + '</td><td>' + (r.group===2?'中文':'英文') + '</td><td><span class="badge" style="background:#dbeafe;color:#2563eb">' + r.value + '</span></td></tr>').join('') +
+      '</tbody></table>';
+  });
+</script>
+{% endblock %}

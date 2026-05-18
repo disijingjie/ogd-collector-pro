@@ -1540,5 +1540,283 @@ def api_download_md():
         download_name='博士论文_最终定稿版.md'
     )
 
+# ========== 论文工坊：文献矩阵生成器 ==========
+
+@app.route('/thesis/lit-matrix')
+def lit_matrix():
+    """文献矩阵生成器——从200篇文献库生成交互式对比矩阵"""
+    return render_template('v6_lit_matrix.html')
+
+@app.route('/api/literature/matrix')
+def api_literature_matrix():
+    """API: 返回文献矩阵数据（合并literature_db + literature_notes）"""
+    try:
+        with open('data/literature_db.json', 'r', encoding='utf-8-sig') as f:
+            db = json.load(f)
+    except FileNotFoundError:
+        db = []
+    try:
+        with open('data/literature_notes.json', 'r', encoding='utf-8') as f:
+            notes = json.load(f)
+    except FileNotFoundError:
+        notes = []
+
+    note_map = {n['n']: n for n in notes}
+    matrix = []
+    for item in db:
+        nid = item.get('n')
+        note = note_map.get(nid, {})
+        dims = note.get('dimensions', {})
+        matrix.append({
+            'n': nid,
+            'author': item.get('a', ''),
+            'title': item.get('t', ''),
+            'journal': item.get('j', ''),
+            'year': item.get('y', ''),
+            'lang': item.get('c', ''),
+            'research_question': dims.get('research_question', ''),
+            'method': dims.get('method', ''),
+            'data': dims.get('data', ''),
+            'findings': dims.get('findings', ''),
+            'relevance': dims.get('relevance', ''),
+            'keywords': note.get('keywords', []),
+            'chapter_tags': note.get('chapter_tags', []),
+            'priority': note.get('priority', 3),
+            'status': note.get('status', ''),
+            'confidence': note.get('confidence', '')
+        })
+    return jsonify({'total': len(matrix), 'items': matrix})
+
+# ========== 论文工坊：NoteExpress导出 ==========
+
+@app.route('/api/export/ne')
+def api_export_noteexpress():
+    """API: 导出文献库为NoteExpress格式(.txt)"""
+    try:
+        with open('data/literature_db.json', 'r', encoding='utf-8-sig') as f:
+            db = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'error': 'literature_db not found'}), 404
+
+    import io
+    output = io.StringIO()
+    # NoteExpress 导入格式（RIS-like简化版）
+    for item in db:
+        output.write(f"{item.get('n', '')}. {item.get('a', '')}. {item.get('t', '')}[J]. {item.get('j', '')}, {item.get('y', '')}.\n")
+
+    from flask import Response
+    return Response(
+        output.getvalue().encode('utf-8-sig'),
+        mimetype='text/plain; charset=utf-8-sig',
+        headers={'Content-Disposition': 'attachment; filename=OGD_Literature_NoteExpress.txt'}
+    )
+
+@app.route('/api/export/ne-advanced')
+def api_export_noteexpress_advanced():
+    """API: 导出高级NoteExpress格式（含笔记、标签、关键词）"""
+    try:
+        with open('data/literature_db.json', 'r', encoding='utf-8-sig') as f:
+            db = json.load(f)
+        with open('data/literature_notes.json', 'r', encoding='utf-8') as f:
+            notes = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'error': 'data not found'}), 404
+
+    note_map = {n['n']: n for n in notes}
+    import io
+    output = io.StringIO()
+    # 生成带标签和笔记的增强格式
+    output.write("# OGD-Collector Pro 文献库导出\n")
+    output.write(f"# 导出时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+    output.write(f"# 总文献数: {len(db)}\n")
+    output.write("# 格式: [编号] 作者. 标题[类型]. 期刊, 年份 | 标签: ... | 笔记摘要: ...\n\n")
+
+    for item in db:
+        nid = item.get('n', '')
+        note = note_map.get(nid, {})
+        tags = ','.join(note.get('keywords', []))
+        ch_tags = ','.join(note.get('chapter_tags', []))
+        note_text = note.get('note', '')
+        if len(note_text) > 100:
+            note_text = note_text[:97] + '...'
+        line = f"[{nid}] {item.get('a', '')}. {item.get('t', '')}[J]. {item.get('j', '')}, {item.get('y', '')}"
+        if tags:
+            line += f" | 关键词:{tags}"
+        if ch_tags:
+            line += f" | 章节:{ch_tags}"
+        if note_text:
+            line += f" | 笔记:{note_text}"
+        output.write(line + "\n")
+
+    from flask import Response
+    return Response(
+        output.getvalue().encode('utf-8-sig'),
+        mimetype='text/plain; charset=utf-8-sig',
+        headers={'Content-Disposition': 'attachment; filename=OGD_Literature_Advanced.txt'}
+    )
+
+# ========== 论文工坊：版本对比工具 ==========
+
+@app.route('/thesis/diff')
+def thesis_diff():
+    """版本对比工具——上传两个MD版本进行差异对比"""
+    import glob, os
+    docs_dir = os.path.join(os.path.dirname(__file__), 'docs')
+    versions = []
+    if os.path.exists(docs_dir):
+        for f in sorted(glob.glob(os.path.join(docs_dir, '博士论文*.md')), reverse=True):
+            versions.append({
+                'name': os.path.basename(f),
+                'path': f,
+                'mtime': datetime.fromtimestamp(os.path.getmtime(f)).strftime('%Y-%m-%d %H:%M:%S'),
+                'size': os.path.getsize(f)
+            })
+    return render_template('v6_thesis_diff.html', versions=versions)
+
+@app.route('/api/thesis/versions')
+def api_thesis_versions():
+    """API: 返回所有论文版本文件列表"""
+    import glob, os
+    docs_dir = os.path.join(os.path.dirname(__file__), 'docs')
+    versions = []
+    if os.path.exists(docs_dir):
+        for f in sorted(glob.glob(os.path.join(docs_dir, '博士论文*.md')), reverse=True):
+            versions.append({
+                'name': os.path.basename(f),
+                'mtime': datetime.fromtimestamp(os.path.getmtime(f)).strftime('%Y-%m-%d %H:%M:%S'),
+                'size': os.path.getsize(f)
+            })
+    return jsonify({'versions': versions})
+
+@app.route('/api/thesis/diff', methods=['POST'])
+def api_thesis_diff():
+    """API: 计算两个版本的差异"""
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'no data'}), 400
+    v1_name = data.get('v1')
+    v2_name = data.get('v2')
+    if not v1_name or not v2_name:
+        return jsonify({'error': 'need v1 and v2'}), 400
+
+    import os
+    docs_dir = os.path.join(os.path.dirname(__file__), 'docs')
+    v1_path = os.path.join(docs_dir, os.path.basename(v1_name))
+    v2_path = os.path.join(docs_dir, os.path.basename(v2_name))
+
+    if not os.path.exists(v1_path) or not os.path.exists(v2_path):
+        return jsonify({'error': 'file not found'}), 404
+
+    with open(v1_path, 'r', encoding='utf-8') as f:
+        v1_lines = f.readlines()
+    with open(v2_path, 'r', encoding='utf-8') as f:
+        v2_lines = f.readlines()
+
+    # 简单行级diff
+    import difflib
+    diff = list(difflib.unified_diff(v1_lines, v2_lines, fromfile=v1_name, tofile=v2_name, lineterm=''))
+
+    # 统计
+    added = sum(1 for l in diff if l.startswith('+') and not l.startswith('+++'))
+    removed = sum(1 for l in diff if l.startswith('-') and not l.startswith('---'))
+
+    return jsonify({
+        'diff': diff,
+        'added': added,
+        'removed': removed,
+        'v1_lines': len(v1_lines),
+        'v2_lines': len(v2_lines)
+    })
+
+# ========== 论文工坊：引用网络可视化 ==========
+
+@app.route('/thesis/citation-network')
+def citation_network():
+    """引用网络可视化——章节-文献关联图"""
+    return render_template('v6_citation_network.html')
+
+@app.route('/api/thesis/citation-network-data')
+def api_citation_network_data():
+    """API: 返回引用网络图数据（章节-文献节点+边）"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return jsonify({'error': 'not found'}), 404
+
+    # 构建节点和边
+    nodes = []
+    edges = []
+    node_id_map = {}
+
+    # 章节节点
+    for i, ch in enumerate(thesis['chapters']):
+        nid = f'ch{i+1}'
+        node_id_map[nid] = len(nodes)
+        nodes.append({
+            'id': nid,
+            'name': ch['title'].replace('第', '').replace('章', ''),
+            'type': 'chapter',
+            'group': 1,
+            'value': len(ch.get('ref_ids', [])) + 1
+        })
+
+    # 文献节点（只包含被引用的）
+    cited_refs = set()
+    for ch in thesis['chapters']:
+        for rid in ch.get('ref_ids', []):
+            cited_refs.add(rid)
+
+    ref_nodes = {}
+    for rid in sorted(cited_refs, key=int):
+        text = thesis['references'].get(rid, '')
+        short = text[:30] + '...' if len(text) > 30 else text
+        # 判断中英文
+        has_cn = bool(re.search(r'[\u4e00-\u9fff]', text))
+        nid = f'ref{rid}'
+        ref_nodes[rid] = nid
+        node_id_map[nid] = len(nodes)
+        nodes.append({
+            'id': nid,
+            'name': f'[{rid}] {short}',
+            'type': 'reference',
+            'group': 2 if has_cn else 3,
+            'value': thesis.get('ref_counts', {}).get(rid, 1)
+        })
+
+    # 边：章节→文献
+    for i, ch in enumerate(thesis['chapters']):
+        ch_nid = f'ch{i+1}'
+        for rid in ch.get('ref_ids', []):
+            if rid in ref_nodes:
+                edges.append({
+                    'source': ch_nid,
+                    'target': ref_nodes[rid],
+                    'value': 1
+                })
+
+    # 文献共引边（两章共同引用的文献建立章节间连接）
+    for i in range(len(thesis['chapters'])):
+        for j in range(i+1, len(thesis['chapters'])):
+            refs_i = set(thesis['chapters'][i].get('ref_ids', []))
+            refs_j = set(thesis['chapters'][j].get('ref_ids', []))
+            common = len(refs_i & refs_j)
+            if common > 0:
+                edges.append({
+                    'source': f'ch{i+1}',
+                    'target': f'ch{j+1}',
+                    'value': common,
+                    'type': 'co-citation'
+                })
+
+    return jsonify({
+        'nodes': nodes,
+        'edges': edges,
+        'stats': {
+            'chapter_count': len(thesis['chapters']),
+            'cited_ref_count': len(cited_refs),
+            'total_citations': sum(thesis.get('ref_counts', {}).values()),
+            'co_citation_pairs': sum(1 for e in edges if e.get('type') == 'co-citation')
+        }
+    })
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

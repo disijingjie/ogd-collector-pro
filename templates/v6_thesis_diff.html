@@ -1,0 +1,145 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}版本对比 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 版本对比{% endblock %}{% block breadcrumb %}论文工坊 / 版本对比{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/thesis/lit-matrix">文献矩阵</a>
+  <a href="/thesis/citation-network">引用网络</a>
+  <a href="/thesis/diff" class="active">版本对比</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="width:48px;height:48px;border-radius:12px;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;font-size:24px">🔀</div>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:4px">版本对比工具</h3>
+      <p style="font-size:12px;color:#94a3b8">选择两个论文版本进行差异对比，追踪修改历史与内容演进</p>
+    </div>
+  </div>
+</div>
+
+<!-- 版本选择 -->
+<div class="card">
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
+    <div style="flex:1;min-width:200px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text-light);margin-bottom:6px">基准版本（旧）</label>
+      <select id="v1Select" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff">
+        {% for v in versions %}
+        <option value="{{ v.name }}">{{ v.name }} ({{ v.mtime }}, {{ (v.size/1024)|round(1) }}KB)</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div style="font-size:20px;color:var(--text-light);padding-bottom:8px">→</div>
+    <div style="flex:1;min-width:200px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--text-light);margin-bottom:6px">对比版本（新）</label>
+      <select id="v2Select" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff">
+        {% for v in versions %}
+        <option value="{{ v.name }}" {% if loop.first %}selected{% endif %}>{{ v.name }} ({{ v.mtime }}, {{ (v.size/1024)|round(1) }}KB)</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button onclick="compareVersions()" style="padding:10px 24px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--primary),#3b82f6);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">开始对比</button>
+  </div>
+</div>
+
+<!-- 统计 -->
+<div id="diffStats" style="display:none;margin-bottom:16px">
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+      <div class="stat-value" id="statAdded" style="font-size:24px;color:#10b981">0</div>
+      <div class="stat-label">新增行</div>
+    </div>
+    <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+      <div class="stat-value" id="statRemoved" style="font-size:24px;color:#ef4444">0</div>
+      <div class="stat-label">删除行</div>
+    </div>
+    <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+      <div class="stat-value" id="statV1Lines" style="font-size:24px">0</div>
+      <div class="stat-label">旧版行数</div>
+    </div>
+    <div class="stat-card" style="flex:1;min-width:100px;padding:14px">
+      <div class="stat-value" id="statV2Lines" style="font-size:24px">0</div>
+      <div class="stat-label">新版行数</div>
+    </div>
+  </div>
+</div>
+
+<!-- Diff结果 -->
+<div class="card" id="diffResult" style="display:none;padding:0;overflow:hidden">
+  <div style="display:flex;border-bottom:1px solid var(--border)">
+    <div style="flex:1;padding:10px 16px;font-size:12px;font-weight:600;background:#f8fafc;border-right:1px solid var(--border)" id="diffHeader1">旧版本</div>
+    <div style="flex:1;padding:10px 16px;font-size:12px;font-weight:600;background:#f8fafc" id="diffHeader2">新版本</div>
+  </div>
+  <div style="max-height:600px;overflow:auto;font-family:monospace;font-size:12px;line-height:1.6" id="diffContent"></div>
+</div>
+
+<!-- 加载提示 -->
+<div id="loading" style="display:none;text-align:center;padding:40px;color:var(--text-light)">
+  <div style="width:32px;height:32px;border:3px solid #e2e8f0;border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px"></div>
+  <p>正在计算差异...</p>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+function compareVersions() {
+  const v1 = document.getElementById('v1Select').value;
+  const v2 = document.getElementById('v2Select').value;
+  if (v1 === v2) {
+    alert('请选择两个不同的版本进行对比');
+    return;
+  }
+
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('diffResult').style.display = 'none';
+  document.getElementById('diffStats').style.display = 'none';
+
+  fetch('/api/thesis/diff', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({v1: v1, v2: v2})
+  })
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('loading').style.display = 'none';
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+    document.getElementById('diffStats').style.display = 'block';
+    document.getElementById('diffResult').style.display = 'block';
+    document.getElementById('statAdded').textContent = data.added;
+    document.getElementById('statRemoved').textContent = data.removed;
+    document.getElementById('statV1Lines').textContent = data.v1_lines;
+    document.getElementById('statV2Lines').textContent = data.v2_lines;
+    document.getElementById('diffHeader1').textContent = v1 + ' (' + data.v1_lines + '行)';
+    document.getElementById('diffHeader2').textContent = v2 + ' (' + data.v2_lines + '行)';
+
+    const content = document.getElementById('diffContent');
+    content.innerHTML = data.diff.map(line => {
+      if (line.startsWith('@@')) {
+        return '<div style="background:#f1f5f9;color:#64748b;padding:4px 16px;font-size:11px">' + escapeHtml(line) + '</div>';
+      }
+      if (line.startsWith('+') && !line.startsWith('+++')) {
+        return '<div style="background:#dcfce7;padding:2px 16px"><span style="color:#16a34a;font-weight:700;margin-right:8px">+</span>' + escapeHtml(line.slice(1)) + '</div>';
+      }
+      if (line.startsWith('-') && !line.startsWith('---')) {
+        return '<div style="background:#fee2e2;padding:2px 16px"><span style="color:#dc2626;font-weight:700;margin-right:8px">-</span>' + escapeHtml(line.slice(1)) + '</div>';
+      }
+      return '<div style="padding:2px 16px;color:var(--text-light)"><span style="margin-right:8px"> </span>' + escapeHtml(line) + '</div>';
+    }).join('');
+  });
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+</script>
+{% endblock %}
