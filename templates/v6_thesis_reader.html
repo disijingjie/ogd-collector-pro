@@ -44,7 +44,7 @@
 /* 引用样式 */
 .fn-ref a{color:var(--primary);text-decoration:none;font-size:11px;font-weight:600;padding:0 2px}
 .fn-ref a:hover{background:#dbeafe;border-radius:2px}
-.fn-popover{position:fixed;max-width:400px;background:#1e293b;color:#e2e8f0;padding:14px 16px;border-radius:8px;font-size:12px;line-height:1.6;box-shadow:0 10px 25px rgba(0,0,0,.3);z-index:9999;display:none;pointer-events:none}
+.fn-popover{position:fixed;max-width:480px;background:#1e293b;color:#e2e8f0;padding:14px 16px;border-radius:8px;font-size:12px;line-height:1.6;box-shadow:0 10px 25px rgba(0,0,0,.3);z-index:9999;display:none;pointer-events:none;max-height:70vh;overflow-y:auto}
 .fn-popover.show{display:block}
 .fn-popover .fn-title{color:#60a5fa;font-weight:700;margin-bottom:6px;font-size:11px}
 .fn-popover .fn-links{margin-top:8px;padding-top:8px;border-top:1px solid #334155;display:flex;gap:8px}
@@ -74,6 +74,7 @@
 .ref-item .ref-links a.link-cnki{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
 .ref-item .ref-links a.link-doi{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
 .ref-item .ref-links a.link-wanfang{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.ref-item .ref-links a.link-scholar{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa}
 .ref-item .ref-links a:hover{opacity:.8;transform:translateY(-1px)}
 .ref-item:target{background:#eff6ff;padding:10px 12px 10px 48px;border-radius:4px}
 .ref-item:target .ref-num{background:var(--primary);color:#fff}
@@ -110,12 +111,29 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
 
 /* 打印 */
 @media print{
-  .sidebar,.journey-bar,.topbar,.reader-toc,.sub-nav,.hamburger,.reader-toolbar{display:none!important}
+  .sidebar,.journey-bar,.topbar,.reader-toc,.sub-nav,.hamburger,.reader-toolbar,.toc-toggle{display:none!important}
   .main-content{margin-left:0!important}
   .reader-body{height:auto!important}
   .reader-content{max-width:100%;padding:0}
   .thesis-paper p{orphans:3;widows:3}
   .thesis-figure{page-break-inside:avoid}
+}
+
+/* === 响应式优化：小屏幕 === */
+@media(max-width:1024px){
+  .reader-toc{width:220px;padding:16px 10px}
+  .reader-content{padding:32px 32px 60px}
+  .thesis-paper h1{font-size:20px}
+  .thesis-paper h3{font-size:13px}
+  .thesis-paper p{font-size:12.5px}
+}
+
+@media(max-width:900px){
+  .reader-toc{position:fixed;left:0;top:53px;z-index:40;transform:translateX(-100%);box-shadow:2px 0 12px rgba(0,0,0,.1);height:calc(100vh - 53px)}
+  .reader-toc.open{transform:translateX(0)}
+  .toc-toggle{display:flex!important}
+  .reader-body{height:auto}
+  .reader-content{padding:24px 20px 60px}
 }
 
 @media(max-width:768px){
@@ -130,6 +148,12 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
   .reader-toolbar{position:static;padding:8px;gap:8px}
   .reader-toolbar .reader-search{max-width:160px}
 }
+
+@media(max-width:600px){
+  .reader-content{padding:16px 14px 40px}
+  .thesis-paper h1{font-size:18px}
+  .thesis-paper p{font-size:12px}
+}
 </style>
 {% endblock %}
 
@@ -139,6 +163,7 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
   <a href="#figures">图目录</a>
   <a href="#tables">表目录</a>
   <a href="#references">参考文献</a>
+  <a href="/reader/chapter/1">📖 按章阅读</a>
   <a href="/api/thesis/structure" target="_blank">JSON结构</a>
   <a href="#" onclick="window.print();return false">打印全文</a>
 </div>
@@ -146,8 +171,10 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
 
 {% block content %}
 <div class="reader-layout">
+  <button class="toc-toggle" id="tocToggle" onclick="toggleToc()" style="display:none;position:fixed;left:10px;bottom:20px;z-index:100;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;align-items:center;justify-content:center;font-size:18px">☰</button>
+
   <!-- 左侧目录 -->
-  <nav class="reader-toc">
+  <nav class="reader-toc" id="readerToc">
     <h3>📑 论文章节目录</h3>
     <ul class="toc-list" id="tocList">
       {% for ch in thesis.chapters %}
@@ -255,6 +282,7 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
               {% if thesis.ref_external[ref_id].get('cnki') %}<a href="{{ thesis.ref_external[ref_id]['cnki'] }}" target="_blank" class="link-cnki">CNKI</a>{% endif %}
               {% if thesis.ref_external[ref_id].get('doi') %}<a href="{{ thesis.ref_external[ref_id]['doi'] }}" target="_blank" class="link-doi">DOI</a>{% endif %}
               {% if thesis.ref_external[ref_id].get('wanfang') %}<a href="{{ thesis.ref_external[ref_id]['wanfang'] }}" target="_blank" class="link-wanfang">万方</a>{% endif %}
+              {% if thesis.ref_external[ref_id].get('scholar') %}<a href="{{ thesis.ref_external[ref_id]['scholar'] }}" target="_blank" class="link-scholar">Scholar</a>{% endif %}
             </div>
             {% endif %}
           </div>
@@ -272,6 +300,17 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><img id="lightboxImg" src="" alt=""></div>
 
 <script>
+// ========== TOC 收起/展开 ==========
+function toggleToc(){
+  var toc = document.getElementById('readerToc');
+  toc.classList.toggle('open');
+}
+document.getElementById('readerBody').addEventListener('click', function(){
+  if(window.innerWidth <= 900){
+    document.getElementById('readerToc').classList.remove('open');
+  }
+});
+
 // ========== TOC导航 ==========
 (function(){
   var tocItems = document.querySelectorAll('.toc-item');
@@ -316,7 +355,7 @@ function showFootnote(e, n){
     var cited = ref.querySelector('.cited-count');
     var links = ref.querySelector('.ref-links');
     var html = '<div class="fn-title">[ '+n+' ] 参考文献</div>';
-    html += '<div>' + (text ? text.textContent.trim().substring(0, 350) : ref.textContent.trim().substring(0, 350)) + '</div>';
+    html += '<div>' + (text ? text.textContent.trim() : ref.textContent.trim()) + '</div>';
     if(cited){
       html += '<div style="margin-top:6px;color:#94a3b8;font-size:11px">被引用 ' + cited.textContent + ' 次</div>';
     }
@@ -325,8 +364,8 @@ function showFootnote(e, n){
     }
     pop.innerHTML = html;
     pop.classList.add('show');
-    pop.style.left = Math.min(e.clientX, window.innerWidth - 420) + 'px';
-    pop.style.top = (e.clientY + 20) + 'px';
+    pop.style.left = Math.min(e.clientX, window.innerWidth - 500) + 'px';
+    pop.style.top = Math.min(e.clientY + 20, window.innerHeight - 300) + 'px';
     setTimeout(function(){ pop.classList.remove('show') }, 5000);
   }
 }

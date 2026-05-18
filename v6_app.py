@@ -1111,22 +1111,45 @@ def parse_thesis_md():
     if ref_id and ref_buffer:
         footnotes[ref_id] = ''.join(ref_buffer).strip()
 
-    # 提取外部链接
+    # 提取外部链接——为每条文献生成搜索链接
+    import urllib.parse
     ref_external = {}
     for rid, text in footnotes.items():
         links = {}
-        doi_match = re.search(r'10\.\d{4,}/[^\s,;]+', text)
+        # 清理脚注标记用于搜索
+        clean_text = re.sub(r'\[\^\d+\]', '', text).strip()
+
+        # DOI直接链接
+        doi_match = re.search(r'10\.\d{4,}/[^\s,;]+', clean_text)
         if doi_match:
             links['doi'] = f'https://doi.org/{doi_match.group(0)}'
-        # CNKI search link for Chinese refs
-        if any(k in text for k in ['《', '学报', '研究', '管理', '科学', '图书情报', '情报', '档案', '大学']):
-            title_match = re.search(r'《([^》]+)》', text)
+
+        # 判断中英文：含中文字符则为中文文献
+        has_chinese = bool(re.search(r'[\u4e00-\u9fff]', clean_text))
+
+        if has_chinese:
+            # CNKI：提取书名或文章标题
+            title_match = re.search(r'《([^》]+)》', clean_text)
             if title_match:
-                links['cnki'] = f'https://kns.cnki.net/kns8/defaultresult/index?kw={title_match.group(1)}'
-        if '万方' in text:
+                links['cnki'] = f'https://kns.cnki.net/kns8/defaultresult/index?kw={urllib.parse.quote(title_match.group(1))}'
+            else:
+                # 无书名号则提取第一个逗号前的作者+标题片段
+                first_part = clean_text.split('.')[0] if '.' in clean_text else clean_text[:30]
+                if first_part:
+                    links['cnki'] = f'https://kns.cnki.net/kns8/defaultresult/index?kw={urllib.parse.quote(first_part)}'
+            # 万方
             links['wanfang'] = 'https://www.wanfangdata.com.cn/'
-        if links:
-            ref_external[rid] = links
+        else:
+            # 英文文献：Google Scholar
+            title_guess = clean_text
+            if '.' in clean_text:
+                parts = clean_text.split('.')
+                if len(parts) >= 2:
+                    title_guess = parts[1].strip()[:80]
+            if len(title_guess) > 5:
+                links['scholar'] = f'https://scholar.google.com/scholar?q={urllib.parse.quote(title_guess)}'
+
+        ref_external[rid] = links
 
     return {
         'chapters': chapters,
@@ -1236,21 +1259,50 @@ def render_table(lines):
     html += '</table></div>'
     return html
 
-@app.route('/reader')
-def thesis_reader():
-    """论文细读页——增强版：章节摘要、图表索引、引用追溯"""
-    thesis = parse_thesis_md()
-    if not thesis:
-        return "论文文件未找到", 404
-
-    # 预处理：转换章节内容为HTML（共享全局图/表计数器）
+def _prepare_thesis_html(thesis):
+    """预处理论文章节内容为HTML，并提取每章引用的参考文献ID"""
     ctx = {'fig_counter': [0], 'tab_counter': [0]}
     for ch in thesis['chapters']:
         ch['content_html'] = md_to_html(ch['content'], thesis['references'], ctx)
         for sec in ch['sections']:
             sec['content_html'] = md_to_html(sec['content'], thesis['references'], ctx)
+        # 提取本章引用的所有ref_id
+        ch_text = ch['content']
+        for sec in ch['sections']:
+            ch_text += sec['content']
+        ch['ref_ids'] = sorted(set(re.findall(r'\[\^(\d+)\]', ch_text)), key=int)
+    return thesis
 
-    return render_template('v6_thesis_reader.html', thesis=thesis)
+@app.route('/reader')
+def thesis_reader():
+    """论文细读页——完整版"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return "论文文件未找到", 404
+    thesis = _prepare_thesis_html(thesis)
+    return render_template('v6_thesis_reader.html', thesis=thesis, view_mode='full')
+
+@app.route('/reader/chapter/<int:ch_num>')
+def thesis_reader_chapter(ch_num):
+    """论文细读页——单章分页版"""
+    thesis = parse_thesis_md()
+    if not thesis:
+        return "论文文件未找到", 404
+    if ch_num < 1 or ch_num > len(thesis['chapters']):
+        return "章节不存在", 404
+
+    # 只预处理指定章节（但图/表计数器需要从头计算到该章）
+    thesis = _prepare_thesis_html(thesis)
+
+    ch = thesis['chapters'][ch_num - 1]
+    ch_idx = ch_num
+    prev_ch = thesis['chapters'][ch_num - 2] if ch_num > 1 else None
+    next_ch = thesis['chapters'][ch_num] if ch_num < len(thesis['chapters']) else None
+
+    return render_template('v6_thesis_reader_chapter.html',
+                           thesis=thesis, ch=ch, ch_idx=ch_idx,
+                           prev_ch=prev_ch, next_ch=next_ch,
+                           view_mode='chapter')
 
 @app.route('/api/thesis/structure')
 def api_thesis_structure():
