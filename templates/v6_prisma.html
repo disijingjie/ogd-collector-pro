@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}文献筛选之路 - OGD-Collector Pro{% endblock %}{% block page_title %}文献筛选之路{% endblock %}{% block breadcrumb %}研究拓展 / 文献筛选之路{% endblock %}
+{% extends "base_v6.html" %}{% set section = "overview" %}{% block title %}文献筛选之路 - OGD-Collector Pro{% endblock %}{% block page_title %}文献筛选之路{% endblock %}{% block breadcrumb %}研究拓展 / 文献筛选之路{% endblock %}
 {% block extra_css %}<style>
 .prisma-stage{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;border-left:4px solid #2563eb}
 .prisma-stage h3{font-size:16px;margin-bottom:8px}
@@ -17,6 +17,18 @@
 .journal-card .count{font-size:22px;font-weight:800;color:#2563eb}
 .journal-card .level{font-size:11px;color:#64748b;margin-top:2px}
 </style>{% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/">系统概览</a>
+  <a href="/literature">文献综述</a>
+  <a href="/methodology">方法论</a>
+  <a href="/prisma" class="active">PRISMA筛选</a>
+  <a href="/research-journey">研究旅程</a>
+  <a href="/chen-chuanfu">导师：陈传夫</a>
+  <a href="/ran-congjing">导师：冉从敬</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">
   <strong>文献筛选之路</strong>：还原一个普通学者如何从海量文献中逐步聚焦到200篇核心文献的完整过程。每一步都记录了筛选标准、排除理由和留下的文献数量。这是论文第二章"理论基础与文献综述"的方法论基础。

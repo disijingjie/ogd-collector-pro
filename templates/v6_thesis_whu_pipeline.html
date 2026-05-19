@@ -1,0 +1,256 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}WHU论文排版工具 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / WHU论文排版工具{% endblock %}{% block breadcrumb %}论文工坊 / WHU论文排版工具{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/write">在线写作</a>
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/thesis/lit-matrix">文献矩阵</a>
+  <a href="/thesis/citation-network">引用网络</a>
+  <a href="/thesis/diff">版本对比</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+  <a href="/thesis/whu-pipeline">WHU排版</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<!-- Hero -->
+<div class="card" style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff;text-align:center;padding:48px 24px">
+  <div style="font-size:48px;margin-bottom:16px">🎓</div>
+  <h2 style="font-size:28px;font-weight:800;margin-bottom:12px">WHU Thesis Pipeline</h2>
+  <p style="font-size:15px;color:#94a3b8;max-width:600px;margin:0 auto 24px;line-height:1.7">
+    武汉大学学位论文 Markdown → DOCX 一键排版流水线<br>
+    独创论文健康度检查 · 双引擎转换 · 格式规则引擎
+  </p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="https://github.com/disijingjie/whu-thesis-pipeline" target="_blank" class="quick-link" style="background:var(--primary);color:#fff;border:none;padding:10px 20px;font-size:14px;font-weight:600">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right:6px"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      GitHub 开源仓库
+    </a>
+    <a href="https://github.com/centixkadon/nju-thesis-markdown" target="_blank" class="quick-link" style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:10px 20px">
+      对比 nju-thesis-markdown →
+    </a>
+  </div>
+</div>
+
+<!-- 项目定位 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#8b5cf6"></span>项目定位</div>
+  </div>
+  <p style="font-size:14px;line-height:1.8;color:#475569;margin-bottom:16px">
+    本项目受 <a href="https://github.com/centixkadon/nju-thesis-markdown" target="_blank" style="color:var(--primary)">nju-thesis-markdown</a>（南京大学 Markdown 论文排版工具）启发，<strong>从零独立开发</strong>面向武汉大学研究生的论文排版流水线。与 nju-thesis-markdown 不同，本项目不仅解决"排版"问题，还独创性地加入了<strong>论文健康度检查</strong>和<strong>格式诊断引擎</strong>，让论文在排版前就能发现结构性问题。
+  </p>
+  <div style="background:#f8fafc;border-radius:8px;padding:16px;font-size:13px;color:#64748b;line-height:1.7">
+    <strong>开发者说：</strong>"OGD-Collector Pro 的论文工坊在检查论文健康度时，我发现手动核对脚注连续性、图片缺失、中英文比例非常繁琐。于是我把这套检查逻辑提炼成了一个独立的 Python 包，让任何武大学生都能一键检查自己的论文。排版只是最后一步，<strong>先确保论文结构健康</strong>才是核心。"
+  </div>
+</div>
+
+<!-- 与现有工具对比 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#ef4444"></span>与现有工具的差异</div>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="data-table" style="font-size:13px;min-width:700px">
+      <thead>
+        <tr>
+          <th style="min-width:100px">特性</th>
+          <th>大以论文</th>
+          <th>AutoSCI</th>
+          <th>nju-thesis-markdown</th>
+          <th style="background:linear-gradient(135deg,#eff6ff,#dbeafe)"><strong>WHU Thesis Pipeline</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>输入格式</strong></td>
+          <td>Word/在线编辑</td>
+          <td>Word/PDF</td>
+          <td>Markdown</td>
+          <td style="background:#f8fafc"><strong>Markdown</strong></td>
+        </tr>
+        <tr>
+          <td><strong>输出格式</strong></td>
+          <td>Word/PDF</td>
+          <td>LaTeX/PDF/Word</td>
+          <td>Word</td>
+          <td style="background:#f8fafc"><strong>Word + 健康报告</strong></td>
+        </tr>
+        <tr>
+          <td><strong>健康度检查</strong></td>
+          <td>❌</td>
+          <td>❌</td>
+          <td>❌</td>
+          <td style="background:#f8fafc"><span style="color:#10b981;font-weight:700">✅ 独创</span></td>
+        </tr>
+        <tr>
+          <td><strong>格式诊断</strong></td>
+          <td>❌</td>
+          <td>✅ 基础</td>
+          <td>❌</td>
+          <td style="background:#f8fafc"><span style="color:#10b981;font-weight:700">✅ 深度</span></td>
+        </tr>
+        <tr>
+          <td><strong>学校定制</strong></td>
+          <td>1600+学校预设</td>
+          <td>50+模板</td>
+          <td>南大专用</td>
+          <td style="background:#f8fafc"><strong>武大专用 + 可扩展</strong></td>
+        </tr>
+        <tr>
+          <td><strong>开源程度</strong></td>
+          <td>❌ 闭源SaaS</td>
+          <td>❌ 闭源SaaS</td>
+          <td>✅ 开源</td>
+          <td style="background:#f8fafc"><span style="color:#10b981;font-weight:700">✅ 开源</span></td>
+        </tr>
+        <tr>
+          <td><strong>Web集成</strong></td>
+          <td>❌</td>
+          <td>❌</td>
+          <td>❌</td>
+          <td style="background:#f8fafc"><span style="color:#10b981;font-weight:700">✅ Flask/网页端</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 核心功能 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#3b82f6"></span>核心功能</div>
+  </div>
+  <div class="journey-cards" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <div class="journey-card" style="border-color:#dbeafe;background:#f8fafc">
+      <div class="journey-card-num" style="background:#3b82f6">1</div>
+      <div class="journey-card-title">双引擎转换</div>
+      <div class="journey-card-desc">Pandoc 通用路线 + python-docx 精细控制路线，兼顾效率与精度</div>
+    </div>
+    <div class="journey-card" style="border-color:#dcfce7;background:#f8fafc">
+      <div class="journey-card-num" style="background:#10b981">2</div>
+      <div class="journey-card-title">论文健康度检查</div>
+      <div class="journey-card-desc">8维度完整性诊断：章节结构、图表、脚注、引用、图片、中英文比例、字数、格式</div>
+    </div>
+    <div class="journey-card" style="border-color:#fef3c7;background:#f8fafc">
+      <div class="journey-card-num" style="background:#f59e0b">3</div>
+      <div class="journey-card-title">格式规则引擎</div>
+      <div class="journey-card-desc">YAML 配置化，支持多学校模板扩展，武大格式一键应用</div>
+    </div>
+    <div class="journey-card" style="border-color:#f3e8ff;background:#f8fafc">
+      <div class="journey-card-num" style="background:#8b5cf6">4</div>
+      <div class="journey-card-title">Web 界面</div>
+      <div class="journey-card-desc">在线检查 + 一键导出 + 实时预览，无需安装即可使用（集成在 OGD-Collector 论文工坊）</div>
+    </div>
+    <div class="journey-card" style="border-color:#fee2e2;background:#f8fafc">
+      <div class="journey-card-num" style="background:#ef4444">5</div>
+      <div class="journey-card-title">Lua Filter</div>
+      <div class="journey-card-desc">Pandoc 转换过程中的自定义处理，中文字体映射、脚注格式调整</div>
+    </div>
+    <div class="journey-card" style="border-color:#cffafe;background:#f8fafc">
+      <div class="journey-card-num" style="background:#06b6d4">6</div>
+      <div class="journey-card-title">数据联动</div>
+      <div class="journey-card-desc">与 OGD-Collector Pro 论文系统联动，采集数据直接反哺论文实证章节</div>
+    </div>
+  </div>
+</div>
+
+<!-- 快速开始 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#10b981"></span>快速开始</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'tab-install')">安装</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-cli')">命令行</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-api')">Python API</button>
+  </div>
+  <div id="tab-install" class="tab-panel active">
+    <div class="code-block"><span class="lang">bash</span>
+pip install whu-thesis-pipeline</div>
+  </div>
+  <div id="tab-cli" class="tab-panel">
+    <div class="code-block"><span class="lang">bash</span>
+<span class="cm"># 健康度检查</span>
+whu-thesis-check docs/thesis.md
+
+<span class="cm"># 生成 DOCX（python-docx 引擎）</span>
+whu-thesis-convert docs/thesis.md --engine=docx --output=output/
+
+<span class="cm"># 完整流水线：检查 → 转换 → 诊断</span>
+whu-thesis-pipeline docs/thesis.md --config=config/whu_phd.yaml</div>
+  </div>
+  <div id="tab-api" class="tab-panel">
+    <div class="code-block"><span class="lang">python</span>
+<span class="kw">from</span> whu_thesis <span class="kw">import</span> ThesisPipeline
+
+pipeline = ThesisPipeline(config=<span class="str">"config/whu_phd.yaml"</span>)
+
+<span class="cm"># 健康度检查</span>
+health = pipeline.check_health(<span class="str">"docs/thesis.md"</span>)
+<span class="fn">print</span>(<span class="str">f"健康度: {health.score}/100"</span>)
+
+<span class="cm"># 转换</span>
+pipeline.convert(<span class="str">"docs/thesis.md"</span>, output=<span class="str">"output/thesis.docx"</span>)</div>
+  </div>
+</div>
+
+<!-- 武大格式支持 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#f59e0b"></span>武汉大学格式支持清单</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 封面页（分类号/UDC/编号/题目/作者/导师/学科）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 原创性声明 + 使用授权协议</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 创新点页</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 中英文摘要</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 自动目录（TOC 域）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 图目录 + 表目录</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 正文（黑体标题 + 宋体正文 + 1.5倍行距 + 首行缩进2字符）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 图片嵌入 + 表格渲染（三线表样式）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 参考文献（悬挂缩进）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#10b981">✓</span> 致谢</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#f59e0b">○</span> 脚注圈码①②③（需 WPS/Word 精修）</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:#f59e0b">○</span> 页眉页脚（需 WPS/Word 精修）</div>
+  </div>
+</div>
+
+<!-- 技术架构 -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title"><span class="icon" style="background:#6366f1"></span>技术架构</div>
+  </div>
+  <div class="code-block" style="background:#1e293b"><span class="lang">text</span>
+whu-thesis-pipeline/
+├── config/whu_phd.yaml          <span class="cm"># 武大博士论文格式配置</span>
+├── src/
+│   ├── whu_thesis/
+│   │   ├── converter.py         <span class="cm"># 双引擎转换器（Pandoc + python-docx）</span>
+│   │   ├── health.py            <span class="cm"># 论文健康度检查（8维度）</span>
+│   │   ├── format_rules.py      <span class="cm"># YAML 格式规则引擎</span>
+│   │   └── cli.py               <span class="cm"># 命令行入口</span>
+│   └── filters/
+│       └── whu-thesis.lua       <span class="cm"># Pandoc 中文处理 Filter</span>
+├── tests/test_basic.py          <span class="cm"># 5项基础测试</span>
+└── README.md                    <span class="cm"># 完整文档</span></div>
+</div>
+
+<!-- 许可证 -->
+<div style="text-align:center;padding:24px;color:var(--text-light);font-size:13px">
+  <p>MIT License · 开源 · 欢迎 Fork 和 PR</p>
+  <p style="margin-top:8px">GitHub: <a href="https://github.com/disijingjie/whu-thesis-pipeline" target="_blank" style="color:var(--primary)">disijingjie/whu-thesis-pipeline</a></p>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+</script>
+{% endblock %}

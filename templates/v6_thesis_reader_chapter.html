@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "reader" %}{% block title %}{{ ch.title }} | 论文细读 | OGD-Collector Pro{% endblock %}{% block page_title %}论文细读{% endblock %}{% block breadcrumb %}论文细读 / {{ ch.title }}{% endblock %}
+{% extends "base_v6.html" %}{% set section = "thesis" %}{% block title %}{{ ch.title }} | 论文细读 | OGD-Collector Pro{% endblock %}{% block page_title %}论文细读{% endblock %}{% block breadcrumb %}<a href="/thesis">论文中心</a> / {{ ch.title }}{% endblock %}
 {% block extra_css %}
 <style>
 /* === 论文细读页 V6.3 增强版（单章分页）=== */
@@ -121,7 +121,12 @@
   <a href="#" onclick="window.print();return false">打印</a>
 </div>
 {% endblock %}
-
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis">论文概览</a>
+  <a href="/reader" class="active">论文细读</a>
+</div>
+{% endblock %}
 {% block content %}
 <div class="reader-layout">
   <button class="toc-toggle" id="tocToggle" onclick="toggleToc()">☰</button>

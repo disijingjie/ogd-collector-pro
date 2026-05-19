@@ -34,6 +34,15 @@
 .timeline-matrix .dot.low{background:#dc2626}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#matrix" class="active">方法映射矩阵</a><a href="#anhui">安徽攻克案例</a><a href="#timeline">采集时间轴</a><a href="#chain">完整溯源链</a><a href="#caliber">数据口径对照</a><a href="#expert">专家方法说明</a><a href="#charts">联动图表</a></div>{% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/collection">采集中心</a>
+  <a href="/caliber">数据口径</a>
+  <a href="/credibility" class="active">可信度</a>
+  <a href="/provenance">溯源</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 
 <div class="cred-alert info">

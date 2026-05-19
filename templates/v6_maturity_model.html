@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}成熟度模型 | OGD-Collector Pro{% endblock %}{% block page_title %}开放数据平台成熟度模型{% endblock %}{% block breadcrumb %}研究贡献 / 成熟度模型{% endblock %}
+{% extends "base_v6.html" %}{% set section = "evaluation" %}{% block title %}成熟度模型 | OGD-Collector Pro{% endblock %}{% block page_title %}开放数据平台成熟度模型{% endblock %}{% block breadcrumb %}<a href="/analysis">绩效评估</a> / 成熟度模型{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 <style>
@@ -110,12 +110,15 @@
 
 {% block sub_nav %}
 <div class="sub-nav">
-  <a href="/thesis">论文成果</a>
-  <a href="/research">研究拓展</a>
-  <a href="/maturity" class="active">成熟度模型</a>
+  <a href="/analysis">分析看板</a>
+  <a href="/map">绩效地图</a>
+  <a href="/maturity" class="active">成熟度</a>
+  <a href="/strategy">策略</a>
   <a href="/value-chain">4E价值链</a>
-  <a href="/international">国际对比</a>
-  <a href="/papers">小论文</a>
+  <a href="/charts/topsis">TOPSIS</a>
+  <a href="/charts/fsqa">fsQCA</a>
+  <a href="/charts/dematel">DEMATEL</a>
+  <a href="/charts/did">DID</a>
 </div>
 {% endblock %}
 

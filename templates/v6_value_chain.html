@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}4E价值链 | OGD-Collector Pro{% endblock %}{% block page_title %}4E价值链动画{% endblock %}{% block breadcrumb %}研究贡献 / 4E价值链{% endblock %}
+{% extends "base_v6.html" %}{% set section = "evaluation" %}{% block title %}4E价值链 | OGD-Collector Pro{% endblock %}{% block page_title %}4E价值链动画{% endblock %}{% block breadcrumb %}<a href="/analysis">绩效评估</a> / 4E价值链{% endblock %}
 {% block extra_css %}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
@@ -60,6 +60,19 @@
 .vc-nav a{color:#60a5fa;font-size:0.85rem;text-decoration:none;margin:0 0.5rem}
 @media(max-width:768px){.chain-flow{flex-direction:column}.chain-arrow{transform:rotate(90deg);margin:0.5rem 0}.detail-grid,.transform-cards{grid-template-columns:1fr}.indicator-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
+{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/analysis">分析看板</a>
+  <a href="/map">绩效地图</a>
+  <a href="/maturity">成熟度</a>
+  <a href="/strategy">策略</a>
+  <a href="/value-chain" class="active">4E价值链</a>
+  <a href="/charts/topsis">TOPSIS</a>
+  <a href="/charts/fsqa">fsQCA</a>
+  <a href="/charts/dematel">DEMATEL</a>
+  <a href="/charts/did">DID</a>
+</div>
 {% endblock %}
 
 {% block sub_nav %}

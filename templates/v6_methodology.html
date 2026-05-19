@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "overview" %}{% block title %}研究方法论 - AI时代的数据驱动研究范式{% endblock %}{% block page_title %}研究方法论{% endblock %}{% block breadcrumb %}研究拓展 / 研究方法论{% endblock %}
+{% extends "base_v6.html" %}{% set section = "methodology" %}{% block title %}研究方法论 - AI时代的数据驱动研究范式{% endblock %}{% block page_title %}研究方法论{% endblock %}{% block breadcrumb %}<a href="/methodology">方法论</a>{% endblock %}
 {% block extra_css %}<style>
 .principle-card{background:#fff;border-radius:12px;padding:22px;border-left:4px solid #2563eb;margin-bottom:16px}
 .principle-card h4{font-size:15px;margin-bottom:8px;color:#1e293b}
@@ -15,6 +15,18 @@
 .compare-table .ours{background:#eff6ff}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#trigger" class="active">现实触发</a><a href="#paradigm">研究范式</a><a href="#pipeline">八步方法论</a><a href="#deepliterature">文献深潜</a><a href="#why-site">为什么这样做</a><a href="#comparison">传统vs新范式</a><a href="#references">外部评估对话</a><a href="#papers">衍生小论文</a><a href="#ai-paper">AI时代方法论创新</a></div>{% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/">系统概览</a>
+  <a href="/literature">文献综述</a>
+  <a href="/methodology" class="active">方法论</a>
+  <a href="/prisma">PRISMA筛选</a>
+  <a href="/research-journey">研究旅程</a>
+  <a href="/chen-chuanfu">导师：陈传夫</a>
+  <a href="/ran-congjing">导师：冉从敬</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 
 <div class="cred-alert info" style="padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.7;background:#eff6ff;border-left:3px solid #2563eb;color:#1e40af">

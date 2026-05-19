@@ -1,4 +1,4 @@
-﻿{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}小论文研究框架 - OGD-Collector Pro{% endblock %}{% block page_title %}小论文研究框架{% endblock %}{% block breadcrumb %}<a href="/research">研究拓展</a> / 小论文研究框架{% endblock %}
+﻿{% extends "base_v6.html" %}{% set section = "extension" %}{% block title %}小论文研究框架 - OGD-Collector Pro{% endblock %}{% block page_title %}小论文研究框架{% endblock %}{% block breadcrumb %}<a href="/research">研究拓展</a> / 小论文研究框架{% endblock %}
 {% block anchor_nav %}
 <div class="anchor-nav">
   <a href="#overview" class="active">研究概览</a>
@@ -8,6 +8,16 @@
   <a href="#guideline">采集规范</a>
 </div>
 {% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/research">研究拓展</a>
+  <a href="/papers" class="active">小论文</a>
+  <a href="/paper-collection">论文集</a>
+  <a href="/international">国际对比</a>
+  <a href="/external-sources">外部来源</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 
 <!-- 顶部引言 -->

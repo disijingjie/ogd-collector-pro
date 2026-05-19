@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "evaluation" %}{% block title %}省域绩效地图 - OGD-Collector Pro{% endblock %}{% block page_title %}省域绩效地图{% endblock %}{% block breadcrumb %}分析验证 / 省域绩效地图{% endblock %}
+{% extends "base_v6.html" %}{% set section = "evaluation" %}{% block title %}省域绩效地图 - OGD-Collector Pro{% endblock %}{% block page_title %}省域绩效地图{% endblock %}{% block breadcrumb %}<a href="/analysis">绩效评估</a> / 省域绩效地图{% endblock %}
 {% block extra_css %}<style>
 .map-container{background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.07);padding:24px;position:relative}
 .map-legend{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#f8fafc;border-radius:8px;margin-top:16px;font-size:12px}
@@ -16,6 +16,19 @@
 .no-data-province{fill:#f1f5f9;stroke:#cbd5e1}
 </style>{% endblock %}
 
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/analysis">分析看板</a>
+  <a href="/map" class="active">绩效地图</a>
+  <a href="/maturity">成熟度</a>
+  <a href="/strategy">策略</a>
+  <a href="/value-chain">4E价值链</a>
+  <a href="/charts/topsis">TOPSIS</a>
+  <a href="/charts/fsqa">fsQCA</a>
+  <a href="/charts/dematel">DEMATEL</a>
+  <a href="/charts/did">DID</a>
+</div>
+{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#map" class="active">绩效地图</a><a href="#ranking">排名表</a><a href="#dimension">4E维度</a></div>{% endblock %}
 
 {% block content %}

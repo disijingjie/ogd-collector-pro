@@ -17,10 +17,23 @@
 .method-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#chain" class="active">方法链</a><a href="#map">绩效地图</a><a href="#topsis">TOPSIS排名</a><a href="#dea">DEA效率</a><a href="#dematel">DEMATEL因果</a><a href="#fsqca">fsQCA路径</a><a href="#did">DID政策</a><a href="#datasource">数据来源</a></div>{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/analysis" class="active">分析看板</a>
+  <a href="/map">绩效地图</a>
+  <a href="/maturity">成熟度</a>
+  <a href="/strategy">策略</a>
+  <a href="/value-chain">4E价值链</a>
+  <a href="/charts/topsis">TOPSIS</a>
+  <a href="/charts/fsqa">fsQCA</a>
+  <a href="/charts/dematel">DEMATEL</a>
+  <a href="/charts/did">DID</a>
+</div>
+{% endblock %}
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：分析验证（第3/5步）</strong> — 本页展示论文第5-7章的五种分析方法结果，形成"描述→诊断→归因→处方→验证"的完整证据链。完成后再进入 <a href="/thesis" style="color:var(--primary)">论文成果 →</a>
+  <strong>您正在浏览：分析验证（第4/7步）</strong> — 本页展示论文第5-7章的五种分析方法结果，形成"描述→诊断→归因→处方→验证"的完整证据链。完成后再进入 <a href="/thesis" style="color:var(--primary)">论文成果 →</a>
 </div>
 
 <div id="map" class="scroll-section">

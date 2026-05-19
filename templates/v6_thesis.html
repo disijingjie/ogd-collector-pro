@@ -1,4 +1,4 @@
-﻿{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}论文成果{% endblock %}
+﻿{% extends "base_v6.html" %}{% set section = "thesis" %}{% block title %}论文成果 - OGD-Collector Pro{% endblock %}{% block page_title %}论文成果{% endblock %}{% block breadcrumb %}<a href="/thesis">论文中心</a>{% endblock %}
 {% block extra_css %}<style>
 .chapter-section{padding:24px;background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.07);margin-bottom:20px}
 .chapter-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #e2e8f0}
@@ -17,10 +17,18 @@
 .toc-item:hover .toc-num{background:#2563eb;color:#fff}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#toc" class="active">目录</a><a href="#ch1">第1章</a><a href="#ch2">第2章</a><a href="#ch3">第3章</a><a href="#ch4">第4章</a><a href="#ch5">第5章</a><a href="#ch6">第6章</a><a href="#ch7">第7章</a><a href="#ch8">第8章</a></div>{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis">论文章节</a>
+  <a href="/maturity">成熟度模型</a>
+  <a href="/strategy">策略推荐</a>
+  <a href="/papers">小论文</a>
+</div>
+{% endblock %}
 {% block content %}
 
 <div class="position-hint">
-  <strong>您正在浏览：论文成果（第4/5步）</strong> — 本页展示博士论文8章完整内容，包含全部36张图表。这是本研究的核心产出。完成后再进入 <a href="/research" style="color:var(--primary)">研究拓展 →</a>
+  <strong>您正在浏览：论文成果（第5/7步）</strong> — 本页展示博士论文8章完整内容，包含全部36张图表。这是本研究的核心产出。完成后再进入 <a href="/research" style="color:var(--primary)">研究拓展 →</a>
 </div>
 
 <div id="toc" class="scroll-section">

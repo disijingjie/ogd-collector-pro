@@ -13,6 +13,11 @@
 .data-source-table td{border-bottom:1px solid #e2e8f0}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">复现概览</a><a href="#sources">数据来源总览</a><a href="#topsis-repro">TOPSIS复现</a><a href="#dea-repro">DEA复现</a><a href="#dematel-repro">DEMATEL复现</a><a href="#fsqca-repro">fsQCA复现</a><a href="#did-repro">DID复现</a><a href="#recollect">重新采集</a></div>{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/reproduce">数据复现</a>
+</div>
+{% endblock %}
 {% block content %}
 
 <div class="position-hint">

@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "evaluation" %}{% block title %}数据溯源中心 - 可复现的研究数据{% endblock %}{% block page_title %}数据溯源中心{% endblock %}{% block breadcrumb %}分析看板 / 数据溯源中心{% endblock %}
+{% extends "base_v6.html" %}{% set section = "data" %}{% block title %}数据溯源中心 - 可复现的研究数据{% endblock %}{% block page_title %}数据溯源中心{% endblock %}{% block breadcrumb %}分析看板 / 数据溯源中心{% endblock %}
 {% block extra_css %}
 <style>
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -25,6 +25,15 @@
 .btn-primary:hover { opacity: 0.9; }
 </style>
 {% endblock %}
+
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/collection">采集中心</a>
+  <a href="/caliber">数据口径</a>
+  <a href="/credibility">可信度</a>
+  <a href="/provenance" class="active">溯源</a>
+</div>
+<{% endblock %}>
 
 {% block content %}
 <div class="card" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border:none">

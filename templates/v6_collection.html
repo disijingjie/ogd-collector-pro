@@ -33,6 +33,15 @@
 .research-card .r-icon{font-size:2em;margin-bottom:8px}.research-card .r-title{font-weight:700;font-size:14px}.research-card .r-desc{font-size:12px;opacity:0.9;margin-top:4px}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#live-dashboard" class="active">实时看板</a><a href="#overview">采集规模</a><a href="#platforms88">88平台全景</a><a href="#provenance">23省详情</a><a href="#downloads">数据下载</a><a href="#charts">交互图表</a><a href="#strategy">采集策略</a><a href="#collection-process">采集归集</a><a href="#reCollect">重新采集</a></div>{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/collection">采集中心</a>
+  <a href="/caliber">口径声明</a>
+  <a href="/credibility">可信度验证</a>
+  <a href="/provenance">数据溯源</a>
+  <a href="/rules">规则引擎</a>
+</div>
+{% endblock %}
 {% block content %}
 
 <div id="live-dashboard" class="scroll-section">
@@ -61,7 +70,7 @@
 </div>
 
 <div class="position-hint">
-  <strong>您正在浏览：数据来源（第2/5步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。系统已扩展支持<strong>全国88+个主要政府数据开放平台</strong>（含省级、地市级、中央部委级），采集方式涵盖静态爬取🟢、动态渲染🟣、官方报告🟠、API接口🔵四种核心技术。
+  <strong>您正在浏览：数据来源（第3/7步）</strong> — 本研究覆盖全部31个省级行政区，其中23个建有独立数据开放平台（全部成功采集，含安徽Playwright动态渲染），8个采用替代开放形式。系统已扩展支持<strong>全国88+个主要政府数据开放平台</strong>（含省级、地市级、中央部委级），采集方式涵盖静态爬取🟢、动态渲染🟣、官方报告🟠、API接口🔵四种核心技术。
   <a href="/analysis" style="color:var(--primary)">完成后再进入 分析验证 →</a>
 </div>
 

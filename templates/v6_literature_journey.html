@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}文献漏斗 - OGD-Collector Pro{% endblock %}{% block page_title %}文献漏斗：四级筛选工作台{% endblock %}{% block breadcrumb %}研究拓展 / 文献漏斗{% endblock %}
+{% extends "base_v6.html" %}{% set section = "overview" %}{% block title %}文献漏斗 - OGD-Collector Pro{% endblock %}{% block page_title %}文献漏斗：四级筛选工作台{% endblock %}{% block breadcrumb %}研究拓展 / 文献漏斗{% endblock %}
 {% block extra_css %}<style>
 .level-block{margin-bottom:20px;border-radius:14px;overflow:hidden;border:1px solid #e2e8f0;transition:all .2s}
 .level-header{padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background .2s}
@@ -25,6 +25,18 @@
 .stat-row{display:flex;gap:20px;margin:10px 0;flex-wrap:wrap}.stat-item{text-align:center}.stat-item .val{font-size:18px;font-weight:700;color:#2563eb}.stat-item .lbl{font-size:10px;color:#64748b}
 </style>{% endblock %}
 {% block anchor_nav %}<div class="anchor-nav"><a href="#l1">万里挑一</a><a href="#l2">千里挑一</a><a href="#l3">百里挑一</a><a href="#l4">十里挑一</a></div>{% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/">系统概览</a>
+  <a href="/literature">文献综述</a>
+  <a href="/methodology">方法论</a>
+  <a href="/prisma">PRISMA筛选</a>
+  <a href="/research-journey" class="active">研究旅程</a>
+  <a href="/chen-chuanfu">导师：陈传夫</a>
+  <a href="/ran-congjing">导师：冉从敬</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 <div style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;border-radius:14px;padding:28px;margin-bottom:20px">
   <div style="font-size:20px;font-weight:700;margin-bottom:6px">文献漏斗：从6,003篇到462篇的筛选全流程</div>

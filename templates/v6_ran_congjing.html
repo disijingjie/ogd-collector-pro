@@ -1,4 +1,4 @@
-{% extends "base_v6.html" %}{% set section = "contribution" %}{% block title %}冉从敬学术思想与课题导航 - OGD-Collector Pro{% endblock %}{% block page_title %}冉从敬学术思想与课题导航{% endblock %}{% block breadcrumb %}<a href="/research">研究拓展</a> / 冉从敬学术思想专题{% endblock %}
+{% extends "base_v6.html" %}{% set section = "overview" %}{% block title %}冉从敬学术思想与课题导航 - OGD-Collector Pro{% endblock %}{% block page_title %}冉从敬学术思想与课题导航{% endblock %}{% block breadcrumb %}<a href="/">研究全景</a> / 冉从敬学术思想专题{% endblock %}
 {% block anchor_nav %}
 <div class="anchor-nav">
   <a href="#profile" class="active">学者画像</a>
@@ -9,6 +9,18 @@
   <a href="#sources">来源索引</a>
 </div>
 {% endblock %}
+<{% block sub_nav %}>
+<div class="sub-nav">
+  <a href="/">系统概览</a>
+  <a href="/literature">文献综述</a>
+  <a href="/methodology">方法论</a>
+  <a href="/prisma">PRISMA筛选</a>
+  <a href="/research-journey">研究旅程</a>
+  <a href="/chen-chuanfu">导师：陈传夫</a>
+  <a href="/ran-congjing" class="active">导师：冉从敬</a>
+</div>
+<{% endblock %}>
+
 {% block content %}
 
 <!-- ========== 顶级标题区 ========== -->

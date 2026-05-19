@@ -1,0 +1,421 @@
+{% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}在线写作 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 在线写作{% endblock %}{% block breadcrumb %}论文工坊 / 在线写作{% endblock %}
+{% block sub_nav %}
+<div class="sub-nav">
+  <a href="/thesis/write" class="active">在线写作</a>
+  <a href="/thesis/health">健康度检查</a>
+  <a href="/thesis/export">导出工坊</a>
+  <a href="/thesis/lit-matrix">文献矩阵</a>
+  <a href="/thesis/citation-network">引用网络</a>
+  <a href="/thesis/diff">版本对比</a>
+  <a href="/defense">答辩辅助</a>
+  <a href="/thesis/format">格式规范</a>
+  <a href="/thesis/whu-pipeline">WHU排版</a>
+</div>
+{% endblock %}
+{% block content %}
+
+<style>
+.write-container { display:flex; gap:16px; height:calc(100vh - 220px); min-height:500px; }
+.editor-pane { flex:1; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#1e1e1e; }
+.editor-toolbar { display:flex; align-items:center; gap:4px; padding:8px 12px; background:#252526; border-bottom:1px solid #333; flex-wrap:wrap; }
+.editor-toolbar button { background:#3c3c3c; color:#ccc; border:1px solid #555; border-radius:4px; padding:4px 10px; font-size:12px; cursor:pointer; transition:all .15s; }
+.editor-toolbar button:hover { background:#4c4c4c; color:#fff; }
+.editor-toolbar button.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.editor-toolbar .sep { width:1px; height:18px; background:#555; margin:0 4px; }
+.editor-toolbar .tool-group { display:flex; gap:4px; align-items:center; }
+.editor-status { display:flex; align-items:center; justify-content:space-between; padding:6px 12px; background:#252526; border-top:1px solid #333; font-size:11px; color:#888; }
+#editor { flex:1; }
+.preview-pane { flex:1; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff; }
+.preview-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#f8fafc; border-bottom:1px solid var(--border); }
+.preview-header h4 { margin:0; font-size:13px; color:var(--text); }
+.preview-body { flex:1; overflow:auto; padding:24px 32px; font-size:14px; line-height:1.8; }
+.preview-body h1 { font-size:20px; margin:24px 0 12px; padding-bottom:8px; border-bottom:2px solid var(--primary); color:#1e293b; }
+.preview-body h2 { font-size:17px; margin:20px 0 10px; color:#334155; }
+.preview-body h3 { font-size:15px; margin:16px 0 8px; color:#475569; }
+.preview-body p { margin:8px 0; color:#334155; }
+.preview-body blockquote { border-left:3px solid var(--primary); padding-left:12px; margin:12px 0; color:#64748b; background:#f8fafc; padding:10px 12px; border-radius:0 8px 8px 0; }
+.preview-body pre { background:#1e293b; color:#e2e8f0; padding:14px; border-radius:8px; overflow:auto; font-size:12px; line-height:1.5; }
+.preview-body code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:12px; color:#be185d; }
+.preview-body table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13px; }
+.preview-body th, .preview-body td { border:1px solid #e2e8f0; padding:8px 10px; text-align:left; }
+.preview-body th { background:#f8fafc; font-weight:600; }
+.preview-body img { max-width:100%; border-radius:8px; margin:12px 0; }
+.preview-body sup { color:var(--primary); font-size:11px; }
+.action-bar { display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1000; align-items:center; justify-content:center; }
+.modal-overlay.active { display:flex; }
+.modal { background:#fff; border-radius:12px; padding:24px; max-width:520px; width:90%; max-height:80vh; overflow:auto; }
+.modal h3 { margin:0 0 16px; font-size:16px; }
+.modal pre { background:#f8fafc; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:300px; }
+.health-score { font-size:32px; font-weight:700; text-align:center; margin:12px 0; }
+.health-score.healthy { color:#10b981; }
+.health-score.warning { color:#f59e0b; }
+.health-score.critical { color:#ef4444; }
+@media (max-width:768px) {
+  .write-container { flex-direction:column; height:auto; }
+  .editor-pane, .preview-pane { min-height:300px; }
+}
+</style>
+
+<!-- 操作栏 -->
+<div class="card" style="margin-bottom:16px">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:20px">✍️</div>
+      <div>
+        <h3 style="font-size:15px;margin:0">在线 Markdown 写作</h3>
+        <p style="font-size:12px;color:var(--text-light);margin:2px 0 0">实时预览 / 自动保存 / 一键导出 DOCX</p>
+      </div>
+    </div>
+    <div class="action-bar" style="margin-top:0">
+      <button onclick="checkHealth()" class="quick-link" style="background:#f59e0b;color:#fff;border:none">健康度检查</button>
+      <button onclick="exportDocx()" class="quick-link" style="background:var(--primary);color:#fff;border:none">导出 DOCX</button>
+      <button onclick="exportMd()" class="quick-link">下载 MD</button>
+    </div>
+  </div>
+</div>
+
+<!-- 编辑器 + 预览 -->
+<div class="write-container">
+  <!-- 编辑器 -->
+  <div class="editor-pane">
+    <div class="editor-toolbar">
+      <div class="tool-group">
+        <button onclick="insertBold()" title="加粗"><b>B</b></button>
+        <button onclick="insertItalic()" title="斜体"><i>I</i></button>
+      </div>
+      <div class="sep"></div>
+      <div class="tool-group">
+        <button onclick="insertHeading(1)" title="一级标题">H1</button>
+        <button onclick="insertHeading(2)" title="二级标题">H2</button>
+        <button onclick="insertHeading(3)" title="三级标题">H3</button>
+      </div>
+      <div class="sep"></div>
+      <div class="tool-group">
+        <button onclick="insertList('ul')" title="无序列表">• 列表</button>
+        <button onclick="insertList('ol')" title="有序列表">1. 列表</button>
+        <button onclick="insertQuote()" title="引用">" 引用</button>
+      </div>
+      <div class="sep"></div>
+      <div class="tool-group">
+        <button onclick="insertLink()" title="链接">🔗</button>
+        <button onclick="insertImage()" title="图片">🖼️</button>
+        <button onclick="insertFootnote()" title="脚注">[^1]</button>
+        <button onclick="insertTable()" title="表格">▦</button>
+      </div>
+      <div class="sep"></div>
+      <div class="tool-group">
+        <button onclick="insertFormula()" title="公式">∑</button>
+        <button onclick="insertCode()" title="代码块">{ }</button>
+      </div>
+    </div>
+    <div id="editor"></div>
+    <div class="editor-status">
+      <span id="save-status">已自动保存</span>
+      <span id="doc-stats">0 字 | 0 行</span>
+    </div>
+  </div>
+
+  <!-- 预览 -->
+  <div class="preview-pane">
+    <div class="preview-header">
+      <h4>实时预览</h4>
+      <div style="display:flex;gap:6px">
+        <button onclick="setPreviewMode('full')" class="quick-link" style="padding:4px 10px;font-size:11px" id="btn-full">完整</button>
+        <button onclick="setPreviewMode('clean')" class="quick-link" style="padding:4px 10px;font-size:11px" id="btn-clean">简洁</button>
+      </div>
+    </div>
+    <div class="preview-body" id="preview"></div>
+  </div>
+</div>
+
+<!-- 健康度弹窗 -->
+<div class="modal-overlay" id="health-modal">
+  <div class="modal">
+    <h3>论文健康度检查</h3>
+    <div id="health-content">正在检查...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+<script>
+let editor;
+let currentContent = localStorage.getItem('thesis_draft') || `---
+title: 论文标题
+author: 姓名
+supervisor: 导师姓名
+school: 武汉大学
+degree: 博士
+---
+
+# 摘要
+
+在这里写中文摘要...
+
+**关键词：** 关键词1；关键词2；关键词3
+
+---
+
+# Abstract
+
+Write your English abstract here...
+
+**Keywords:** keyword1, keyword2, keyword3
+
+---
+
+# 绪论
+
+## 研究背景
+
+开始你的论文写作...
+
+## 研究意义
+
+...
+
+# 参考文献
+
+[1] 作者. 题名[J]. 刊名, 年, 卷(期): 页码.
+`;
+
+let previewMode = 'full';
+let autoSaveTimer;
+
+require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' }});
+require(['vs/editor/editor.main'], function() {
+  editor = monaco.editor.create(document.getElementById('editor'), {
+    value: currentContent,
+    language: 'markdown',
+    theme: 'vs-dark',
+    fontSize: 14,
+    lineNumbers: 'on',
+    wordWrap: 'on',
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    tabSize: 2,
+    insertSpaces: true,
+  });
+
+  editor.onDidChangeModelContent(function() {
+    updatePreview();
+    scheduleAutoSave();
+    updateStats();
+  });
+
+  updatePreview();
+  updateStats();
+});
+
+// Markdown 转 HTML（简易版）
+function mdToHtml(md) {
+  let html = md;
+  // YAML front matter
+  html = html.replace(/^---\n[\s\S]*?\n---\n*/, '');
+  // 代码块
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+  // 行内代码
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // 标题
+  html = html.replace(/^######\s+(.*)$/gm, '<h6>$1</h6>');
+  html = html.replace(/^#####\s+(.*)$/gm, '<h5>$1</h5>');
+  html = html.replace(/^####\s+(.*)$/gm, '<h4>$1</h4>');
+  html = html.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+  // 粗体斜体
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<b><i>$1</i></b>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  html = html.replace(/\*(.+?)\*/g, '<i>$1</i>');
+  // 引用
+  html = html.replace(/^>\s+(.*)$/gm, '<blockquote>$1</blockquote>');
+  // 无序列表
+  html = html.replace(/^([-\*])\s+(.*)$/gm, '<li>$2</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+  html = html.replace(/<\/ul>\s*<ul>/g, '');
+  // 有序列表
+  html = html.replace(/^\d+\.\s+(.*)$/gm, '<li>$1</li>');
+  // 图片
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+  // 链接
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  // 脚注 [^N]
+  html = html.replace(/\[\^(\d+)\]/g, '<sup>[$1]</sup>');
+  // 表格（简化处理）
+  html = html.replace(/\|(.+)\|/g, function(m, p1) {
+    const cells = p1.split('|').map(c => c.trim()).filter(c => c && !c.match(/^[-:]+$/));
+    if (cells.length === 0) return '';
+    return '<tr>' + cells.map(c => '<td>' + c + '</td>').join('') + '</tr>';
+  });
+  html = html.replace(/(<tr>.*<\/tr>\n?)+/g, '<table>$&</table>');
+  // 分隔线
+  html = html.replace(/^---+$/gm, '<hr/>');
+  // 段落
+  html = html.replace(/\n\n/g, '</p><p>');
+  html = '<p>' + html + '</p>';
+  html = html.replace(/<p><\/p>/g, '');
+  html = html.replace(/<p>(<(h\d|blockquote|pre|ul|table|hr)[^>]*>)/g, '$1');
+  html = html.replace(/(<\/(h\d|blockquote|pre|ul|table|hr)>)<\/p>/g, '$1');
+  return html;
+}
+
+function updatePreview() {
+  if (!editor) return;
+  const md = editor.getValue();
+  const html = mdToHtml(md);
+  document.getElementById('preview').innerHTML = html;
+}
+
+function scheduleAutoSave() {
+  document.getElementById('save-status').textContent = '正在保存...';
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    localStorage.setItem('thesis_draft', editor.getValue());
+    document.getElementById('save-status').textContent = '已自动保存 ' + new Date().toLocaleTimeString();
+  }, 1000);
+}
+
+function updateStats() {
+  if (!editor) return;
+  const text = editor.getValue();
+  const chars = text.length;
+  const lines = text.split('\n').length;
+  const cnChars = (text.match(/[\u4e00-\u9fff]/g) || []).length;
+  document.getElementById('doc-stats').textContent = `${chars} 字符 | ${lines} 行 | ${cnChars} 汉字`;
+}
+
+// 工具栏功能
+function insertBold() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `**${editor.getModel().getValueInRange(sel) || '粗体文本'}**` }]);
+}
+function insertItalic() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `*${editor.getModel().getValueInRange(sel) || '斜体文本'}*` }]);
+}
+function insertHeading(level) {
+  const sel = editor.getSelection();
+  const prefix = '#'.repeat(level) + ' ';
+  editor.executeEdits('', [{ range: sel, text: `${prefix}${editor.getModel().getValueInRange(sel) || '标题'}\n\n` }]);
+}
+function insertList(type) {
+  const sel = editor.getSelection();
+  const prefix = type === 'ul' ? '- ' : '1. ';
+  editor.executeEdits('', [{ range: sel, text: `${prefix}列表项\n${prefix}列表项\n` }]);
+}
+function insertQuote() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `> ${editor.getModel().getValueInRange(sel) || '引用内容'}\n\n` }]);
+}
+function insertLink() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `[${editor.getModel().getValueInRange(sel) || '链接文本'}](https://example.com)` }]);
+}
+function insertImage() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `![${editor.getModel().getValueInRange(sel) || '图片描述'}](图片路径)` }]);
+}
+function insertFootnote() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `${editor.getModel().getValueInRange(sel) || ''}[^1]` }]);
+}
+function insertTable() {
+  const table = `| 列1 | 列2 | 列3 |
+|-----|-----|-----|
+| 数据 | 数据 | 数据 |
+| 数据 | 数据 | 数据 |
+\n`;
+  const pos = editor.getPosition();
+  editor.executeEdits('', [{ range: new monaco.Range(pos.lineNumber, pos.column, pos.lineNumber, pos.column), text: table }]);
+}
+function insertFormula() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `$${editor.getModel().getValueInRange(sel) || 'E = mc^2'}$` }]);
+}
+function insertCode() {
+  const sel = editor.getSelection();
+  editor.executeEdits('', [{ range: sel, text: `\`\`\`python\n${editor.getModel().getValueInRange(sel) || '代码'}\n\`\`\`\n` }]);
+}
+
+function setPreviewMode(mode) {
+  previewMode = mode;
+  document.getElementById('btn-full').classList.toggle('active', mode === 'full');
+  document.getElementById('btn-clean').classList.toggle('active', mode === 'clean');
+  updatePreview();
+}
+
+// 导出功能
+function exportMd() {
+  const blob = new Blob([editor.getValue()], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '论文草稿_' + new Date().toISOString().slice(0,10) + '.md';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportDocx() {
+  const content = editor.getValue();
+  fetch('/api/thesis/write/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: content })
+  })
+  .then(r => r.blob())
+  .then(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '论文草稿_' + new Date().toISOString().slice(0,10) + '.docx';
+    a.click();
+    URL.revokeObjectURL(url);
+  })
+  .catch(err => alert('导出失败: ' + err));
+}
+
+function checkHealth() {
+  const content = editor.getValue();
+  document.getElementById('health-modal').classList.add('active');
+  document.getElementById('health-content').innerHTML = '正在检查...';
+
+  fetch('/api/thesis/write/health', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: content })
+  })
+  .then(r => r.json())
+  .then(data => {
+    let html = `<div class="health-score ${data.overall_status}">${data.overall_score}</div>`;
+    html += '<div style="text-align:center;margin-bottom:16px;font-size:13px;color:#64748b">综合评分 / 100</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:8px">';
+    for (const check of data.checks) {
+      const emoji = check.passed ? '✅' : '⚠️';
+      const color = check.passed ? '#10b981' : '#f59e0b';
+      html += `<div style="background:#f8fafc;border-radius:8px;padding:10px 12px">`;
+      html += `<div style="display:flex;justify-content:space-between;align-items:center">`;
+      html += `<span style="font-weight:600;font-size:13px">${emoji} ${check.name}</span>`;
+      html += `<span style="color:${color};font-weight:700;font-size:13px">${check.score}分</span>`;
+      html += `</div>`;
+      if (check.details.length > 0) {
+        html += `<div style="margin-top:6px;font-size:11px;color:#64748b">`;
+        html += check.details.map(d => `• ${d}`).join('<br>');
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+    html += '</div>';
+    document.getElementById('health-content').innerHTML = html;
+  })
+  .catch(err => {
+    document.getElementById('health-content').innerHTML = '检查失败: ' + err;
+  });
+}
+
+document.getElementById('health-modal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('active');
+});
+</script>
+
+{% endblock %}

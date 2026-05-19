@@ -1,6 +1,7 @@
 {% extends "base_v6.html" %}{% set section = "workshop" %}{% block title %}导出工坊 | OGD-Collector Pro{% endblock %}{% block page_title %}论文工坊 / 导出工坊{% endblock %}{% block breadcrumb %}论文工坊 / 导出工坊{% endblock %}
 {% block sub_nav %}
 <div class="sub-nav">
+  <a href="/thesis/write">在线写作</a>
   <a href="/thesis/health">健康度检查</a>
   <a href="/thesis/export" class="active">导出工坊</a>
   <a href="/thesis/lit-matrix">文献矩阵</a>
@@ -38,6 +39,21 @@
       <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">产出</div>
       <div style="font-weight:700;font-size:13px">武大标准DOCX</div>
       <div style="font-size:11px;color:#64748b;margin-top:4px">可直接打印</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHU Pipeline 开源工具 -->
+<div class="card" style="border:2px solid #dbeafe;background:linear-gradient(135deg,#f8fafc,#eff6ff)">
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+    <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:24px">🎓</div>
+    <div style="flex:1;min-width:200px">
+      <h3 style="font-size:16px;margin-bottom:4px">WHU Thesis Pipeline — 独立开源工具</h3>
+      <p style="font-size:13px;color:#64748b;line-height:1.6">受 nju-thesis-markdown 启发，独立开发的武汉大学论文排版工具。支持 Markdown → DOCX 双引擎转换、8维度论文健康度检查、YAML格式规则引擎。已开源在 GitHub。</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="/thesis/whu-pipeline" class="quick-link" style="background:var(--primary);color:#fff;border:none;padding:8px 16px">了解详情</a>
+      <a href="https://github.com/disijingjie/whu-thesis-pipeline" target="_blank" class="quick-link" style="background:#1e293b;color:#fff;border:none;padding:8px 16px">GitHub →</a>
     </div>
   </div>
 </div>
