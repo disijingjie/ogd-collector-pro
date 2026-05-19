@@ -163,18 +163,6 @@ body.reader-mode-defense .chapter-summary .summary-label{color:#d97706}
 </div>
 {% endblock %}
 
-{% block sub_nav %}
-<div class="sub-nav">
-  <a href="#toc">论文目录</a>
-  <a href="#figures">图目录</a>
-  <a href="#tables">表目录</a>
-  <a href="#references">参考文献</a>
-  <a href="/reader/chapter/1">📖 按章阅读</a>
-  <a href="/api/thesis/structure" target="_blank">JSON结构</a>
-  <a href="#" onclick="window.print();return false">打印全文</a>
-</div>
-{% endblock %}
-
 {% block content %}
 <div class="reader-layout">
   <button class="toc-toggle" id="tocToggle" onclick="toggleToc()" style="display:none;position:fixed;left:10px;bottom:20px;z-index:100;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;align-items:center;justify-content:center;font-size:18px">☰</button>
