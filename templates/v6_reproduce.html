@@ -15,7 +15,8 @@
 {% block anchor_nav %}<div class="anchor-nav"><a href="#overview" class="active">复现概览</a><a href="#sources">数据来源总览</a><a href="#topsis-repro">TOPSIS复现</a><a href="#dea-repro">DEA复现</a><a href="#dematel-repro">DEMATEL复现</a><a href="#fsqca-repro">fsQCA复现</a><a href="#did-repro">DID复现</a><a href="#recollect">重新采集</a></div>{% endblock %}
 {% block sub_nav %}
 <div class="sub-nav">
-  <a href="/reproduce">数据复现</a>
+  <a href="/reproduce" class="active">数据复现</a>
+  <a href="/rules">学术规范</a>
 </div>
 {% endblock %}
 {% block content %}
@@ -38,6 +39,35 @@
     <div class="stat-card"><div class="stat-value">88</div><div class="stat-label">原始采集平台</div><div style="font-size:12px;color:#16a34a;margin-top:4px">全部数据开源</div></div>
     <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">可复现承诺</div><div style="font-size:12px;color:#16a34a;margin-top:4px">代码+数据+文档</div></div>
     <div class="stat-card"><div class="stat-value">GitHub</div><div class="stat-label">开源仓库</div><div style="font-size:12px;color:#16a34a;margin-top:4px">disijingjie/ogd-collector-pro</div></div>
+  </div>
+
+  <!-- 学术规范证明卡片 -->
+  <div class="card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #bbf7d0;margin-top:16px">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">✅</div>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:700;color:#065f46;margin-bottom:6px">数据复现 = 学术规范的最佳证明</div>
+        <div style="font-size:13px;color:#166534;line-height:1.8">本研究遵循"可复现性优先"原则，将数据复现作为学术规范的核心支撑。所有分析步骤透明公开，任何人都可以通过本页提供的代码和数据验证论文结论。这不仅是技术能力，更是学术诚信的体现。<a href="/rules" style="color:#065f46;font-weight:600;text-decoration:underline">查看学术规范详情 →</a></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+      <div style="padding:10px 14px;background:#fff;border-radius:8px;border-left:3px solid #059669">
+        <div style="font-size:12px;font-weight:700;color:#065f46">数据来源透明</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px">每条数据均可追溯至原始采集记录</div>
+      </div>
+      <div style="padding:10px 14px;background:#fff;border-radius:8px;border-left:3px solid #2563eb">
+        <div style="font-size:12px;font-weight:700;color:#1e40af">分析过程公开</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px">核心代码开源，分析逻辑完全透明</div>
+      </div>
+      <div style="padding:10px 14px;background:#fff;border-radius:8px;border-left:3px solid #d97706">
+        <div style="font-size:12px;font-weight:700;color:#92400e">结果可验证</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px">独立复现可得到与论文一致的结果</div>
+      </div>
+      <div style="padding:10px 14px;background:#fff;border-radius:8px;border-left:3px solid #7c3aed">
+        <div style="font-size:12px;font-weight:700;color:#7e22ce">伦理合规</div>
+        <div style="font-size:11px;color:#64738b;margin-top:2px">采集规则公开，不触碰隐私数据</div>
+      </div>
+    </div>
   </div>
 </div>
 

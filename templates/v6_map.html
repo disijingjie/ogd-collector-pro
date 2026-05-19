@@ -150,6 +150,18 @@ const nameMap = {
   'Yunnan':'Yunnan','Jilin':'Jilin','Henan':'Henan'
 };
 
+// Map province data keys to platform codes (lowercase pinyin)
+const provinceCodeMap = {
+  'Shandong':'shandong','Zhejiang':'zhejiang','Guangdong':'guangdong',
+  'Beijing':'beijing','Shanghai':'shanghai','Guizhou':'guizhou',
+  'Sichuan':'sichuan','Fujian':'fujian','Jiangsu':'jiangsu',
+  'Hubei':'hubei','Tianjin':'tianjin','Chongqing':'chongqing',
+  'Hunan':'hunan','Hainan':'hainan','Anhui':'anhui',
+  'Guangxi':'guangxi','Liaoning':'liaoning',
+  'Neimenggu':'neimenggu','Shanxi':'shanxi','Jiangxi':'jiangxi',
+  'Yunnan':'yunnan','Jilin':'jilin','Henan':'henan'
+};
+
 let currentDim = 'topsis';
 
 function getColor(score) {
@@ -268,8 +280,9 @@ fetch('https://cdn.jsdelivr.net/npm/datamaps@0.5.10/src/js/data/chn.topo.json')
       })
       .on('click', function(event, d) {
         const mapped = nameMap[d.properties.name];
-        if (mapped && provinceData[mapped]) {
-          window.location.href = '/analysis';
+        const code = mapped ? provinceCodeMap[mapped] : null;
+        if (code) {
+          window.location.href = '/platform/' + code;
         }
       });
   })
