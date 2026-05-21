@@ -1540,6 +1540,13 @@ def api_download_md():
         download_name='博士论文_最终定稿版.md'
     )
 
+# ========== 论文工坊：WHU排版工具介绍 ==========
+
+@app.route('/thesis/whu-pipeline')
+def thesis_whu_pipeline():
+    """WHU论文排版工具介绍页"""
+    return render_template('v6_thesis_whu_pipeline.html')
+
 # ========== 论文工坊：文献矩阵生成器 ==========
 
 @app.route('/thesis/lit-matrix')
@@ -1816,6 +1823,208 @@ def api_citation_network_data():
             'total_citations': sum(thesis.get('ref_counts', {}).values()),
             'co_citation_pairs': sum(1 for e in edges if e.get('type') == 'co-citation')
         }
+    })
+
+# ========== 在线写作 ==========
+@app.route('/thesis/write')
+def thesis_write():
+    """在线 Markdown 写作页面"""
+    return render_template('v6_thesis_write.html')
+
+@app.route('/api/thesis/write/export', methods=['POST'])
+def api_thesis_write_export():
+    """API: 在线写作内容导出为 DOCX"""
+    import tempfile
+    import subprocess
+    from docx import Document
+    from docx.shared import Pt, Mm
+    from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
+    from docx.oxml.ns import qn
+
+    data = request.get_json()
+    content = data.get('content', '')
+
+    if not content.strip():
+        return jsonify({'error': '内容为空'}), 400
+
+    try:
+        # 创建临时 MD 文件
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False, encoding='utf-8') as f:
+            f.write(content)
+            md_path = f.name
+
+        # 阶段 1: Pandoc 转换
+        stage1_path = md_path.replace('.md', '.stage1.docx')
+        cmd = [
+            'pandoc', md_path,
+            '-o', stage1_path,
+            '--from', 'markdown+yaml_metadata_block+footnotes+pipe_tables',
+            '--to', 'docx',
+            '--embed-resources'
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            # Pandoc 失败则回退到纯文本
+            doc = Document()
+            doc.add_paragraph(content)
+            output = tempfile.NamedTemporaryFile(suffix='.docx', delete=False)
+            doc.save(output.name)
+            output_path = output.name
+        else:
+            # 阶段 2: python-docx 精修
+            output = tempfile.NamedTemporaryFile(suffix='.docx', delete=False)
+            output_path = output.name
+            doc = Document(stage1_path)
+
+            # 应用武大格式
+            style = doc.styles['Normal']
+            style.font.name = 'Times New Roman'
+            style.font.size = Pt(12)
+            style.font.element.rPr.rFonts.set(qn('w:eastAsia'), '宋体')
+            pf = style.paragraph_format
+            pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE
+            pf.line_spacing = 1.5
+
+            # 页面设置
+            for section in doc.sections:
+                section.page_width = Mm(210)
+                section.page_height = Mm(297)
+                section.top_margin = Mm(25)
+                section.bottom_margin = Mm(25)
+                section.left_margin = Mm(30)
+                section.right_margin = Mm(25)
+
+            doc.save(output_path)
+
+        # 清理
+        import os
+        os.unlink(md_path)
+        if os.path.exists(stage1_path):
+            os.unlink(stage1_path)
+
+        return send_from_directory(os.path.dirname(output_path),
+                                   os.path.basename(output_path),
+                                   as_attachment=True,
+                                   download_name='论文草稿.docx')
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/thesis/write/health', methods=['POST'])
+def api_thesis_write_health():
+    """API: 在线写作内容健康度检查"""
+    import re
+    data = request.get_json()
+    text = data.get('content', '')
+
+    if not text.strip():
+        return jsonify({'overall_score': 0, 'overall_status': 'critical',
+                        'checks': [{'name': '内容', 'passed': False, 'score': 0,
+                                   'message': '内容为空', 'details': []}]})
+
+    checks = []
+
+    # 1. 章节结构
+    chapters = re.findall(r'^#{1,2}\s+(.+)$', text, re.MULTILINE)
+    ch_score = 100
+    ch_details = [f'检测到 {len(chapters)} 个章节']
+    if len(chapters) < 5:
+        ch_score -= 20
+        ch_details.append('章节数不足（建议至少5章）')
+    has_intro = any('绪论' in c or '引言' in c for c in chapters)
+    has_conc = any('结论' in c or '总结' in c for c in chapters)
+    if not has_intro:
+        ch_score -= 15; ch_details.append('缺少绪论/引言')
+    if not has_conc:
+        ch_score -= 15; ch_details.append('缺少结论/总结')
+    checks.append({'name': '章节结构', 'passed': ch_score >= 80, 'score': max(0, ch_score),
+                   'message': '结构完整' if ch_score >= 80 else '结构需完善', 'details': ch_details})
+
+    # 2. 参考文献
+    refs = re.findall(r'^\[(\d+)\]\s+.+$', text, re.MULTILINE)
+    ref_score = 100
+    ref_details = [f'参考文献 {len(refs)} 篇']
+    if len(refs) < 30:
+        ref_score -= max(0, (30 - len(refs)) * 1.5)
+        ref_details.append('参考文献数量偏少')
+    cn_refs = sum(1 for r in re.findall(r'^\[\d+\]\s+.+$', text, re.MULTILINE) if re.search(r'[\u4e00-\u9fff]', r))
+    if len(refs) > 0:
+        ratio = cn_refs / len(refs)
+        ref_details.append(f'中文占比 {ratio:.0%}')
+        if not (0.5 <= ratio <= 0.95):
+            ref_score -= 10
+    checks.append({'name': '参考文献', 'passed': ref_score >= 80, 'score': max(0, ref_score),
+                   'message': '参考文献规范' if ref_score >= 80 else '需补充', 'details': ref_details})
+
+    # 3. 摘要
+    abs_score = 100
+    abs_details = []
+    cn_abs = re.search(r'#{1,2}\s*摘要\s*\n+([\s\S]*?)(?=#{1,2}\s*(?:Abstract|关键词|引言|绪论))', text, re.I)
+    if cn_abs:
+        cn_chars = len(re.findall(r'[\u4e00-\u9fff]', cn_abs.group(1)))
+        abs_details.append(f'中文摘要 {cn_chars} 字')
+        if cn_chars < 300:
+            abs_score -= 15
+    else:
+        abs_score -= 25
+        abs_details.append('未检测到中文摘要')
+    en_abs = re.search(r'#{1,2}\s*Abstract\s*\n+([\s\S]*?)(?=#{1,2}\s*(?:Keywords|关键词|引言|绪论))', text, re.I)
+    if en_abs:
+        en_words = len(en_abs.group(1).split())
+        abs_details.append(f'英文摘要 {en_words} words')
+        if en_words < 200:
+            abs_score -= 10
+    else:
+        abs_score -= 20
+        abs_details.append('未检测到英文摘要')
+    checks.append({'name': '摘要', 'passed': abs_score >= 80, 'score': max(0, abs_score),
+                   'message': '摘要完整' if abs_score >= 80 else '摘要需完善', 'details': abs_details})
+
+    # 4. 引用完整性
+    cite_score = 100
+    cite_details = []
+    cited = set(re.findall(r'\[(\d+)\]', text))
+    ref_nums = set(re.findall(r'^\[(\d+)\]\s+', text, re.MULTILINE))
+    if ref_nums:
+        orphan = ref_nums - cited
+        missing = cited - ref_nums
+        if orphan:
+            cite_score -= min(20, len(orphan) * 2)
+            cite_details.append(f'未引用文献 {len(orphan)} 篇')
+        if missing:
+            cite_score -= min(20, len(missing) * 2)
+            cite_details.append(f'引用未列出 {len(missing)} 篇')
+    cite_details.append(f'引用 {len(cited)} 篇 / 列出 {len(ref_nums)} 篇')
+    checks.append({'name': '引用完整性', 'passed': cite_score >= 80, 'score': max(0, cite_score),
+                   'message': '引用完整' if cite_score >= 80 else '引用有问题', 'details': cite_details})
+
+    # 5. 图片
+    imgs = re.findall(r'!\[[^\]]*\]\([^)]+\)', text)
+    img_score = 100 if len(imgs) >= 5 else max(0, 100 - (5 - len(imgs)) * 10)
+    checks.append({'name': '图片图表', 'passed': img_score >= 80, 'score': img_score,
+                   'message': '图片完整' if img_score >= 80 else '图片偏少', 'details': [f'图片 {len(imgs)} 张']})
+
+    # 6. 表格
+    tbls = [t for t in re.findall(r'\|.+\|.+\|', text) if '---' in t or '===' in t]
+    tbl_score = 100 if len(tbls) >= 3 else max(0, 100 - (3 - len(tbls)) * 15)
+    checks.append({'name': '表格', 'passed': tbl_score >= 80, 'score': tbl_score,
+                   'message': '表格规范' if tbl_score >= 80 else '表格偏少', 'details': [f'表格 {len(tbls)} 个']})
+
+    # 7. 格式规范
+    fmt_score = 100
+    fmt_details = []
+    if not text.strip().startswith('---'):
+        fmt_score -= 10
+        fmt_details.append('建议添加 YAML front matter')
+    checks.append({'name': '格式规范', 'passed': fmt_score >= 80, 'score': fmt_score,
+                   'message': '格式规范', 'details': fmt_details if fmt_details else ['格式正常']})
+
+    total = sum(c['score'] for c in checks) / len(checks)
+    status = 'healthy' if total >= 80 else 'warning' if total >= 60 else 'critical'
+
+    return jsonify({
+        'overall_score': round(total, 1),
+        'overall_status': status,
+        'checks': checks
     })
 
 if __name__ == '__main__':
