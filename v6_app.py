@@ -2027,5 +2027,44 @@ def api_thesis_write_health():
         'checks': checks
     })
 
+# ============================================================
+# 历史 URL 兼容重定向（2026-08 站点优化：修复7处死链）
+# 旧版路由/笔误链接 → 新版正确路由，避免 404
+# ============================================================
+@app.route('/literature-extract')
+def legacy_lit_extract():
+    """旧链接：文献摘录 → /lit-extract"""
+    return redirect('/lit-extract')
+
+@app.route('/literature-synthesis')
+def legacy_lit_synthesis():
+    """旧链接：章节合成 → /chapter-synth"""
+    return redirect('/chapter-synth')
+
+@app.route('/collector')
+def legacy_collector():
+    """旧链接：采集控制台 → /collection"""
+    return redirect('/collection')
+
+@app.route('/source-code')
+def legacy_source_code():
+    """旧链接：源码 → GitHub 仓库"""
+    return redirect('https://github.com/disijingjie/ogd-collector-pro')
+
+@app.route('/export')
+def legacy_export():
+    """旧链接：数据导出 → /thesis/export"""
+    return redirect('/thesis/export')
+
+@app.route('/logout')
+def legacy_logout():
+    """旧链接：退出登录（本站无登录体系）→ 首页"""
+    return redirect('/')
+
+@app.route('/thesis/')
+def legacy_thesis_slash():
+    """旧链接：论文中心（带尾斜杠）→ /thesis"""
+    return redirect('/thesis')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
