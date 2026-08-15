@@ -104,6 +104,9 @@ data/export/
 data/whu_export/
 data/papers/
 
+# Sensitive config (API keys) - DO NOT commit
+data/_api_keys.json
+
 # Temp template files (old versions)
 templates/server_*.html
 templates/v3_*.html
